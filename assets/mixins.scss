@@ -1,0 +1,26 @@
+@mixin flex($direction, $justify, $align, $gap: 10px) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  gap: $gap;
+}
+
+@mixin footerSpan($line-height, $font-size) {
+  color: white;
+  font-weight: 400;
+  line-height: $line-height;
+  font-size: $font-size;
+}
+@mixin openedOptionsHeader($width, $padding, $top) {
+  position: absolute;
+  top: $top;
+  width: $width;
+  background: white;
+  left: 0;
+  z-index: 10;
+  padding: $padding;
+  transition: 0.3s ease all;
+  opacity: 0;
+  visibility: hidden;
+}

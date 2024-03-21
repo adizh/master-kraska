@@ -1,0 +1,31 @@
+$main-pink: #b30753;
+$main-black: #222222;
+$main-white: #f5f5f5;
+$main-blue: #33587d;
+$main-gray: #999999;
+$main-dark-grey: #666666;
+$button-padding: 10px 20px 10px 20px;
+$blue-color: #2f80ed;
+$input-border-color: #e0e0e0;
+$product-item-width: 95%;
+$slider-border-color: #dddddd;
+$advan-text-color: #1a2331;
+$footer-border-color: #4f4f4f;
+$footer-bottom-color: #828282;
+$advan-bg: #000a1a;
+
+%button-shared {
+  padding: $button-padding;
+  background: $main-pink;
+  color: #fff;
+  border-radius: 8px;
+  outline: none;
+  border: none;
+  font-size: 13px;
+}
+
+%header-nav {
+  font-size: 16px;
+  color: #000;
+  line-height: 20px;
+}
