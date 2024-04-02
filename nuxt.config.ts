@@ -26,11 +26,23 @@ export default defineNuxtConfig({
         {
           src: "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js",
         },
+        {
+          //  src: "https://api-maps.yandex.ru/v3/?apikey=7a61a60d-10c2-4b7b-8779-5101f3a5e2a0&lang=ru_RU",
+        },
       ],
     },
   },
+  modules: [
+    "@nuxt/image",
+    "nuxt-swiper",
+    "nuxt-primevue",
+    "vue-yandex-maps/nuxt",
+    "@pinia/nuxt",
+  ],
+  yandexMaps: {
+    apikey: "7a61a60d-10c2-4b7b-8779-5101f3a5e2a0",
+  },
 
-  modules: ["@nuxt/image", "nuxt-swiper"],
   image: {
     dir: "assets/images",
   },

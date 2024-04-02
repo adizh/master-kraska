@@ -13,6 +13,8 @@ $advan-text-color: #1a2331;
 $footer-border-color: #4f4f4f;
 $footer-bottom-color: #828282;
 $advan-bg: #000a1a;
+$rating-color: #f2c94c;
+$light-blue: #33587d1a;
 
 %button-shared {
   padding: $button-padding;
@@ -21,11 +23,37 @@ $advan-bg: #000a1a;
   border-radius: 8px;
   outline: none;
   border: none;
-  font-size: 13px;
+  font-size: 16px;
 }
 
 %header-nav {
   font-size: 16px;
   color: #000;
   line-height: 20px;
+}
+
+%rating-icon {
+  color: $rating-color;
+  width: 20px;
+  height: 19px;
+}
+
+%sm-span {
+  margin: 10px 0;
+  color: $main-dark-grey;
+  font-size: 14px;
+  display: block;
+  line-height: 20px;
+}
+
+%border-bottoms {
+  border-bottom: 1px solid $slider-border-color;
+}
+
+.margin-top-80 {
+  margin-top: 80px;
+}
+
+.margin-top-40 {
+  margin-top: 40px;
 }

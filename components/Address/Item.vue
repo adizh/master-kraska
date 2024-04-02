@@ -1,0 +1,65 @@
+<template>
+    <div class="maps-address-list-block">
+        <h3>{{ name }}</h3>
+        <div class="bottom-list">
+            <p>
+                <img src="../../assets/icons/black/icon=components-location.svg" alt="location">
+                <span>{{ location }}</span>
+            </p>
+            <p><img src="../../assets/icons/black/icon=components-phone.svg" alt="phone">
+                <span class="phone">{{ phone }}</span>
+            </p>
+            <p>
+                <img src="../../assets/icons/black/icon=components-time.svg" alt="time">
+                <span>
+                    {{ time }}
+                </span>
+            </p>
+            <p>
+                <img src="../../assets/icons/black/icon=components-email.svg" alt="email">
+                <span> {{ email }}</span>
+            </p>
+        </div>
+    </div>
+</template>
+
+<script setup lang="ts">
+const props = defineProps<{
+    name: string
+    location: string;
+    time: string;
+    email: string
+    phone: string
+}>()
+
+
+
+</script>
+
+<style scoped lang='scss'>
+.maps-address-list {
+
+
+    &-block {
+        border: 1px solid $slider-border-color;
+        border-radius: 10px;
+        padding: 40px;
+        margin-bottom: 20px;
+
+        img {
+            width: 24px;
+            height: 24px
+        }
+
+    }
+}
+
+.bottom-list {
+    @include flex(row, space-between, center);
+    margin-top: 20px;
+
+    p {
+        @include flex(row, space-between, center);
+    }
+}
+</style>

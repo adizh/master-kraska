@@ -24,3 +24,20 @@
   opacity: 0;
   visibility: hidden;
 }
+
+@mixin items-button($padding, $color, $bg, $border, $font-size: 13px) {
+  padding: $padding;
+  background: $bg;
+  color: $color;
+  border-radius: 8px;
+  outline: none;
+  border: $border;
+  font-size: $font-size;
+}
+
+@mixin textFormat($font-size, $line-height, $font-weight, $color: #2222) {
+  color: $color;
+  font-size: $font-size;
+  font-weight: $font-weight;
+  line-height: $line-height;
+}

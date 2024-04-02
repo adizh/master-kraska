@@ -1,7 +1,8 @@
 <template>
-    <div>
-        about
-    </div>
+    <section>
+
+        <AdminProducts />
+    </section>
 </template>
 
 <script setup lang="ts">

@@ -1,5 +1,5 @@
 <template>
-  
+
   <NuxtLayout></NuxtLayout>
   <section class="main-section-site">
     <NuxtPage />
@@ -10,9 +10,11 @@
 
 
 <script setup lang="ts">
+import 'primevue/resources/themes/aura-light-green/theme.css';
 </script>
 
 
 <style lang="scss">
 @import url(./assets/main.scss);
+@import 'primeflex/primeflex.scss';
 </style>

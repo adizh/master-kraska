@@ -2,22 +2,23 @@
     <div class="popular-products">
         <h5 class='each-section-header'>Популярные товары</h5>
         <div class="products-list">
-            <Swiper :slides-per-view="4" :loop="true" :navigation="true" id="mySlider" :parallax="true"
-                :modules="[SwiperNavigation]" :style='{ "--swiper-navigation-size": "15px", "padding": "20px 0" }'>
-                <SwiperSlide v-for="  slide   in   10  " :key="slide">
-                    <ProductsProductItem />
+            <Swiper :slides-per-view="3" :navigation="true" id="mySlider" :modules="[SwiperNavigation]"
+                :style='{ "--swiper-navigation-size": "15px", "padding": "20px 0" }'>
+                <SwiperSlide v-for="product in store.getAllProducsts" :key="product.id">
+                    <ProductsProductItem :product="product" />
                 </SwiperSlide>
-                <!-- <button @click="nextSlide">Next</button> -->
-
             </Swiper>
-
         </div>
 
     </div>
 </template>
 
 <script setup lang="ts">
+const store = useProductsSstore();
+onMounted(() => {
+    store.fetchAllProducts();
 
+})
 </script>
 
 <style scoped lang='scss'>
@@ -25,11 +26,11 @@
     margin-top: 40px;
 }
 
+
 .products-list {
     @include flex(row, space-around, center);
-    flex-wrap: wrap
+    flex-wrap: wrap;
 }
-
 
 
 

@@ -7,8 +7,7 @@
                 <SwiperSlide v-for=" slide  in  10 " :key="slide">
                     <ProductsProductItem />
                 </SwiperSlide>
-                <!-- <button @click="nextSlide">Next</button> -->
-
+            
             </Swiper>
 
         </div>

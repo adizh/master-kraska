@@ -1,6 +1,6 @@
 <template>
     <div class="main-header">
-        <div class="left">
+        <div class="left" @click="backHome">
             <NuxtImg src="/logo-master.png"></NuxtImg>
         </div>
         <div class="right">
@@ -9,8 +9,10 @@
                     <img src="../assets/icons/icon=phone loight.svg" alt="">
                     +996 509 910 148
                 </li>
-                <li><img src="../assets/icons/icon=cart.svg" alt="">Корзина</li>
-                <li><img src="../assets/icons/icon=user.svg" alt="">Профиль</li>
+                <li @click="navigateTo('/cart')">
+                    <img src="../assets/icons/icon=cart.svg" alt="">Корзина
+                </li>
+                <li @click="toggleProfile"><img src="../assets/icons/icon=user.svg" alt="">Профиль</li>
             </ul>
             <ul class="bottom">
                 <li class="catalog-li" @mouseover="toggleCatalog">Каталог
@@ -20,7 +22,9 @@
 
                 <li>Колеровка</li>
                 <li>Оплата и доставка</li>
-                <li>О нас</li>
+                <li>
+                    <NuxtLink to="/about-us">О нас</NuxtLink>
+                </li>
                 <li>Контакты</li>
                 <li class="search-place"><input type="text" class="main-header-input" @input="handleSearch">
                     <img src="../assets/icons/icon=search.svg" alt="search" class="search-icon">
@@ -35,13 +39,42 @@
         <div class="overlay-header-options" v-show="isCatalogOpen" :class="{ 'open': isCatalogOpen }"></div>
     </div>
 
+    <Dialog v-model:visible="isProfileOpen" modal :style="{ width: '450px', padding: '10px 40px 40px 40px' }">
+        <div class="profile-section-header">
 
+            <TabView v-if="selectedReg === 0">
+                <TabPanel header="Регистрация">
+                    <AuthEmailRegister @closeModal="isProfileOpen = false" />
+                    <!-- <AuthRegister @selectRegister="selectRegister" /> -->
+                </TabPanel>
+                <TabPanel header="Войти">
+                    <AuthLogin @closeLoginModal="isProfileOpen = false" />
+                </TabPanel>
+            </TabView>
 
+            <div v-else-if='selectedReg === 1'>
+
+                <AuthEmailRegister @closeModal="isProfileOpen = false" />
+            </div>
+        </div>
+    </Dialog>
+
+    <!-- <Toast /> -->
 </template>
 
 <script setup lang="ts">
+const toast = useToast()
 const isCatalogOpen = ref(false);
 const isSearchOpen = ref(false);
+const isProfileOpen = ref();
+const authStore = useAuthStore();
+const selectedReg = ref(0);
+
+const selectRegister = (tab: number) => {
+    selectedReg.value = tab;
+}
+console.log('authStore email', authStore.getUserId)
+
 const toggleCatalog = () => {
     isCatalogOpen.value = true
 }
@@ -53,13 +86,29 @@ const handleSearch = (event: any) => {
     isSearchOpen.value = event.target.value.trim().length > 0;
 }
 
+const backHome = () => {
+    return navigateTo('/')
+}
 
+
+const toggleProfile = () => {
+    if (authStore.getUserId && authStore.getUserId?.length > 0) {
+        return navigateTo('/profile')
+    } else {
+        isProfileOpen.value = !isProfileOpen.value
+    }
+}
+
+const closeProfileOpen = () => {
+    isProfileOpen.value = false
+}
+provide('closeProfileOpen', closeProfileOpen)
 </script>
 
 <style scoped lang="scss">
 .main-header {
     @include flex(row, start, center, 4rem);
-    padding: 20px 4.5rem;
+    padding: 20px 2.5rem;
     box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.06);
     position: fixed;
     width: 100%;
@@ -76,8 +125,12 @@ const handleSearch = (event: any) => {
     width: 15%
 }
 
+.left:hover {
+    cursor: pointer;
+}
+
 .right {
-    width: 75%
+    width: 85%
 }
 
 .bottom {
@@ -100,11 +153,13 @@ const handleSearch = (event: any) => {
         display: flex;
         align-items: center;
     }
+
+    &-header-links {
+        @include flex(row, start, center, 0px)
+    }
 }
 
-.phone {
-    color: $blue-color;
-}
+
 
 .search-place {
     position: relative;
@@ -121,23 +176,49 @@ const handleSearch = (event: any) => {
     display: flex;
 }
 
-.arrow {
-    transition: transform 0.3s ease;
 
-}
-
-.arrow.rotated {
-    transform: rotate(180deg);
-}
 
 .catalog-li:hover {
     cursor: pointer;
 }
 
+.profile-section-header {
+    margin-top: 20px;
+}
 
 .main-header-input:focus {
     border-color: $main-blue;
     outline: none;
     @extend %header-nav;
+}
+
+:deep(ul.p-tabview-nav) {
+    @include flex(row, space-around, center !important)
+}
+
+
+
+:deep(.p-tabview .p-tabview-ink-bar) {
+    background-color: $main-pink;
+    height: 3px;
+    color: $main-black;
+}
+
+:deep(.p-tabview .p-tabview-nav) {
+    padding-bottom: 15px !important;
+}
+
+:deep(.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link) {
+    color: $main-black;
+}
+
+:deep(.p-tabview .p-tabview-nav li .p-tabview-nav-link) {
+    border: none;
+
+    @include textFormat(16px, 16px, 500, $main-dark-grey)
+}
+
+:deep(.p-tabview .p-tabview-panels) {
+    color: $main-black
 }
 </style>

@@ -30,17 +30,20 @@ import { advantagesOptions } from '@/assets/js/advantages'
     background: $advan-bg;
     width: 100%;
     color: white;
-    padding: 4.3rem 0 30px 2rem;
+    padding: 4.3rem 0 0 2rem;
     border-radius: 20px;
     @include flex(row, space-between, center);
 
 }
 
 .right {
-    width: 30%;
+    width: 35%;
+
+
 
     img {
         width: 100%;
+
     }
 }
 

@@ -10,14 +10,23 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@pinia/nuxt": "^0.5.1",
+    "@types/yandex-maps": "^2.1.35",
+    "axios": "^1.6.8",
     "nuxt": "^3.10.3",
     "nuxt-swiper": "^1.2.2",
+    "pinia": "^2.1.7",
+    "primeflex": "^3.3.1",
     "swiper": "^11.0.7",
     "vue": "^3.4.21",
-    "vue-router": "^4.3.0"
+    "vue-router": "^4.3.0",
+    "vue-yandex-maps": "^2.1.0"
   },
   "devDependencies": {
     "@nuxt/image": "^1.4.0",
+    "@types/axios": "^0.14.0",
+    "@yandex/ymaps3-types": "^0.0.22",
+    "nuxt-primevue": "^0.3.1",
     "sass": "^1.71.1",
     "sharp": "^0.33.2"
   }

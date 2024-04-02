@@ -1,8 +1,14 @@
 * {
   margin: 0;
-  padding: 0;
   box-sizing: border-box;
   font-family: "Avenir Next";
+  padding: 0;
+}
+button:hover {
+  cursor: pointer;
+}
+input:focus {
+  outline: none;
 }
 
 a {
@@ -10,6 +16,7 @@ a {
 }
 .main-section-site {
   padding: 20px 2rem;
+  margin-top: 8rem;
 }
 ul li {
   list-style: none;
@@ -26,6 +33,7 @@ ul li {
   &-header {
     color: $main-black;
     font-size: 28px;
+    line-height: 28px;
     font-weight: 700;
     margin: 20px 0;
   }
@@ -64,3 +72,290 @@ ul li {
   visibility: visible;
   transition: 0.5s ease all;
 }
+
+.each-block-info-col {
+  margin: 10px 0;
+  color: $main-dark-grey;
+  font-size: 14px;
+  display: block;
+}
+
+.rating-color {
+  color: #f2c94c;
+}
+
+.read-all-btn {
+  color: $blue-color;
+  border: none;
+  background: none;
+  font-size: 16px;
+}
+
+.p-rating {
+  @include flex(row, start, center, 5px !important);
+}
+
+.basic-input {
+  border: 1px solid $main-gray;
+  border-radius: 10px;
+  color: $main-gray !important;
+  @include footerSpan(24px, 16px);
+  padding: 10px;
+}
+
+.section-header-links {
+  @include flex(row, space-between, center);
+}
+
+.phone {
+  color: $blue-color;
+}
+.main-header-h1 {
+  @include footerSpan(36px, 32px);
+  color: $main-black !important;
+  font-weight: 700;
+}
+
+.prod-count-buttons {
+  @include flex(row, space-between, center, 20px);
+  @include items-button(
+    6px 20px 6px 20px,
+    $main-black,
+    $main-white,
+    1px solid $main-white,
+    16px
+  );
+  span {
+    font-size: 20px;
+  }
+}
+.info-certif-img {
+  @include flex(row, space-between, center);
+
+  img {
+    width: 30%;
+  }
+}
+
+.margin-bottom-40 {
+  margin-bottom: 40px;
+}
+.margin-top-20 {
+  margin-top: 20px;
+}
+.margin-bottom-20 {
+  margin-bottom: 20px;
+}
+.margin-bottom-30 {
+  margin-bottom: 30px;
+}
+.margin-top-30 {
+  margin-top: 30px;
+}
+.margin-top-40 {
+  margin-top: 40px;
+}
+// headers base
+h1 {
+  font-size: 32px !important;
+  line-height: 36px !important;
+  color: $main-black;
+}
+
+h3 {
+  font-size: 24px !important;
+  line-height: 24px !important;
+  font-weight: 700;
+  color: $main-black;
+}
+h2 {
+  font-size: 28px !important;
+  line-height: 28px !important;
+  font-weight: 700;
+  color: $main-black;
+}
+
+//cart
+.cart-main-info-price {
+  width: 30% !important;
+
+  margin-top: 50px;
+
+  &-block {
+    @include flex(column, start, initial, 12px);
+    margin-top: 20px;
+    background: $main-white;
+    border-radius: 10px;
+    padding: 20px;
+
+    .first {
+      @include flex(row, space-between, center);
+      @include textFormat(16px, 24px, 600, #000);
+      @extend %border-bottoms;
+      padding-bottom: 10px;
+    }
+
+    .second {
+      @include flex(row, space-between, center);
+      @include textFormat(16px, 24px, 400, #000);
+    }
+
+    .last {
+      margin-top: 5px;
+      @include flex(row, space-between, center);
+      @include textFormat(24px, 24px, 700, #000);
+    }
+  }
+
+  button {
+    @extend %button-shared;
+    font-size: 20px;
+    line-height: 32px;
+    width: 100%;
+  }
+}
+
+.cart-main-info-prod {
+  @include flex(row, space-between, start);
+  @extend %border-bottoms;
+  padding: 50px 0 20px 0;
+
+  &-items {
+    @include flex(row, start, start, 20px);
+  }
+
+  h3 {
+    @include footerSpan(28px, 24px);
+    color: $main-black !important;
+    font-weight: 700;
+    max-width: 480px;
+    margin-bottom: 8px;
+  }
+}
+.cart-main-info-prod-img {
+  width: 37%;
+
+  img {
+    width: 100%;
+  }
+}
+
+.cart-main-info-count {
+  @include flex(column, center, flex-end, 20px);
+
+  .price {
+    @include textFormat(28px, 28px, 500, #016934);
+  }
+
+  button {
+    padding: 10px 40px 10px 40px;
+  }
+}
+.cart-main-info-middle {
+  @include flex(column, start, start);
+}
+// cart form input
+.form-input {
+  padding: 13px 16px;
+  border: 1px solid $slider-border-color;
+  border-radius: 10px;
+  @include textFormat(16px, 20px, 500, $main-black);
+  &::placeholder {
+    @include textFormat(16px, 20px, 500, $main-gray);
+  }
+}
+
+.no-content-img {
+  width: 44px;
+  height: 44px;
+}
+
+.bookmark-icon-heart {
+  width: 100%;
+  @include flex(flex, flex-end, center);
+  img {
+    width: 28px !important;
+    height: 24px !important;
+  }
+}
+
+.arrow {
+  transition: transform 0.3s ease;
+}
+
+.arrow.rotated {
+  transform: rotate(180deg);
+}
+
+.error-input {
+  margin: -3px 0 10px 0;
+  color: $main-pink;
+  font-size: 14px;
+}
+
+.register-auth-header {
+  @include textFormat(20px, 20px, 600, $main-black !important);
+}
+
+:deep(.p-toast .p-toast-message.p-toast-message-success) {
+  padding: 20px !important;
+  margin: 20px !important;
+}
+
+.bookmarked-list {
+  margin-top: 40px;
+  @include flex(row, start, center, 28px);
+  flex-wrap: wrap;
+}
+
+.modal-header {
+  @include textFormat(20px, 20px, 600, #000);
+}
+
+.modal-btns {
+  @include flex(row, flex-end, center, 20px);
+  margin-top: 5rem;
+
+  button {
+    @include textFormat(20px, 20px, 600, #000);
+    border: none;
+    background: none;
+  }
+
+  button:last-child {
+    color: #eb5757 !important;
+  }
+}
+
+:deep(.p-modal-header) {
+  @include flex(row, flex-end, center !important);
+}
+
+.err-input-msg {
+  @include textFormat(13px, 20px, 400, #eb5757);
+  margin-bottom: 10px;
+}
+
+.password-block-input {
+  position: relative;
+  .password-icon {
+    position: absolute;
+    width: 20px;
+    right: 20px;
+    top: 12px;
+  }
+}
+
+.delete-icon:hover {
+  cursor: pointer;
+}
+
+.btn-white-bg {
+  background: white !important;
+  box-shadow: 0px 0px 0px 0.5px #0000000d !important;
+  box-shadow: 0px 0.5px 2.5px 0px #0000004d !important;
+  @include textFormat(20px, 20px, 600, $main-blue !important);
+  margin-top: 20px;
+}
+
+

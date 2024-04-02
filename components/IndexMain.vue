@@ -1,11 +1,11 @@
 <template>
     <div class="main-page-header">
-        <Swiper :modules="[SwiperNavigation, SwiperPagination]" :slides-per-view="1"
+        <!-- <Swiper :modules="[SwiperNavigation, SwiperPagination]" :slides-per-view="1"
             :pagination="{ enabled: true, clickable: true, }" :navigation="true" class="swiper"
-            :style='{ "--swiper-navigation-size": "15px", "padding": "20px 0" }'>
+            :style='{ "--swiper-navigation-size": "15px", "padding": "20px 0" }'> -->
 
 
-            <SwiperSlide v-for="slide in 3" :key="slide">
+            <!-- <SwiperSlide v-for="slide in 3" :key="slide"> -->
                 <div class="left">
                     <h1>Мастер Краска</h1>
                     <div class="sub-header">Официальный представитель мировых брендов лакокрасочной продукции
@@ -16,8 +16,8 @@
                 <div class="right">
                     <NuxtImg src='/main-page.png' />
                 </div>
-            </SwiperSlide>
-        </Swiper>
+            <!-- </SwiperSlide>
+        </Swiper> -->
 
 
     </div>
@@ -41,7 +41,6 @@
     border-radius: 10px;
     padding: 4.5rem 0 4.5rem 4rem;
     @include flex(row, space-around, center);
-    margin-top: 8rem;
 }
 
 .right {

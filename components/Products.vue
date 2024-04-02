@@ -1,8 +1,8 @@
 <template>
     <div class="each-section">
         <ProductsPopular />
-        <ProductsUseful />
-        <ProductsRecommended />
+        <!-- <ProductsUseful />
+        <ProductsRecommended /> -->
 
         <div class="koler">
             <h5 class="koler-header">Колеровка</h5>
@@ -39,7 +39,7 @@
 
     &-text {
         color: white;
-        max-width: 60%;
+        max-width: 42%;
         width: 60%;
         font-size: 16px;
         font-weight: 500;
@@ -51,7 +51,8 @@
         box-shadow: 0px 0px 0px 0.5px rgba(0, 0, 0, 0.05) 0px 0.5px 2.5px 0px rgba(0, 0, 0, 0.3);
         background: white;
         font-weight: 500;
-        margin-top: 20px
+        margin-top: 20px;
+        font-size: 20px;
     }
 }
 </style>

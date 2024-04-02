@@ -7,7 +7,6 @@
                 <span>Смотреть все</span>
                 <img src='../assets/icons/icon=components-more.svg' />
 
-
             </button>
         </div>
         <div class="actions-block">
@@ -47,10 +46,42 @@
         </div>
 
         <div class="brands-pictures">
+            <Swiper :slides-per-view="4" :loop="true" :modules="[SwiperAutoplay, SwiperController, SwiperNavigation]"
+                :autoplay="{
+                delay: 2000,
+                disableOnInteraction: true,
+            }">
+                <SwiperSlide>
+                    <NuxtImg src="/brands/decor.png"></NuxtImg>
+                </SwiperSlide>
+                <SwiperSlide>
+                    <NuxtImg src="/brands/marshall.png"></NuxtImg>
+                </SwiperSlide>
+                <SwiperSlide>
+                    <NuxtImg src="/brands/Apollo.png"></NuxtImg>
+                </SwiperSlide>
+                <SwiperSlide>
+                    <NuxtImg src="/brands/arcobaleno.png"></NuxtImg>
+                </SwiperSlide>
+                <SwiperSlide>
+                    <NuxtImg src="/brands/decor.png"></NuxtImg>
+                </SwiperSlide>
+                <SwiperSlide>
+                    <NuxtImg src="/brands/marshall.png"></NuxtImg>
+                </SwiperSlide>
+                <SwiperSlide>
+                    <NuxtImg src="/brands/Apollo.png"></NuxtImg>
+                </SwiperSlide>
+                <SwiperSlide>
+                    <NuxtImg src="/brands/arcobaleno.png"></NuxtImg>
+                </SwiperSlide>
+
+            </Swiper>
+            <!-- 
             <NuxtImg src="/brands/decor.png"></NuxtImg>
             <NuxtImg src="/brands/marshall.png"></NuxtImg>
             <NuxtImg src="/brands/Apollo.png"></NuxtImg>
-            <NuxtImg src="/brands/arcobaleno.png"></NuxtImg>
+            <NuxtImg src="/brands/arcobaleno.png"></NuxtImg> -->
         </div>
     </div>
 </template>
@@ -101,19 +132,21 @@
 }
 
 .brands-pictures {
-    width: 100%;
     margin-top: 20px;
-    border-top: 1px solid $slider-border-color;
     padding: 20px;
-}
-
-.brands-pictures {
-    width: 100%;
-
-    @include flex(row, space-around, center);
+    border-top: 1px solid $slider-border-color;
 
     img {
-        width: 23%;
+        width: 100%;
+        margin: 0 10px;
     }
+
+}
+
+:deep(.slider) {
+    width: 100%;
+    @include flex(row, space-around, center);
+
+
 }
 </style>
