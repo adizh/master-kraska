@@ -28,7 +28,7 @@
                 </li>
                 <li>Контакты</li>
 
-                <li @click="navigateTo(`/catalog/e}`);">csdsds</li>
+
                 <li class="search-place"><input type="text" class="main-header-input"
                         v-model="productStore.filters.search" @input="handleSearch">
                     <img src="../assets/icons/icon=search.svg" alt="search" class="search-icon">
