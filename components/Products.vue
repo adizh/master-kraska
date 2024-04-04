@@ -20,8 +20,7 @@
 
 <style scoped lang="scss">
 .koler {
-    background-image: url('../static/sofa-img\ 1.png');
-
+    background-image: url('/static/sofa-img\ 1.png');
     background-repeat: no-repeat;
     background-size: contain;
     height: 100vh;
