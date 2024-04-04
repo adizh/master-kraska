@@ -1,18 +1,20 @@
 <template>
-    <div class="catalog-options" :class="{ 'open': isCatalogOpen }" @mouseleave="closeCatalogOptions">
+    <div class="catalog-options" :class="{ 'open': isCatalogOpen }">
         <h5 class='each-section-header'>Каталог товаров</h5>
         <div class="options-list">
             <ul class="first-col">
-                <li v-for="item in catalogOptions.slice(0, 9)" :key="item"><a href="">
-                        {{ item }}
+                <li v-for="item in catalogOptions.slice(0, 9)" :key="item.id" @click.stop="() => goToCatalog(item)"><a
+                        href="">
+                        {{ item.name }}
                     </a></li>
             </ul>
 
-            <ul class="second-col">
-                <li v-for="item in catalogOptions.slice(9)" :key="item"><a href="">
-                        {{ item }}
+            <!-- <ul class="second-col">
+                <li @click.stop="navigateTo(`/catalog/${item.id}`)" v-for="item in catalogOptions.slice(9)"
+                    :key="item.id"><a href="">
+                        {{ item.name }}
                     </a></li>
-            </ul>
+            </ul> -->
         </div>
     </div>
 
@@ -21,15 +23,28 @@
 </template>
 
 <script setup lang="ts">
-import { catalogOptions } from '@/assets/js/catalogOptions';
+//import { catalogOptions } from '@/assets/js/catalogOptions';
+import { CatalogItem } from '@/types/Catalog'
+const { data: catalogOptions } = useApi<CatalogItem[]>('/api/v1/Category/get-all-categories') as any;
 
 const props = defineProps<{
     isCatalogOpen: boolean
 }>();
-
+const router = useRouter()
 const emit = defineEmits<{
-    closeCatalog: []
+    closeCatalog: [],
+    goToCatalog: [CatalogItem]
 }>();
+
+const goToCatalog = (item: CatalogItem) => {
+    emit('goToCatalog', item)
+    // if (props.isCatalogOpen) {
+    //     console.log('navifage to catallog')
+    //     navigateTo(`/catalog/${item.id}`);
+    //     //router.push(`/catalog/${item.id}`)
+    // }
+
+}
 
 const closeCatalogOptions = () => {
     emit('closeCatalog');
@@ -58,7 +73,7 @@ li a:hover {
 }
 
 .catalog-options {
-    @include openedOptionsHeader(100%, 20px 4rem,6rem)
+    @include openedOptionsHeader(100%, 20px 4rem, 6rem)
 }
 
 .catalog-options.open {

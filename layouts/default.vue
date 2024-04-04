@@ -26,16 +26,19 @@
                     <NuxtLink to="/about-us">О нас</NuxtLink>
                 </li>
                 <li>Контакты</li>
-                <li class="search-place"><input type="text" class="main-header-input" @input="handleSearch">
+
+                <li @click="navigateTo(`/catalog/e}`);">csdsds</li>
+                <li class="search-place"><input type="text" class="main-header-input"
+                        v-model="productStore.filters.search" @input="handleSearch">
                     <img src="../assets/icons/icon=search.svg" alt="search" class="search-icon">
 
-                    <SearchOptions :isSearchOpen="isSearchOpen" />
+                    <SearchOptions :isSearchOpen="isSearchOpen" @closeSearch="isSearchOpen = false" />
                     <div class="overlay-header-options" v-show="isSearchOpen" :class="{ 'open': isSearchOpen }"></div>
 
                 </li>
             </ul>
         </div>
-        <Catalog :isCatalogOpen="isCatalogOpen" @closeCatalog="closeCatalog" />
+        <Catalog :isCatalogOpen="isCatalogOpen" @closeCatalog="closeCatalog" @goToCatalog="goToCatalog" />
         <div class="overlay-header-options" v-show="isCatalogOpen" :class="{ 'open': isCatalogOpen }"></div>
     </div>
 
@@ -63,13 +66,15 @@
 </template>
 
 <script setup lang="ts">
+import { CatalogItem } from '~/types/Catalog';
+
 const toast = useToast()
 const isCatalogOpen = ref(false);
 const isSearchOpen = ref(false);
 const isProfileOpen = ref();
 const authStore = useAuthStore();
 const selectedReg = ref(0);
-
+const productStore = useProductsSstore()
 const selectRegister = (tab: number) => {
     selectedReg.value = tab;
 }
@@ -84,6 +89,11 @@ const closeCatalog = () => {
 
 const handleSearch = (event: any) => {
     isSearchOpen.value = event.target.value.trim().length > 0;
+    productStore.filterProducts()
+}
+
+const goToCatalog = (item: CatalogItem) => {
+    navigateTo(`/catalog/${item.id}`);
 }
 
 const backHome = () => {
@@ -103,6 +113,8 @@ const closeProfileOpen = () => {
     isProfileOpen.value = false
 }
 provide('closeProfileOpen', closeProfileOpen)
+
+
 </script>
 
 <style scoped lang="scss">

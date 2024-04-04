@@ -14,6 +14,8 @@ export default defineNuxtConfig({
       },
     },
   },
+  build: {},
+
   app: {
     head: {
       link: [
@@ -42,8 +44,15 @@ export default defineNuxtConfig({
   yandexMaps: {
     apikey: "7a61a60d-10c2-4b7b-8779-5101f3a5e2a0",
   },
-
-  image: {
-    dir: "assets/images",
+  $development: {
+    image: {
+      dir: "assets/images",
+    },
   },
+  $production: {
+    image: {
+      provider: "ipx",
+    },
+  },
+
 });

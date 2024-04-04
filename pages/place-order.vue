@@ -5,10 +5,12 @@
             <div class="col-8 orders-first">
                 <h3>Способ получения заказа</h3>
                 <div class="buttons-sel">
-                    <button class="order-btn" @click="selectWay(1)">Забрать из магазина
-                        <img src="../assets/icons/carbon_checkmark-filled (1).svg" alt="">
+                    <button class="order-btn" @click="selMethod(1)">Забрать из магазина
+                        <img src="../assets/icons/carbon_checkmark-filled (1).svg" alt="carbon" v-show="method === 1">
                     </button>
-                    <button class="order-btn" @click="selectWay(2)">Доставка</button>
+                    <button class="order-btn" @click="selMethod(2)"> Доставка
+                        <img src="../assets/icons/carbon_checkmark-filled (1).svg" alt="carbon" v-show="method === 2">
+                    </button>
                 </div>
                 <div class="order-first-info">
                     <h5>Условия самовывоза:</h5>
@@ -25,14 +27,24 @@
                 <div v-if="selectedOrderPlacement === 1">
                     <div class="magazine">
                         <h3>Выберите магазин откуда заберёте</h3>
-                        <button class="order-btn" @click="isMagVisible = !isMagVisible">Выбрать магазин</button>
+                        <button class="order-btn" @click="isMagVisible = !isMagVisible">{{ selectedMarket }}</button>
                     </div>
 
                     <div class="magazine">
                         <h3>Способ оплаты</h3>
                         <div class="flex flex-row flex-wrap gap-4">
-                            <button class="order-btn">Банковской картой</button>
-                            <button class="order-btn">Наличными</button>
+                            <button class="order-btn" @click="selPayMethod(1)">Банковской картой
+                                <img src="../assets/icons/carbon_checkmark-filled (1).svg" alt="carbon"
+                                    v-show="payMethod === 1" @click="selMethod(2)">
+
+
+                            </button>
+                            <button class="order-btn" @click="selPayMethod(2)">Наличными
+
+                                <img src="../assets/icons/carbon_checkmark-filled (1).svg" alt="carbon"
+                                    v-show="payMethod === 2" @click="selMethod(2)">
+
+                            </button>
                         </div>
 
                     </div>
@@ -46,7 +58,7 @@
 
                 <div class="comments">
                     <h3>Коментарии</h3>
-                    <input type="text" class="basic-input" placeholder="Коментарии">
+                    <input type="text" class="basic-input" placeholder="Коментарии" v-model="comment">
                 </div>
             </div>
 
@@ -70,11 +82,7 @@
                 </div>
                 <button class="margin-top-20">Подтвердить заказ</button>
             </div>
-
-
         </div>
-
-
         <div class="ordered-items margin-top-40 col-8">
             <h2>Товар</h2>
             <CartProductItem v-for="item in cartStore.getAllCart" :key="item.id" :item="item">
@@ -103,8 +111,8 @@
             </div>
         </template>
         <div class="maps-address-list mt-4">
-            <AddressItem v-for="  item   in   addressList  " :key="item.name" :name="item.name" :phone="item.phone"
-                :email="item.email" :location="item.location" :time="item.time" />
+            <AddressItem v-for="item   in   addressList  " :key="item.name" :name="item.name" :phone="item.phone"
+                :email="item.email" :location="item.location" :time="item.time" @click="selectAddress(item)" />
         </div>
     </Dialog>
 
@@ -113,14 +121,38 @@
 <script setup lang="ts">
 const isMagVisible = ref(false);
 import { addressList } from '@/assets/js/addressList';
+import { AddressList } from '~/types/Items';
 const cartStore = useCartStore()
 const selectedOrderPlacement = ref(1);
 const selectWay = (type: number) => {
+
+}
+
+
+const method = ref(1);
+const selectedMarket = ref('Выберите магазин ');
+const payMethod = ref(1);
+const comment = ref('');
+
+
+const selMethod = (type: number) => {
+    method.value = type;
     if (type === 1) {
         selectedOrderPlacement.value = 1
     } else if (type === 2) {
         selectedOrderPlacement.value = 2
     }
+}
+const selPayMethod = (type: number) => {
+    payMethod.value = type
+}
+
+
+
+const selectAddress = (item: AddressList) => {
+
+    selectedMarket.value = item.name;
+    isMagVisible.value = false
 }
 </script>
 

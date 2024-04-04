@@ -5,6 +5,7 @@ export const useCartStore = defineStore("cartStore", {
   state: () => ({
     cart: [] as ExtendedProduct[],
     countToBuy: 1,
+
   }),
   actions: {
     addToCart(prod: ExtendedProduct) {
@@ -47,6 +48,7 @@ export const useCartStore = defineStore("cartStore", {
     saveNewCart() {
       localStorage.setItem("cart", JSON.stringify(this.cart));
     },
+  
   },
   getters: {
     getAllCart(state) {

@@ -74,6 +74,7 @@ const productName = computed(() => {
         display: block;
         text-align: left;
 
+        height: 60px;
 
 
 

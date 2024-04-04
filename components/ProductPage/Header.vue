@@ -103,27 +103,29 @@
             <div class="count-overlay-inputs">
                 <div class="count-overlay-inputs-block">
                     <span>Длина</span>
-                    <input type="text" placeholder="0 м" />
+                    <input type="text" placeholder="0 м" v-model="length" />
 
                 </div>
                 <div class="count-overlay-inputs-block sign">x</div>
                 <div class="count-overlay-inputs-block">
-                    <span>Ширина (Высота)</span>
-                    <input type="text" placeholder="0 м" />
+                    <span>Ширина</span>
+                    <input type="text" placeholder="0 м" v-model="width" />
 
                 </div>
                 <div class="count-overlay-inputs-block sign">=</div>
                 <div class="count-overlay-inputs-block">
                     <span>Площадь</span>
-                    <input type="text" placeholder="0 м" />
+                    <input type="text" placeholder="0 м" v-model="sumHeight" disabled />
                 </div>
             </div>
 
             <div class="count-overlay-res sizes">
 
                 <span>Рекомендуемое количество краски:</span>
-                <button>1 слой 0л</button>
-                <button>2 слоя 0 л</button>
+                <div class="btns">
+                    <button>1 слой 0л</button>
+                    <button>2 слоя 0 л</button>
+                </div>
             </div>
             <div class="count-overlay-res">
 
@@ -155,6 +157,11 @@ const authStore = useAuthStore();
 const productStore = useProductsSstore()
 const store = useCartStore()
 const toast = useToast()
+
+const length = ref(0)
+const width = ref(0)
+const sumHeight = computed(() => length.value * width.value);
+
 const toggle = (event: any) => {
     countOverlay.value.toggle(event);
 }
@@ -212,22 +219,25 @@ const { data: getBookmarkItem } = useApi('/api/v1/Bookmark/get-bookmarks', {
 
 
         &-block {
-            @include flex(column, center, center);
-            width: 30%;
+            @include flex(column, start, start);
         }
 
         .sign {
             margin-top: 20px;
-            width: 0% !important;
+            width: 5% !important;
+            margin-left: -4px;
+
         }
 
         span {
             @include footerSpan(20px, 14px);
             color: black !important;
+            width: 95%;
+            text-align: center;
         }
 
         input {
-            width: 75%;
+            width: 95%;
             padding: 10px 35px;
             border: 1px solid $slider-border-color;
         }
@@ -418,14 +428,18 @@ const { data: getBookmarkItem } = useApi('/api/v1/Bookmark/get-bookmarks', {
 .sizes {
     border: none;
 
-    @include flex(row, start, center, 15px);
+
+
+    .btns {
+        @include flex(row, start, center, 15px);
+    }
 
     button {
         margin: 0;
         background: white;
         border: 1px solid $slider-border-color;
         @include textFormat(16px, 20x, 500, $main-black);
-        width: 45%;
+        width: 50%;
 
     }
 
