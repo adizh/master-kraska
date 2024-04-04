@@ -52,28 +52,29 @@
                 disableOnInteraction: true,
             }">
                 <SwiperSlide>
-                    <NuxtImg src="/brands/decor.png"></NuxtImg>
+                    <img src="../assets/images/brands/decor.png"></img>
+
                 </SwiperSlide>
                 <SwiperSlide>
-                    <NuxtImg src="/brands/marshall.png"></NuxtImg>
+                    <img src="../assets/images/brands/marshall.png"></img>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <NuxtImg src="/brands/Apollo.png"></NuxtImg>
+                    <img src="../assets/images/brands/Apollo.png"></img>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <NuxtImg src="/brands/arcobaleno.png"></NuxtImg>
+                    <img src="../assets/images/brands/arcobaleno.png"></img>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <NuxtImg src="/brands/decor.png"></NuxtImg>
+                    <img src="../assets/images/brands/decor.png"></img>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <NuxtImg src="/brands/marshall.png"></NuxtImg>
+                    <img src="../assets/images/brands/marshall.png"></img>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <NuxtImg src="/brands/Apollo.png"></NuxtImg>
+                    <img src="../assets/images/brands/Apollo.png"></img>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <NuxtImg src="/brands/arcobaleno.png"></NuxtImg>
+                    <img src="../assets/images/brands/arcobaleno.png"></img>
                 </SwiperSlide>
 
             </Swiper>

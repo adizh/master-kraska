@@ -2,7 +2,9 @@
     <div class="cart-main-info-prod">
         <div class="cart-main-info-prod-items">
             <div class="cart-main-info-prod-img">
-                <NuxtImg src="/test-kraska.png" />
+    
+
+                <img src="../../assets/images/test-kraska.png" alt="">
             </div>
             <div class="cart-main-info-middle">
                 <h3>{{ item?.name }}</h3>

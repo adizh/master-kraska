@@ -15,7 +15,8 @@
 
             </div>
             <div class="right">
-                <NuxtImg src="/advantage-img 1.png" />
+
+                <img src="../assets/images/advantage-img 1.png" alt="">
             </div>
         </div>
     </div>

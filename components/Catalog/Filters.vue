@@ -1,5 +1,6 @@
 <template>
     <div class='filters'>
+       
         <div class="price">
             <label for="price" class="filters-help">
                 Цена
@@ -10,17 +11,16 @@
         </div>
 
         <div class="filters-block">
-            <span class="filters-help">
-                Материал для рабочей поверхности
-            </span>
+           
 
             <div>
-                <label :class="!value ? 'checkbox-container' : 'checked-input'">checkbox
-                    <input type="checkbox" v-model="value">
-                    <span class="checkmark"></span>
-                </label>
-                <!-- <input type="checkbox" class="basic-checkbox">
-                <span>чёрный</span> -->
+
+
+                <!-- <p v-for="item in productStore.getAllCatalogs" :key="item?.id">{{ item?.name }}</p> -->
+                <!-- <label class="custom-checkbox" v-for="item in productStore.getAllCatalogs"  :key="item?.id">
+                    <input type="checkbox" v-model='value'>
+                    <span>{{ item?.name }}</span>
+                </label> -->
             </div>
         </div>
     </div>
@@ -28,55 +28,61 @@
 </template>
 
 <script setup lang="ts">
-const value = ref(false)
+const value = ref(false);
+const catalogStore = useCatalogStore();
+const route = useRoute()
+const id = route.params?.id
+const { data: category } = await useApi(`/api/v1/Category/get-category/${id}`) as any;
+
+onMounted(() => {
+    catalogStore.fetchAllCatalogs()
+})
+
+
 </script>
 
 <style lang="scss" scoped>
-input[type="checkbox"] {
+.custom-checkbox {
+    span {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+
+}
+
+.custom-checkbox input[type='checkbox'] {
     display: none;
 }
 
-
-.checkbox-container {
-    display: inline-block;
-    position: relative;
-    padding-left: 25px;
-    cursor: pointer;
-}
-
-.checkbox-container::before {
-    content: "";
-    display: inline-block;
-    width: 18px;
-    height: 18px;
-    border: 2px solid #ccc;
-    position: absolute;
-    left: 0;
-    top: 0;
-}
-
-.checked-input::before {
-    content: url('../../assets/icons/check-icon.svg');
-    display: inline-block;
-    width: 18px;
-    height: 18px;
-    position: absolute;
-    left: 10px;
-
-}
-
-.checked-input input[type="checkbox"]:checked+.checkmark::before {
-    content: url('../../assets/icons/check-icon.svg');
-    /* Path to your checked image */
+.custom-checkbox span::before {
+    content: '';
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: none;
+    border: 2px solid #000;
     display: block;
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    width: 14px;
-    /* Adjust width and height according to your image size */
-    height: 14px;
-    border: none;
-    /* Remove border when checked */
+    width: 18px;
+    height: 18px;
+
+}
+
+
+
+
+.custom-checkbox input[type='checkbox']:checked+span::before {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    content: url('../../assets/icons/check-icon-vector.svg');
+    width: 18px;
+    height: 18px;
+    position: relative;
+    left: 0px;
+    background: black;
 }
 
 
@@ -85,6 +91,10 @@ input[type="checkbox"] {
 
 
 .filters {
+    .basic-input {
+        padding: 9px;
+    }
+
     &-help {
         @include textFormat(20px, 20px, 600, #000);
         margin-bottom: 10px;

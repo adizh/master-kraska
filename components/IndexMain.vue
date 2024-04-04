@@ -14,7 +14,8 @@
                         Пободбрать по параметрам</button>
                 </div>
                 <div class="right">
-                    <NuxtImg src='/main-page.png' />
+                
+                    <img src="../assets/images/main-page.png" alt="">
                 </div>
             <!-- </SwiperSlide>
         </Swiper> -->

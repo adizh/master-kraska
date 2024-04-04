@@ -5,7 +5,10 @@
             <img src="../../assets/icons/icon=heart fill.svg" alt="heart icon">
         </div>
         <slot name="edit-items"></slot>
-        <NuxtImg src="/test-kraska.png"></NuxtImg>
+        <!-- <NuxtImg src="/test-kraska.png"></NuxtImg> -->
+        <img src="../../assets/images/test-kraska.png" alt="">
+
+
         <span class="item-block-name">{{ productName }}</span>
 
         <div class="item-block-info">

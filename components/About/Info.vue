@@ -26,9 +26,11 @@
                 </button>
             </div>
             <div class="info-certif-img">
-                <NuxtImg src="/certif/certificate1.png" />
-                <NuxtImg src="/certif/certificate2.png" />
-                <NuxtImg src="/certif/certificate3.png" />
+                <img src="../../assets/images/certif/certificate1.png" />
+                <img src="../../assets/images/certif/certificate2.png" />
+                <img src="../../assets/images/certif/certificate3.png" />
+
+    
             </div>
         </div>
 
@@ -44,9 +46,11 @@
             </div>
             <div class="info-certif-img">
 
-                <NuxtImg src="/seller1.png" />
-                <NuxtImg src="/seller1.png" />
-                <NuxtImg src="/seller1.png" />
+              
+
+                <img src="../../assets/images/seller1.png" alt="">
+                <img src="../../assets/images/seller1.png" alt="">
+                <img src="../../assets/images/seller1.png" alt="">
             </div>
         </div>
     </div>

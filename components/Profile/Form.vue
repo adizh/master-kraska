@@ -1,7 +1,10 @@
 <template>
     <form @submit.prevent="editUser">
-        <img :src="userLogo" alt="user profile">
-        <input type="file" @change="uploadLogo($event)" accept="image/*">
+        <label for="fileInput">
+            <img :src="inputs.image.value" alt="user profile">
+        </label>
+
+        <input type="file" @change="uploadLogo($event)" accept="image/*" id="fileInput" class="select-input">
         <div class="grid">
             <div class="col-6 each-field">
                 <label for="name">Имя</label>
@@ -72,7 +75,10 @@ const inputs = ref({
     lastName: { value: '', error: '' },
     email: { value: '', error: '' },
     phone: { value: '', error: '' },
-    address: { value: '', error: '' }
+    address: { value: '', error: '' },
+    image: { value: '', error: '' },
+
+
 });
 const toast = useToast()
 onMounted(async () => {
@@ -82,9 +88,8 @@ onMounted(async () => {
     inputs.value.email.value = store.getUser.email;
     inputs.value.phone.value = store.getUser.phone;
     inputs.value.address.value = store.getUser.address;
+    inputs.value.image.value = store.getUser.image;
 });
-
-
 
 const { handleValues } = useInputValidation()
 
@@ -100,6 +105,7 @@ const editUser = async () => {
         phone: 'string',
         address: 'string'
     };
+
 
     for (const fieldName in inputs.value) {
         if (Object.prototype.hasOwnProperty.call(inputs.value, fieldName)) {
@@ -118,7 +124,7 @@ const editUser = async () => {
                 "lastName": inputs.value.lastName.value,
                 "address": inputs.value.address.value,
                 "phoneNumber": inputs.value.phone.value,
-                "image": ""
+                "image": inputs.value.image.value
             }
             const response = await http.put('/api/v1/User/edit-user', body);
             if (response.status === 200) {
@@ -133,44 +139,15 @@ const editUser = async () => {
 
 
 const uploadLogo = (event: any) => {
-    console.log('event', event)
     const file = event?.target?.files[0];
-    const extension = file.name.split(".").pop();
     const fileReader = new FileReader();
-
     fileReader.onload = async (event) => {
         if (event.target?.result) {
             const base64 = event.target.result.toString();
-            console.log('base64', base64)
-            userLogo.value = base64;
-            console.log('userLogo', userLogo)
-            try {
-
-                const body = {
-                    "userId": store.getUserId,
-                    "firstName": inputs.value.firstName.value,
-                    "lastName": inputs.value.lastName.value,
-                    "address": inputs.value.address.value,
-                    "phoneNumber": inputs.value.phone.value,
-                    "image": base64
-                }
-                const response = await http.put('/api/v1/User/edit-user', body);
-                console.log("response in logo", response);
-                if (response.status === 200) {
-
-                }
-                else {
-
-                }
-            } catch (error) {
-                console.error("Failed to upload company logo:", error);
-
-            }
+            inputs.value.image.value = base64;
         }
     }
-
     fileReader.readAsDataURL(file);
-
 }
 
 
@@ -221,7 +198,17 @@ input {
 }
 
 img {
-    width: 22%;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.select-input {
+    display: none
 }
 
 :deep(input#phone.p-inputtext) {

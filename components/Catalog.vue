@@ -1,20 +1,22 @@
 <template>
-    <div class="catalog-options" :class="{ 'open': isCatalogOpen }">
+    <div class="catalog-options" :class="{ 'open': isCatalogOpen }" @mouseleave="closeCatalogOptions">
         <h5 class='each-section-header'>Каталог товаров</h5>
         <div class="options-list">
             <ul class="first-col">
-                <li v-for="item in catalogOptions.slice(0, 9)" :key="item.id" @click.stop="() => goToCatalog(item)"><a
-                        href="">
+                <li v-for="item in catalogOptions.slice(0, 9)" :key="item.id"
+                    @click.prevent="navigateTo(`/catalog/${item.id}`)">
+                    <a href="">
                         {{ item.name }}
-                    </a></li>
+                    </a>
+                </li>
             </ul>
 
-            <!-- <ul class="second-col">
+            <ul class="second-col">
                 <li @click.stop="navigateTo(`/catalog/${item.id}`)" v-for="item in catalogOptions.slice(9)"
                     :key="item.id"><a href="">
                         {{ item.name }}
                     </a></li>
-            </ul> -->
+            </ul>
         </div>
     </div>
 
@@ -28,6 +30,7 @@ import { CatalogItem } from '@/types/Catalog'
 const { data: catalogOptions } = useApi<CatalogItem[]>('/api/v1/Category/get-all-categories') as any;
 
 const props = defineProps<{
+
     isCatalogOpen: boolean
 }>();
 const router = useRouter()
@@ -37,6 +40,8 @@ const emit = defineEmits<{
 }>();
 
 const goToCatalog = (item: CatalogItem) => {
+    // navigateTo(`/catalog/${item.id}`);
+    //window.location.reload()
     emit('goToCatalog', item)
     // if (props.isCatalogOpen) {
     //     console.log('navifage to catallog')

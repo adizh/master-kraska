@@ -1,7 +1,8 @@
 <template>
     <div class="main-header">
         <div class="left" @click="backHome">
-            <NuxtImg src="/logo-master.png"></NuxtImg>
+            <!-- <NuxtImg src="/logo-master.png"></NuxtImg> -->
+            <img src="../assets/images/logo-master.png" alt="" class="logo-img">
         </div>
         <div class="right">
             <ul class="top">
@@ -39,7 +40,9 @@
             </ul>
         </div>
         <Catalog :isCatalogOpen="isCatalogOpen" @closeCatalog="closeCatalog" @goToCatalog="goToCatalog" />
+
         <div class="overlay-header-options" v-show="isCatalogOpen" :class="{ 'open': isCatalogOpen }"></div>
+
     </div>
 
     <Dialog v-model:visible="isProfileOpen" modal :style="{ width: '450px', padding: '10px 40px 40px 40px' }">
@@ -118,6 +121,10 @@ provide('closeProfileOpen', closeProfileOpen)
 </script>
 
 <style scoped lang="scss">
+.logo-img {
+    width: 100%;
+}
+
 .main-header {
     @include flex(row, start, center, 4rem);
     padding: 20px 2.5rem;

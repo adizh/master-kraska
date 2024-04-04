@@ -1,7 +1,9 @@
 <template>
     <div class="item-page-header">
         <div class="left">
-            <NuxtImg src="/test-kraska.png" />
+            <!-- <NuxtImg src="/test-kraska.png" /> -->
+
+            <img src="../../assets/images/test-kraska.png" alt="">
         </div>
         <div class="middle">
             <div class="middle-header">
@@ -9,7 +11,8 @@
             </div>
             <div>
                 <p class="each-block-info-col">Торговая марка:</p>
-                <NuxtImg src="/brands/marshall.png" />
+                <!-- <NuxtImg src="/brands/marshall.png" /> -->
+                <img src="../../assets/images/test-kraska.png" alt="">
             </div>
             <div class="middle-review"><span class="each-block-info-col">Рейтинг</span>
                 <div class='middle-rating'>

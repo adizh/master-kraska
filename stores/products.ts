@@ -1,6 +1,7 @@
 import http from "@/composables/http";
 import { Product } from "@/types/Product";
 
+
 //const toast = useToast();
 
 export const useProductsSstore = defineStore("productsStore", {
@@ -11,6 +12,7 @@ export const useProductsSstore = defineStore("productsStore", {
     filters: {
       search: "",
     },
+
   }),
   actions: {
     async fetchAllProducts() {
@@ -67,6 +69,9 @@ export const useProductsSstore = defineStore("productsStore", {
         console.log(err);
       }
     },
+
+   
+
   },
   getters: {
     getAllProducsts(state) {
@@ -75,5 +80,6 @@ export const useProductsSstore = defineStore("productsStore", {
     getFilteredProducts(state) {
       return state.filteredProducts;
     },
+  
   },
 });

@@ -26,7 +26,10 @@
             :class="{ 'slide-enter': isCatalogOpen, 'slide-leave-to': !isCatalogOpen }">
             <div class="item-info grid">
                 <div class="col-6 flex flex-row gap-1 align-items-center">
-                    <NuxtImg src="/test-kraska.png" alt="kraska" class="prod-img" />
+                    <!-- <NuxtImg src="/test-kraska.png" alt="kraska" class="prod-img" /> -->
+
+                    <img src="../../assets/images/test-kraska.png" alt="">
+
                     <div class="expanded-section-info"><span>Финниколор Оазис краска для потолков</span>
                         <span>Разбавитель: вода</span>
                         <span>Без запаха: да</span>
