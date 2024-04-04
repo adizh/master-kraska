@@ -11,11 +11,8 @@
                         <p class="left-item-subtext">{{ item.text }}</p>
                     </div>
                 </div>
-
-
             </div>
             <div class="right">
-
                 <img src="../assets/images/advantage-img 1.png" alt="">
             </div>
         </div>
