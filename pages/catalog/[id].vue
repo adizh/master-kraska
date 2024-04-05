@@ -2,7 +2,6 @@
     <section>
         <div class="header-help">
             <h1> {{ category?.name }}</h1>
-
             <div class="header-help-icons">
                 <input type="text" placeholder="Поиск краски" class="basic-input">
                 <div>
@@ -13,7 +12,9 @@
         </div>
         <div class="grid">
             <CatalogFilters class="col-3" />
-            <CatalogResults class="col-8" :visibleMethod="visibleMethod" />
+            <CatalogResults class="col-9" :visibleMethod="visibleMethod" />
+
+
         </div>
     </section>
 </template>
@@ -21,12 +22,23 @@
 <script setup lang="ts">
 const route = useRoute();
 const id = route.params.id;
-
 const { data: category } = useApi(`/api/v1/Category/get-category/${id}`) as any;
-
 type visibleMethod = 'vertical' | 'horizontal'
-
 const visibleMethod = ref<visibleMethod>('vertical')
+const productStore = useProductsSstore()
+
+onMounted(() => {
+    productStore.setCategoryId(id as string);
+    productStore.filterProducts()
+})
+
+
+
+
+
+
+
+
 
 </script>
 

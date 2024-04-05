@@ -54,5 +54,7 @@ export default defineNuxtConfig({
       provider: "ipx",
     },
   },
-
+  routeRules: {
+    "/": { prerender: true },
+  },
 });

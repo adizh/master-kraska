@@ -2,8 +2,9 @@
     <section class="footer-section">
         <div class="top">
             <div class="first">
-                <!-- <NuxtImg src="/white-logo.png" /> -->
-                <!-- <NuxtImg src="/white-logo.png" /> -->
+              
+                <NuxtImg src="/white-logo.png" />
+      
                 <img src="../assets/images/white-logo.png" alt="">
                 <button class="callback-btn">Обратный звонок</button>
             </div>

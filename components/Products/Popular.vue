@@ -2,7 +2,7 @@
     <div class="popular-products">
         <h5 class='each-section-header'>Популярные товары</h5>
         <div class="products-list">
-            <Swiper :slides-per-view="3" :navigation="true" id="mySlider" :modules="[SwiperNavigation]"
+            <Swiper :slides-per-view="1" :navigation="true" id="mySlider" :modules="[SwiperNavigation]"
                 :style='{ "--swiper-navigation-size": "15px", "padding": "20px 0" }'>
                 <SwiperSlide v-for="product in store.getAllProducsts" :key="product.id">
                     <ProductsProductItem :product="product" />

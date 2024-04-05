@@ -1,18 +1,18 @@
 import http from "@/composables/http";
 import { Product } from "@/types/Product";
 
-
+import { Category } from "@/types/Category";
 //const toast = useToast();
 
 export const useProductsSstore = defineStore("productsStore", {
   state: () => ({
     allProducts: [] as Product[],
     filteredProducts: [] as Product[],
-
+    isProductBookmarked: false,
     filters: {
       search: "",
+      categoryId: "",
     },
-
   }),
   actions: {
     async fetchAllProducts() {
@@ -54,6 +54,7 @@ export const useProductsSstore = defineStore("productsStore", {
     async filterProducts() {
       const query = {
         productName: this.filters.search,
+        categoryId: this.filters.categoryId,
       };
 
       try {
@@ -69,9 +70,29 @@ export const useProductsSstore = defineStore("productsStore", {
         console.log(err);
       }
     },
+    setCategoryId(categoryId: string) {
+      this.filters.categoryId = categoryId;
+    },
 
-   
+    async getBookmarks(productId: string) {
+      const authStore = useAuthStore();
 
+      try {
+        const response = await http("/api/v1/Bookmark/get-bookmarks", {
+          params: {
+            userId: authStore.getUserId,
+            objectId: productId,
+          },
+        });
+
+        console.log(" response getBookmarks", response);
+        if (response.status === 200) {
+          this.isProductBookmarked = response.data.message;
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    },
   },
   getters: {
     getAllProducsts(state) {
@@ -80,6 +101,8 @@ export const useProductsSstore = defineStore("productsStore", {
     getFilteredProducts(state) {
       return state.filteredProducts;
     },
-  
+    getProductBookmarked(state) {
+      return state.isProductBookmarked;
+    },
   },
 });

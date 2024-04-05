@@ -1,15 +1,13 @@
 <template>
-    <div class="results">
-        <ProductsProductItem />
-        <ProductsProductItem />
-        <ProductsProductItem />
+    <div class="results" :class="{ 'horizontal': visibleMethod === 'horizontal' }">
+        <CatalogProductItem :visibleMethod="visibleMethod" />
+        <CatalogProductItem :visibleMethod="visibleMethod" />
     </div>
 </template>
 
 <script setup lang="ts">
 const props = defineProps<{
     visibleMethod: string
-
 }>()
 
 </script>
@@ -21,7 +19,7 @@ const props = defineProps<{
     flex-wrap: wrap;
 }
 
-.item-block {
-    width: 40%;
+.horizontal {
+    @include flex(column, start, center);
 }
 </style>

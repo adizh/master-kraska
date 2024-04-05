@@ -27,6 +27,20 @@ export const useCatalogStore = defineStore("catalogStore", {
         console.log(err);
       }
     },
+
+    async fetchSubCatalogs(catalogId: string) {
+      try {
+        const response = await http(
+          `/api/v1/Helpers/get-all-subdirectories-by-directoryId?id=${catalogId}`
+        );
+        console.log("response fetchSubCatalogs", response);
+        //return response.data;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+    
   },
   getters: {
     getAllCatalogs(state) {

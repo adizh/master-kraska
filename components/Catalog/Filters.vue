@@ -1,6 +1,6 @@
 <template>
     <div class='filters'>
-       
+
         <div class="price">
             <label for="price" class="filters-help">
                 Цена
@@ -11,12 +11,15 @@
         </div>
 
         <div class="filters-block">
-           
 
             <div>
 
 
-                <!-- <p v-for="item in productStore.getAllCatalogs" :key="item?.id">{{ item?.name }}</p> -->
+                <p v-for="item in catalogStore.getAllCatalogs" :key="item?.id">{{ item?.name }}
+
+   
+                  
+                </p>
                 <!-- <label class="custom-checkbox" v-for="item in productStore.getAllCatalogs"  :key="item?.id">
                     <input type="checkbox" v-model='value'>
                     <span>{{ item?.name }}</span>
@@ -32,11 +35,15 @@ const value = ref(false);
 const catalogStore = useCatalogStore();
 const route = useRoute()
 const id = route.params?.id
-const { data: category } = await useApi(`/api/v1/Category/get-category/${id}`) as any;
-
+const allSubCatalogs = ref<any>([])
+const getItems = async (id: string) => {
+    allSubCatalogs.value = await catalogStore.fetchSubCatalogs(id)
+}
 onMounted(() => {
-    catalogStore.fetchAllCatalogs()
+    catalogStore.fetchAllCatalogs();
+
 })
+console.log('allSubCatalogs', allSubCatalogs)
 
 
 </script>

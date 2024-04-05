@@ -3,7 +3,7 @@
         'open': isSearchOpen
     }">
         <ul class='search-res-header'>
-            <li v-for="item in productStore.getFilteredProducts.slice(0, 3)" :key="item?.id"
+            <li v-for="item in productStore.getFilteredProducts?.slice(0, 3)" :key="item?.id"
                 @click="goToProd(item?.id)">
                 <img src="../assets/images/search-test.png" alt="img-product">
                 <span class="prod-search-name">{{ searchName(item?.name) }}</span>
@@ -11,7 +11,7 @@
 
 
         </ul>
-        <button class="look-all-btn" v-if="productStore.getFilteredProducts.length">
+        <button class="look-all-btn" v-if="productStore.getFilteredProducts?.length">
             <span>Смотреть все</span>
             <img src='../assets/icons/icon=components-more.svg' />
 

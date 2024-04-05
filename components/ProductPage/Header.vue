@@ -57,15 +57,15 @@
         <div class="right">
             <div class="header">
                 <span>Цены</span>
-
-                <button @click="productStore.addToBookmarks(product?.id)" v-if="!getBookmarkItem?.message">
+                <UIBookmarks :product="product" />
+                <!-- <button @click="toggleBoomark(product?.id)" v-if="!isProductBookmarked">
                     В избранное
                     <img src="../../assets/icons/icon=heart.svg" alt="heart" />
                 </button>
-                <button @click="productStore.addToBookmarks(product?.id)" v-else>
+                <button @click="toggleBoomark(product?.id)" v-else>
                     Убрать
                     <img src="../../assets/icons/icon=heart fill.svg" alt="heart icon">
-                </button>
+                </button> -->
             </div>
 
             <div class="numbers">
@@ -163,6 +163,7 @@ const toast = useToast()
 
 const length = ref(0)
 const width = ref(0)
+const isProductBookmarked = ref(false)
 const sumHeight = computed(() => length.value * width.value);
 
 const toggle = (event: any) => {
@@ -177,6 +178,11 @@ const decreaseCount = () => {
         countToBuy.value--;
         totalPrice.value = countToBuy.value * props.product.price
     }
+}
+
+const toggleBoomark = (id: string) => {
+    isProductBookmarked.value = !isProductBookmarked.value;
+    productStore.addToBookmarks(id)
 }
 
 const increaseCount = () => {
@@ -200,7 +206,10 @@ const { data: getBookmarkItem } = useApi('/api/v1/Bookmark/get-bookmarks', {
     }
 }) as any;
 
-
+onMounted(() => {
+    productStore.getBookmarks(props?.product?.id);
+    isProductBookmarked.value = productStore.getProductBookmarked
+})
 </script>
 
 <style scoped lang="scss">
@@ -313,16 +322,7 @@ const { data: getBookmarkItem } = useApi('/api/v1/Bookmark/get-bookmarks', {
             color: $main-black;
         }
 
-        button {
-            @include footerSpan(20px, 16px);
-            font-weight: 400;
-            color: $main-black;
-            background: $light-blue;
-            padding: 4px 8px;
-            border: none;
-            border-radius: 10px;
-            @include flex(row, center, center, 5px)
-        }
+      
 
 
 
