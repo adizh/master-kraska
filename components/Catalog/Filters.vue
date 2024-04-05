@@ -13,12 +13,17 @@
             <div>
                 <div v-for="item in catalogStore.getAllCatalogs" :key="item?.id">
                     <h4 class="filters-block-header">{{ item?.name }}</h4>
-                    <p v-for="(sub, index) in getSlicedSubdirectories(item)" :key="index">
-                        {{ sub?.name }}
+                    <p v-for="(sub, index) in getSlicedSubdirectories(item)" :key="index" class="each-sub-item">
 
-                        <input type="checkbox" :id="`${item.id}-${index}`" :value="sub.id"
-                            :checked="isChecked(item.id, sub.id)"
-                            @change="updateCheckboxState(item.id, sub.id, $event)" />
+
+                        <label class="custom-checkbox">
+                            <input type="checkbox" :id="`${item.id}-${index}`" :value="sub.id"
+                                :checked="isChecked(item.id, sub.id)"
+                                @change="updateCheckboxState(item.id, sub.id, $event)" />
+                            <!-- <input type="checkbox"> -->
+                            <p><span>{{ sub?.name }}</span></p>
+                        </label>
+
 
                     </p>
                     <p v-if="getRemainingItemCount(item) > 0" class="open-block" @click="setOpenBlock(item?.id)">
@@ -83,12 +88,7 @@ onMounted(() => {
 
 console.log('checkboxStates', checkboxStates)
 
-
-
-
 const openedBlockFilters = ref<string[]>([]);
-
-
 
 const opensIncludes = (id: string) => {
     return openedBlockFilters.value.includes(id)
@@ -128,9 +128,8 @@ const getRemainingItemCount = (item: AllCatalog) => {
 }
 
 .custom-checkbox {
-    span {
+    p {
         display: flex;
-        align-items: center;
         gap: 10px;
     }
 }
@@ -139,7 +138,7 @@ const getRemainingItemCount = (item: AllCatalog) => {
     display: none;
 }
 
-.custom-checkbox span::before {
+.custom-checkbox p::before {
     content: '';
     display: flex;
     justify-content: center;
@@ -147,20 +146,27 @@ const getRemainingItemCount = (item: AllCatalog) => {
     background: none;
     border: 2px solid #000;
     display: block;
-    width: 18px;
+    max-width: 18px;
+    width: 100%;
     height: 18px;
+
 }
 
-.custom-checkbox input[type='checkbox']:checked+span::before {
+.custom-checkbox input[type='checkbox']:checked+p::before {
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     content: url('../../assets/icons/check-icon-vector.svg');
     width: 18px;
     height: 18px;
     position: relative;
     left: 0px;
     background: black;
+}
+
+
+.each-sub-item {
+    margin: 7px 0;
 }
 
 .filters {

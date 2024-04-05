@@ -1,11 +1,24 @@
 <template>
-    <div class="main-page-header">
-        <!-- <Swiper :modules="[SwiperNavigation, SwiperPagination]" :slides-per-view="1"
-            :pagination="{ enabled: true, clickable: true, }" :navigation="true" class="swiper"
-            :style='{ "--swiper-navigation-size": "15px", "padding": "20px 0" }'> -->
+    <!-- <div class="main-page-header">
+        <div class="left">
+            <h1>Мастер Краска</h1>
+            <div class="sub-header">Официальный представитель мировых брендов лакокрасочной продукции
+            </div>
+            <button>
+                Пободбрать по параметрам</button>
+        </div>
+        <div class="right">
 
+            <img src="../assets/images/main-page.png" alt="">
+        </div>
+    </div> -->
 
-            <!-- <SwiperSlide v-for="slide in 3" :key="slide"> -->
+    <div class="carousel-slider">
+        <div class="slider-wrapper">
+            <div class="main-page-header animate__animated" v-if="currentIndex === 0" :class="{
+                'animate__slideInRight': currentIndex === 0 && direction === 'next',
+                'animate__slideInLeft': currentIndex === 0 && direction === 'prev'
+            }">
                 <div class="left">
                     <h1>Мастер Краска</h1>
                     <div class="sub-header">Официальный представитель мировых брендов лакокрасочной продукции
@@ -14,34 +27,136 @@
                         Пободбрать по параметрам</button>
                 </div>
                 <div class="right">
-                
+
                     <img src="../assets/images/main-page.png" alt="">
                 </div>
-            <!-- </SwiperSlide>
-        </Swiper> -->
+            </div>
 
+            <div class="main-page-header animate__animated" v-else-if="currentIndex === 1" :class="{
+                'animate__slideInRight': currentIndex === 1 && direction === 'next',
+                'animate__slideInLeft': currentIndex === 1 && direction === 'prev'
+            }">
+                <div class="left">
+                    <h1>Мастер Краска 1</h1>
+                    <div class="sub-header">Официальный представитель мировых брендов лакокрасочной продукции
+                    </div>
+                    <button>
+                        Пободбрать по параметрам</button>
+                </div>
+                <div class="right">
+
+                    <img src="../assets/images/main-page.png" alt="">
+                </div>
+            </div>
+
+            <div class="main-page-header animate__animated" v-else-if="currentIndex === 2" :class="{
+                'animate__slideInRight': currentIndex === 2 && direction === 'next',
+                'animate__slideInLeft': currentIndex === 2 && direction === 'prev'
+            }">
+                <div class="left">
+                    <h1>Мастер Краска 2</h1>
+                    <div class="sub-header">Официальный представитель мировых брендов лакокрасочной продукции
+                    </div>
+                    <button>
+                        Пободбрать по параметрам</button>
+                </div>
+                <div class="right">
+
+                    <img src="../assets/images/main-page.png" alt="">
+                </div>
+            </div>
+
+
+            <div class="controls">
+                <img src="../assets/icons/arrow-right.svg" @click="prevSlide" />
+
+
+                <div class="controls-circle">
+                    <span @click="changeSlide(0)"
+                        :class="{ 'active-control': currentIndex === 0, 'next-slide': direction === 'next', 'prev-slide': direction === 'prev' }"></span>
+                    <span @click="changeSlide(1)"
+                        :class="{ 'active-control': currentIndex === 1, 'next-slide': direction === 'next', 'prev-slide': direction === 'prev' }"></span>
+                    <span @click="changeSlide(2)"
+                        :class="{ 'active-control': currentIndex === 2, 'next-slide': direction === 'next', 'prev-slide': direction === 'prev' }"></span>
+                </div>
+                <img @click="nextSlide" src="../assets/icons/arrow-left.svg" />
+            </div>
+        </div>
 
     </div>
-
 
 
 
 </template>
 
 <script lang="ts" setup>
+import 'animate.css';
+const currentIndex = ref(0)
+const direction = ref('');
+const nextSlide = () => {
+    if (currentIndex.value < 2) {
+        currentIndex.value++
+        direction.value = 'next';
+    }
+}
 
+const changeSlide = (index: number) => {
+    direction.value = currentIndex.value < index ? 'next' : 'prev';
+    currentIndex.value = index;
+};
+const prevSlide = () => {
+    if (currentIndex.value > 0) {
+        currentIndex.value--; direction.value = 'prev';
 
-
+    }
+}
 
 </script>
 
 
 <style scoped lang="scss">
-.main-page-header {
+.slider-wrapper {
     background: $main-white;
     border-radius: 10px;
-    padding: 4.5rem 0 4.5rem 4rem;
-    @include flex(row, space-around, center);
+    position: relative;
+
+    .controls {
+        position: absolute;
+        @include flex(row, center, center);
+        bottom: 27px;
+        right: 40px;
+
+        img:hover {
+            cursor: pointer;
+        }
+
+        &-circle {
+            span {
+                display: inline-block;
+                background: $slider-border-color;
+                border-radius: 100%;
+                width: 10px;
+                height: 10px;
+                margin-right: 10px;
+
+                &:hover {
+                    cursor: pointer;
+                }
+
+            }
+        }
+    }
+}
+
+.slider-wrapper .controls-circle span.active-control {
+    background: $blue-color
+}
+
+.main-page-header {
+
+
+    padding: 4.5rem 0 4.5rem 50px;
+    @include flex(row, space-between, center);
 }
 
 .right {
@@ -53,7 +168,14 @@
 }
 
 .left {
-    @include flex(column, center, start, 1px)
+    @include flex(column, center, start, 1px);
+
+    button {
+        @extend %button-shared;
+        display: block;
+        margin-top: 2.6rem;
+        font-size: 20px;
+    }
 }
 
 h1 {
@@ -70,12 +192,7 @@ h1 {
     max-width: 500px;
 }
 
-button {
-    @extend %button-shared;
-    display: block;
-    margin-top: 2.6rem;
-    font-size: 20px;
-}
+
 
 
 

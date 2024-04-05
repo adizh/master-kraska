@@ -5,7 +5,6 @@
             <img src="../../assets/icons/icon=heart fill.svg" alt="heart icon">
         </div>
         <slot name="edit-items"></slot>
-        <!-- <NuxtImg src="/test-kraska.png"></NuxtImg> -->
         <img src="../../assets/images/test-kraska.png" alt="">
 
 
@@ -58,7 +57,7 @@ const productName = computed(() => {
 }
 
 .item-block {
-    width: 90%;
+    width: 45%;
     padding: 20px 32px;
     overflow: hidden;
 

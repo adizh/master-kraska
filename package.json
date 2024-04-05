@@ -12,12 +12,14 @@
   "dependencies": {
     "@pinia/nuxt": "^0.5.1",
     "@types/yandex-maps": "^2.1.35",
+    "animate.css": "^4.1.1",
     "axios": "^1.6.8",
     "nuxt": "^3.10.3",
     "nuxt-swiper": "^1.2.2",
     "pinia": "^2.1.7",
     "primeflex": "^3.3.1",
     "swiper": "^11.0.7",
+    "usebootstrap": "^3.5.5",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0",
     "vue-yandex-maps": "^2.1.0"

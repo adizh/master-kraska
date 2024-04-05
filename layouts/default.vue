@@ -133,7 +133,7 @@ provide('closeProfileOpen', closeProfileOpen)
 }
 
 .main-header {
-    @include flex(row, start, center, 4rem);
+    @include flex(row, start, end, 4rem);
     padding: 20px 2.5rem;
     box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.06);
     position: fixed;
@@ -162,7 +162,18 @@ provide('closeProfileOpen', closeProfileOpen)
 .bottom {
     width: 100%;
     list-style: none;
-    @include flex(row, space-between, center)
+    @include flex(row, space-between, center);
+
+    li {
+        transition: .2s ease;
+        color: $main-black;
+
+        &:hover {
+            color: $main-pink !important;
+            cursor: pointer;
+            transition: .2s ease;
+        }
+    }
 }
 
 .top {
