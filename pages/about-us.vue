@@ -1,8 +1,8 @@
 <template>
     <section>
         <AboutInfo />
+        <div class="main-header-h1">Все магазины</div>
         <AboutContacts :address-list="addressList.slice(0, 2)" type="about-us">
-
             <template #look-all-btn>
                 <button class="look-all-btn" @click="navigateTo('/contacts')">
                     <span>Смотреть все</span>
@@ -19,4 +19,8 @@
 import { addressList } from '@/assets/js/addressList'
 </script>
 
-<style scoped></style>
+<style scoped>
+.main-header-h1 {
+    margin-top: 80px;
+}
+</style>

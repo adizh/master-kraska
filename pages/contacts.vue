@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="main-header-h1">Все магазины</div>
+       
         <AboutContacts class="contacts-section" :address-list="addressList" type="contacts" />
     </div>
 </template>

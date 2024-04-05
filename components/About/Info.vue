@@ -30,7 +30,7 @@
                 <img src="../../assets/images/certif/certificate2.png" />
                 <img src="../../assets/images/certif/certificate3.png" />
 
-    
+
             </div>
         </div>
 
@@ -46,7 +46,7 @@
             </div>
             <div class="info-certif-img">
 
-              
+
 
                 <img src="../../assets/images/seller1.png" alt="">
                 <img src="../../assets/images/seller1.png" alt="">
@@ -80,4 +80,6 @@ h4 {
         @include flex(row, space-between, center)
     }
 }
+
+
 </style>

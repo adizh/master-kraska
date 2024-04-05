@@ -37,7 +37,7 @@
             <h5 class='each-section-header brands'>Бренды</h5>
             <p class="brands-text">Компания "Мастер Краска" является официальным поставщиком лакокрасочных материалов
                 следующих брендов:</p>
-            <button class="look-all-btn">
+            <button class="look-all-btn" @click="navigateTo('/brands')">
                 <span>Смотреть все</span>
                 <img src='../assets/icons/icon=components-more.svg' />
 
@@ -51,22 +51,10 @@
                 delay: 2000,
                 disableOnInteraction: true,
             }">
-                <SwiperSlide>
-                    <img src="../assets/images/brands/decor.png"></img>
-
+                <SwiperSlide v-for="item in brandsStore.getAllBrands" :key="item.id">
+                    <img :src="item?.logo" />
                 </SwiperSlide>
-                <SwiperSlide>
-                    <img src="../assets/images/brands/marshall.png"></img>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="../assets/images/brands/Apollo.png"></img>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="../assets/images/brands/arcobaleno.png"></img>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="../assets/images/brands/decor.png"></img>
-                </SwiperSlide>
+                <!-- </SwiperSlide>
                 <SwiperSlide>
                     <img src="../assets/images/brands/marshall.png"></img>
                 </SwiperSlide>
@@ -76,18 +64,31 @@
                 <SwiperSlide>
                     <img src="../assets/images/brands/arcobaleno.png"></img>
                 </SwiperSlide>
+                <SwiperSlide>
+                    <img src="../assets/images/brands/decor.png"></img>
+                </SwiperSlide>
+                <SwiperSlide>
+                    <img src="../assets/images/brands/marshall.png"></img>
+                </SwiperSlide>
+                <SwiperSlide>
+                    <img src="../assets/images/brands/Apollo.png"></img>
+                </SwiperSlide>
+                <SwiperSlide>
+                    <img src="../assets/images/brands/arcobaleno.png"></img>
+                </SwiperSlide> -->
 
             </Swiper>
-            <!-- 
-            <NuxtImg src="/brands/decor.png"></NuxtImg>
-            <NuxtImg src="/brands/marshall.png"></NuxtImg>
-            <NuxtImg src="/brands/Apollo.png"></NuxtImg>
-            <NuxtImg src="/brands/arcobaleno.png"></NuxtImg> -->
+
+
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
+const brandsStore = useBrandsStore()
+onMounted(() => {
+    brandsStore.fetchAllBrands()
+})
 
 </script>
 
@@ -136,7 +137,6 @@
     margin-top: 20px;
     padding: 20px;
     border-top: 1px solid $slider-border-color;
-
     img {
         width: 100%;
         margin: 0 10px;

@@ -21,12 +21,12 @@
                         src="../assets/icons/icon=components-closed-arrow.svg" alt="open-arrow">
                 </li>
 
-                <li>Колеровка</li>
-                <li>Оплата и доставка</li>
+                <li @click="isKolerOpen = !isKolerOpen">Колеровка</li>
+                <li @click="navigateTo('/pay-deliver')">Оплата и доставка</li>
                 <li>
                     <NuxtLink to="/about-us">О нас</NuxtLink>
                 </li>
-                <li>Контакты</li>
+                <li @click="navigateTo('/contacts')">Контакты</li>
 
 
                 <li class="search-place"><input type="text" class="main-header-input"
@@ -65,12 +65,19 @@
         </div>
     </Dialog>
 
+
+    <Dialog v-model:visible="isKolerOpen" modal :style="{ width: '650px', padding: '10px 40px 40px 40px' }">
+
+        <Koler />
+    </Dialog>
+
+
     <!-- <Toast /> -->
 </template>
 
 <script setup lang="ts">
 import { CatalogItem } from '~/types/Catalog';
-
+const isKolerOpen = ref(false)
 const toast = useToast()
 const isCatalogOpen = ref(false);
 const isSearchOpen = ref(false);
