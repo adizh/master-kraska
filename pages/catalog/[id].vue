@@ -12,9 +12,7 @@
         </div>
         <div class="grid">
             <CatalogFilters class="col-3" />
-            <CatalogResults class="col-9" :visibleMethod="visibleMethod" />
-
-
+            <!-- <CatalogResults class="col-9" :visibleMethod="visibleMethod" /> -->
         </div>
     </section>
 </template>

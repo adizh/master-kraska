@@ -7,4 +7,13 @@ export type CatalogItem = {
 export type AllCatalog = {
   id: string;
   name: string;
+  subdirectory: SubCatalog[];
+};
+
+export type SubCatalog = {
+  id: string;
+  name: string;
+  description: string | null;
+  categoryId: string;
+  products: null;
 };

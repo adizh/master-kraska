@@ -2,23 +2,23 @@
     <section class="footer-section">
         <div class="top">
             <div class="first">
-              
+
                 <NuxtImg src="/white-logo.png" />
-      
+
                 <img src="../assets/images/white-logo.png" alt="">
                 <button class="callback-btn">Обратный звонок</button>
             </div>
             <div class="second">
-                <span><a href="">Новости</a></span>
-                <span><a href="">Наши магазины</a></span>
-                <span><a href="">Контакты</a></span>
+                <span><a href="/news">Новости</a></span>
+                <span><a href="/contacts">Наши магазины</a></span>
+                <span><a href="/contacts">Контакты</a></span>
                 <span><a href="">Колеровка</a></span>
             </div>
             <div class="third">
                 <span><a href="">Подбор по параметрам</a></span>
                 <span><a href="">Бренды</a></span>
-                <span><a href="">Сертификаты</a></span>
-                <span><a href="">О нас</a></span>
+                <span><a href="/certificates">Сертификаты</a></span>
+                <span><a href="/about-us">О нас</a></span>
             </div>
             <div class="fourth">
                 <span><a href="">Выездной консультант</a></span>

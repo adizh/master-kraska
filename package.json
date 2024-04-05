@@ -4,9 +4,9 @@
   "type": "module",
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "nuxt dev -p 3000",
     "generate": "nuxt generate",
-    "preview": "nuxt preview --port 8000",
+    "preview": "nuxt preview -p 3200",
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
