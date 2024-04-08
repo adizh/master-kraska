@@ -46,21 +46,7 @@
     </div>
 
     <Dialog v-model:visible="isProfileOpen" modal :style="{ width: '450px', padding: '10px 40px 40px 40px' }">
-        <div class="profile-section-header">
-            <TabView v-if="selectedReg === 0">
-                <TabPanel header="Регистрация">
-                    <AuthEmailRegister @closeModal="isProfileOpen = false" />
-                </TabPanel>
-                <TabPanel header="Войти">
-                    <AuthLogin @closeLoginModal="isProfileOpen = false" />
-                </TabPanel>
-            </TabView>
-
-            <div v-else-if='selectedReg === 1'>
-
-                <AuthEmailRegister @closeModal="isProfileOpen = false" />
-            </div>
-        </div>
+        <AuthModal @closeModal="isProfileOpen = false" />
     </Dialog>
 
 
@@ -78,11 +64,9 @@ const isCatalogOpen = ref(false);
 const isSearchOpen = ref(false);
 const isProfileOpen = ref();
 const authStore = useAuthStore();
-const selectedReg = ref(0);
+
 const productStore = useProductsSstore()
-const selectRegister = (tab: number) => {
-    selectedReg.value = tab;
-}
+
 console.log('authStore email', authStore.getUserId)
 
 const toggleCatalog = () => {
@@ -123,6 +107,7 @@ provide('closeProfileOpen', closeProfileOpen)
 </script>
 
 <style scoped lang="scss">
+@import '../assets/tabs.scss';
 .logo-img {
     width: 100%;
 }
@@ -221,9 +206,7 @@ provide('closeProfileOpen', closeProfileOpen)
     cursor: pointer;
 }
 
-.profile-section-header {
-    margin-top: 20px;
-}
+
 
 .main-header-input:focus {
     border-color: $main-blue;
@@ -231,33 +214,4 @@ provide('closeProfileOpen', closeProfileOpen)
     @extend %header-nav;
 }
 
-:deep(ul.p-tabview-nav) {
-    @include flex(row, space-around, center !important)
-}
-
-
-
-:deep(.p-tabview .p-tabview-ink-bar) {
-    background-color: $main-pink;
-    height: 3px;
-    color: $main-black;
-}
-
-:deep(.p-tabview .p-tabview-nav) {
-    padding-bottom: 15px !important;
-}
-
-:deep(.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link) {
-    color: $main-black;
-}
-
-:deep(.p-tabview .p-tabview-nav li .p-tabview-nav-link) {
-    border: none;
-
-    @include textFormat(16px, 16px, 500, $main-dark-grey)
-}
-
-:deep(.p-tabview .p-tabview-panels) {
-    color: $main-black
-}
 </style>

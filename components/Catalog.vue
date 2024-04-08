@@ -4,18 +4,19 @@
         <div class="options-list">
             <ul class="first-col">
                 <li v-for="item in catalogOptions.slice(0, 9)" :key="item.id"
-                    @click.prevent="navigateTo(`/catalog/${item.id}`)">
-                    <a href="">
-                        {{ item.name }}
-                    </a>
+                    @click.stop="navigateTo(`/catalog/${item.id}`)">
+
+                    {{ item.name }}
+
                 </li>
             </ul>
 
             <ul class="second-col">
-                <li @click.stop="navigateTo(`/catalog/${item.id}`)" v-for="item in catalogOptions.slice(9)"
-                    :key="item.id"><a href="">
-                        {{ item.name }}
-                    </a></li>
+                <li v-for="item in catalogOptions.slice(9)" :key="item.id"
+                    @click.stop="navigateTo(`/catalog/${item.id}`)">
+                    {{ item.name }}
+
+                </li>
             </ul>
         </div>
     </div>
@@ -67,15 +68,17 @@ ul li {
 
 }
 
-li a {
+li {
     @include footerSpan(32px, 18px);
     color: $main-black;
+
+    &:hover {
+        cursor: pointer;
+        color: $main-blue
+    }
 }
 
-li a:hover {
-    cursor: pointer;
-    color: $main-blue
-}
+
 
 .catalog-options {
     @include openedOptionsHeader(100%, 20px 4rem, 6rem)

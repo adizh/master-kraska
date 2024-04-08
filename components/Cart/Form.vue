@@ -52,11 +52,22 @@
                 <input type="text" class="form-input w-30rem">
             </div>
         </div>
+        <CartPayMethod @choosePayMethod="choosePayMethod" />
     </div>
+
+    <Dialog v-model:visible="isMbnankOpen" modal :style="{ width: '450px', padding: '30px 25px' }">
+        <PaymentMbank />
+    </Dialog>
 </template>
 
 <script setup lang="ts">
-
+const isMbnankOpen = ref(false);
+import { PaymentTypes } from '@/types/Items';
+const choosePayMethod = (value: string) => {
+    if (value === 'MBank') {
+        isMbnankOpen.value = true
+    }
+}
 </script>
 
 <style scoped lang="scss">

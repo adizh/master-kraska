@@ -413,6 +413,43 @@ h2 {
   background: black;
 }
 
+.magazine {
+  @extend %border-bottoms;
+  padding-bottom: 20px;
+  margin-top: 20px;
+}
+
+.order-btn {
+  @extend %button-shared;
+  @include flex(row, center, center);
+  background: white;
+  border: 1px solid $slider-border-color;
+  border-radius: 10px;
+  padding: 16px 20px;
+  @include footerSpan(20px, 16px);
+  color: $main-black !important;
+  font-weight: 400;
+}
+
+.bg-white-btn {
+  @extend %button-shared;
+  color: $main-blue;
+  box-shadow: 0px 0px 0px 0.5px rgba(0, 0, 0, 0.05) 0px 0.5px 2.5px 0px
+    rgba(0, 0, 0, 0.3);
+  background: white;
+  font-weight: 500;
+  margin-top: 20px;
+  font-size: 20px;
+  transition: 0.3s;
+
+
+
+  &:hover {
+    @extend %blue-bnt-hover;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+}
 @media (min-width: 768px) and (max-width: 992px) {
   .item-block {
     width: 50%;

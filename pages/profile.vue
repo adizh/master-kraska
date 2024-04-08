@@ -38,7 +38,7 @@
 
                 <div class="cart-main-info-price col-12" v-if="cartStore.getAllCart?.length">
                     <div class="col-6">
-                        <button @click="navigateTo('/place-order')" class="pink-button">Перейти к оформлению</button>
+                        <button class="pink-button">Перейти к оформлению</button>
                         <div class="cart-main-info-price-block">
                             <div class="first">
                                 <span>Всего: {{ cartStore.numberOfProds }} товар</span>

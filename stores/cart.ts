@@ -1,11 +1,12 @@
 import http from "@/composables/http";
 import { Product, ExtendedProduct } from "@/types/Product";
+import { Order, OrderItem } from "~/types/Order";
 
 export const useCartStore = defineStore("cartStore", {
   state: () => ({
     cart: [] as ExtendedProduct[],
     countToBuy: 1,
-
+    currentOrder: {} as OrderItem,
   }),
   actions: {
     addToCart(prod: ExtendedProduct) {
@@ -22,8 +23,10 @@ export const useCartStore = defineStore("cartStore", {
     decreaseCount(item: ExtendedProduct) {
       if (item.count > 1) {
         const updatedItem = { ...item };
+
         updatedItem.count--;
-        updatedItem.totalProdSum = updatedItem.count * updatedItem.price;
+
+        updatedItem.totalProdSum = updatedItem.count * updatedItem.initPrice;
         this.updateCartItem(updatedItem);
       }
     },
@@ -35,9 +38,10 @@ export const useCartStore = defineStore("cartStore", {
     },
 
     increaseCount(item: ExtendedProduct) {
+      console.log(" increaseCount item", item);
       const updatedItem = { ...item };
       updatedItem.count++;
-      updatedItem.totalProdSum = updatedItem.count * updatedItem.price;
+      updatedItem.totalProdSum = updatedItem.count * updatedItem.initPrice;
       this.updateCartItem(updatedItem);
     },
 
@@ -48,7 +52,11 @@ export const useCartStore = defineStore("cartStore", {
     saveNewCart() {
       localStorage.setItem("cart", JSON.stringify(this.cart));
     },
-  
+
+    setCurrentOrder(item: OrderItem) {
+      console.log("item setCurrentOrder", item);
+      this.currentOrder = item;
+    },
   },
   getters: {
     getAllCart(state) {
@@ -59,6 +67,9 @@ export const useCartStore = defineStore("cartStore", {
         }
       }
       return state.cart;
+    },
+    getCurrentOrder(state) {
+      return state.currentOrder;
     },
 
     numberOfProds(state) {

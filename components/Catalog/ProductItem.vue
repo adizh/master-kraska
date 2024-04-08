@@ -5,11 +5,8 @@
             <img src="../../assets/icons/icon=heart fill.svg" alt="heart icon">
         </div>
         <slot name="edit-items"></slot>
-        <!-- <NuxtImg src="/test-kraska.png"></NuxtImg> -->
-        <img src="../../assets/images/test-kraska.png" alt="">
-
-
-        <span class="item-block-name">{{ productName('Полуматовая универсальн') }}</span>
+        <img :src="product?.images[0]" alt="">
+        <span class="item-block-name">{{ productName(product?.name) }}</span>
 
         <div class="item-block-info">
             <div class="each-block-info-col">
@@ -104,6 +101,7 @@ const productName = (name: string) => {
 .item-block {
     transition: .3s ease all;
     border-radius: 10px;
+
     @include flex(column, space-between, center);
 
 

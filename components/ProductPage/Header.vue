@@ -16,7 +16,7 @@
             </div>
             <div class="middle-review"><span class="each-block-info-col">Рейтинг</span>
                 <div class='middle-rating'>
-                    <span class="middle-review-number">5/5</span>
+                    <span class="middle-review-number">{{ product?.rating.toFixed(2) }}</span>
                     <Rating v-model="ratingValue" :cancel="false" />
                     <span class="middle-review-text">Отзывы</span>
                 </div>
@@ -26,8 +26,12 @@
                 <span class="each-block-info-col">Объем</span>
 
                 <div class="middle-volume-buttons">
-                    <button>{{ product?.packing }} л</button>
-                    <button>{{ product?.size }} л</button>
+                    <button v-for="(btn, index) in product?.variants" :class="{ 'active-btn': volumeBtn === btn?.size }"
+                        @click='selectVolumeSize(btn?.size, index)'>
+                        {{ btn?.size }}
+                    </button>
+                    <!-- <button>{{ product?.packing }} л</button> -->
+                    <!-- <button>{{ product?.size }} л</button> -->
                 </div>
             </div>
 
@@ -70,7 +74,7 @@
 
             <div class="numbers">
                 <p><span>шт</span>
-                    <span class="numbers-price">{{ product?.price }} сом</span>
+                    <span class="numbers-price">{{ selectedProductPrice }} сом</span>
                 </p>
                 <p><span>л</span>500 сом</p>
                 <p><span>м2</span>50 сом</p>
@@ -88,13 +92,13 @@
             <div class="count">
                 <span class="each-block-info-col">Сумма</span>
                 {{
-                    product?.price * countToBuy }} сом
+                    selectedProductPrice * countToBuy }} сом
             </div>
 
-
-
-            <div class="buy-btns"> <button @click="addToCart">Добавить в корзину</button>
-                <button>Купить сразу</button>
+            <div class="buy-btns"> <button @click="addToCart">
+                    {{ isProductExistsInCart ? 'Добавить в корзину' : "Добавлено в корзину" }}
+                </button>
+                <button @click.capture="buyNow">Купить сразу</button>
             </div>
         </div>
     </div>
@@ -143,27 +147,36 @@
         </div>
     </OverlayPanel>
     <Toast />
+
+
+    <Dialog v-model:visible="isProfileOpen" modal :style="{ width: '450px', padding: '10px 40px 40px 40px' }">
+        <AuthModal @closeModal="isProfileOpen = false" />
+    </Dialog>
+
 </template>
 
 <script setup lang="ts">
 import Rating from 'primevue/rating';
 import { Product } from '@/types/Product'
-import Id from '~/pages/product/[id].vue';
+
 const props = defineProps<{
     product: Product
 }>()
-const ratingValue = ref(5);
+const ratingValue = ref(0);
 const countOverlay = ref();
+const volumeBtn = ref('');
 const countToBuy = ref(1);
 const totalPrice = ref(0)
 const authStore = useAuthStore();
 const productStore = useProductsSstore()
 const store = useCartStore()
 const toast = useToast()
-
+const selectedProductPrice = ref(0)
 const length = ref(0)
 const width = ref(0)
 const isProductBookmarked = ref(false)
+const isProfileOpen = ref(false)
+
 const sumHeight = computed(() => length.value * width.value);
 
 const toggle = (event: any) => {
@@ -173,10 +186,39 @@ const toggle = (event: any) => {
 
 ratingValue.value = props?.product?.rating
 
+
+const leastSmallAmount = computed(() => {
+    const variants = props.product?.variants;
+    if (!variants || variants.length === 0) {
+        return -1;
+    }
+
+    let smallestPrice = variants[0].price;
+    let smallestPriceIndex = 0;
+    for (let i = 1; i < variants.length; i++) {
+        const variantPrice = variants[i].price;
+        if (variantPrice < smallestPrice) {
+            smallestPrice = variantPrice;
+            smallestPriceIndex = i;
+        }
+    }
+
+    return smallestPriceIndex;
+});
+
+
+
+
+
+const selectVolumeSize = (value: string, index: number) => {
+    volumeBtn.value = value;
+    selectedProductPrice.value = props?.product?.variants[index].price
+
+}
 const decreaseCount = () => {
     if (countToBuy.value > 1) {
         countToBuy.value--;
-        totalPrice.value = countToBuy.value * props.product.price
+        totalPrice.value = countToBuy.value * selectedProductPrice.value
     }
 }
 
@@ -187,12 +229,30 @@ const toggleBoomark = (id: string) => {
 
 const increaseCount = () => {
     countToBuy.value++;
-    totalPrice.value = countToBuy.value * props.product.price
+    totalPrice.value = countToBuy.value * selectedProductPrice.value
 }
 
+const buyNow = () => {
+   // navigateTo('/place-order')
+    if (authStore.getUserId) {
+
+    } else {
+
+        isProfileOpen.value = true
+    }
+}
 const addToCart = () => {
-    const prodItem = { ...props.product, count: countToBuy.value, totalProdSum: totalPrice.value }
-    store.addToCart(prodItem)
+    if (authStore.getUserId) {
+        const prodItem = { ...props.product, count: countToBuy.value, totalProdSum: totalPrice.value, initPrice: selectedProductPrice.value }
+        store.addToCart(prodItem)
+    }
+
+    else {
+
+
+        isProfileOpen.value = true
+    }
+
 }
 
 
@@ -206,13 +266,23 @@ const { data: getBookmarkItem } = useApi('/api/v1/Bookmark/get-bookmarks', {
     }
 }) as any;
 
-onMounted(() => {
-    productStore.getBookmarks(props?.product?.id);
-    isProductBookmarked.value = productStore.getProductBookmarked
+
+const isProductExistsInCart = computed(() => {
+    const index = store.getAllCart?.findIndex((item) => item?.id === props?.product?.id);
+    return index !== -1 ? false : true
+})
+onMounted(async () => {
+    await productStore.getBookmarks(props?.product?.id);
+    isProductBookmarked.value = productStore.getProductBookmarked;
+    volumeBtn.value = props?.product?.variants[leastSmallAmount.value]?.size;
+    selectedProductPrice.value = props?.product?.variants[leastSmallAmount.value]?.price;
+    totalPrice.value = countToBuy.value * selectedProductPrice.value
 })
 </script>
 
 <style scoped lang="scss">
+@import '../../assets/tabs.scss';
+
 .count-overlay {
     @include flex(column, start, space-between);
     padding: 20px;
@@ -322,7 +392,7 @@ onMounted(() => {
             color: $main-black;
         }
 
-      
+
 
 
 
@@ -402,13 +472,15 @@ onMounted(() => {
 
 .middle-volume {
     &-buttons {
-        button:first-child {
+
+        button.active-btn {
             @include items-button(8px 20px 8px 20px, white, $main-blue, none, 16px);
             margin-right: 10px
         }
 
-        button:last-child {
-            @include items-button(8px 20px 8px 20px, $main-black, white, 1px solid $slider-border-color , 16px)
+        button {
+            @include items-button(8px 20px 8px 20px, $main-black, white, 1px solid $slider-border-color , 16px);
+            margin-right: 10px;
         }
     }
 }

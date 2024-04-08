@@ -21,6 +21,10 @@
         </div>
     </div>
     <Toast />
+
+    <Dialog v-model:visible="isProfileOpen" modal :style="{ width: '450px', padding: '10px 40px 40px 40px' }">
+        <AuthModal @closeModal="isProfileOpen = false" />
+    </Dialog>
 </template>
 
 <script setup lang="ts">
@@ -29,7 +33,7 @@ import { Review } from '~/types/Review';
 
 
 const authStore = useAuthStore()
-
+const isProfileOpen = ref(false)
 const props = defineProps<{
     item: ExtendedProduct
 }>();
@@ -46,41 +50,47 @@ const handleInput = (field: string, type: string) => {
     handleValues(inputs.value, field, type);
 }
 const createReview = async () => {
-    const validationTypes: any = {
-        title: 'string',
-        text: 'string',
-        ratingValue: 'rating'
-    };
-    for (const fieldName in inputs.value) {
-        if (Object.prototype.hasOwnProperty.call(inputs.value, fieldName)) {
-            const validationType = validationTypes[fieldName];
-            handleValues(inputs.value, fieldName, validationType);
-            console.log('inputs.value', inputs.value, fieldName, validationType)
+    if (authStore.getUserId) {
+        const validationTypes: any = {
+            title: 'string',
+            text: 'string',
+            ratingValue: 'rating'
+        };
+        for (const fieldName in inputs.value) {
+            if (Object.prototype.hasOwnProperty.call(inputs.value, fieldName)) {
+                const validationType = validationTypes[fieldName];
+                handleValues(inputs.value, fieldName, validationType);
+                console.log('inputs.value', inputs.value, fieldName, validationType)
+            }
         }
+
+        const hasError = Object.values(inputs.value).some(input => input.error !== '');
+        if (!hasError) {
+            try {
+                const body = {
+                    "productId": props?.item?.id,
+                    "userId": authStore.getUserId,
+                    "rating": inputs.value.ratingValue.value,
+                    "ratingText": inputs.value.text.value,
+                    "title": inputs.value.title.value
+                }
+                const response = await http.post('/api/v1/ProductReview/create-review', body);
+                if (response.status === 200) {
+                    inputs.value.text.value = ''
+                    inputs.value.title.value = ''
+                    inputs.value.ratingValue.value = 0;
+                    toast.add({ severity: 'success', summary: "Успешно", detail: 'Отзыв оставлен!' })
+                }
+                console.log('response create review', response)
+            } catch (err) {
+                console.log(err)
+            }
+        }
+    }
+    else {
+        isProfileOpen.value = true
     }
 
-    const hasError = Object.values(inputs.value).some(input => input.error !== '');
-    if (!hasError) {
-        try {
-            const body = {
-                "productId": props?.item?.id,
-                "userId": authStore.getUserId,
-                "rating": inputs.value.ratingValue.value,
-                "ratingText": inputs.value.text.value,
-                "title": inputs.value.title.value
-            }
-            const response = await http.post('/api/v1/ProductReview/create-review', body);
-            if (response.status === 200) {
-                inputs.value.text.value = ''
-                inputs.value.title.value = ''
-                inputs.value.ratingValue.value = 0;
-                toast.add({ severity: 'success', summary: "Успешно", detail: 'Отзыв оставлен!' })
-            }
-            console.log('response create review', response)
-        } catch (err) {
-            console.log(err)
-        }
-    }
     fetchReviewsByProd()
 }
 
@@ -103,6 +113,7 @@ onMounted(() => {
 </script>
 
 <style scoped lang='scss'>
+@import '../../assets/tabs.scss';
 .prod-item-reviews {
     margin-top: 80px;
 

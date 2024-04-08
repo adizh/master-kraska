@@ -2,10 +2,10 @@
     <div class="popular-products">
         <h5 class='each-section-header'>Популярные товары</h5>
         <div class="products-list">
-            <Swiper :slides-per-view="2" :navigation="true" id="mySlider" :modules="[SwiperNavigation]"
+            <Swiper :slides-per-view="4" :navigation="true" id="mySlider" :modules="[SwiperNavigation]"
                 :style='{ "--swiper-navigation-size": "15px", "padding": "20px 0" }'>
-                <SwiperSlide>
-                    <ProductsProductItem v-for="product in popularItems" :key="product.id" :product="product" />
+                <SwiperSlide v-for="product in popularItems" :key="product.id">
+                    <ProductsProductItem :product="product" />
                 </SwiperSlide>
             </Swiper>
         </div>
@@ -34,7 +34,7 @@ const popularItems = computed(() => {
 }
 
 .item-block {
-    width: 95%
+    width: 100%;
 }
 
 .products-list {
@@ -43,6 +43,7 @@ const popularItems = computed(() => {
 
 :deep(.swiper-slide) {
     @include flex(row, start, start);
+    flex-wrap: wrap;
 }
 
 :deep(.swiper-button-next,

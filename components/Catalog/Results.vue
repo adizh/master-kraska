@@ -1,7 +1,12 @@
 <template>
     <div class="results" :class="{ 'horizontal': visibleMethod === 'horizontal' }">
-        <CatalogProductItem :visibleMethod="visibleMethod" />
-        <CatalogProductItem :visibleMethod="visibleMethod" />
+
+
+        <CatalogProductItem v-for="item in productStore.getFilteredProducts" :key="item?.id"
+            :visibleMethod="visibleMethod" :product="item" />
+
+
+
     </div>
 </template>
 
@@ -9,6 +14,9 @@
 const props = defineProps<{
     visibleMethod: string
 }>()
+
+const productStore = useProductsSstore()
+
 
 </script>
 

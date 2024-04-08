@@ -30,30 +30,29 @@
                         <button class="order-btn" @click="isMagVisible = !isMagVisible">{{ selectedMarket }}</button>
                     </div>
 
-                    <div class="magazine">
+                    <CartPayMethod />
+                    <!-- <div class="magazine">
                         <h3>Способ оплаты</h3>
                         <div class="flex flex-row flex-wrap gap-4">
-                            <button class="order-btn" @click="selPayMethod(1)">Банковской картой
+                            <button v-for="payOption in payOptions" :key="payOption" class="order-btn"
+                                @click="selPayMethod(payOption)">
+                                {{ payOption }}
                                 <img src="../assets/icons/carbon_checkmark-filled (1).svg" alt="carbon"
-                                    v-show="payMethod === 1" @click="selMethod(2)">
-
-
+                                    v-show="payMethod === payOption" @click="selMethod(2)">
                             </button>
-                            <button class="order-btn" @click="selPayMethod(2)">Наличными
-
-                                <img src="../assets/icons/carbon_checkmark-filled (1).svg" alt="carbon"
-                                    v-show="payMethod === 2" @click="selMethod(2)">
-
-                            </button>
+                          
                         </div>
 
-                    </div>
+                    </div> -->
                 </div>
 
 
                 <div v-else-if="selectedOrderPlacement === 2">
+
                     <CartForm />
                 </div>
+
+
 
 
                 <div class="comments">
@@ -124,14 +123,11 @@ import { addressList } from '@/assets/js/addressList';
 import { AddressList } from '~/types/Items';
 const cartStore = useCartStore()
 const selectedOrderPlacement = ref(1);
-const selectWay = (type: number) => {
-
-}
 
 
 const method = ref(1);
 const selectedMarket = ref('Выберите магазин ');
-const payMethod = ref(1);
+
 const comment = ref('');
 
 
@@ -142,9 +138,6 @@ const selMethod = (type: number) => {
     } else if (type === 2) {
         selectedOrderPlacement.value = 2
     }
-}
-const selPayMethod = (type: number) => {
-    payMethod.value = type
 }
 
 
@@ -185,17 +178,6 @@ const selectAddress = (item: AddressList) => {
     padding: 64px 20px;
 }
 
-.order-btn {
-    @extend %button-shared;
-    @include flex(row, center, center);
-    background: white;
-    border: 1px solid $slider-border-color;
-    border-radius: 10px;
-    padding: 16px 20px;
-    @include footerSpan(20px, 16px);
-    color: $main-black !important;
-    font-weight: 400;
-}
 
 
 h3 {

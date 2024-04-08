@@ -44,4 +44,5 @@ export type Product = {
 export interface ExtendedProduct extends Product {
   count: number;
   totalProdSum: number;
+  initPrice:number
 }

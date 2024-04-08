@@ -6,13 +6,15 @@
                 <CartProductItem v-for="cartItem in store.getAllCart" :key="cartItem.id" :item="cartItem">
                     <template #count-buttons>
                         <span class="price">{{ cartItem.totalProdSum }} сом</span>
+
                         <button class="prod-count-buttons">
                             <span @click="store.decreaseCount(cartItem)">-</span>
                             <span>{{ store.getTotalItemCount(cartItem?.count) }}</span>
                             <span @click="store.increaseCount(cartItem)">+</span>
                         </button>
                         <img src="../assets/icons/icon=trash.svg" alt="delete" class='delete-icon'
-                            @click="removeFromCart(cartItem)">
+                            @click.stop="removeFromCart(cartItem)">
+
                     </template>
                 </CartProductItem>
 
@@ -20,7 +22,7 @@
 
             </div>
             <div class="cart-main-info-price col-3  ml-4">
-                <button @click="navigateTo('/place-order')" class="pink-button">Перейти к оформлению</button>
+                <button class="pink-button" @click="createOrder">Перейти к оформлению</button>
                 <div class="cart-main-info-price-block">
                     <div class="first">
                         <span>Всего: {{ store.numberOfProds }} товар</span>
@@ -55,36 +57,59 @@
         </NoContent>
 
     </section>
+    <Toast />
 </template>
 
 <script setup lang="ts">
 import { Product, ExtendedProduct } from '~/types/Product';
-
+import { Order } from '@/types/Order'
 const store = useCartStore();
-//const countToBuy = ref(1)
 
+const authStore = useAuthStore()
 console.log('cart', store.getAllCart)
 
 const removeFromCart = (item: ExtendedProduct) => {
     store.removeFromCart(item)
 }
 
-
-// const updateCartItem = (updatedItem: ExtendedProduct) => {
-
-//     store.updateCartItem(updatedItem)
-// }
+const toast = useToast()
 
 
+const createOrder = async () => {
+    const allOrderItems = [] as Order[]
+    for (let item of store.getAllCart) {
+        allOrderItems.push({
+            customerId: authStore.getUserId ? authStore.getUserId : '',
+            productId: item?.id,
+            productName: item?.name,
+            price: item?.totalProdSum
 
-// const numberOfProds = computed(() => {
-//     return store.getAllCart.length
-// })
+        })
+    }
 
 
-// const totalOfTotalSum = computed(() => {
-//     return store.getAllCart.reduce((acc: number, item: ExtendedProduct) => acc + item.totalProdSum, 0);
-// })
+    try {
+
+        const response = await http.post('/api/v1/Order/create-order', allOrderItems);
+        console.log('response', response);
+        if (response.status === 200) {
+            toast.add({ severity: 'success', summary: 'Успех', detail: 'Успешно оформлено' });
+            store.setCurrentOrder(response?.data?.message)
+            console.log('response data mesage', response?.data?.message)
+            setTimeout(() => {
+                navigateTo(`/place-order/${response?.data?.message?.orderNumber}`)
+            }, 900)
+        }
+    } catch (err: any) {
+        console.log(err, 'some err ');
+        if (err?.response?.data?.code === 400) {
+            toast.add({ severity: 'error', summary: 'Ошибка', detail: 'Вы не можете оформить заказ, если он не оплачен' });
+            console.log('store.getCurrentOrder?.orderNumber', store)
+            // navigateTo(`/place-order/${store.getCurrentOrder?.orderNumber}`)
+        }
+    }
+}
+
 
 
 

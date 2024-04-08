@@ -6,12 +6,10 @@ export type AddressList = {
   email: string;
 };
 
-
 export interface InputProperties {
   value: string;
   error: string;
 }
-
 
 export interface Inputs {
   name: InputProperties;
@@ -21,7 +19,15 @@ export interface Inputs {
   passwordRepeat: InputProperties;
   phone: InputProperties;
 }
-export interface LoginInputs{
+export interface LoginInputs {
   email: InputProperties;
   password: InputProperties;
 }
+
+export type PaymentTypes =
+  | "Банковской картой"
+  | "Наличными"
+  | "MBank"
+  | "MegaPay"
+  | "Элкарт"
+  | "";

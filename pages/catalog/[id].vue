@@ -4,17 +4,16 @@
             <h1> {{ category?.name }}</h1>
             <div class="header-help-icons">
                 <input type="text" placeholder="Поиск краски" class="basic-input">
-                
+
                 <div>
                     <img src="../../assets/icons/ep_menu.svg" alt="ep menu" @click="visibleMethod = 'vertical'">
                     <img src="../../assets/icons/f7_menu.svg" alt="menu" @click="visibleMethod = 'horizontal'">
                 </div>
             </div>
         </div>
-        <div class="grid">
-
+        <div class="grid align-items-start">
             <CatalogFilters class="col-3" />
-            <!-- <CatalogResults class="col-9" :visibleMethod="visibleMethod" /> -->
+            <CatalogResults class="col-9" :visibleMethod="visibleMethod" />
         </div>
     </section>
 </template>

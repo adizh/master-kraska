@@ -12,6 +12,14 @@ export const useProductsSstore = defineStore("productsStore", {
     filters: {
       search: "",
       categoryId: "",
+      subdirectoryIds: [] as any,
+      fastDrying: false,
+      approvedByThePaintQualityAssociation: false,
+      withoutSmell: false,
+      washableCoating: false,
+      weatherResistantCoating: false,
+      wearResistantCoating: false,
+      dirtAndWaterRepellentCoating: false,
     },
   }),
   actions: {
@@ -51,10 +59,41 @@ export const useProductsSstore = defineStore("productsStore", {
         console.log(err);
       }
     },
+
+    setBoolParams(query: any) {
+      this.filters.fastDrying = query.fastDrying;
+      this.filters.approvedByThePaintQualityAssociation =
+        query.approvedByThePaintQualityAssociation;
+      this.filters.withoutSmell = query.withoutSmell;
+      this.filters.washableCoating = query.washableCoating;
+      this.filters.weatherResistantCoating = query.weatherResistantCoating;
+      this.filters.dirtAndWaterRepellentCoating =
+        query.dirtAndWaterRepellentCoating;
+      this.filters.wearResistantCoating = query.wearResistantCoating;
+    },
+    setSubDirectories(item: { id: string; value: boolean } | null) {
+      if (item) {
+        this.filters.subdirectoryIds.push(item?.id);
+      } else {
+        this.filters.subdirectoryIds = null;
+      }
+
+      console.log("this.filters.subdirectoryIds", this.filters.subdirectoryIds);
+    },
     async filterProducts() {
       const query = {
         productName: this.filters.search,
         categoryId: this.filters.categoryId,
+        subdirectoryIds: this.filters.subdirectoryIds?.join(",") || null,
+
+        fastDrying: this.filters.fastDrying,
+        approvedByThePaintQualityAssociation:
+          this.filters.approvedByThePaintQualityAssociation,
+        withoutSmell: this.filters.withoutSmell,
+        washableCoating: this.filters.washableCoating,
+        weatherResistantCoating: this.filters.weatherResistantCoating,
+        wearResistantCoating: this.filters.wearResistantCoating,
+        dirtAndWaterRepellentCoating: this.filters.dirtAndWaterRepellentCoating,
       };
 
       try {
