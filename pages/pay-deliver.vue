@@ -218,7 +218,7 @@
 
 .header {
     margin-bottom: 80px;
-    background-image: url('/static/close-up-hands-carrying-box\ 1.png');
+    background-image: url('/static/delivery.png');
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;

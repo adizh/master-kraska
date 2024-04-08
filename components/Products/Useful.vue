@@ -1,11 +1,12 @@
 <template>
     <div class="popular-products">
-        <h5 class='each-section-header'>Выгодные товары</h5>
+        <h5 class='each-section-header'>Выгодные вам</h5>
         <div class="products-list">
-            <Swiper :slides-per-view="2" :navigation="true" id="mySlider" :modules="[SwiperNavigation]"
+            <Swiper :slides-per-view="4" :navigation="true" id="mySlider" :modules="[SwiperNavigation]"
                 :style='{ "--swiper-navigation-size": "15px", "padding": "20px 0" }'>
-                <SwiperSlide>
-                    <ProductsProductItem v-for="product in beneficialItems" :key="product.id" :product="product" />
+                <SwiperSlide v-for="product in popularItems" :key="product.id">
+                    <ProductsProductItem :product="product" />
+
                 </SwiperSlide>
             </Swiper>
         </div>
@@ -23,7 +24,7 @@ onMounted(() => {
 
 console.log('store.getAllProducsts', store.getAllProducsts);
 
-const beneficialItems = computed(() => {
+const popularItems = computed(() => {
     return store.getAllProducsts.filter((item: Product) => item.isBeneficial)
 })
 </script>
@@ -34,7 +35,7 @@ const beneficialItems = computed(() => {
 }
 
 .item-block {
-    width: 65%
+    width: 100%;
 }
 
 .products-list {
@@ -43,6 +44,7 @@ const beneficialItems = computed(() => {
 
 :deep(.swiper-slide) {
     @include flex(row, start, start);
+    flex-wrap: wrap;
 }
 
 :deep(.swiper-button-next,

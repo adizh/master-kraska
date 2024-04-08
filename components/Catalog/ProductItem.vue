@@ -81,6 +81,7 @@ const props = defineProps<{
     type?: string,
     product: Product,
     visibleMethod: string
+    
 
 }>()
 
@@ -93,7 +94,7 @@ const emit = defineEmits<{
 }>()
 
 const productName = (name: string) => {
-    return name && name?.length > 54 ? name.slice(0, 54) + '...' : name
+    return name && name?.split(' ').length > 5 ? name?.split(' ').slice(0, 5).join(' ') : name
 }
 </script>
 

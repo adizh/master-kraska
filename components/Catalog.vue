@@ -5,7 +5,6 @@
             <ul class="first-col">
                 <li v-for="item in catalogOptions.slice(0, 9)" :key="item.id"
                     @click.stop="navigateTo(`/catalog/${item.id}`)">
-
                     {{ item.name }}
 
                 </li>

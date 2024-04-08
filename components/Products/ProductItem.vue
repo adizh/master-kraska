@@ -10,6 +10,8 @@
 
         <span class="item-block-name">{{ productName }}</span>
 
+
+
         <div class="item-block-info">
             <div class="each-block-info-col">
                 <span class="text">Расход: </span>
@@ -43,7 +45,7 @@ const emit = defineEmits<{
 }>()
 
 const productName = computed(() => {
-    return props?.product?.name && props?.product?.name?.length > 65 ? props?.product?.name.slice(0, 65) + '...' : props?.product?.name
+    return props?.product?.name && props?.product?.name?.split(' ').length > 9 ? props?.product?.name.split(' ').slice(0, 9).join(' ') + '...' : props?.product?.name
 })
 </script>
 
@@ -61,13 +63,15 @@ const productName = computed(() => {
     padding: 20px 32px;
     overflow: hidden;
 
+    max-height: 510px;
+    height: 510px;
 
     img {
         width: 70%
     }
 
     &-name {
-        max-width: $product-item-width;
+
         text-align: center;
         font-size: 18px;
         font-weight: 600;
@@ -75,8 +79,8 @@ const productName = computed(() => {
         width: 100%;
         display: block;
         text-align: left;
+        margin-bottom: 15px;
 
-        height: 60px;
 
 
 
