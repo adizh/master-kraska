@@ -133,7 +133,7 @@ import { Product } from '~/types/Product';
 const route = useRoute()
 const id = route.params.id;
 const toast = useToast()
-const { data: item } = useApi<Product>(`/api/v1/Product/get-product-by-id/${id}`);
+const { data: item } = await useApi<Product>(`/api/v1/Product/get-product-by-id/${id}`);
 interface InputField {
     value: string | number | undefined | string[] | boolean
     error: string;
@@ -198,7 +198,7 @@ const submitUpdate = async () => {
             "isPopular": inputs.value.isPopular.value,
             "isFeatured": inputs.value.isFeatured.value,
             "isBeneficial": inputs.value.isBeneficial.value,
-            "images": ['string']
+            "images": null
         }
         console.log(body)
         const response = await http.put(`/api/v1/Product/update-product/${item?.value?.id}`, body);
@@ -225,6 +225,35 @@ const editProduct = () => {
     }
 
 }
+
+onMounted(async () => {
+    inputs.value = {
+        name: { value: item.value?.name, error: '', type: 'string' },
+        description: { value: item.value?.description, error: '', type: 'string' },
+        price: { value: item?.value?.price, error: '', type: 'number' },
+        categoryId: { value: item?.value?.categoryId, error: '' },
+        subcategoryId: { value: item?.value?.subcategoryId, error: '' },
+        brandId: { value: item?.value?.brandId, error: '' },
+        expenditure: { value: item?.value?.expenditure, error: '', type: 'string' },
+        packing: { value: item?.value?.packing, error: '', type: 'string' },
+        brandName: { value: item?.value?.brandName, error: '', type: 'string' },
+        surfacePreparations: { value: item?.value?.surfacePreparations, error: '', type: 'string' },
+        numberOfLayers: { value: item?.value?.numberOfLayers, error: '', type: 'number' },
+        size: { value: item?.value?.size, error: '', type: 'string' },
+        material: { value: item?.value?.material, error: '', type: 'string' },
+        color: { value: item?.value?.color, error: '', type: 'string' },
+        isPopular: { value: item?.value?.isPopular, error: '' },
+        isFeatured: { value: item?.value?.isFeatured, error: '' },
+        isBeneficial: { value: item?.value?.isBeneficial, error: '' },
+        images: {
+            value: item?.value?.images, error: '',
+
+        },
+    }
+})
+
+console.log('inutes edit admin', inputs);
+console.log('item edit admin', item)
 </script>
 
 <style scoped lang='scss'>

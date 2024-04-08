@@ -1,17 +1,4 @@
 <template>
-    <!-- <div class="main-page-header">
-        <div class="left">
-            <h1>Мастер Краска</h1>
-            <div class="sub-header">Официальный представитель мировых брендов лакокрасочной продукции
-            </div>
-            <button>
-                Пободбрать по параметрам</button>
-        </div>
-        <div class="right">
-
-            <img src="../assets/images/main-page.png" alt="">
-        </div>
-    </div> -->
 
     <div class="carousel-slider">
         <div class="slider-wrapper">
@@ -23,7 +10,7 @@
                     <h1>Мастер Краска</h1>
                     <div class="sub-header">Официальный представитель мировых брендов лакокрасочной продукции
                     </div>
-                    <button>
+                    <button class="pink-button" @click="navigateTo('/parameters')">
                         Пободбрать по параметрам</button>
                 </div>
                 <div class="right">
@@ -40,7 +27,7 @@
                     <h1>Мастер Краска 1</h1>
                     <div class="sub-header">Официальный представитель мировых брендов лакокрасочной продукции
                     </div>
-                    <button>
+                    <button class="pink-button">
                         Пободбрать по параметрам</button>
                 </div>
                 <div class="right">
@@ -57,7 +44,7 @@
                     <h1>Мастер Краска 2</h1>
                     <div class="sub-header">Официальный представитель мировых брендов лакокрасочной продукции
                     </div>
-                    <button>
+                    <button class="pink-button">
                         Пободбрать по параметрам</button>
                 </div>
                 <div class="right">
@@ -69,8 +56,6 @@
 
             <div class="controls">
                 <img src="../assets/icons/arrow-right.svg" @click="prevSlide" />
-
-
                 <div class="controls-circle">
                     <span @click="changeSlide(0)"
                         :class="{ 'active-control': currentIndex === 0, 'next-slide': direction === 'next', 'prev-slide': direction === 'prev' }"></span>
@@ -82,7 +67,6 @@
                 <img @click="nextSlide" src="../assets/icons/arrow-left.svg" />
             </div>
         </div>
-
     </div>
 
 
@@ -107,9 +91,9 @@ const changeSlide = (index: number) => {
 const prevSlide = () => {
     if (currentIndex.value > 0) {
         currentIndex.value--; direction.value = 'prev';
-
     }
 }
+
 
 </script>
 
@@ -170,12 +154,7 @@ const prevSlide = () => {
 .left {
     @include flex(column, center, start, 1px);
 
-    button {
-        @extend %button-shared;
-        display: block;
-        margin-top: 2.6rem;
-        font-size: 20px;
-    }
+
 }
 
 h1 {

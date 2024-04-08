@@ -81,6 +81,7 @@ const createReview = async () => {
             console.log(err)
         }
     }
+    fetchReviewsByProd()
 }
 
 

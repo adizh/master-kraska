@@ -244,4 +244,11 @@
     max-width: 600px;
     padding-left: 20px;
 }
+
+@media (min-width:768px) and (max-width:992px) {
+    .header h1 {
+        margin-top: 4rem;
+        font-size: 60px !important
+    }
+}
 </style>

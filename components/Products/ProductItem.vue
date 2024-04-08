@@ -5,7 +5,7 @@
             <img src="../../assets/icons/icon=heart fill.svg" alt="heart icon">
         </div>
         <slot name="edit-items"></slot>
-        <img src="../../assets/images/test-kraska.png" alt="">
+        <img :src="product?.images[0]" alt="">
 
 
         <span class="item-block-name">{{ productName }}</span>
@@ -22,7 +22,7 @@
                 <span class="text-data">{{ product?.brandName }}</span>
             </div>
         </div>
-        <button class="item-block-buy">{{ product?.price }} сом</button>
+        <button class="pink-button">{{ product?.variants[0]?.price }} сом</button>
     </div>
 </template>
 
@@ -92,9 +92,7 @@ const productName = computed(() => {
     }
 
     &-buy {
-        @extend %button-shared;
-        font-weight: 600;
-        font-size: 20px;
+
         width: $product-item-width
     }
 }

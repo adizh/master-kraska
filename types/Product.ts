@@ -4,7 +4,6 @@ export type Product = {
   id: string;
   name: string;
   description: string;
-  price: number;
   categoryId: string;
   subcategoryId: string;
   brandId: string;
@@ -13,16 +12,33 @@ export type Product = {
   brandName: string;
   surfacePreparations: string;
   numberOfLayers: number;
-  size: string;
-  material: string;
-  color: string;
+  rating: number;
+  isPopular: boolean;
+  isFeatured: boolean;
+  isBeneficial: boolean;
+  washableCoating: boolean;
+  withoutSmell: boolean;
+  weatherResistantCoating: boolean;
+  wearResistantCoating: boolean;
+  approvedByThePaintQualityAssociation: boolean;
+  fastDrying: boolean;
+  dirtAndWaterRepellentCoating: boolean;
   createdAt: string;
+  subdirectoryId: string[];
   images: string[];
   reviews: Review[];
-  rating: number;
-  isPopular:boolean;
-  isBeneficial:boolean;
-  isFeatured:boolean;
+
+  helpersMain: {
+    id: string;
+    name: string;
+    description: string;
+    categoryId: string;
+    products: [];
+    category: null;
+  }[];
+  products: [];
+  category: null;
+  variants: { id: string; size: string; price: number }[];
 };
 
 export interface ExtendedProduct extends Product {

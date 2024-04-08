@@ -1,15 +1,15 @@
 <template>
     <div class="each-section">
         <ProductsPopular />
-        <!-- <ProductsUseful />
-        <ProductsRecommended /> -->
+        <ProductsUseful />
+        <ProductsRecommended />
 
         <div class="koler">
             <h5 class="koler-header">Колеровка</h5>
             <p class="koler-text">Вы можете выбрать любой понравившийся цвет среди заданных фирм и посмотреть, как будет
                 выглядеть тот или
                 иной оттенок на поверхности</p>
-            <button class="koler-btn">Начать процедуру</button>
+            <button class="koler-btn" @click="navigateTo('/koler')">Начать процедуру</button>
         </div>
     </div>
 </template>
@@ -53,6 +53,19 @@
         font-weight: 500;
         margin-top: 20px;
         font-size: 20px;
+        transition: .3s;
+
+        &:hover {
+            @extend %blue-bnt-hover;
+            transition: .3s;
+            cursor: pointer;
+        }
+    }
+}
+
+@media (min-width:768px) and (max-width:992px) {
+    .koler {
+        padding-bottom: 8rem;
     }
 }
 </style>

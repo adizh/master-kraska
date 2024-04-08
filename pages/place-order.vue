@@ -80,7 +80,7 @@
                         <span>{{ cartStore.totalOfTotalSum }} сом</span>
                     </div>
                 </div>
-                <button class="margin-top-20">Подтвердить заказ</button>
+                <button class="margin-top-20 pink-button">Подтвердить заказ</button>
             </div>
         </div>
         <div class="ordered-items margin-top-40 col-8">

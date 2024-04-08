@@ -49,6 +49,8 @@ import { advantagesOptions } from '@/assets/js/advantages'
     @include flex(row, space-between, center);
     flex-wrap: wrap;
     width: 70%;
+    margin: 80px 0;
+
 
     &-item {
         width: 45%;

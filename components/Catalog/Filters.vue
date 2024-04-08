@@ -10,22 +10,19 @@
         </div>
 
         <div class="filters-block">
+
             <div>
                 <div v-for="item in catalogStore.getAllCatalogs" :key="item?.id">
                     <h4 class="filters-block-header">{{ item?.name }}</h4>
                     <p v-for="(sub, index) in getSlicedSubdirectories(item)" :key="index" class="each-sub-item">
-
-
                         <label class="custom-checkbox">
                             <input type="checkbox" :id="`${item.id}-${index}`" :value="sub.id"
                                 :checked="isChecked(item.id, sub.id)"
                                 @change="updateCheckboxState(item.id, sub.id, $event)" />
-                            <!-- <input type="checkbox"> -->
                             <p><span>{{ sub?.name }}</span></p>
                         </label>
-
-
                     </p>
+
                     <p v-if="getRemainingItemCount(item) > 0" class="open-block" @click="setOpenBlock(item?.id)">
                         {{ opensIncludes(item.id) ? 'Свернуть' : 'Еще' }} <span v-if="!opensIncludes(item.id)">{{
                     getRemainingItemCount(item) }}</span>
@@ -40,17 +37,17 @@
 </template>
 
 <script setup lang="ts">
-import { AllCatalog, SubCatalog } from '@/types/Catalog'
+import { AllCatalog, CatalogCheckbox, CatalogItem, SubCatalog } from '@/types/Catalog'
 import Catalog from '../Catalog.vue';
 const value = ref(false);
 const catalogStore = useCatalogStore();
 const route = useRoute()
 const id = route.params?.id
 const allSubCatalogs = ref<any>([]);
-const checkboxStates = ref<any>({})
-const initializeCheckboxStates = () => {
-    catalogStore.getAllCatalogs.map(item => {
-        checkboxStates.value[item.id] = {
+const checkboxStates = ref<{ [key: string]: CatalogCheckbox }>({});
+const initializeCheckboxStates = async () => {
+    return await catalogStore.getAllCatalogs.map(item => {
+        return checkboxStates.value[item.id] = {
             name: item.name,
             id: item.id,
             values: item.subdirectory.map(sub => ({ id: sub.id, value: false }))
@@ -59,19 +56,21 @@ const initializeCheckboxStates = () => {
 };
 
 const getCheckboxValue = computed(() => (itemId: string, subId: string) => {
-    return checkboxStates.value[itemId]?.values.find((val: SubCatalog) => val.id === subId)?.value || false;
+    return checkboxStates.value[itemId]?.values.find((val: { id: string }) => val.id === subId)?.value || false;
 });
 
 
 const isChecked = (itemId: string, subId: string) => {
-    return checkboxStates.value[itemId]?.values?.find((val: SubCatalog) => val.id === subId)?.value || false;
+    return checkboxStates?.value[itemId]?.values?.find((val: { id: string }) => val.id === subId)?.value || false;
 };
 
 const updateCheckboxState = (itemId: string, subId: string, event: any) => {
     const checked = event.target.checked;
 
-    const subIndex = checkboxStates?.value[itemId]?.values?.findIndex((val: AllCatalog) => val.id === subId);
-    checkboxStates.value[itemId].values[subIndex].value = checked;
+    const subIndex = checkboxStates?.value[itemId]?.values?.findIndex((val: { id: string }) => val.id === subId);
+    if (checkboxStates.value[itemId]?.values) {
+        checkboxStates.value[itemId].values[subIndex].value = checked;
+    }
 
 
     console.log('updateCheckboxState checked', checked)
@@ -79,17 +78,8 @@ const updateCheckboxState = (itemId: string, subId: string, event: any) => {
 };
 
 
-onMounted(() => {
-    catalogStore.fetchAllCatalogs();
-    initializeCheckboxStates();
-
-})
-
-
-console.log('checkboxStates', checkboxStates)
 
 const openedBlockFilters = ref<string[]>([]);
-
 const opensIncludes = (id: string) => {
     return openedBlockFilters.value.includes(id)
 }
@@ -102,8 +92,6 @@ const setOpenBlock = (id: string) => {
 
 }
 
-
-
 const getSlicedSubdirectories = (item: AllCatalog) => {
     if (item?.subdirectory && opensIncludes(item?.id)) {
         return item.subdirectory;
@@ -112,11 +100,17 @@ const getSlicedSubdirectories = (item: AllCatalog) => {
     }
     // return item?.subdirectory ? item.subdirectory.slice(0, 5) : [];
 }
-
 const getRemainingItemCount = (item: AllCatalog) => {
     return item?.subdirectory ? Math.max(item.subdirectory.length - 5, 0) : 0;
 }
+onMounted(async () => {
+    await catalogStore.fetchAllCatalogs();
+    initializeCheckboxStates();
 
+})
+
+
+console.log('checkboxStates', checkboxStates)
 
 </script>
 
@@ -127,42 +121,7 @@ const getRemainingItemCount = (item: AllCatalog) => {
     margin-top: 12px;
 }
 
-.custom-checkbox {
-    p {
-        display: flex;
-        gap: 10px;
-    }
-}
 
-.custom-checkbox input[type='checkbox'] {
-    display: none;
-}
-
-.custom-checkbox p::before {
-    content: '';
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: none;
-    border: 2px solid #000;
-    display: block;
-    max-width: 18px;
-    width: 100%;
-    height: 18px;
-
-}
-
-.custom-checkbox input[type='checkbox']:checked+p::before {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    content: url('../../assets/icons/check-icon-vector.svg');
-    width: 18px;
-    height: 18px;
-    position: relative;
-    left: 0px;
-    background: black;
-}
 
 
 .each-sub-item {

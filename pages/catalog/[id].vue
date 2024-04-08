@@ -6,13 +6,13 @@
                 <input type="text" placeholder="Поиск краски" class="basic-input">
                 
                 <div>
-
                     <img src="../../assets/icons/ep_menu.svg" alt="ep menu" @click="visibleMethod = 'vertical'">
                     <img src="../../assets/icons/f7_menu.svg" alt="menu" @click="visibleMethod = 'horizontal'">
                 </div>
             </div>
         </div>
         <div class="grid">
+
             <CatalogFilters class="col-3" />
             <!-- <CatalogResults class="col-9" :visibleMethod="visibleMethod" /> -->
         </div>
@@ -31,13 +31,6 @@ onMounted(() => {
     productStore.setCategoryId(id as string);
     productStore.filterProducts()
 })
-
-
-
-
-
-
-
 
 
 </script>

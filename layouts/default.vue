@@ -21,7 +21,8 @@
                         src="../assets/icons/icon=components-closed-arrow.svg" alt="open-arrow">
                 </li>
 
-                <li @click="isKolerOpen = !isKolerOpen">Колеровка</li>
+                <li @click="navigateTo('/koler')">Колеровка</li>
+
                 <li @click="navigateTo('/pay-deliver')">Оплата и доставка</li>
                 <li>
                     <NuxtLink to="/about-us">О нас</NuxtLink>
@@ -39,19 +40,16 @@
                 </li>
             </ul>
         </div>
+
         <Catalog :isCatalogOpen="isCatalogOpen" @closeCatalog="closeCatalog" @goToCatalog="goToCatalog" />
-
         <div class="overlay-header-options" v-show="isCatalogOpen" :class="{ 'open': isCatalogOpen }"></div>
-
     </div>
 
     <Dialog v-model:visible="isProfileOpen" modal :style="{ width: '450px', padding: '10px 40px 40px 40px' }">
         <div class="profile-section-header">
-
             <TabView v-if="selectedReg === 0">
                 <TabPanel header="Регистрация">
                     <AuthEmailRegister @closeModal="isProfileOpen = false" />
-                    <!-- <AuthRegister @selectRegister="selectRegister" /> -->
                 </TabPanel>
                 <TabPanel header="Войти">
                     <AuthLogin @closeLoginModal="isProfileOpen = false" />
@@ -66,10 +64,7 @@
     </Dialog>
 
 
-    <Dialog v-model:visible="isKolerOpen" modal :style="{ width: '650px', padding: '10px 40px 40px 40px' }">
 
-        <Koler />
-    </Dialog>
 
 
     <!-- <Toast /> -->
@@ -77,7 +72,7 @@
 
 <script setup lang="ts">
 import { CatalogItem } from '~/types/Catalog';
-const isKolerOpen = ref(false)
+
 const toast = useToast()
 const isCatalogOpen = ref(false);
 const isSearchOpen = ref(false);
@@ -189,6 +184,13 @@ provide('closeProfileOpen', closeProfileOpen)
     li {
         display: flex;
         align-items: center;
+        transition: .2s ease;
+
+        &:hover {
+            color: $main-pink !important;
+            cursor: pointer;
+            transition: .2s ease;
+        }
     }
 
     &-header-links {

@@ -357,3 +357,64 @@ h2 {
   @include textFormat(20px, 20px, 600, $main-blue !important);
   margin-top: 20px;
 }
+
+.pink-button {
+  @extend %button-shared;
+  display: block;
+  margin-top: 2.6rem;
+  font-size: 20px;
+  transition: 0.3s;
+  &:hover {
+    transition: 0.3s;
+    background: #9c004b;
+  }
+}
+.gray-buttons-border {
+  padding: 16px 20px;
+  border: 1px solid $slider-border-color;
+  border-radius: 10px;
+  background: white;
+  @include textFormat(16px, 20px, 500, $main-black);
+}
+
+.custom-checkbox {
+  p {
+    display: flex;
+    gap: 10px;
+  }
+}
+
+.custom-checkbox input[type="checkbox"] {
+  display: none;
+}
+
+.custom-checkbox p::before {
+  content: "";
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  border: 2px solid #000;
+  display: block;
+  max-width: 18px;
+  width: 100%;
+  height: 18px;
+}
+
+.custom-checkbox input[type="checkbox"]:checked + p::before {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  content: url("../assets/icons/check-icon-vector.svg");
+  width: 18px;
+  height: 18px;
+  position: relative;
+  left: 0px;
+  background: black;
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  .item-block {
+    width: 50%;
+  }
+}

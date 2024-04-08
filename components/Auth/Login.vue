@@ -8,6 +8,7 @@
             <div class="password-block-input">
                 <input :type="isPasswordOpen ? 'text' : 'password'" class="form-input col-12" placeholder="Пароль"
                     v-model.trim="inputs.password.value" @input="handleValues('password', 'password')">
+                <span class="err-input-msg " v-if="inputs.password.error">{{ inputs.password.error }}</span>
                 <img src="../../assets/icons/black/ri-eye-open.svg" alt="open" v-if="isPasswordOpen"
                     @click="togglePassword(false)" class="password-icon">
                 <img src="../../assets/icons/black/ri_eye-off-line.svg" alt="close" v-else @click="togglePassword(true)"
@@ -15,7 +16,7 @@
             </div>
             <span class="sm-blue-text" @click="isPasswordReset = true">Забыли пароль?</span>
 
-            <span class="err-input-msg " v-if="inputs.password.error">{{ inputs.password.error }}</span>
+         
             <button @click="submitLogin">Войти</button>
 
         </div>
@@ -97,6 +98,9 @@ const submitLogin = async () => {
             }
             console.log('response submit login', response);
         } catch (err: any) {
+            if (err?.response?.data?.code === 401) {
+                inputs.value.password.error = err?.response?.data?.message || 'Произошла ошибка'
+            }
             if (err?.response?.data?.code === 404) {
                 inputs.value.email.error = err?.response?.data?.message || 'Произошла ошибка'
             }

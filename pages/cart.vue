@@ -20,7 +20,7 @@
 
             </div>
             <div class="cart-main-info-price col-3  ml-4">
-                <button @click="navigateTo('/place-order')">Перейти к оформлению</button>
+                <button @click="navigateTo('/place-order')" class="pink-button">Перейти к оформлению</button>
                 <div class="cart-main-info-price-block">
                     <div class="first">
                         <span>Всего: {{ store.numberOfProds }} товар</span>

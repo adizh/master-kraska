@@ -110,7 +110,7 @@ const productName = (name: string) => {
 }
 
 .item-block {
-    width: 30%;
+    width: 35%;
     padding: 20px 32px;
     overflow: hidden;
 
@@ -158,7 +158,7 @@ const productName = (name: string) => {
 
 .item-block:hover {
     cursor: pointer;
-    box-shadow: 0px 6px 30px 0px rgba(0, 0, 0, 0.12);
+    box-shadow: 0px 6px 18px 0px #0000001F;
     transition: .3s ease all;
 }
 

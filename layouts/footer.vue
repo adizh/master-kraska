@@ -4,27 +4,34 @@
             <div class="first">
 
                 <!-- <NuxtImg src="/white-logo.png" /> -->
-
-                <img src="../assets/images/white-logo.png" alt="">
+                <img src="../assets/images/white-logo.png" alt="" class="white-logo">
                 <button class="callback-btn">Обратный звонок</button>
             </div>
             <div class="second">
-                <span><a href="/news">Новости</a></span>
-                <span><a href="/contacts">Наши магазины</a></span>
-                <span><a href="/contacts">Контакты</a></span>
-                <span><a href="">Колеровка</a></span>
+                <span><a href="/news">Новости
+
+                        <img src="../assets/icons/arrow-footer.svg" alt="arrow">
+                    </a></span>
+                <span><a href="/contacts">Наши магазины <img src="../assets/icons/arrow-footer.svg"
+                            alt="arrow"></a></span>
+                <span><a href="/contacts">Контакты <img src="../assets/icons/arrow-footer.svg" alt="arrow"></a></span>
+                <span><a href="">Колеровка <img src="../assets/icons/arrow-footer.svg" alt="arrow"></a></span>
             </div>
             <div class="third">
-                <span><a href="">Подбор по параметрам</a></span>
-                <span><a href="">Бренды</a></span>
-                <span><a href="/certificates">Сертификаты</a></span>
-                <span><a href="/about-us">О нас</a></span>
+                <span><a href="">Подбор по параметрам <img src="../assets/icons/arrow-footer.svg"
+                            alt="arrow"></a></span>
+                <span><a href="">Бренды <img src="../assets/icons/arrow-footer.svg" alt="arrow"></a></span>
+                <span><a href="/certificates">Сертификаты <img src="../assets/icons/arrow-footer.svg"
+                            alt="arrow"></a></span>
+                <span><a href="/about-us">О нас <img src="../assets/icons/arrow-footer.svg" alt="arrow"></a></span>
             </div>
             <div class="fourth">
-                <span><a href="">Выездной консультант</a></span>
-                <span><a href="">Карта постоянного покупателя</a></span>
-                <span><a href="">Оплата и доставка</a></span>
-                <span><a href="">Эксперты</a></span>
+                <span><a href="">Выездной консультант <img src="../assets/icons/arrow-footer.svg"
+                            alt="arrow"></a></span>
+                <span><a href="">Карта постоянного покупателя <img src="../assets/icons/arrow-footer.svg"
+                            alt="arrow"></a></span>
+                <span><a href="">Оплата и доставка <img src="../assets/icons/arrow-footer.svg" alt="arrow"></a></span>
+                <span><a href="">Эксперты <img src="../assets/icons/arrow-footer.svg" alt="arrow"></a></span>
             </div>
         </div>
         <div class="middle">
@@ -79,8 +86,25 @@
 .top {
     @include flex(row, space-between, center);
 
-    img {
+    .white-logo {
         width: 100%
+    }
+
+
+    a {
+        img {
+            opacity: 0;
+        }
+
+        transition: .4s ease-in all;
+        @include flex(row, center, center);
+
+        &:hover {
+            img {
+                opacity: 1;
+                transition: .4s ease-in all;
+            }
+        }
     }
 }
 
@@ -92,7 +116,6 @@
 }
 
 span a {
-
     @include footerSpan(24px, 16px)
 }
 
@@ -113,5 +136,23 @@ span a {
     @include footerSpan(20px, 13px);
     color: $footer-bottom-color;
     @include flex(row, start, center, 15px)
+}
+
+
+@media (min-width:768px) and (max-width:992px) {
+    .callback-btn {
+        padding: 6px 13px;
+        font-size: 14px;
+    }
+
+    .top img {
+        width: 75%;
+    }
+}
+
+@media (min-width:768px) and (max-width:992px) {
+    .middle {
+        flex-wrap: wrap;
+    }
 }
 </style>

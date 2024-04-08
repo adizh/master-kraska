@@ -17,3 +17,9 @@ export type SubCatalog = {
   categoryId: string;
   products: null;
 };
+
+export type CatalogCheckbox = {
+  name: string;
+  id: string;
+  values: { id: string; value: boolean }[]
+};
