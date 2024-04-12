@@ -2,23 +2,27 @@
     <div class="magazine">
         <h3>Способ оплаты</h3>
         <div class="flex flex-row flex-wrap gap-4">
-            <button v-for="payOption in payOptions" :key="payOption" class="order-btn" @click="selPayMethod(payOption)">
+            <button v-for="payOption in payOptions" :key="payOption" class="gray-buttons-border"
+                @click="selPayMethod(payOption)" :class="{ 'selected-btn': payMethod === payOption }">
                 {{ payOption }}
                 <img src="../../assets/icons/carbon_checkmark-filled (1).svg" alt="carbon"
                     v-show="payMethod === payOption">
+
+
             </button>
 
-        </div>
 
+
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
 import { PaymentTypes } from '@/types/Items'
 const payMethod = ref<PaymentTypes>('');
+const orderStore = useOrderStore()
 
-
-const payOptions:PaymentTypes[] = [
+const payOptions: PaymentTypes[] = [
     'Банковской картой',
     'Наличными',
     'MBank',
@@ -31,7 +35,7 @@ const emits = defineEmits<{
 
 const selPayMethod = (type: PaymentTypes) => {
     payMethod.value = type;
-    emits('choosePayMethod', type)
+    emits('choosePayMethod', type);
 }
 
 </script>
@@ -39,5 +43,9 @@ const selPayMethod = (type: PaymentTypes) => {
 <style scoped lang="scss">
 h3 {
     margin-bottom: 20px;
+}
+
+.err-input-msg {
+    margin-top: -15px
 }
 </style>

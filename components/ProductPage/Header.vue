@@ -26,8 +26,8 @@
                 <span class="each-block-info-col">Объем</span>
 
                 <div class="middle-volume-buttons">
-                    <button v-for="(btn, index) in product?.variants" :class="{ 'active-btn': volumeBtn === btn?.size }"
-                        @click='selectVolumeSize(btn?.size, index)'>
+                    <button v-for="(btn, index) in product?.variants" :key="btn?.id"
+                        :class="{ 'active-btn': volumeBtn === btn?.size }" @click='selectVolumeSize(btn?.size, index)'>
                         {{ btn?.size }}
                     </button>
                     <!-- <button>{{ product?.packing }} л</button> -->
@@ -62,14 +62,7 @@
             <div class="header">
                 <span>Цены</span>
                 <UIBookmarks :product="product" />
-                <!-- <button @click="toggleBoomark(product?.id)" v-if="!isProductBookmarked">
-                    В избранное
-                    <img src="../../assets/icons/icon=heart.svg" alt="heart" />
-                </button>
-                <button @click="toggleBoomark(product?.id)" v-else>
-                    Убрать
-                    <img src="../../assets/icons/icon=heart fill.svg" alt="heart icon">
-                </button> -->
+
             </div>
 
             <div class="numbers">
@@ -146,7 +139,7 @@
             <button>В корзину</button>
         </div>
     </OverlayPanel>
-    <Toast />
+
 
 
     <Dialog v-model:visible="isProfileOpen" modal :style="{ width: '450px', padding: '10px 40px 40px 40px' }">
@@ -170,7 +163,7 @@ const totalPrice = ref(0)
 const authStore = useAuthStore();
 const productStore = useProductsSstore()
 const store = useCartStore()
-const toast = useToast()
+
 const selectedProductPrice = ref(0)
 const length = ref(0)
 const width = ref(0)
@@ -187,24 +180,7 @@ const toggle = (event: any) => {
 ratingValue.value = props?.product?.rating
 
 
-const leastSmallAmount = computed(() => {
-    const variants = props.product?.variants;
-    if (!variants || variants.length === 0) {
-        return -1;
-    }
 
-    let smallestPrice = variants[0].price;
-    let smallestPriceIndex = 0;
-    for (let i = 1; i < variants.length; i++) {
-        const variantPrice = variants[i].price;
-        if (variantPrice < smallestPrice) {
-            smallestPrice = variantPrice;
-            smallestPriceIndex = i;
-        }
-    }
-
-    return smallestPriceIndex;
-});
 
 
 
@@ -233,7 +209,7 @@ const increaseCount = () => {
 }
 
 const buyNow = () => {
-   // navigateTo('/place-order')
+    // navigateTo('/place-order')
     if (authStore.getUserId) {
 
     } else {
@@ -271,13 +247,39 @@ const isProductExistsInCart = computed(() => {
     const index = store.getAllCart?.findIndex((item) => item?.id === props?.product?.id);
     return index !== -1 ? false : true
 })
-onMounted(async () => {
-    await productStore.getBookmarks(props?.product?.id);
+
+const leastSmallAmount = computed(() => {
+    const variants = props?.product?.variants;
+    if (!variants || variants?.length === 0 && variants == null) {
+        return -1;
+    } else {
+        let smallestPrice = variants[0]?.price;
+        let smallestPriceIndex = 0;
+        for (let i = 1; i < variants?.length; i++) {
+            const variantPrice = variants[i]?.price;
+            if (variantPrice < smallestPrice) {
+                smallestPrice = variantPrice;
+                smallestPriceIndex = i;
+            }
+        }
+        return smallestPriceIndex || 0
+    }
+
+
+
+
+});
+
+console.log('leastSmallAmount', leastSmallAmount)
+onMounted(() => {
+    productStore.getBookmarks(props?.product?.id);
+    console.log('product in component child itseld', props)
     isProductBookmarked.value = productStore.getProductBookmarked;
-    volumeBtn.value = props?.product?.variants[leastSmallAmount.value]?.size;
-    selectedProductPrice.value = props?.product?.variants[leastSmallAmount.value]?.price;
+    volumeBtn.value = props.product?.variants[leastSmallAmount.value]?.size;
+    selectedProductPrice.value = props.product?.variants[leastSmallAmount.value]?.price;
     totalPrice.value = countToBuy.value * selectedProductPrice.value
 })
+
 </script>
 
 <style scoped lang="scss">

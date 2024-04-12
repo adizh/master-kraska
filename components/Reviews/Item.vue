@@ -26,7 +26,7 @@
             {{ item?.ratingText }}
         </p>
     </li>
-    <Toast />
+
     <Dialog v-model:visible="isModal" modal header="">
         <template #header>
             <div class="p-modal-header">
@@ -47,14 +47,14 @@
         <ReviewsEditForm :item="item" />
     </Dialog>
 
-    <Toast />
+
 </template>
 
 <script setup lang="ts">
 import { Review } from '~/types/Review';
 
 const rating = ref(4);
-const toast = useToast();
+
 const isModal = ref(false);
 const isEditModal = ref(false);
 
@@ -72,7 +72,10 @@ const confirmDelete = async () => {
         const response = await http.delete(`/api/v1/ProductReview/delete-review-by-id/${props?.item?.id}`);
         console.log('response delete', response);
         if (response.status === 200) {
-            toast.add({ severity: 'success', detail: 'Комментарий удален', summary: 'Успешно' });
+      
+
+
+            useNotif('success', 'Комментарий удален', 'Успешно')
             isModal.value = false
         }
     } catch (err) {

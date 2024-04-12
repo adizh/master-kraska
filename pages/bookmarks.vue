@@ -24,7 +24,5 @@
 <style scoped lang="scss">
 
 
-.item-block {
-    width: 25%
-}
+
 </style>

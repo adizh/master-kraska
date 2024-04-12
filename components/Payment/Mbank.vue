@@ -1,27 +1,67 @@
 <template>
-
-
     <form class='order-form' @submit.prevent="sendCheckPayment">
         <h3>MBank</h3>
         <div class="flex flex-column gap-2 mt-4">
             <span for="basic">Номер телефона</span>
-            <InputMask id="basic" mask="+999 999 99 99 99" placeholder="+996 777 66 55 44" v-model="mbankPhone" />
+            <InputMask id="basic" mask="999999999999" placeholder="996700555555"
+                v-model="payStore.getMbank.mbankPhone.value" @input="payStore.clearError('mbankPhone')" />
+            <span v-if='payStore.getMbank.mbankPhone.error' class="err-input-msg">{{ payStore.getMbank.mbankPhone.error
+                }}</span>
         </div>
         <div class="btn"> <button class="bg-white-btn" type="submit">Отправить</button></div>
     </form>
+
+    <div v-if="payStore.getMbank?.openConfirm">
+        <InputOtp v-model="payStore.getMbank.otp.value" :length='4' id="code" @input="payStore.clearError('otp')" />
+        <span v-if='payStore.getMbank.otp.error' class="err-input-msg">{{ payStore.getMbank.otp.error }}</span>
+        <div class="btn"> <button class="bg-white-btn" type="submit" @click='sendOtp'>Отправить</button></div>
+    </div>
+
+
 </template>
 
 <script setup lang="ts">
-const route = useRoute()
-const id = route.params.id as string
-const mbankPhone = ref('');
+const route = useRoute();
+const emit = defineEmits(['closeModal'])
 const payStore = usePayStore();
+const cartStore = useCartStore();
+
+
+console.log('cartStore get curre stre ordernumber', cartStore);
+
+//996772140014
 const sendCheckPayment = () => {
+    console.log(' phone: payStore.getMbank.mbankPhone.value,', payStore.getMbank.mbankPhone.value,)
     payStore.checkPayment({
         paymentType: 'mbank',
-        phone: '996772140014'
-    }, id)
+        phone: payStore.getMbank.mbankPhone.value,
+
+    }, cartStore.getCurrentOrder?.orderNumber, 'mbank')
 }
+
+const sendOtp = async () => {
+    console.log('what is otp', payStore.getMbank.otp.value)
+    const response = await payStore.confirmMbank();
+    console.log('response from the apin setntop', response)
+    if (response === 'Платеж в обработке...') {
+       
+
+
+        useNotif('success',payStore.getMbank.status,'Успешно')
+        setTimeout(() => {
+            return navigateTo('/cart')
+        }, 1000)
+    }
+
+
+
+    if (payStore.getMbank.statusCode === '201') {
+        emit('closeModal');
+        payStore.setExit(true)
+
+    }
+}
+
 </script>
 
 <style scoped lang="scss">
@@ -40,14 +80,27 @@ const sendCheckPayment = () => {
 
     }
 
-    .btn {
-        @include flex(flex, flex-end, center);
-        width: 100%;
 
-        button {
-            box-shadow: 0px 0.5px 2.5px 0px #0000004d;
-        }
+
+}
+
+.bg-white-btn {
+    box-shadow: 0px 0.5px 2.5px 0px #0000004d;
+}
+
+.btn {
+    @include flex(flex, flex-end, center);
+    width: 100%;
+}
+
+:deep(.p-inputotp) {
+    margin-top: 10px !important;
+    @include flex(flex, center, center);
+
+
+    input {
+        width: 70px !important;
+        height: 68px !important;
     }
-
 }
 </style>

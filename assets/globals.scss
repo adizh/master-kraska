@@ -17,13 +17,14 @@ $rating-color: #f2c94c;
 $light-blue: #33587d1a;
 
 %button-shared {
-  padding: $button-padding;
+  padding: 16px 20px;
   background: $main-pink;
   color: #fff;
   border-radius: 8px;
   outline: none;
   border: none;
-  font-size: 16px;
+  font-size: 20px;
+  line-height: 20px;
 }
 
 %header-nav {
@@ -59,9 +60,9 @@ $light-blue: #33587d1a;
 }
 
 %blue-bnt-hover {
-  background: #274562;
-  box-shadow: 0px 0px 0px 0.5px #0000000d;
+  background: #274562 !important;
+  box-shadow: 0px 0px 0px 0.5px #0000000d !important;
 
-  box-shadow: 0px 0.5px 2.5px 0px #0000004d;
-  color: white;
+  box-shadow: 0px 0.5px 2.5px 0px #0000004d !important;
+  color: white !important;
 }

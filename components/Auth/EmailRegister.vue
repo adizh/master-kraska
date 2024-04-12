@@ -4,19 +4,19 @@
         <div class="grid">
 
             <div class="col-12 flex flex-column  col-password">
-                <input type="text" class="form-input col-12 password" placeholder="Имя" v-model="inputs.name.value"
+                <input type="text" class="basic-input col-12 password" placeholder="Имя" v-model="inputs.name.value"
                     @input="handleValues('name', 'string')">
                 <span class="err-input-msg"> {{ inputs.name.error }}</span>
             </div>
             <div class="col-12 flex flex-column  col-password">
-                <input type="text" class="form-input col-12 password" placeholder="Фамилия"
+                <input type="text" class="basic-input col-12 password" placeholder="Фамилия"
                     v-model="inputs.surname.value" @input="handleValues('surname', 'string')">
                 <span class="err-input-msg"> {{ inputs.surname.error }}</span>
             </div>
 
 
             <div class="col-12 flex flex-column  col-password">
-                <input type="email" class="form-input col-12 password" placeholder="Почта" v-model="inputs.email.value"
+                <input type="email" class="basic-input col-12 password" placeholder="Почта" v-model="inputs.email.value"
                     @input="handleValues('email', 'email')">
                 <span class="err-input-msg"> {{ inputs.email.error }}</span>
             </div>
@@ -31,7 +31,7 @@
             <div class="col-12 flex flex-column  col-password password-block-input">
 
                 <input :type="isPasswordOpen ? 'text' : 'password'" v-model="inputs.password.value"
-                    class="form-input col-12 password" placeholder="Придумайте пароль"
+                    class="basic-input col-12 password" placeholder="Придумайте пароль"
                     @input="handleValues('password', 'password')">
                 <img src="../../assets/icons/black/ri-eye-open.svg" alt="open" v-if="isPasswordOpen"
                     @click="togglePassword(false)" class="password-icon">
@@ -41,7 +41,7 @@
             </div>
             <div class="col-12 flex flex-column  col-password password-block-input">
                 <input :type="isPasswordRepeatOpen ? 'text' : 'password'" v-model="inputs.passwordRepeat.value"
-                    class="form-input col-12 password" placeholder="Повторите пароль"
+                    class="basic-input col-12 password" placeholder="Повторите пароль"
                     @input="handleValues('passwordRepeat', 'passwordRepeat')">
                 <img src="../../assets/icons/black/ri-eye-open.svg" alt="open" v-if="isPasswordRepeatOpen"
                     @click="togglePasswordRepeat(false)" class="password-icon">
@@ -50,12 +50,12 @@
                 <span class="err-input-msg"> {{ inputs.passwordRepeat.error }}</span>
             </div>
 
-            <button class="col-12" type="submit">Зарегистрироваться</button>
+            <button class="col-12 register-auth-btn" type="submit" >Зарегистрироваться</button>
 
         </div>
 
     </form>
-    <Toast />
+
 </template>
 
 <script setup lang="ts">
@@ -63,7 +63,7 @@ import { Inputs } from '@/types/Items'
 import http from '@/composables/http'
 const isPasswordOpen = ref(false)
 const isPasswordRepeatOpen = ref(false)
-const toast = useToast();
+
 
 const inputs = ref<Inputs>({
     name: { value: '', error: '' },
@@ -144,7 +144,8 @@ const submitRegister = async () => {
             const response = await http.post('/api/v1/User/registration', body);
             if (response.status === 200) {
                 localStorage.setItem('userId', response.data.message.id)
-                toast.add({ severity: 'success', detail: 'Регистрация прошла успешно', summary: 'Регистрация' });
+
+                useNotif('success', 'Регистрация прошла успешно', 'Регистрация')
                 setTimeout(() => {
                     emit('closeModal')
                 }, 1000)
@@ -185,12 +186,6 @@ input:not(.password) {
     margin-bottom: 5px;
 }
 
-button {
-    @extend %button-shared;
-    font-size: 16px;
-    line-height: 32px;
-    padding: 6px 13px;
-}
 
 
 

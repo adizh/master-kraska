@@ -25,6 +25,7 @@ export const useAuthStore = defineStore("authStore", {
           this.user.phone = response.data.message.phoneNumber;
           this.user.email = response.data.message.email;
           this.user.image = response.data.message.image;
+      
         } catch (err) {
           console.log(err);
         }

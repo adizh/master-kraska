@@ -4,6 +4,7 @@
         <ProductsUseful />
         <ProductsRecommended />
 
+
         <div class="koler">
             <h5 class="koler-header">Колеровка</h5>
             <p class="koler-text">Вы можете выбрать любой понравившийся цвет среди заданных фирм и посмотреть, как будет
@@ -22,7 +23,7 @@
 .koler {
     background-image: url('/static/sofa.png');
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
     height: 100vh;
     background-position: center center;
 
@@ -49,7 +50,16 @@
 
 @media (min-width:768px) and (max-width:992px) {
     .koler {
-        padding-bottom: 8rem;
+        padding-bottom: .1rem;
+
+        &-header {
+            font-size: 48px;
+            line-height: 65px;
+        }
+
+        &-text {
+            max-width: 100%;
+        }
     }
 }
 </style>

@@ -125,9 +125,11 @@ const chooseBrand = (value: string) => {
 
     .top {
         position: relative;
+        padding: 10px 20px;
 
         .prev,
         .next {
+
             color: black !important;
             border: 1px solid $slider-border-color !important;
             padding: 10px;
@@ -149,7 +151,7 @@ const chooseBrand = (value: string) => {
         }
 
         .prev {
-            left: -15px;
+            left: 0;
             background-image: url(../assets/icons/arrow-right.svg);
 
             &:hover {
@@ -158,7 +160,7 @@ const chooseBrand = (value: string) => {
         }
 
         .next {
-            right: 5px;
+            right: 20px;
             background-image: url(../assets/icons/arrow-left.svg);
 
             &:hover {

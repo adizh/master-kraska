@@ -59,7 +59,7 @@ const productName = computed(() => {
 }
 
 .item-block {
-    width: 45%;
+    width: 28%;
     padding: 20px 32px;
     overflow: hidden;
 

@@ -12,9 +12,11 @@
   "dependencies": {
     "@pinia/nuxt": "^0.5.1",
     "@types/yandex-maps": "^2.1.35",
+    "@vuesimple/vs-toast": "^3.0.5",
     "animate.css": "^4.1.1",
     "axios": "^1.6.8",
     "nuxt": "^3.10.3",
+    "nuxt-snackbar": "^1.0.4",
     "nuxt-swiper": "^1.2.2",
     "pinia": "^2.1.7",
     "primeflex": "^3.3.1",

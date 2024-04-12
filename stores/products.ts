@@ -2,7 +2,6 @@ import http from "@/composables/http";
 import { Product } from "@/types/Product";
 
 import { Category } from "@/types/Category";
-//const toast = useToast();
 
 export const useProductsSstore = defineStore("productsStore", {
   state: () => ({
@@ -20,6 +19,8 @@ export const useProductsSstore = defineStore("productsStore", {
       weatherResistantCoating: false,
       wearResistantCoating: false,
       dirtAndWaterRepellentCoating: false,
+      minPrice: 0,
+      maxPrice: 0,
     },
   }),
   actions: {
@@ -71,21 +72,39 @@ export const useProductsSstore = defineStore("productsStore", {
         query.dirtAndWaterRepellentCoating;
       this.filters.wearResistantCoating = query.wearResistantCoating;
     },
-    setSubDirectories(item: { id: string; value: boolean } | null) {
-      if (item) {
-        this.filters.subdirectoryIds.push(item?.id);
+    setPrices(minPrice: number, maxPrice: number) {
+      this.filters.minPrice = minPrice;
+      this.filters.maxPrice = maxPrice;
+    },
+    setTypeOfWork(value: any) {
+      if (value === null) {
+        this.filters.subdirectoryIds = [];
       } else {
-        this.filters.subdirectoryIds = null;
+        console.log("value set Sub dirs", value);
+        const ids = value.map((item: any) => item?.id);
+        this.filters.subdirectoryIds.push(value[0]);
       }
-
-      console.log("this.filters.subdirectoryIds", this.filters.subdirectoryIds);
+    },
+    setSubDirectories(value: any) {
+      if (value === null) {
+        this.filters.subdirectoryIds = [];
+      } else {
+        console.log("value set Sub dirs", value);
+        const ids = value.map((item: any) => item?.id);
+        this.filters.subdirectoryIds = [...ids];
+      }
     },
     async filterProducts() {
+      const subDirs =
+        this.filters.subdirectoryIds?.length > 0
+          ? this.filters.subdirectoryIds?.join(",")
+          : null;
+
+      console.log("filter products subDirs", subDirs);
       const query = {
         productName: this.filters.search,
         categoryId: this.filters.categoryId,
-        subdirectoryIds: this.filters.subdirectoryIds?.join(",") || null,
-
+        subdirectoryIds: subDirs,
         fastDrying: this.filters.fastDrying,
         approvedByThePaintQualityAssociation:
           this.filters.approvedByThePaintQualityAssociation,
@@ -94,6 +113,8 @@ export const useProductsSstore = defineStore("productsStore", {
         weatherResistantCoating: this.filters.weatherResistantCoating,
         wearResistantCoating: this.filters.wearResistantCoating,
         dirtAndWaterRepellentCoating: this.filters.dirtAndWaterRepellentCoating,
+        minPrice: this.filters.minPrice,
+        maxPrice: this.filters.maxPrice,
       };
 
       try {

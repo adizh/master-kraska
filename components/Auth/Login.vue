@@ -2,11 +2,11 @@
     <div class="register-auth">
         <p class="register-auth-header">Введите данные чтобы войти в аккаунт</p>
         <div class="register-auth-options">
-            <input type="text" class="form-input" placeholder="Email" v-model.trim="inputs.email.value"
+            <input type="text" class="basic-input" placeholder="Email" v-model.trim="inputs.email.value"
                 @input="handleValues('email', 'email')">
             <span class="err-input-msg " v-if="inputs.email.error">{{ inputs.email.error }}</span>
             <div class="password-block-input">
-                <input :type="isPasswordOpen ? 'text' : 'password'" class="form-input col-12" placeholder="Пароль"
+                <input :type="isPasswordOpen ? 'text' : 'password'" class="basic-input col-12" placeholder="Пароль"
                     v-model.trim="inputs.password.value" @input="handleValues('password', 'password')">
                 <span class="err-input-msg " v-if="inputs.password.error">{{ inputs.password.error }}</span>
                 <img src="../../assets/icons/black/ri-eye-open.svg" alt="open" v-if="isPasswordOpen"
@@ -16,8 +16,8 @@
             </div>
             <span class="sm-blue-text" @click="isPasswordReset = true">Забыли пароль?</span>
 
-         
-            <button @click="submitLogin">Войти</button>
+
+            <button @click="submitLogin" class="register-auth-btn">Войти</button>
 
         </div>
     </div>
@@ -129,22 +129,6 @@ const submitLogin = async () => {
 
     &-options {
         @include flex(column, center, initial);
-
-        input {
-            font-size: 14px;
-            padding: 13px 16px;
-
-            &::placeholder {
-                font-size: 14px;
-            }
-        }
-
-        button {
-            @extend %button-shared;
-            @include textFormat(14px, 32px, 500, #fff);
-            border-radius: 10px;
-
-        }
     }
 }
 

@@ -20,7 +20,7 @@
             <button @click="createReview">Оставить отзыв</button>
         </div>
     </div>
-    <Toast />
+
 
     <Dialog v-model:visible="isProfileOpen" modal :style="{ width: '450px', padding: '10px 40px 40px 40px' }">
         <AuthModal @closeModal="isProfileOpen = false" />
@@ -38,7 +38,7 @@ const props = defineProps<{
     item: ExtendedProduct
 }>();
 const itemReviews = ref<Review[]>([])
-const toast = useToast()
+
 const inputs = ref({
     title: { value: '', error: '' },
     text: { value: '', error: '' },
@@ -79,7 +79,8 @@ const createReview = async () => {
                     inputs.value.text.value = ''
                     inputs.value.title.value = ''
                     inputs.value.ratingValue.value = 0;
-                    toast.add({ severity: 'success', summary: "Успешно", detail: 'Отзыв оставлен!' })
+
+                    useNotif('success', 'Отзыв оставлен!','Успешно')
                 }
                 console.log('response create review', response)
             } catch (err) {
@@ -114,6 +115,7 @@ onMounted(() => {
 
 <style scoped lang='scss'>
 @import '../../assets/tabs.scss';
+
 .prod-item-reviews {
     margin-top: 80px;
 

@@ -14,15 +14,12 @@
                         </button>
                         <img src="../assets/icons/icon=trash.svg" alt="delete" class='delete-icon'
                             @click.stop="removeFromCart(cartItem)">
-
                     </template>
                 </CartProductItem>
-
-
-
             </div>
+
             <div class="cart-main-info-price col-3  ml-4">
-                <button class="pink-button" @click="createOrder">Перейти к оформлению</button>
+                <button class="pink-button" @click='isConfirmOpen = true'>Перейти к оформлению</button>
                 <div class="cart-main-info-price-block">
                     <div class="first">
                         <span>Всего: {{ store.numberOfProds }} товар</span>
@@ -39,7 +36,7 @@
                     </div>
                 </div>
 
-                <button class="btn-white-bg" @click="store.saveNewCart">Сохранить изменения</button>
+                <button class="bg-white-btn" @click="store.saveNewCart">Сохранить изменения</button>
             </div>
         </div>
 
@@ -57,55 +54,76 @@
         </NoContent>
 
     </section>
-    <Toast />
+
+
+
+    <Dialog v-model:visible="isConfirmOpen" modal :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
+        header=" ">
+        <h5 class="modal-header">Вы действительно хотите подтвердить заказ?</h5>
+        <div class='flex flex-row justify-content-end gap-2'>
+            <button @click="createOrder" class='modal-btns'>Подтвердить</button>
+            <button @click="isConfirmOpen = false" class='modal-btns blue'>Отменить</button>
+        </div>
+    </Dialog>
 </template>
 
 <script setup lang="ts">
+
 import { Product, ExtendedProduct } from '~/types/Product';
 import { Order } from '@/types/Order'
 const store = useCartStore();
+const cartStore = useCartStore();
 
 const authStore = useAuthStore()
-console.log('cart', store.getAllCart)
+const isConfirmOpen = ref(false)
+
+
+
+
 
 const removeFromCart = (item: ExtendedProduct) => {
     store.removeFromCart(item)
 }
 
-const toast = useToast()
+const confirmOrder = () => {
+    isConfirmOpen.value = true;
+}
+
+
 
 
 const createOrder = async () => {
+    isConfirmOpen.value = false;
     const allOrderItems = [] as Order[]
-    for (let item of store.getAllCart) {
+    for (let item of cartStore.getAllCart) {
+        console.log('what is item in cart store create-order', item)
         allOrderItems.push({
             customerId: authStore.getUserId ? authStore.getUserId : '',
             productId: item?.id,
             productName: item?.name,
-            price: item?.totalProdSum
-
+            price: item?.initPrice,
+            quantity: item?.count
         })
     }
-
-
     try {
-
         const response = await http.post('/api/v1/Order/create-order', allOrderItems);
-        console.log('response', response);
+        console.log('response create order', response);
         if (response.status === 200) {
-            toast.add({ severity: 'success', summary: 'Успех', detail: 'Успешно оформлено' });
-            store.setCurrentOrder(response?.data?.message)
-            console.log('response data mesage', response?.data?.message)
-            setTimeout(() => {
-                navigateTo(`/place-order/${response?.data?.message?.orderNumber}`)
-            }, 900)
+            useNotif('success', 'Заказ оформлен', 'Успешно')
+            cartStore.setCurrentOrder(response?.data?.message)
+            console.log('response data mesage', response?.data?.message);
+            if (response.data.code === 200) {
+                return navigateTo(`/place-order/${response.data?.message?.id}`)
+
+                // isPaymentOpen.value = true;
+            }
         }
-    } catch (err: any) {
+    }
+    catch (err: any) {
         console.log(err, 'some err ');
         if (err?.response?.data?.code === 400) {
-            toast.add({ severity: 'error', summary: 'Ошибка', detail: 'Вы не можете оформить заказ, если он не оплачен' });
-            console.log('store.getCurrentOrder?.orderNumber', store)
-            // navigateTo(`/place-order/${store.getCurrentOrder?.orderNumber}`)
+            useNotif('error', 'Вы не можете оформить заказ, если он не оплачен', 'Ошибка')
+            isConfirmOpen.value = false
         }
     }
 }

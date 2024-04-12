@@ -3,17 +3,17 @@
         <h5 class='each-section-header'>Каталог товаров</h5>
         <div class="options-list">
             <ul class="first-col">
-                <li v-for="item in catalogOptions.slice(0, 9)" :key="item.id"
+                <li v-for="item in catalogOptions?.slice(0, 9)" :key="item.id"
                     @click.stop="navigateTo(`/catalog/${item.id}`)">
-                    {{ item.name }}
+                    {{ formatName(item?.name) }}
 
                 </li>
             </ul>
 
             <ul class="second-col">
-                <li v-for="item in catalogOptions.slice(9)" :key="item.id"
+                <li v-for="item in catalogOptions?.slice(9)" :key="item.id"
                     @click.stop="navigateTo(`/catalog/${item.id}`)">
-                    {{ item.name }}
+                    {{ formatName(item?.name) }}
 
                 </li>
             </ul>
@@ -28,6 +28,12 @@
 //import { catalogOptions } from '@/assets/js/catalogOptions';
 import { CatalogItem } from '@/types/Catalog'
 const { data: catalogOptions } = useApi<CatalogItem[]>('/api/v1/Category/get-all-categories') as any;
+
+
+const formatName = (name: string) => {
+    return name?.slice(0, 1).toUpperCase() + name?.slice(1).toLowerCase()
+}
+
 
 const props = defineProps<{
 

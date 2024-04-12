@@ -5,11 +5,15 @@
             <div class="col-8 orders-first">
                 <h3>Способ получения заказа</h3>
                 <div class="buttons-sel">
-                    <button class="order-btn" @click="selMethod(1)">Забрать из магазина
-                        <img src="../assets/icons/carbon_checkmark-filled (1).svg" alt="carbon" v-show="method === 1">
+                    <button class="gray-buttons-border" @click="selMethod(1)"
+                        :class="{ 'selected-btn': method === 1 }">Забрать из магазина
+                        <img src="../../assets/icons/carbon_checkmark-filled (1).svg" alt="carbon"
+                            v-show="method === 1">
                     </button>
-                    <button class="order-btn" @click="selMethod(2)"> Доставка
-                        <img src="../assets/icons/carbon_checkmark-filled (1).svg" alt="carbon" v-show="method === 2">
+                    <button class="gray-buttons-border" @click="selMethod(2)" :class="{ 'selected-btn': method === 2 }">
+                        Доставка
+                        <img src="../../assets/icons/carbon_checkmark-filled (1).svg" alt="carbon"
+                            v-show="method === 2">
                     </button>
                 </div>
                 <div class="order-first-info">
@@ -27,37 +31,25 @@
                 <div v-if="selectedOrderPlacement === 1">
                     <div class="magazine">
                         <h3>Выберите магазин откуда заберёте</h3>
-                        <button class="order-btn" @click="isMagVisible = !isMagVisible">{{ selectedMarket }}</button>
+                        <button class="gray-buttons-border mb-2" @click="isMagVisible = !isMagVisible">{{
+                            selectedMarket?.name
+                        }}</button>
+                        <span v-if='pickupErr.store' class="err-input-msg">{{
+                            pickupErr.store }}</span>
                     </div>
 
-                    <CartPayMethod />
-                    <!-- <div class="magazine">
-                        <h3>Способ оплаты</h3>
-                        <div class="flex flex-row flex-wrap gap-4">
-                            <button v-for="payOption in payOptions" :key="payOption" class="order-btn"
-                                @click="selPayMethod(payOption)">
-                                {{ payOption }}
-                                <img src="../assets/icons/carbon_checkmark-filled (1).svg" alt="carbon"
-                                    v-show="payMethod === payOption" @click="selMethod(2)">
-                            </button>
-                          
-                        </div>
-
-                    </div> -->
+                    <CartPayMethod @choosePayMethod="choosePayMethod" />
+                    <span v-if='pickupErr.payMethod' class="err-input-msg">{{ pickupErr.payMethod }}</span>
+                    <div class="delivery-comments mt-3">
+                        <h3>Коментарии</h3>
+                        <input type="text" class="basic-input" placeholder="Коментарии"
+                            v-model="orderStore.delForm.comment.value">
+                    </div>
                 </div>
 
 
                 <div v-else-if="selectedOrderPlacement === 2">
-
                     <CartForm />
-                </div>
-
-
-
-
-                <div class="comments">
-                    <h3>Коментарии</h3>
-                    <input type="text" class="basic-input" placeholder="Коментарии" v-model="comment">
                 </div>
             </div>
 
@@ -79,7 +71,7 @@
                         <span>{{ cartStore.totalOfTotalSum }} сом</span>
                     </div>
                 </div>
-                <button class="margin-top-20 pink-button">Подтвердить заказ</button>
+                <button class="margin-top-20 pink-button" @click="submitOrder">Подтвердить заказ</button>
             </div>
         </div>
         <div class="ordered-items margin-top-40 col-8">
@@ -115,21 +107,106 @@
         </div>
     </Dialog>
 
+
+    <Dialog v-model:visible="isWarningOpen" modal header=" "
+        :style="{ width: '30rem', padding: '20px 40px 50px 20px' }">
+
+
+        <div class="warning-modal-exit">
+            <h5 class="modal-header2">Вы хотите отменить заказ?</h5>
+            <p class="warning-text-modal">
+                Оформление заказа будет отменен в случае выхода
+            </p>
+            <div class='flex flex-row justify-content-end gap-2 buttons'>
+                <button class="modal-btns danger" @click="deleteOrder">Выйти</button>
+
+                <button class='modal-btns' @click="isWarningOpen = false">Отменить</button>
+
+            </div>
+
+        </div>
+
+    </Dialog>
+
+
+    <UIModal :showModal="isPaymentOpen" @closeModal="closePayModal">
+        <CartPayMethod @choosePayMethod="choosePayMethod" />
+        <PaymentMbank v-if="pickUpPay === 'MBank'" @closeModal="isPaymentOpen = false" />
+        <PaymentMegaPay v-else-if="pickUpPay === 'MegaPay'" />
+        <PaymentElcart v-else-if="pickUpPay === 'Элкарт'" />
+    </UIModal>
+
+
 </template>
 
 <script setup lang="ts">
-const isMagVisible = ref(false);
+definePageMeta({
+    layout: false
+
+
+})
 import { addressList } from '@/assets/js/addressList';
 import { AddressList } from '~/types/Items';
+import { Order, OrderItem } from '@/types/Order'
+import Results from '~/components/Catalog/Results.vue';
 const cartStore = useCartStore()
 const selectedOrderPlacement = ref(1);
 
 
-const method = ref(1);
-const selectedMarket = ref('Выберите магазин ');
 
+const pickupErr = ref({
+    store: '',
+    payMethod: ""
+})
+const authStore = useAuthStore()
+const method = ref(1);
+const selectedMarket = ref({ name: 'Выберите магазин' } as AddressList);
 const comment = ref('');
 
+const isMbnankOpen = ref(false);
+const isPaymentOpen = ref(false)
+
+const isMagVisible = ref(false);
+const payStore = usePayStore()
+const isWarningOpen = ref(false)
+const pickUpPay = ref('')
+const orderStore = useOrderStore()
+const closePayModal = () => {
+    isWarningOpen.value = true
+}
+const choosePayMethod = (value: string) => {
+    pickUpPay.value = value;
+
+
+    console.log('pickUpPay', pickUpPay);
+
+}
+const route = useRoute()
+
+
+
+//const orderById = ref({} as OrderItem)
+
+
+
+
+
+const deleteOrder = async () => {
+    try {
+        const response = await http.delete(`/api/v1/Order/delete-order?orderNumber=${cartStore.getCurrentOrder?.orderNumber}`);
+        console.log('delete order response', response);
+        if (response.status === 200) {
+
+
+            useNotif('success', 'Заказ отменен', 'Успешно')
+            isWarningOpen.value = false;
+            isPaymentOpen.value = false;
+            return navigateTo('/cart')
+        }
+    } catch (err) {
+        console.log(err)
+    }
+}
 
 const selMethod = (type: number) => {
     method.value = type;
@@ -143,10 +220,110 @@ const selMethod = (type: number) => {
 
 
 const selectAddress = (item: AddressList) => {
-
-    selectedMarket.value = item.name;
-    isMagVisible.value = false
+    selectedMarket.value = item;
+    isMagVisible.value = false;
+    pickupErr.value.store = ''
 }
+
+
+
+const submitOrder = async () => {
+    const authStore = useAuthStore()
+    if (method.value === 1) {
+        if (selectedMarket?.value?.id) {
+            const body = {
+                orderId: route.params?.id,
+                "shopId": selectedMarket?.value?.id,
+                "name": authStore.getUser?.firstName,
+                "lastName": authStore.getUser?.lastName,
+                "address": authStore.getUser?.address,
+                "city": '',
+                "phone": authStore?.getUser?.phone,
+                "email": authStore.getUser?.email,
+                "comment": orderStore.delForm.comment?.value,
+                "deliveryType": 0
+            }
+
+            orderStore.sendOrder(body)
+        }
+        else {
+            if (!selectedMarket?.value?.id) {
+                pickupErr.value.store = 'Выберите магазин'
+            }
+
+
+        }
+    } else {
+        for (const fieldName in orderStore.delForm) {
+            if (orderStore.delForm.hasOwnProperty(fieldName)) {
+                const field = orderStore.delForm[fieldName as keyof typeof orderStore.delForm];
+
+                if ('type' in field) {
+                    const validationType = field.type;
+                    orderStore.handleValues(fieldName as keyof typeof orderStore.delForm, validationType);
+
+                }
+            }
+        }
+        const hasError = Object.values(orderStore.deliveryForm).some(input => input.error !== '');
+        console.log('hasError', hasError)
+        if (!hasError) {
+            const body = {
+                orderId: route.params?.id,
+                "shopId": '',
+                "name": orderStore.deliveryForm.name.value,
+                "lastName": orderStore.deliveryForm.lastName.value,
+                "address": orderStore.deliveryForm.address.value,
+                "city": orderStore.deliveryForm.city.value,
+                "phone": orderStore.deliveryForm.phone.value,
+                "email": orderStore.deliveryForm.email.value,
+                "comment": orderStore.deliveryForm.comment.value,
+                "deliveryType": 1
+            }
+            const result = await orderStore.sendOrder(body);
+            console.log('result in submitOrder', result);
+            if (result?.status === 200) {
+                isPaymentOpen.value = true
+            }
+
+
+        }
+
+    }
+
+}
+
+
+
+onMounted(() => {
+    const section = document.querySelector('.footer-section') as HTMLElement;
+    section.style.display = 'none';
+    //cartStore.setCurrentOrder(orderById)
+    orderStore.fetchOrderById(route.params?.id as string)
+    authStore.fetchUser()
+})
+
+
+
+onBeforeRouteLeave((to, from, next) => {
+    if (!payStore.getExit) {
+        const answer = window.confirm(
+            "Вы уверены, что хотите выйти? Заказ будет отменен в случае выхода"
+        );
+        if (answer) {
+            deleteOrder()
+        } else {
+            return false;
+        }
+
+        next()
+    } else {
+        next()
+    }
+
+});
+
+
 </script>
 
 <style scoped lang="scss">
@@ -169,6 +346,12 @@ const selectAddress = (item: AddressList) => {
     }
 }
 
+
+
+
+
+
+
 .buttons-sel {
     @include flex(row, start, center, 20px);
     margin: 20px 0;
@@ -190,24 +373,32 @@ h3 {
     margin-top: 20px;
 }
 
-.comments {
-    margin-top: 20px;
-
-    input {
-        width: 100%;
-        border-color: $slider-border-color;
-
-
-        &::placeholder {
-            color: $slider-border-color !important;
-        }
+.warning-modal-exit {
+    p {
+        @include textFormat(20px, 20px, 600, #000);
     }
 
+    .danger {
+        color: #EB5757;
+    }
+
+    .buttons {
+        margin-top: 20px;
+    }
 }
+
+
 
 .p-dialog .p-dialog-header .p-dialog-header-icon {
     background-color: none !important;
     outline: none !important;
     color: none;
+}
+
+
+
+
+:deep(.p-dialog-header) {
+    @include flex(row, flex-end !important, center)
 }
 </style>

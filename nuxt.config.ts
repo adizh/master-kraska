@@ -23,13 +23,12 @@ export default defineNuxtConfig({
           rel: "stylesheet",
           href: "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css",
         },
-       
       ],
       script: [
         {
           src: "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js",
         },
-      
+
         {
           //  src: "https://api-maps.yandex.ru/v3/?apikey=7a61a60d-10c2-4b7b-8779-5101f3a5e2a0&lang=ru_RU",
         },
@@ -43,7 +42,13 @@ export default defineNuxtConfig({
     "vue-yandex-maps/nuxt",
     "@pinia/nuxt",
     "usebootstrap",
+    "nuxt-snackbar",
   ],
+  snackbar: {
+    bottom: true,
+    right: true,
+    duration: 5000,
+  },
   yandexMaps: {
     apikey: "7a61a60d-10c2-4b7b-8779-5101f3a5e2a0",
   },

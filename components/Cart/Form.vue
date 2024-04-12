@@ -1,5 +1,5 @@
 <template>
-    <div class='cart-form margin-top-20'>
+    <form class='cart-form margin-top-20'>
 
         <div class="cart-form-block">
             <h3>
@@ -7,8 +7,20 @@
             </h3>
 
             <div class="flex flex-row gap-5">
-                <input type="text" class="form-input w-14rem" placeholder="Имя">
-                <input type="text" class="form-input w-14rem" placeholder="Фамилия">
+                <div class='flex flex-column gap-2'>
+                    <input type="text" class="basic-input  w-14rem" placeholder="Имя" required
+                        v-model="deliveryForm.name.value" @input="handleDeliveryForm('name', 'string')">
+                    <span v-if='deliveryForm.name.error' class="err-input-msg">{{ deliveryForm.name.error }}</span>
+                </div>
+
+                <div class='flex flex-column gap-2'>
+                    <input type="text" class="basic-input  w-14rem" placeholder="Фамилия" required
+                        v-model="deliveryForm.lastName.value" @input="handleDeliveryForm('lastName', 'string')">
+
+                    <span v-if='deliveryForm.lastName.error' class="err-input-msg">{{ deliveryForm.lastName.error
+                        }}</span>
+                </div>
+
             </div>
         </div>
 
@@ -18,8 +30,11 @@
             </h3>
 
             <div class="flex flex-column gap-2">
-                <input type="text" class="form-input w-30rem" placeholder="Номер дома и название улицы">
-                <input type="text" class="form-input w-30rem" placeholder="Квартира, апартаменты, жилое помещение">
+                <input type="text" class="basic-input w-30rem" placeholder="Номер квартирвы и название улицы"
+                    v-model="deliveryForm.address.value" required @input="handleDeliveryForm('address', 'string')">
+                <span v-if='deliveryForm.address.error' class="err-input-msg">{{ deliveryForm.address.error }}</span>
+
+                <!-- <input type="text" class="form-input w-30rem" placeholder="Квартира, апартаменты, жилое помещение"> -->
             </div>
         </div>
 
@@ -29,7 +44,10 @@
             </h3>
 
             <div class="flex flex-column gap-2">
-                <input type="text" class="form-input w-30rem">
+                <input type="text" class="basic-input w-30rem" required v-model="deliveryForm.city.value"
+                    @input="handleDeliveryForm('city', 'string')">
+                <span v-if='deliveryForm.city.error' class="err-input-msg">{{ deliveryForm.city.error }}</span>
+
             </div>
         </div>
 
@@ -39,7 +57,11 @@
             </h3>
 
             <div class="flex flex-column gap-2">
-                <input type="text" class="form-input w-30rem">
+                <InputMask id="basic" mask="+999 999 99 99 99" placeholder="+996 700 55 55 55"
+                    v-model="deliveryForm.phone.value" required
+                    @update:modelValue="handleDeliveryForm('phone', 'string')" />
+                <span v-if='deliveryForm.phone.error' class="err-input-msg">{{ deliveryForm.phone.error }}</span>
+
             </div>
         </div>
 
@@ -49,25 +71,51 @@
             </h3>
 
             <div class="flex flex-column gap-2">
-                <input type="text" class="form-input w-30rem">
+                <input type="email" class="basic-input  w-30rem" required v-model="deliveryForm.email.value"
+                    @input="handleDeliveryForm('email', 'email')">
+                <span v-if='deliveryForm.email.error' class="err-input-msg">{{ deliveryForm.email.error }}</span>
             </div>
         </div>
-        <CartPayMethod @choosePayMethod="choosePayMethod" />
-    </div>
 
-    <Dialog v-model:visible="isMbnankOpen" modal :style="{ width: '450px', padding: '30px 25px' }">
-        <PaymentMbank />
+        <div class="delivery-comments">
+            <h3>Коментарии</h3>
+            <input type="text" class="basic-input mt-4" placeholder="Коментарии" v-model="deliveryForm.comment.value">
+        </div>
+        <!-- <CartPayMethod @choosePayMethod="choosePayMethod" /> -->
+    </form>
+
+    <Dialog v-model:visible="isPayOpen" modal :style="{ width: '450px', padding: '30px 25px' }">
+        <PaymentMbank v-if="selectedPayMethod === 'MBank'" @closeModal="isPayOpen = false" />
+        <PaymentMegaPay v-else-if="selectedPayMethod === 'MegaPay'" />
+        <PaymentElcart v-else-if="selectedPayMethod === 'Элкарт'" />
+
     </Dialog>
 </template>
 
 <script setup lang="ts">
-const isMbnankOpen = ref(false);
-import { PaymentTypes } from '@/types/Items';
-const choosePayMethod = (value: string) => {
-    if (value === 'MBank') {
-        isMbnankOpen.value = true
-    }
+const isPayOpen = ref(false);
+const orderStore = useOrderStore();
+const authStore = useAuthStore()
+
+const { deliveryForm, delForm } = storeToRefs(orderStore)
+
+
+const handleDeliveryForm = (field: keyof typeof orderStore.delForm, type: string) => {
+    orderStore.handleValues(field, type)
 }
+console.log('deliverFORM IN FORM ', deliveryForm)
+const selectedPayMethod = ref("")
+const choosePayMethod = (value: string) => {
+    isPayOpen.value = true;
+    selectedPayMethod.value = value;
+}
+onMounted(() => {
+    if (authStore.getUser) {
+        orderStore.setInitUser(authStore.getUser)
+    }
+})
+
+
 </script>
 
 <style scoped lang="scss">
@@ -81,5 +129,14 @@ const choosePayMethod = (value: string) => {
             margin-bottom: 20px;
         }
     }
+}
+
+
+:deep(input#basic.p-inputtext) {
+    padding: 16px 20px;
+    border: 1px solid #dddddd;
+    border-radius: 10px;
+    margin-bottom: 5px !important;
+    width: 60%;
 }
 </style>

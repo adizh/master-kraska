@@ -4,6 +4,7 @@ export type AddressList = {
   phone: string;
   time: string;
   email: string;
+  id:string
 };
 
 export interface InputProperties {

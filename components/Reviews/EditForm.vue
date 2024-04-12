@@ -13,7 +13,7 @@
             <button @click="createReview">Сохранить отзыв</button>
         </div>
     </div>
-    <Toast />
+
 </template>
 
 <script setup lang="ts">
@@ -25,7 +25,7 @@ const authStore = useAuthStore()
 const props = defineProps<{
     item: Review
 }>()
-const toast = useToast()
+
 const inputs = ref({
     title: { value: props?.item?.title, error: '' },
     text: { value: props?.item?.ratingText, error: '' },
@@ -65,7 +65,8 @@ const createReview = async () => {
                 inputs.value.text.value = ''
                 inputs.value.title.value = ''
                 inputs.value.ratingValue.value = 0;
-                toast.add({ severity: 'success', summary: "Успешно", detail: 'Отзыв оставлен!' })
+          
+                useNotif('success', 'Отзыв оставлен!', 'Успешно')
             }
             console.log('response update review', response)
         } catch (err) {

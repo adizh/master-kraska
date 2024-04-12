@@ -1,19 +1,20 @@
 <template>
     <section>
-        <ProductPageHeader :product="data" />
-        <ProductPageInfo :item="data" />
-        <ProductPageSImilarItems />
-        <ProductPageReviews :item='data' />
+        <ProductPageHeader :product="data?.product" />
+        <ProductPageInfo :item="data?.product" />
+        <ProductPageSImilarItems :similarItems="data?.similarProducts" />
+        <ProductPageReviews :item='data?.product' />
     </section>
 </template>
 
 <script setup lang="ts">
 import { Product } from '~/types/Product';
-
 const route = useRoute()
-const id = route.params.id
+const id = ref(route.params.id)
+const { data, error, status, pending } = await useApi<Product>(`/api/v1/Product/get-product-by-id/${id.value}`, {
+    watch: [id]
 
-const { data, error, status, pending } = useApi<Product>(`/api/v1/Product/get-product-by-id/${id}`) as any;
+}) as any;
 console.log('data fetch single Product', data)
 
 

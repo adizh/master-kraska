@@ -123,7 +123,7 @@
 
         <button type="submit">Сохранить изменения</button>
     </form>
-    <Toast />
+
 </template>
 
 <script setup lang="ts">
@@ -132,8 +132,10 @@ import { Product } from '~/types/Product';
 
 const route = useRoute()
 const id = route.params.id;
-const toast = useToast()
-const { data: item } = await useApi<Product>(`/api/v1/Product/get-product-by-id/${id}`);
+
+const { data: product } = await useApi(`/api/v1/Product/get-product-by-id/${id}`) as any;
+const item = ref({} as Product)
+console.log('wjat is item ', item)
 interface InputField {
     value: string | number | undefined | string[] | boolean
     error: string;
@@ -204,7 +206,9 @@ const submitUpdate = async () => {
         const response = await http.put(`/api/v1/Product/update-product/${item?.value?.id}`, body);
         console.log('response', response);
         if (response.status === 200) {
-            toast.add({ severity: 'success', summary: "Успешно", detail: "Обновлено!" })
+
+
+            useNotif('success', "Обновлено!", 'Успешно')
         }
     } catch (err) {
         console.log(err)
@@ -227,6 +231,8 @@ const editProduct = () => {
 }
 
 onMounted(async () => {
+    item.value = product;
+
     inputs.value = {
         name: { value: item.value?.name, error: '', type: 'string' },
         description: { value: item.value?.description, error: '', type: 'string' },

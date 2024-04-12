@@ -1,7 +1,6 @@
 <template>
     <div class="register-auth">
         <p class="register-auth-header">Выберите спопоб создания аккаунта</p>
-
         <div class="register-auth-options">
             <button @click="emit('selectRegister', 1)">Электронная почта</button>
             <button>Google</button>

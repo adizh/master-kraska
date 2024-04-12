@@ -22,9 +22,7 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-.item-block {
-    width: 25%;
-}
+
 
 .all-prods {
     margin-top: 40px;

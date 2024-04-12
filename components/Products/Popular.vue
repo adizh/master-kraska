@@ -6,7 +6,7 @@
                 :style='{ "--swiper-navigation-size": "15px", "padding": "20px 0" }'>
                 <SwiperSlide v-for="product in popularItems" :key="product.id">
                     <ProductsProductItem :product="product" />
-                    
+
                 </SwiperSlide>
             </Swiper>
         </div>
@@ -42,10 +42,8 @@ const popularItems = computed(() => {
     padding-left: 20px;
 }
 
-:deep(.swiper-slide) {
-    @include flex(row, start, start);
-    flex-wrap: wrap;
-}
+
+
 
 :deep(.swiper-button-next,
     .swiper-button-prev),

@@ -1,5 +1,4 @@
 // handleValues.ts
-import { ref } from "vue";
 
 export const useInputValidation = () => {
   const handleValues = (
@@ -7,6 +6,8 @@ export const useInputValidation = () => {
     fieldName: string,
     validationType: string | any
   ) => {
+    console.log("inputs", inputs);
+    console.log("fieldName", fieldName);
     const value = inputs[fieldName].value;
 
     inputs[fieldName].value = value;

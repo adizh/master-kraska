@@ -41,12 +41,7 @@
                             Нет
                         </label>
                     </div>
-                    <!-- <input type="radio" :id="'radio_' + item.id + '_true'" :value="true"
-                            v-model="selectedBoolValues[item.id].value" @change="handleInputChange(item.id)">
-                        <label :for="'radio_' + item?.id + '_true'">Да</label>
-                        <input type="radio" :id="'radio_' + item.id + '_false'" :value="false"
-                            v-model="selectedBoolValues[item.id].value" @change="handleInputChange(item.id)">
-                        <label :for="'radio_' + item?.id + '_false'">Нет</label> -->
+
 
                     </p>
 
@@ -186,24 +181,20 @@ const updateCheckboxState = (itemId: string, subId: string, event: any) => {
     }
 
     const valuesArray = Object.values(checkboxStates.value);
-    console.log('valuesArray', valuesArray)
 
-    const filteredValues = valuesArray.flatMap(item => item?.values?.filter((sub: { value: boolean }) => sub.value));
+
+    const filteredValues = valuesArray.flatMap(item => item.values?.filter((sub: { value: boolean }) => sub.value === true));
     if (!filteredValues?.length) {
         productsStore.setSubDirectories(null);
     }
 
 
-    console.log('updateCheckboxState checkboxStates', checkboxStates);
+    productsStore.setSubDirectories(filteredValues)
+
+
     console.log('filteredValues', filteredValues)
-    filteredValues.map((item: { id: string, value: boolean }) => {
-        productsStore.setSubDirectories(item);
 
-    })
     productsStore.filterProducts()
-
-
-
 };
 
 
@@ -297,13 +288,15 @@ console.log('checkboxStates', checkboxStates)
 
 
 .custom-radio input[type="radio"] {
-    display: none; /* Hide the default radio button */
+    display: none;
+    /* Hide the default radio button */
 }
 
 .custom-radio label {
     position: relative;
     cursor: pointer;
-    padding-left: 25px; /* Space for the custom icon */
+    padding-left: 25px;
+    /* Space for the custom icon */
     margin-right: 15px;
     font-size: 16px;
 }
@@ -315,21 +308,23 @@ console.log('checkboxStates', checkboxStates)
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background-color: #fff; /* Circle color */
-    border: 2px solid #000; /* Circle border color */
+    background-color: #fff;
+    /* Circle color */
+    border: 2px solid #000;
+    /* Circle border color */
 }
 
-.custom-radio input[type="radio"]:checked + label .radio-icon::after {
+.custom-radio input[type="radio"]:checked+label .radio-icon::after {
     content: '';
     display: block;
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background-color: #000; /* Custom icon color */
+    background-color: #000;
+    /* Custom icon color */
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
-
 </style>

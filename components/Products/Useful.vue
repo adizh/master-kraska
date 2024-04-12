@@ -42,10 +42,7 @@ const popularItems = computed(() => {
     padding-left: 20px;
 }
 
-:deep(.swiper-slide) {
-    @include flex(row, start, start);
-    flex-wrap: wrap;
-}
+
 
 :deep(.swiper-button-next,
     .swiper-button-prev),

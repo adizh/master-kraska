@@ -1,24 +1,22 @@
 export type User = {
   address: string;
-  createdAt: string;
+  createdAt?: string;
 
   email: string;
 
   firstName: string;
 
-  id: string;
+  id?: string;
 
-  image: null | string;
+  image?: null | string;
 
-  isVerified: boolean;
+  isVerified?: boolean;
 
   lastName: string;
 
-  password: string;
-
+  password?: string;
   phoneNumber: string;
-
-  role: number;
-  token: string;
-  verificationCode: string;
+  role?: number;
+  token?: string;
+  verificationCode?: string;
 };

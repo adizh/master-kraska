@@ -1,64 +1,119 @@
 <template>
-    <div class="item">
-        <span class="item-date">11/12/24</span>
-        <div class="item-info grid">
-            <div class="col-6">
-                <span>Товар</span>
-                <p>Финниколор Оазис краска для потолков…</p>
-            </div>
-            <div class="col-2">
-                <span>Кол-во</span>
-                <p>24шт</p>
-            </div>
-            <div class="col-2">
-                <span>Сумма</span>
-                <p>2000сом</p>
-            </div>
-            <div class="col-2 more-info" @click="toggleCatalog">
-                Подробнее
-                <img class="arrow" :class="{ 'rotated': isCatalogOpen }"
-                    src="../../assets/icons/icon=components-arrow-blue.svg" alt="open-arrow">
-            </div>
-        </div>
-
-
-        <div class="expanded-section" v-show="isCatalogOpen"
-            :class="{ 'slide-enter': isCatalogOpen, 'slide-leave-to': !isCatalogOpen }">
+    <div v-if="userOrders?.length > 0">
+        <div class="item" v-for="order in userOrders" :key="order?.id">
+            <span class="item-date">11/12/24</span>
             <div class="item-info grid">
-                <div class="col-6 flex flex-row gap-1 align-items-center">
-                    <!-- <NuxtImg src="/test-kraska.png" alt="kraska" class="prod-img" /> -->
+                <div class="col-6">
+                    <span>Товар</span>
+                    <p>{{ formatName(order?.productName) }}</p>
 
-                    <img src="../../assets/images/test-kraska.png" alt="">
+                </div>
+                <div class="col-2">
+                    <span>Кол-во</span>
+                    <p>{{ order?.quantity }}</p>
+                </div>
+                <div class="col-2">
+                    <span>Сумма</span>
+                    <p>{{ order?.price * order?.quantity }} сом</p>
+                </div>
+                <div class="col-2 more-info" @click="() => toggleCatalog(order?.id)">
+                    Подробнее
+                    <img class="arrow" :class="{ 'rotated': isCatalogOpen === order?.id }"
+                        src="../../assets/icons/icon=components-arrow-blue.svg" alt="open-arrow">
+                </div>
+            </div>
 
-                    <div class="expanded-section-info"><span>Финниколор Оазис краска для потолков</span>
-                        <span>Разбавитель: вода</span>
-                        <span>Без запаха: да</span>
 
+            <div class="expanded-section" v-show="isCatalogOpen"
+                :class="{ 'slide-enter': isCatalogOpen === order?.id, 'slide-leave-to': isCatalogOpen !== order?.id }">
+                <div class="item-info grid">
+                    <div class="col-6 flex flex-row gap-1 align-items-center">
+                        <img src="../../assets/images/test-kraska.png" alt="">
+                        <div class="expanded-section-info"><span>{{ order?.productName }}</span>
+                            <span>Разбавитель: вода</span>
+                            <span>Без запаха: да</span>
+
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <p>{{ order?.quantity }} шт</p>
+                    </div>
+                    <div class="col-2">
+                        <p>{{ order?.price * order?.quantity }} сом</p>
+                    </div>
+                    <div class="col-2">
+                        <button class="bg-white-btn">
+                            Заказать снова
+                        </button>
                     </div>
                 </div>
-                <div class="col-2">
-                    <p>12шт</p>
-                </div>
-                <div class="col-2">
-                    <p>2000сом</p>
-                </div>
-                <div class="col-2">
-                    <button>
-                        Заказать снова
-                    </button>
-                </div>
             </div>
+
+
         </div>
-
-
     </div>
+
+
+    <NoContent v-else title="История заказов пусто">
+        <template #icon>
+            <img src="../../assets/icons/black/icon=components -time-notfill.svg" alt="">
+        </template>
+    </NoContent>
+
+    <Dialog v-model:visible="isConfirmOpen" modal :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
+        header=" ">
+        <h5 class="modal-header">Вы действительно хотите подтвердить заказ?</h5>
+
+        <div class='flex flex-row justify-content-end gap-2'>
+
+            <button class='modal-btns'>Подтвердить</button>
+
+            <button @click="isConfirmOpen = false" class='modal-btns blue'>Отменить</button>
+
+        </div>
+    </Dialog>
 </template>
 
 <script setup lang="ts">
-const isCatalogOpen = ref(false);
-const toggleCatalog = () => {
-    isCatalogOpen.value = !isCatalogOpen.value;
+
+import { OrderItem, UserOrder } from '~/types/Order';
+
+const isConfirmOpen = ref(false)
+const isCatalogOpen = ref('');
+const userOrders = ref<UserOrder[]>([])
+const authStore = useAuthStore()
+
+const toggleCatalog = (id: string) => {
+    if (isCatalogOpen.value === id) {
+        isCatalogOpen.value = ''
+    } else {
+        isCatalogOpen.value = id
+    }
+
 }
+
+
+console.log('userOrders', userOrders)
+
+const getOrderByUser = async () => {
+    try {
+        const response = await http(`/api/v1/Order/get-orders-by-user-id/${authStore.getUserId}`);
+
+        if (response.status === 200) {
+            const filtered = response.data.filter((item: OrderItem) => item?.isPaid);
+            userOrders.value = filtered.map((item: OrderItem) => item?.items).flat()
+        }
+
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+onMounted(() => {
+    authStore.fetchUser()
+    getOrderByUser()
+})
+
 </script>
 
 <style scoped lang="scss">
@@ -134,17 +189,22 @@ const toggleCatalog = () => {
 
 .expanded-section.slide-enter {
     animation: slideFromUpToBottoms 0.6s ease forwards;
+
+    display: block;
 }
 
 .expanded-section.slide-leave-to {
     animation: slideFromBottomToUp .3s ease forwards !important;
-    display: block !important;
+    display: none !important;
+
 }
 
 
 
 .expanded-section {
     opacity: 0;
+    transition: opacity 0.5s ease;
+    display: none;
     transition: .5s ease all;
     border-top: 1px solid $slider-border-color;
     padding-top: 7px;
@@ -166,10 +226,7 @@ const toggleCatalog = () => {
 
     button {
         box-shadow: 0px 0px 0px 0.5px #0000000D;
-        @extend %button-shared;
-        background: white;
-        @include textFormat(20px, 20px, 600, $main-blue);
-        padding: 12px 18px;
+
     }
 
 

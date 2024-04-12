@@ -26,6 +26,8 @@ ul li {
   border-radius: 8px;
   padding: 8px;
   width: 100%;
+  font-size: 16px;
+  line-height: 20px;
 }
 
 .each-section {
@@ -96,11 +98,14 @@ ul li {
 }
 
 .basic-input {
-  border: 1px solid $main-gray;
+  padding: 16px 20px !important;
+  border: 1px solid $slider-border-color;
   border-radius: 10px;
-  color: $main-gray !important;
+  color: $main-black !important;
   @include footerSpan(24px, 16px);
-  padding: 10px;
+  ::placeholder {
+    color: $main-gray !important;
+  }
 }
 
 .section-header-links {
@@ -178,7 +183,6 @@ h2 {
 //cart
 .cart-main-info-price {
   width: 30% !important;
-
   margin-top: 50px;
 
   &-block {
@@ -208,10 +212,15 @@ h2 {
   }
 
   button {
-    @extend %button-shared;
-    font-size: 20px;
-    line-height: 32px;
     width: 100%;
+    &:first-child {
+      @extend %button-shared;
+    }
+    &:last-child {
+      box-shadow: 0px 0px 0px 0.5px #0000000d;
+
+      box-shadow: 0px 0.5px 2.5px 0px #0000004d;
+    }
   }
 }
 
@@ -255,15 +264,6 @@ h2 {
   @include flex(column, start, start);
 }
 // cart form input
-.form-input {
-  padding: 13px 16px;
-  border: 1px solid $slider-border-color;
-  border-radius: 10px;
-  @include textFormat(16px, 20px, 500, $main-black);
-  &::placeholder {
-    @include textFormat(16px, 20px, 500, $main-gray);
-  }
-}
 
 .no-content-img {
   width: 44px;
@@ -354,8 +354,17 @@ h2 {
   background: white !important;
   box-shadow: 0px 0px 0px 0.5px #0000000d !important;
   box-shadow: 0px 0.5px 2.5px 0px #0000004d !important;
-  @include textFormat(20px, 20px, 600, $main-blue !important);
+  padding: 10px 20px !important;
+  border-radius: 8px;
+  outline: none;
+  border: none;
+  @include textFormat(20px, 32px, 600, $main-blue !important);
   margin-top: 20px;
+  &:hover {
+    @extend %blue-bnt-hover;
+    transition: 0.3s;
+    cursor: pointer;
+  }
 }
 
 .pink-button {
@@ -369,12 +378,17 @@ h2 {
     background: #9c004b;
   }
 }
+
 .gray-buttons-border {
   padding: 16px 20px;
   border: 1px solid $slider-border-color;
   border-radius: 10px;
   background: white;
   @include textFormat(16px, 20px, 500, $main-black);
+  @include flex(row, center, center);
+}
+.gray-buttons-border.selected-btn {
+  border: 2px solid $main-black;
 }
 
 .custom-checkbox {
@@ -419,30 +433,20 @@ h2 {
   margin-top: 20px;
 }
 
-.order-btn {
-  @extend %button-shared;
-  @include flex(row, center, center);
-  background: white;
-  border: 1px solid $slider-border-color;
-  border-radius: 10px;
-  padding: 16px 20px;
-  @include footerSpan(20px, 16px);
-  color: $main-black !important;
-  font-weight: 400;
-}
-
 .bg-white-btn {
-  @extend %button-shared;
+  padding: 16px 18px;
+  border-radius: 8px;
   color: $main-blue;
+  outline: none;
+  border: none;
   box-shadow: 0px 0px 0px 0.5px rgba(0, 0, 0, 0.05) 0px 0.5px 2.5px 0px
     rgba(0, 0, 0, 0.3);
   background: white;
   font-weight: 500;
   margin-top: 20px;
+  line-height: 20px;
   font-size: 20px;
   transition: 0.3s;
-
-
 
   &:hover {
     @extend %blue-bnt-hover;
@@ -454,4 +458,54 @@ h2 {
   .item-block {
     width: 50%;
   }
+}
+
+.modal-btns {
+  @include textFormat(20px, 20px, 600, #000);
+  border: none;
+  background: none;
+
+  &:first-child {
+    margin-right: 20px;
+  }
+}
+.modal-btns.blue {
+  color: $main-blue;
+}
+.modal-header2 {
+  @include textFormat(24px, 24px, 600, #000);
+  padding-left: 30px;
+  margin-top: 20px;
+}
+
+.modal-header {
+  @include textFormat(20px, 20px, 600, #000);
+  padding-left: 30px;
+  margin-top: 20px;
+}
+
+.warning-text-modal {
+  padding-left: 30px;
+  margin-top: 20px;
+}
+
+.delivery-comments {
+  margin-top: 20px;
+
+  input {
+    width: 100%;
+    border-color: $slider-border-color;
+
+    &::placeholder {
+      color: $slider-border-color !important;
+    }
+  }
+}
+:deep(.vs-alert--toast.vs-alert-success .vs-alert__heading) {
+  font-size: 20px !important;
+}
+
+.register-auth-btn {
+  @extend %button-shared;
+  padding: 16px 20px !important;
 }

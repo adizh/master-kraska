@@ -1,20 +1,21 @@
 <template>
     <form @submit.prevent="editUser">
         <label for="fileInput">
-            <img :src="inputs.image.value" alt="user profile">
+            <img :src="inputs.image.value" alt="user profile" v-if="inputs.image.value">
+            <img src="../../assets/images/no-logo.png" alt="user profile" v-else class="no-logo">
         </label>
 
         <input type="file" @change="uploadLogo($event)" accept="image/*" id="fileInput" class="select-input">
         <div class="grid">
             <div class="col-6 each-field">
                 <label for="name">Имя</label>
-                <input class='form-input col-12' type="text" id="name" v-model="inputs.firstName.value"
+                <input class='basic-input col-12' type="text" id="name" v-model="inputs.firstName.value"
                     @input="validate('firstName', 'string')">
                 <span v-if="inputs.firstName.error" class="err-input-msg">{{ inputs.firstName.error }}</span>
             </div>
             <div class="col-6 each-field">
                 <label for="surname">Фамилия</label>
-                <input class='form-input col-12' type="text" id="surname" v-model="inputs.lastName.value"
+                <input class='basic-input col-12' type="text" id="surname" v-model="inputs.lastName.value"
                     @input="validate('lastName', 'string')">
                 <span class="err-input-msg"> {{ inputs.lastName.error }}</span>
             </div>
@@ -29,7 +30,7 @@
                     }}</span>
             </div>
             <div class="col-6 each-field"> <label for="email">Почта</label>
-                <input class='form-input col-12' type="text" id="email" v-model="inputs.email.value"
+                <input class='basic-input  col-12' type="text" id="email" v-model="inputs.email.value"
                     @input="validate('email', 'email')">
                 <span class="err-input-msg"> {{ inputs.email.error }}</span>
 
@@ -37,7 +38,7 @@
 
             <div class="col-6 each-field">
                 <label for="address"> Адрес доставки</label>
-                <input class='form-input col-12' type="text" id="address" v-model="inputs.address.value"
+                <input class='basic-input col-12' type="text" id="address" v-model="inputs.address.value"
                     @input="validate('address', 'string')">
                 <span class="err-input-msg"> {{ inputs.address.error }}</span>
             </div>
@@ -46,12 +47,13 @@
                 <label for="password"> Пароль</label>
                 <button class="change-password-btn col-12" type="button"
                     @click="isPasswordChangOpen = !isPasswordChangOpen">Изменить
+
                     пароль</button>
             </div>
         </div>
 
         <div class="col-12 edit-btn">
-            <button type="submit">
+            <button type="submit" class="bg-white-btn">
                 Редактировать
             </button>
         </div>
@@ -80,7 +82,7 @@ const inputs = ref({
 
 
 });
-const toast = useToast()
+
 onMounted(async () => {
     await store.fetchUser();
     inputs.value.firstName.value = store.getUser.firstName;
@@ -107,6 +109,7 @@ const editUser = async () => {
     };
 
 
+
     for (const fieldName in inputs.value) {
         if (Object.prototype.hasOwnProperty.call(inputs.value, fieldName)) {
             const validationType = validationTypes[fieldName];
@@ -128,7 +131,8 @@ const editUser = async () => {
             }
             const response = await http.put('/api/v1/User/edit-user', body);
             if (response.status === 200) {
-                toast.add({ severity: 'success', detail: 'Успешно редактировано!', summary: 'Успешно' })
+
+                useNotif('success', 'Успешно редактировано!', 'Успешно')
             }
             console.log('response', response)
         } catch (err) {
@@ -175,32 +179,29 @@ div {
     margin-bottom: 20px;
 }
 
-input {
-    padding: 16px 18px;
-}
 
+
+.no-logo {
+    border-radius: 100%;
+    border: 1px solid #dddddd;
+}
 
 
 .edit-btn {
     @include flex(flex, flex-end, center !important);
 
     button {
-        @extend %button-shared;
-        background: #fff;
-        padding: 16px 18px;
-
+        box-shadow: 0px 0px 0px 0.5px #0000000D;
         box-shadow: 0px 0.5px 2.5px 0px #0000004D;
-
-
-        @include textFormat(20px, 20px, 600, $main-blue)
     }
-
 }
 
 img {
     width: 180px;
     height: 180px;
     border-radius: 50%;
+
+    object-fit: contain;
 
     &:hover {
         cursor: pointer;
@@ -212,7 +213,7 @@ img {
 }
 
 :deep(input#phone.p-inputtext) {
-    padding: 15px 20px;
+    padding: 16px 20px;
     width: 100%;
     border: 1px solid #dddddd;
     border-radius: 10px;

@@ -10,7 +10,7 @@
                 <div class="steps"><span>1</span><label for="name">Введите адрес, который вы использовали при создании
                         этого
                         аккаунта</label></div>
-                <input class='col-12 form-input' type="text" id="name" placeholder="Введите свою почту"
+                <input class='col-12 basic-input' type="text" id="name" placeholder="Введите свою почту"
                     v-model="inputs.email.value" @input="handleInput('email', 'email')">
                 <span v-if="inputs.email.error" class="err-input-msg">{{ inputs.email.error }}</span>
             </div>
@@ -37,29 +37,29 @@
         <div class="grid form" v-else>
             <div class="col-12 each-field">
                 <label for="password">Новый пароль</label>
-                <input class='col-12 form-input' type="text" id="password" placeholder="Новый пароль"
+                <input class='col-12 basic-input' type="text" id="password" placeholder="Новый пароль"
                     v-model="inputs.password.value" @input="handleInput('password', 'password')">
                 <span v-if="inputs.password.error" class="err-input-msg">{{ inputs.password.error }}</span>
             </div>
 
             <div class="col-12 each-field">
                 <label for="passwordRepeat"> Повторите пароль</label>
-                <input class='col-12 form-input' type="text" id="passwordRepeat" placeholder="Повторите пароль"
+                <input class='col-12 basic-input' type="text" id="passwordRepeat" placeholder="Повторите пароль"
                     v-model="inputs.passwordRepeat.value" @input="handleInput('passwordRepeat', 'passwordRepeat')">
                 <span v-if="inputs.passwordRepeat.error" class="err-input-msg">{{ inputs.passwordRepeat.error }}</span>
             </div>
             <div class="change-password">
-                <button @click="changePassword">Сбросить</button>
+                <button @click="changePassword" class="register-auth-btn">Сбросить</button>
             </div>
 
         </div>
     </div>
-    <Toast />
+
 </template>
 
 <script setup lang="ts">
 
-const toast = useToast()
+
 const inputs = ref({
     email: { value: '', error: '' },
     code: { value: '', error: '' },
@@ -147,7 +147,8 @@ const changePassword = async () => {
             const response = await http.post('/api/v1/User/reset-password', body);
             console.log('response resetPassword', response);
             if (response.status === 200) {
-                toast.add({ severity: 'success', summary: 'Успех', detail: "Пароль сброшен и обновлен!" });
+
+                useNotif('success', "Пароль сброшен и обновлен!", 'Успех')
                 setTimeout(() => {
                     window.location.reload()
                 }, 800);

@@ -53,13 +53,12 @@
 
 
 
-    <!-- <Toast /> -->
 </template>
 
 <script setup lang="ts">
 import { CatalogItem } from '~/types/Catalog';
 
-const toast = useToast()
+
 const isCatalogOpen = ref(false);
 const isSearchOpen = ref(false);
 const isProfileOpen = ref();

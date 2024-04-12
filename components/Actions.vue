@@ -54,32 +54,7 @@
                 <SwiperSlide v-for="item in brandsStore.getAllBrands" :key="item.id">
                     <img :src="item?.logo" />
                 </SwiperSlide>
-                <!-- </SwiperSlide>
-                <SwiperSlide>
-                    <img src="../assets/images/brands/marshall.png"></img>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="../assets/images/brands/Apollo.png"></img>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="../assets/images/brands/arcobaleno.png"></img>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="../assets/images/brands/decor.png"></img>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="../assets/images/brands/marshall.png"></img>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="../assets/images/brands/Apollo.png"></img>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="../assets/images/brands/arcobaleno.png"></img>
-                </SwiperSlide> -->
-
             </Swiper>
-
-
         </div>
     </div>
 </template>
@@ -137,8 +112,12 @@ onMounted(() => {
     margin-top: 20px;
     padding: 20px;
     border-top: 1px solid $slider-border-color;
+
     img {
-        width: 100%;
+        width: 250px;
+        max-height: 200px;
+        height: 140px;
+        object-fit: contain !important;
         margin: 0 10px;
     }
 
@@ -147,7 +126,16 @@ onMounted(() => {
 :deep(.slider) {
     width: 100%;
     @include flex(row, space-around, center);
+}
+
+:deep(.swiper-slide) {
+    margin: 0 15px;
+}
 
 
+@media (min-width:768px) and (max-width:992px) {
+    .brands-pictures img {
+        width: 180px;
+    }
 }
 </style>
