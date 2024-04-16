@@ -214,10 +214,6 @@ onMounted(async () => {
 watch(() => authStore.getSelectedLang, async (newVal, oldVal) => {
     await catalogStore.fetchAllCatalogs();
     initializeCheckboxStates();
-
-    console.log('lan has beeen changed');
-    console.log('checkboxStates', checkboxStates);
-    console.log('getAllCatalogs', catalogStore.getAllCatalogs)
 });
 
 

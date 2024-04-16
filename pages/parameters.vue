@@ -112,6 +112,7 @@ import { AllCatalog, CatalogItem, SubCatalog, CatalogCheckbox } from '~/types/Ca
 const showResults = ref(false)
 const catalogStore = useCatalogStore();
 const productsStore = useProductsSstore();
+const authStore = useAuthStore()
 const minPrice = ref(0)
 const maxPrice = ref(0)
 const typeOfWork = ref('')
@@ -146,28 +147,28 @@ const items = [
 
 const filteredCatalogs = computed(() => {
     return catalogStore.getAllCatalogs.filter((item: AllCatalog) => {
-        return items.filter((obj) => obj.name === item?.name)
+        return items.filter((obj) => obj.name === item?.name.toUpperCase())
     })
 
 })
 
 const firstBlock = computed(() => {
     return filteredCatalogs.value.filter((item: AllCatalog) => {
-        return item?.name === 'ТИП РАБОТ'
+        return item?.id === 'd12f4dfb-6f54-4a37-9cd3-1d6d5423e084'
     })
 })
 
 const secondOptions = [
-    'МАТЕРИАЛ РАБОЧЕЙ ПОВЕРХНОСТИ', 'ТИП ОБЪЕКТА', 'РАЗБАВИТЕЛЬ'
+    '5ff5e6eb-884b-4e64-ae7b-d99bede77b9b', 'd637e138-5784-4d3d-bb91-77a7a185469e', '4b5d79cb-b7fd-4646-8dc2-6fafd0d3fd3e'
 ]
 const secondBlock = computed(() => {
     return filteredCatalogs.value.filter((item) => {
-        return secondOptions?.includes(item?.name)
+        return secondOptions?.includes(item?.id)
     })
 })
 
 const thirdBlock = computed(() => {
-    return filteredCatalogs.value.filter((item) => item?.name === 'ТИП ЛКМ')
+    return filteredCatalogs.value.filter((item) => item?.id === 'c8409cbf-4b89-492d-bbb6-fce1813815d3')
 })
 
 
@@ -183,13 +184,16 @@ const isChecked = (itemId: string, subId: string) => {
     return checkboxStates?.value[itemId]?.values?.find((val: { id: string }) => val.id === subId)?.value || false;
 };
 const initializeCheckboxStates = async () => {
-    return await catalogStore.getAllCatalogs.map(item => {
-        return checkboxStates.value[item.id] = {
+    await catalogStore.getAllCatalogs.map(item => {
+        checkboxStates.value[item.id] = {
             name: item.name,
             id: item.id,
             values: item.subdirectory.map(sub => ({ id: sub.id, value: false, name: sub?.name }))
         };
+
+
     });
+    console.log('checkboxStates in function', checkboxStates)
 };
 
 
@@ -198,6 +202,12 @@ onMounted(async () => {
     await initializeCheckboxStates()
 
 })
+watch(() => authStore.getSelectedLang, async (newVal, oldVal) => {
+    await catalogStore.fetchAllCatalogs();
+    initializeCheckboxStates()
+
+});
+
 
 const openedBlockFilters = ref<string[]>([]);
 
