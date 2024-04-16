@@ -12,56 +12,56 @@
             </div>
         </div>
         <div class="filters-block">
-            <div>
-                <div v-for="item in catalogStore.getAllCatalogs" :key="item?.id">
-                    <h4 class="filters-block-header">{{ item?.name }}</h4>
-                    <p v-if="item?.subdirectory?.length" v-for="(sub, index) in getSlicedSubdirectories(item)"
-                        :key="index" class="each-sub-item">
-                        <label class="custom-checkbox">
-                            <input type="checkbox" :id="`${item.id}-${index}`" :value="sub.id"
-                                :checked="isChecked(item.id, sub.id)"
-                                @change="updateCheckboxState(item.id, sub.id, $event)" />
-                            <p><span>{{ sub?.name }}</span></p>
-                        </label>
-                    </p>
 
-                    <p v-else-if="!item?.subdirectory?.length && selectedBoolValues[item?.id]">
-                    <div class="custom-radio">
-                        <input type="radio" :id="'radio_' + item.id + '_true'" :value="true"
-                            v-model="selectedBoolValues[item.id].value" @change="handleInputChange()">
-                        <label :for="'radio_' + item?.id + '_true'">
-                            <span class="radio-icon"></span>
-                            {{ $t('yes') }}
-                        </label>
-                    </div>
-                    <div class="custom-radio mt-2">
-                        <input type="radio" :id="'radio_' + item.id + '_false'" :value="false"
-                            v-model="selectedBoolValues[item.id].value" @change="handleInputChange()">
-                        <label :for="'radio_' + item?.id + '_false'">
-                            <span class="radio-icon"></span>
-                            {{ $t('no') }}
-                        </label>
-                    </div>
+            <div v-for="item in catalogStore.getAllCatalogs" :key="item?.id" class="each-filter-block"
+                :class="{ 'each-filter-block open': opensIncludes(item.id) }">
+                <h4 class="filters-block-header">{{ item?.name }}</h4>
+                <p v-if="item?.subdirectory?.length" v-for="(sub, index) in getSlicedSubdirectories(item)" :key="index"
+                    class="each-sub-item">
+                    <label class="custom-checkbox">
+                        <input type="checkbox" :id="`${item.id}-${index}`" :value="sub.id"
+                            :checked="isChecked(item.id, sub.id)"
+                            @change="updateCheckboxState(item.id, sub.id, $event)" />
+                        <p><span>{{ sub?.name }}</span></p>
+                    </label>
+                </p>
 
-
-                    </p>
-
-                    <p v-if="getRemainingItemCount(item) > 0" class="open-block" @click="setOpenBlock(item?.id)">
-                        {{ opensIncludes(item.id) ? $t('closeBlock') : $t('more') }} <span
-                            v-if="!opensIncludes(item.id)">{{
-                    getRemainingItemCount(item) }}</span>
-                        <img class="arrow" :class="{ 'rotated': opensIncludes(item.id) }"
-                            src="../../assets/icons/arrow-down-blue.svg" alt="open-arrow">
-                    </p>
+                <p v-else-if="!item?.subdirectory?.length && selectedBoolValues[item?.id]">
+                <div class="custom-radio">
+                    <input type="radio" :id="'radio_' + item.id + '_true'" :value="true"
+                        v-model="selectedBoolValues[item.id].value" @change="handleInputChange()">
+                    <label :for="'radio_' + item?.id + '_true'">
+                        <span class="radio-icon"></span>
+                        {{ $t('yes') }}
+                    </label>
                 </div>
+                <div class="custom-radio mt-2">
+                    <input type="radio" :id="'radio_' + item.id + '_false'" :value="false"
+                        v-model="selectedBoolValues[item.id].value" @change="handleInputChange()">
+                    <label :for="'radio_' + item?.id + '_false'">
+                        <span class="radio-icon"></span>
+                        {{ $t('no') }}
+                    </label>
+                </div>
+
+
+                </p>
+
+                <p v-if="getRemainingItemCount(item) > 0" class="open-block" @click="setOpenBlock(item?.id)">
+                    {{ opensIncludes(item.id) ? $t('closeBlock') : $t('more') }} <span v-if="!opensIncludes(item.id)">{{
+                    getRemainingItemCount(item) }}</span>
+                    <img class="arrow" :class="{ 'rotated': opensIncludes(item.id) }"
+                        src="../../assets/icons/arrow-down-blue.svg" alt="open-arrow">
+                </p>
             </div>
+
         </div>
     </div>
 
 </template>
 
 <script setup lang="ts">
-import { AllCatalog, CatalogCheckbox, CatalogItem, SubCatalog } from '@/types/Catalog'
+import { AllCatalog, CatalogCheckbox } from '@/types/Catalog'
 
 
 type BoolValues = {
@@ -76,10 +76,9 @@ interface BoolCatalog {
 }
 
 
-const value = ref(false);
+
 const productsStore = useProductsSstore()
 const catalogStore = useCatalogStore();
-const route = useRoute()
 const authStore = useAuthStore();
 const checkboxStates = ref<{ [key: string]: CatalogCheckbox }>({});
 const selectedBoolValues: Ref<Record<string, BoolValues>> = ref({});
@@ -170,10 +169,7 @@ const updateCheckboxState = (itemId: string, subId: string, event: any) => {
 
     console.log('checkboxStates', checkboxStates)
     productsStore.setSubDirectories(filteredValues)
-
-
     console.log('filteredValues', filteredValues)
-
     productsStore.filterProducts()
 };
 
@@ -247,12 +243,44 @@ watch(() => authStore.getSelectedLang, async (newVal, oldVal) => {
         display: block;
     }
 
+    .each-filter-block {
+        margin-top: 40px;
+    }
+
+    .each-filter-block.open {
+        border: 1px solid $slider-border-color;
+        padding: 12px 10px;
+        max-height: 217px;
+        height: 100%;
+        scrollbar-gutter: stable;
+        overflow-y: auto;
+
+        &::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: #222;
+            border-radius: 5px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: #D9D9D9;
+            border-radius: 10px;
+
+        }
+
+
+    }
+
+
+
     &-block {
         margin-top: 40px;
 
         &-header {
             @include textFormat(20px, 20px, 600, #000);
-            margin: 40px 0 22px 0;
+            margin: 0 0 22px 0;
         }
     }
 

@@ -19,9 +19,10 @@
                 <li @click="toggleProfile"><img src="../assets/icons/icon=user.svg" alt="">{{ $t('profile') }}</li>
             </ul>
             <ul class="bottom">
-                <li class="catalog-li" @mouseover="toggleCatalog">{{ $t('catalog') }}
+                <li class="catalog-li" @mouseover="toggleCatalog" @mouseleave="closeCatalog">{{ $t('catalog') }}
                     <img class="arrow" :class="{ 'rotated': isCatalogOpen }"
                         src="../assets/icons/icon=components-closed-arrow.svg" alt="open-arrow">
+                    <Catalog :isCatalogOpen="isCatalogOpen" @closeCatalog="closeCatalog" @goToCatalog="goToCatalog" />
                 </li>
 
                 <li @click="navigateTo('/koler')">{{ $t('tinting') }}</li>
@@ -44,18 +45,14 @@
             </ul>
         </div>
 
-        <Catalog :isCatalogOpen="isCatalogOpen" @closeCatalog="closeCatalog" @goToCatalog="goToCatalog" />
+
         <div class="overlay-header-options" v-show="isCatalogOpen" :class="{ 'open': isCatalogOpen }"></div>
     </div>
+
 
     <Dialog v-model:visible="isProfileOpen" modal :style="{ width: '450px', padding: '10px 40px 40px 40px' }">
         <AuthModal @closeModal="isProfileOpen = false" />
     </Dialog>
-
-
-
-
-
 </template>
 
 <script setup lang="ts">

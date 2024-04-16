@@ -38,8 +38,6 @@
             <button class="look-all-btn" @click="navigateTo('/brands')">
                 <span>{{ $t('lookAll') }}</span>
                 <img src='../assets/icons/icon=components-more.svg' />
-
-
             </button>
         </div>
 
