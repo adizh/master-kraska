@@ -5,33 +5,38 @@
 
                 <!-- <NuxtImg src="/white-logo.png" /> -->
                 <img src="../assets/images/white-logo.png" alt="" class="white-logo">
-                <button class="callback-btn">Обратный звонок</button>
+                <button class="callback-btn">{{ $t('callBack') }}</button>
             </div>
             <div class="second">
-                <span><a href="/news">Новости
+                <span><a href="/news">{{ $t('news') }}
 
                         <img src="../assets/icons/arrow-footer.svg" alt="arrow">
                     </a></span>
-                <span><a href="/contacts">Наши магазины <img src="../assets/icons/arrow-footer.svg"
+                <span><a href="/contacts">{{ $t('allOutStores') }} <img src="../assets/icons/arrow-footer.svg"
                             alt="arrow"></a></span>
-                <span><a href="/contacts">Контакты <img src="../assets/icons/arrow-footer.svg" alt="arrow"></a></span>
-                <span><a href="">Колеровка <img src="../assets/icons/arrow-footer.svg" alt="arrow"></a></span>
+                <span><a href="/contacts">{{ $t('contacts') }} <img src="../assets/icons/arrow-footer.svg"
+                            alt="arrow"></a></span>
+                <span><a href="">{{ $t('tinting') }} <img src="../assets/icons/arrow-footer.svg"
+                            alt="arrow"></a></span>
             </div>
             <div class="third">
-                <span><a href="">Подбор по параметрам <img src="../assets/icons/arrow-footer.svg"
+                <span><a href="">{{ $t('searchByParams') }} <img src="../assets/icons/arrow-footer.svg"
                             alt="arrow"></a></span>
-                <span><a href="">Бренды <img src="../assets/icons/arrow-footer.svg" alt="arrow"></a></span>
-                <span><a href="/certificates">Сертификаты <img src="../assets/icons/arrow-footer.svg"
+                <span><a href="">{{ $t('brands') }} <img src="../assets/icons/arrow-footer.svg" alt="arrow"></a></span>
+                <span><a href="/certificates">{{ $t('certificates') }} <img src="../assets/icons/arrow-footer.svg"
                             alt="arrow"></a></span>
-                <span><a href="/about-us">О нас <img src="../assets/icons/arrow-footer.svg" alt="arrow"></a></span>
+                <span><a href="/about-us">{{ $t('aboutUs') }} <img src="../assets/icons/arrow-footer.svg"
+                            alt="arrow"></a></span>
             </div>
             <div class="fourth">
-                <span><a href="">Выездной консультант <img src="../assets/icons/arrow-footer.svg"
+                <span><a href="">{{ $t('mobileConsultant') }}<img src="../assets/icons/arrow-footer.svg"
                             alt="arrow"></a></span>
-                <span><a href="">Карта постоянного покупателя <img src="../assets/icons/arrow-footer.svg"
+                <span><a href="">{{ $t('mapPermanentCustomer') }} <img src="../assets/icons/arrow-footer.svg"
                             alt="arrow"></a></span>
-                <span><a href="">Оплата и доставка <img src="../assets/icons/arrow-footer.svg" alt="arrow"></a></span>
-                <span><a href="">Эксперты <img src="../assets/icons/arrow-footer.svg" alt="arrow"></a></span>
+                <span><a href="">{{ $t('payDelivery') }} <img src="../assets/icons/arrow-footer.svg"
+                            alt="arrow"></a></span>
+                <span><a href="">{{ $t('experts') }} <img src="../assets/icons/arrow-footer.svg"
+                            alt="arrow"></a></span>
             </div>
         </div>
         <div class="middle">
@@ -50,13 +55,13 @@
 
             <span>
                 <img src="../assets/icons/icon=time.svg" alt="time">
-                c 9:00 до 18:00 Понедельник-суббота
+                c 9:00 до 18:00 {{ $t('monday') }}-{{ $t('saturday') }}
             </span>
         </div>
         <div class="bottom">
 
             <span>Мастер Краска 2012г</span>
-            <span>Политика конфиденциальности</span>
+            <span>{{ $t('privacyPolicy') }}</span>
         </div>
     </section>
 </template>

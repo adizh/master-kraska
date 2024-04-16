@@ -1,14 +1,14 @@
 <template>
     <ClientOnly>
         <section>
-            <h1>Профиль</h1>
+            <h1>{{ $t('profile') }}</h1>
             <div class="profile-main grid">
                 <ul class="sidebar col-3">
                     <li v-for="(item, index) in tabsOptions" :key="item" @click="() => selectTab(index + 1)"
                         :class="{ 'active': index + 1 === selectedTab }">
                         {{ item }}
                     </li>
-                    <li @click="openLogout" class="">Выход из аккаунта</li>
+                    <li @click="openLogout" class="">{{ $t('logoutext') }}</li>
                 </ul>
 
                 <div class="col-8 right-side" v-if="selectedTab === 1">
@@ -34,25 +34,25 @@
                         </template>
                     </CartProductItem>
                     <div class="flex justify-content-end flex-row"> <button class="btn-white-bg"
-                            @click='cartStore.saveNewCart'>Сохранить
-                            изменения</button>
+                            @click='cartStore.saveNewCart'>
+                            {{ $t('saveChanges') }}</button>
                     </div>
 
                     <div class="cart-main-info-price col-12" v-if="cartStore.getAllCart?.length">
                         <div class="col-6">
-                            <button class="pink-button">Перейти к оформлению</button>
+                            <button class="pink-button">{{ $t('goToRegister') }}</button>
                             <div class="cart-main-info-price-block">
                                 <div class="first">
-                                    <span>Всего: {{ cartStore.numberOfProds }} товар</span>
+                                    <span>{{ $t('all') }}: {{ cartStore.numberOfProds }} {{ $t('product') }}</span>
                                     <span>{{ cartStore.totalOfTotalSum }} сом</span>
                                 </div>
                                 <div class="second">
-                                    <span>Скидка</span>
+                                    <span>{{ $t('accountPiece') }}</span>
                                     <span>0%</span>
                                 </div>
                                 <input class="basic-input" placeholder="Промокод" />
                                 <div class="last">
-                                    <span>Итого</span>
+                                    <span>{{ $t('inTotal') }}</span>
                                     <span>{{ cartStore.totalOfTotalSum }} сом</span>
                                 </div>
                             </div>
@@ -60,7 +60,7 @@
                     </div>
 
 
-                    <NoContent title="Ваша корзина пуста" v-else>
+                    <NoContent :title="$t('noCart')" v-else>
                         <template #icon>
                             <svg width="44" height="44" viewBox="0 0 44 44" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -78,18 +78,12 @@
                 </div>
 
                 <div class="col-8 right-side orders" v-else-if="selectedTab === 5">
-
-
                     <ProfileNotifications />
                 </div>
                 <div class="col-8 right-side orders" v-else-if="selectedTab === 6">
                     <div class="bookmarked-list">
                         <ProductsProductItem type="bookmark" v-for="item in userBookmarks" :key="item.id"
                             :product="item" @addItemToBookmarks="addItemToBookmarks" />
-                        <!-- <ProductsProductItem type="bookmark" />
-                        <ProductsProductItem type="bookmark" />
-                        <ProductsProductItem type="bookmark" />
-                        <ProductsProductItem type="bookmark" /> -->
                     </div>
                 </div>
             </div>
@@ -103,10 +97,10 @@
             <template #closeicon>
                 <span class="close-icon-modal">X</span>
             </template>
-            <div class="modal-header">Вы действительно хотите выйти из аккаунта?</div>
+            <div class="modal-header">{{ $t('logoutWarningText') }}?</div>
             <div class="modal-btns">
-                <button @click="isLogoutOpen = false">Отменить</button>
-                <button @click='confirmedLogout'>Выйти</button>
+                <button @click="isLogoutOpen = false">{{ $t('cancel') }}</button>
+                <button @click='confirmedLogout'>{{ $t('logout') }}</button>
             </div>
         </Dialog>
     </ClientOnly>
@@ -117,18 +111,19 @@
 
 <script setup lang="ts">
 import { Product } from '~/types/Product';
-import orders from './orders.vue';
 
 const isLogoutOpen = ref(false);
 const userBookmarks = ref<Product[]>([])
+let selectedTab: Ref<number>;
+const tabsOptions = ['Личная информация', 'История заказов', 'Корзина', 'Мои отзывы', 'Настройки уведомлений', 'Избранные'];
+const store = useAuthStore();
+const productsStore = useProductsSstore();
+const cartStore = useCartStore()
 
 const openLogout = () => {
     isLogoutOpen.value = true
 }
 
-const tabsOptions = ['Личная информация', 'История заказов', 'Корзина', 'Мои отзывы', 'Настройки уведомлений', 'Избранные'];
-
-let selectedTab: Ref<number>;
 
 if (process.client) {
     if (localStorage.getItem('selectedTab') && localStorage.getItem('selectedTab') !== null) {
@@ -150,24 +145,13 @@ const confirmedLogout = () => {
 
 const selectTab = (tab: number) => {
     selectedTab.value = tab;
-
-    console.log('is selectes tab is chaning', selectedTab, tab)
-    // if (typeof selectedTab === 'number') {
-    //     selectedTab = ref(tab);
-    // } else {
-    //     selectedTab.value = tab;
-    // }
-
     if (tab === 7) {
         openLogout();
     }
-
     localStorage.setItem('selectedTab', selectedTab.value.toString());
 }
 
-const store = useAuthStore();
-const productsStore = useProductsSstore();
-const cartStore = useCartStore()
+
 
 const fetchUserBookmarks = async () => {
     try {
@@ -186,13 +170,19 @@ const addItemToBookmarks = (objectId: string) => {
 }
 
 
+// onBeforeRouteLeave((to, from, next) => {
+//     localStorage.removeItem('selectedTab')
+
+// });
+
 onMounted(() => {
     store.fetchUser();
     fetchUserBookmarks();
 
-
+    console.log('store getUserId', store.getUserId)
     if (!store.getUserId) {
-        return navigateTo('/')
+        navigateTo('/');
+        console.log('should be navigates to home')
     }
 
 

@@ -4,20 +4,20 @@
             <span class="item-date">11/12/24</span>
             <div class="item-info grid">
                 <div class="col-6">
-                    <span>Товар</span>
+                    <span>{{ $t('productCap') }}</span>
                     <p>{{ formatName(order?.productName) }}</p>
 
                 </div>
                 <div class="col-2">
-                    <span>Кол-во</span>
+                    <span>{{ $t('quantity') }}</span>
                     <p>{{ order?.quantity }}</p>
                 </div>
                 <div class="col-2">
-                    <span>Сумма</span>
+                    <span>{{ $t('sum') }}</span>
                     <p>{{ order?.price * order?.quantity }} сом</p>
                 </div>
                 <div class="col-2 more-info" @click="() => toggleCatalog(order?.id)">
-                    Подробнее
+                    {{ $t('moreInfo') }}
                     <img class="arrow" :class="{ 'rotated': isCatalogOpen === order?.id }"
                         src="../../assets/icons/icon=components-arrow-blue.svg" alt="open-arrow">
                 </div>
@@ -30,20 +30,20 @@
                     <div class="col-6 flex flex-row gap-1 align-items-center">
                         <img src="../../assets/images/test-kraska.png" alt="">
                         <div class="expanded-section-info"><span>{{ order?.productName }}</span>
-                            <span>Разбавитель: вода</span>
-                            <span>Без запаха: да</span>
+                            <span>{{ $t('diluent') }}: вода</span>
+                            <span>{{ $t('noSmell') }}: да</span>
 
                         </div>
                     </div>
                     <div class="col-2">
-                        <p>{{ order?.quantity }} шт</p>
+                        <p>{{ order?.quantity }} {{ $t('piece') }}</p>
                     </div>
                     <div class="col-2">
                         <p>{{ order?.price * order?.quantity }} сом</p>
                     </div>
                     <div class="col-2">
                         <button class="bg-white-btn">
-                            Заказать снова
+                            {{ $t('orderAgain') }}
                         </button>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
     </div>
 
 
-    <NoContent v-else title="История заказов пусто">
+    <NoContent v-else :title="$t('noHistoryOrder')">
         <template #icon>
             <img src="../../assets/icons/black/icon=components -time-notfill.svg" alt="">
         </template>
@@ -62,14 +62,11 @@
 
     <Dialog v-model:visible="isConfirmOpen" modal :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
         header=" ">
-        <h5 class="modal-header">Вы действительно хотите подтвердить заказ?</h5>
+        <h5 class="modal-header">{{ $t('confirmOrderText') }}?</h5>
 
         <div class='flex flex-row justify-content-end gap-2'>
-
-            <button class='modal-btns'>Подтвердить</button>
-
-            <button @click="isConfirmOpen = false" class='modal-btns blue'>Отменить</button>
-
+            <button class='modal-btns'>{{ $t('confirm') }}</button>
+            <button @click="isConfirmOpen = false" class='modal-btns blue'>{{ $t('cancel') }}</button>
         </div>
     </Dialog>
 </template>

@@ -1,48 +1,48 @@
 <template>
     <section>
-        <div class="main-header-h1">Оформление</div>
+        <div class="main-header-h1">{{ $t('orderRegister') }}</div>
         <div class="orders grid">
             <div class="col-8 orders-first">
-                <h3>Способ получения заказа</h3>
+                <h3>{{ $t('waysOfOrder') }}</h3>
                 <div class="buttons-sel">
                     <button class="gray-buttons-border" @click="selMethod(1)"
-                        :class="{ 'selected-btn': method === 1 }">Забрать из магазина
+                        :class="{ 'selected-btn': method === 1 }">{{ $t('takeFromStore') }}
                         <img src="../../assets/icons/carbon_checkmark-filled (1).svg" alt="carbon"
                             v-show="method === 1">
                     </button>
                     <button class="gray-buttons-border" @click="selMethod(2)" :class="{ 'selected-btn': method === 2 }">
-                        Доставка
+                        {{ $t('delivery') }}
                         <img src="../../assets/icons/carbon_checkmark-filled (1).svg" alt="carbon"
                             v-show="method === 2">
                     </button>
                 </div>
                 <div class="order-first-info">
-                    <h5>Условия самовывоза:</h5>
+                    <h5>{{ $t('rulesPickip') }}:</h5>
                     <ul>
-                        <li>-Если товар в наличии в магазине, то вы можете забрать его сегодня, бесплатно</li>
+                        <li>-{{ $t('rulesPickip1') }}</li>
                         <li>
-                            -Если товар есть на Центральном складе, то мы привезём его в нужный магазин в течение
-                            2–3 дней; в этом случае необходима 100% предоплата.
+                            -{{ $t('rulesPickip2') }}
                         </li>
-                        <li>-Если товар не поддерживается на остатке, то необходима 100% предоплата и мы привезём
-                            его для вас в течение 7–10 рабочих дней</li>
+                        <li>-
+                            {{ $t('rulesPickip3') }}
+                        </li>
                     </ul>
                 </div>
                 <div v-if="selectedOrderPlacement === 1">
                     <div class="magazine">
-                        <h3>Выберите магазин откуда заберёте</h3>
+                        <h3>{{ $t('chooseStore') }}</h3>
                         <button class="gray-buttons-border mb-2" @click="isMagVisible = !isMagVisible">{{
-                            selectedMarket?.name
-                        }}</button>
+            selectedMarket?.name
+        }}</button>
                         <span v-if='pickupErr.store' class="err-input-msg">{{
-                            pickupErr.store }}</span>
+            pickupErr.store }}</span>
                     </div>
 
                     <CartPayMethod @choosePayMethod="choosePayMethod" />
                     <span v-if='pickupErr.payMethod' class="err-input-msg">{{ pickupErr.payMethod }}</span>
                     <div class="delivery-comments mt-3">
-                        <h3>Коментарии</h3>
-                        <input type="text" class="basic-input" placeholder="Коментарии"
+                        <h3>{{ $t('comments') }}</h3>
+                        <input type="text" class="basic-input" :placeholder="$t('comments')"
                             v-model="orderStore.delForm.comment.value">
                     </div>
                 </div>
@@ -58,24 +58,24 @@
 
                 <div class="cart-main-info-price-block">
                     <div class="first">
-                        <span>Всего: {{ cartStore.numberOfProds }} товар</span>
+                        <span>{{ $t('all') }}: {{ cartStore.numberOfProds }} {{ $t('product') }}</span>
                         <span>{{ cartStore.totalOfTotalSum }} сом</span>
                     </div>
                     <div class="second">
-                        <span>Скидка</span>
+                        <span>{{ $t('accountPiece') }}</span>
                         <span>0%</span>
                     </div>
                     <input class="basic-input" placeholder="Промокод" />
                     <div class="last">
-                        <span>Итого</span>
+                        <span>{{ $t('inTotal') }}</span>
                         <span>{{ cartStore.totalOfTotalSum }} сом</span>
                     </div>
                 </div>
-                <button class="margin-top-20 pink-button" @click="submitOrder">Подтвердить заказ</button>
+                <button class="margin-top-20 pink-button" @click="submitOrder">{{ $t('confirmOrder') }}</button>
             </div>
         </div>
         <div class="ordered-items margin-top-40 col-8">
-            <h2>Товар</h2>
+            <h2>{{ $t('productCap') }}</h2>
             <CartProductItem v-for="item in cartStore.getAllCart" :key="item.id" :item="item">
                 <template #count-buttons>
                     <span class="price">{{ item.totalProdSum }} сом</span>
@@ -89,7 +89,7 @@
 
     <Dialog v-model:visible="isMagVisible" modal :style="{ width: '65rem', padding: '10px 20px' }" class="dialog-mag">
         <template #header>
-            <h5 class="m-3">Выбрать магазин</h5>
+            <h5 class="m-3">{{ $t('Выбрать магазин') }}</h5>
         </template>
         <template #closeicon :style="{ background: 'transparent', color: 'none' }">
             <div class="mt-3">
@@ -113,14 +113,14 @@
 
 
         <div class="warning-modal-exit">
-            <h5 class="modal-header2">Вы хотите отменить заказ?</h5>
+            <h5 class="modal-header2">{{ $t('cancedlOrderWarn') }}?</h5>
             <p class="warning-text-modal">
-                Оформление заказа будет отменен в случае выхода
+                {{ $t('cancelOrderTextWarn') }}
             </p>
             <div class='flex flex-row justify-content-end gap-2 buttons'>
-                <button class="modal-btns danger" @click="deleteOrder">Выйти</button>
+                <button class="modal-btns danger" @click="deleteOrder">{{ $t('logout') }}</button>
 
-                <button class='modal-btns' @click="isWarningOpen = false">Отменить</button>
+                <button class='modal-btns' @click="isWarningOpen = false">{{ $t('cancel') }}</button>
 
             </div>
 
@@ -142,8 +142,6 @@
 <script setup lang="ts">
 definePageMeta({
     layout: false
-
-
 })
 import { addressList } from '@/assets/js/addressList';
 import { AddressList } from '~/types/Items';

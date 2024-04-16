@@ -1,12 +1,12 @@
 <template>
     <div class="contacts margin-top-80">
-        <h5 class='each-section-header'>Контакты</h5>
+        <h5 class='each-section-header'>{{ $t('contacts') }}</h5>
         <h5 class='each-section-header margin-top-40'>ФЛАГМАНСКИЙ МАГАЗИН</h5>
 
         <div class="contacts-header ">
             <div class="contacts-header-block">
                 <div><img src="@/assets/icons/black/icon=components-location.svg" alt="location" /></div>
-                <div><span>Адрес</span>
+                <div><span>{{ $t('address') }}</span>
                     <p>пр.Чынгыза Айтматова, 93/1 лит А, г.Бишкек</p>
                 </div>
             </div>
@@ -15,7 +15,7 @@
                 <div>
                     <img src="@/assets/icons/black/icon=components-phone.svg" alt="phone">
                 </div>
-                <div><span>Номер телефона</span>
+                <div><span>{{ $t('phoneNumber') }}</span>
                     <p>+996 550 910 148</p>
                 </div>
             </div>
@@ -25,7 +25,7 @@
                     <img src="@/assets/icons/black/icon=components-time.svg" alt="time">
                 </div>
                 <div>
-                    <span>Рабочие часы </span>
+                    <span>{{ $t('workingHours') }}</span>
                     <p>Пон - Суб с 9:00 до 18:00</p>
                 </div>
             </div>
@@ -33,8 +33,8 @@
 
         <div class="maps-address margin-top-80">
             <div class="section-header-links">
-                <h5 class='each-section-header'>Все наши магазины</h5>
-               <slot name="look-all-btn"></slot>
+                <h5 class='each-section-header'>{{ $t('allOurMarkets') }}</h5>
+                <slot name="look-all-btn"></slot>
             </div>
 
             <div class="maps-address-list" v-if="type === 'about-us'">
@@ -46,11 +46,11 @@
         <ClientOnly>
             <div class="margin-top-40 margin-bottom-40">
                 <YandexMap :settings="{
-                    location: {
-                        center: [74.585016, 42.835826],
-                        zoom: 16,
-                    },
-                }" width="100%" height="500px">
+            location: {
+                center: [74.585016, 42.835826],
+                zoom: 16,
+            },
+        }" width="100%" height="500px">
                     <yandex-map-default-scheme-layer />
                     <yandex-map-default-features-layer />
                     <template v-for="(coordinate, index) in markers" :key="index">

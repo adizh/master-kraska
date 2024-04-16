@@ -1,6 +1,6 @@
 <template>
     <section>
-        <div class="main-header-h1">Бренды</div>
+        <div class="main-header-h1">{{ $t('brands') }}</div>
 
 
         <div class="brands-list">

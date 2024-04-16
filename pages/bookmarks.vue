@@ -1,12 +1,12 @@
 <template>
     <section>
-        <h1>Избранное</h1>
+        <h1>{{ $t('bookmarks') }}</h1>
         <div class="bookmarked-list">
             <ProductsProductItem type="bookmark" />
             <ProductsProductItem type="bookmark" />
             <ProductsProductItem type="bookmark" />
             <ProductsProductItem type="bookmark" />
-            
+
         </div>
 
         <!-- <NoContent title="Избранные пусто">
@@ -21,8 +21,4 @@
 
 </script>
 
-<style scoped lang="scss">
-
-
-
-</style>
+<style scoped lang="scss"></style>

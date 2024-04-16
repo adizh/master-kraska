@@ -10,13 +10,13 @@
 
         <div class="item-block-info">
             <div class="each-block-info-col">
-                <span class="text">Расход: </span>
+                <span class="text">{{ $t('consumption') }}: </span>
                 <span class="text-data">4343434</span>
             </div>
-            <div class="each-block-info-col"> <span class="text">Фасовка: </span>
+            <div class="each-block-info-col"> <span class="text">{{ $t('packing') }}: </span>
                 <span class="text-data"> 43434</span>
             </div>
-            <div class="each-block-info-col"> <span class="text">Бренд: </span>
+            <div class="each-block-info-col"> <span class="text">: </span>
                 <span class="text-data">feererere</span>
             </div>
         </div>
@@ -102,7 +102,6 @@ const productName = (name: string) => {
 .item-block {
     transition: .3s ease all;
     border-radius: 10px;
-
     @include flex(column, space-between, center);
 
 
@@ -112,8 +111,6 @@ const productName = (name: string) => {
     width: 35%;
     padding: 20px 32px;
     overflow: hidden;
-
-
     img {
         width: 70%
     }
@@ -127,12 +124,7 @@ const productName = (name: string) => {
         width: 100%;
         display: block;
         text-align: left;
-
         height: 60px;
-
-
-
-
         line-height: 20px;
 
     }
@@ -140,7 +132,6 @@ const productName = (name: string) => {
     &-info {
         max-width: $product-item-width;
         width: $product-item-width;
-
     }
 
     &-buy {

@@ -62,6 +62,7 @@ export const useProductsSstore = defineStore("productsStore", {
     },
 
     setBoolParams(query: any) {
+      console.log("setBoolParams query", query);
       this.filters.fastDrying = query.fastDrying;
       this.filters.approvedByThePaintQualityAssociation =
         query.approvedByThePaintQualityAssociation;
@@ -94,15 +95,17 @@ export const useProductsSstore = defineStore("productsStore", {
         this.filters.subdirectoryIds = [...ids];
       }
     },
-    async filterProducts() {
+    async filterProducts(prodName?: string) {
       const subDirs =
         this.filters.subdirectoryIds?.length > 0
           ? this.filters.subdirectoryIds?.join(",")
           : null;
 
       console.log("filter products subDirs", subDirs);
+
+      console.log("in filter product bool values", this.filters.fastDrying);
       const query = {
-        productName: this.filters.search,
+        productName: this.filters.search || prodName,
         categoryId: this.filters.categoryId,
         subdirectoryIds: subDirs,
         fastDrying: this.filters.fastDrying,

@@ -1,11 +1,11 @@
 <template>
     <section>
         <h1 class="main-header-h1">
-            Колеровка
+            {{ $t('tinting') }}
         </h1>
         <div class="koler-section">
             <h1 class="main-header-h1">
-                Карта красок
+                {{ $t('colorsMap') }}
             </h1>
             <div class="grid koler-section-select">
                 <div class="col-2 koler-section-select-line">
@@ -20,9 +20,9 @@
 
                     <input type="text" name="search" id="searcg" placeholder="Введите код цвета" class="basic-input">
 
-                    <div class="danger-text">Внимание Цвет может отличаться от оригинала, из-за воспроизведения цвета
-                        на экране, используйте колеровку только для справки. Колеровка является платной услугой
-                        и оценивается менеджером полсе размещения заказа.</div>
+                    <div class="danger-text">
+                        {{ $t('kolerWarning') }}
+                    </div>
 
 
 

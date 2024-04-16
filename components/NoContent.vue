@@ -2,8 +2,6 @@
     <section>
         <div class="no-content ">
             <span>
-      
-           
                 <slot name="icon"></slot>
             </span>
             <h1 class="main-header-h1">{{ title }}</h1>

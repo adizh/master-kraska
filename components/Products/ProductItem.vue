@@ -14,13 +14,13 @@
 
         <div class="item-block-info">
             <div class="each-block-info-col">
-                <span class="text">Расход: </span>
+                <span class="text">{{ $t('consumption') }}: </span>
                 <span class="text-data">{{ product?.expenditure }}</span>
             </div>
-            <div class="each-block-info-col"> <span class="text">Фасовка: </span>
+            <div class="each-block-info-col"> <span class="text">{{ $t('packing') }}: </span>
                 <span class="text-data"> {{ product?.packing }}</span>
             </div>
-            <div class="each-block-info-col"> <span class="text">Бренд: </span>
+            <div class="each-block-info-col"> <span class="text">{{ $t('brand') }}: </span>
                 <span class="text-data">{{ product?.brandName }}</span>
             </div>
         </div>

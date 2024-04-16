@@ -1,10 +1,10 @@
 <template>
     <button @click.stop="toggleBoomark(product?.id)" v-if="!isProductBookmarked">
-        В избранное
+        {{ $t('toBookmarks') }}
         <img src="../../assets/icons/icon=heart.svg" alt="heart" />
     </button>
     <button @click.stop="toggleBoomark(product?.id)" v-else>
-        Убрать
+        {{ $t('remove') }}
         <img src="../../assets/icons/icon=heart fill.svg" alt="heart icon">
     </button>
 </template>

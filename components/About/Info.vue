@@ -1,28 +1,23 @@
 <template>
     <div class="info">
-        <h1 class="main-header-h1">Компания</h1>
-        <h5 class='each-section-header'>О нас</h5>
-        <p class="info-text">ОсОО «Мастер Краска» — мультибрендовая сеть специализированных магазинов с колор-студиями
-            по продаже лакокрасочных материалов, декоративных покрытий, сопутствующих товаров и услуг по подбору цвета и
-            тонированию в сегменте розничной и оптовой торговли.
+        <h1 class="main-header-h1">{{ $t('company') }}</h1>
+        <h5 class='each-section-header'>{{ $t('aboutUs') }}</h5>
+        <p class="info-text">
+            {{ $t('aboutMainHeader') }}
 
             <br />
-            В 2002 году образовался бренд «Мастер Краска». Долгая и кропотливая работа команды единомышленников,
-            доверительные отношения с клиентами и производителями, стабильность, мастерство и желание каждый день
-            совершенствоваться— вот что является залогом успеха компании. Компания «Мастер Краска» являясь официальный
-            представитель таких мировых брендов лакокрасочной продукции, как Tikk..
+            {{ $t('aboutSubHeader') }}
             <button class="read-all-btn">
-                Еще</button>
+                {{ $t('Еще') }}</button>
         </p>
 
-        <h4>ДОБРО ПОЖАЛОВАТЬ В «МАСТЕР КРАСКУ»!</h4>
+        <h4>{{ $t('welcomeHeader') }}!</h4>
         <div class="info-certif">
             <div class="info-certif-header">
-                <h5 class='each-section-header'>Сертификаты</h5>
+                <h5 class='each-section-header'>{{ $t('certificates') }}</h5>
                 <button class="look-all-btn" @click="navigateTo('/certificates')">
-                    <span>Смотреть все</span>
+                    <span>{{ $t('lookAll') }}</span>
                     <img src='../../assets/icons/icon=components-more.svg' />
-
                 </button>
             </div>
             <div class="info-certif-img">
@@ -37,17 +32,14 @@
 
         <div class="info-certif margin-top-80">
             <div class="info-certif-header">
-                <h5 class='each-section-header'>Продавцы</h5>
+                <h5 class='each-section-header'>{{ $t('sellers') }}</h5>
                 <button class="look-all-btn" @click="navigateTo('/sellers')">
-                    <span>Смотреть все</span>
+                    <span>{{ $t('lookAll') }}</span>
                     <img src='../../assets/icons/icon=components-more.svg' />
 
                 </button>
             </div>
             <div class="info-certif-img">
-
-
-
                 <img src="../../assets/images/seller1.png" alt="">
                 <img src="../../assets/images/seller1.png" alt="">
                 <img src="../../assets/images/seller1.png" alt="">
@@ -80,6 +72,4 @@ h4 {
         @include flex(row, space-between, center)
     }
 }
-
-
 </style>

@@ -1,7 +1,7 @@
 <template>
     <div class="news">
         <div class="section-header-links">
-            <h5 class='each-section-header'>Новости</h5>
+            <h5 class='each-section-header'>{{ $t('news') }}</h5>
 
         </div>
 

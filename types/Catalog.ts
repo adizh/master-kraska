@@ -6,8 +6,11 @@ export type CatalogItem = {
 
 export type AllCatalog = {
   id: string;
-  name: string;
+  nameRu: string;
+  nameKg: string;
   subdirectory: SubCatalog[];
+  isActive: boolean;
+  name: string;
 };
 
 export type SubCatalog = {
@@ -16,10 +19,12 @@ export type SubCatalog = {
   description: string | null;
   categoryId: string;
   products: null;
+  nameRu: string;
+  nameKg: string;
 };
 
 export type CatalogCheckbox = {
   name: string;
   id: string;
-  values: { id: string; value: boolean }[]
+  values: { id: string; value: boolean }[];
 };

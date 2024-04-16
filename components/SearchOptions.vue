@@ -8,8 +8,6 @@
                 <img src="../assets/images/search-test.png" alt="img-product">
                 <span class="prod-search-name">{{ searchName(item?.name) }}</span>
             </li>
-
-
         </ul>
         <button class="look-all-btn" v-if="productStore.getFilteredProducts?.length">
             <span>Смотреть все</span>
@@ -33,7 +31,7 @@ const goToProd = (id: string) => {
 
 const productStore = useProductsSstore();
 const searchName = (name: string) => {
-    if (name.length > 10) {
+    if (name?.length > 10) {
         return name.slice(0, 10) + '...'
     } else {
         return name

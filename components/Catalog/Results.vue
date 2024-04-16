@@ -1,12 +1,7 @@
 <template>
     <div class="results" :class="{ 'horizontal': visibleMethod === 'horizontal' }">
-
-
         <CatalogProductItem v-for="item in productStore.getFilteredProducts" :key="item?.id"
             :visibleMethod="visibleMethod" :product="item" />
-
-
-
     </div>
 </template>
 

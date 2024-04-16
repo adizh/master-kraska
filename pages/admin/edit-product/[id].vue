@@ -132,10 +132,10 @@ import { Product } from '~/types/Product';
 
 const route = useRoute()
 const id = route.params.id;
-
 const { data: product } = await useApi(`/api/v1/Product/get-product-by-id/${id}`) as any;
+
 const item = ref({} as Product)
-console.log('wjat is item ', item)
+
 interface InputField {
     value: string | number | undefined | string[] | boolean
     error: string;
@@ -231,7 +231,9 @@ const editProduct = () => {
 }
 
 onMounted(async () => {
-    item.value = product;
+    item.value = product.value.product;
+    console.log('what is produc value in in mounted', product);
+    console.log('what is item in mouned ', item)
 
     inputs.value = {
         name: { value: item.value?.name, error: '', type: 'string' },

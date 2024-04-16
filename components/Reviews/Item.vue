@@ -8,8 +8,7 @@
                     <div class='flex flex-row gap-4'>
                         <Rating :cancel="false" v-model="rating" />
                         <button v-if="type === 'profile'" class="look-all-btn"
-                            @click="navigateTo(`/product/${item?.productId}`)">Перейти к
-                            коментарию
+                            @click="navigateTo(`/product/${item?.productId}`)"> {{ $t('goToCommnent') }}
                             <img src='../../assets/icons/icon=components-more.svg' />
                         </button>
                     </div>
@@ -17,7 +16,6 @@
                         <img src="../../assets/icons/icon=trash.svg" alt="trash" @click="isModal = !isModal">
                         <img src="../../assets/icons/tdesign_edit.svg" alt="edit" @click="isEditModal = !isEditModal">
                     </div>
-
                 </div>
             </div>
         </div>
@@ -25,9 +23,10 @@
         <p class="info">
             {{ item?.ratingText }}
         </p>
+        
     </li>
 
-    <Dialog v-model:visible="isModal" modal header="">
+    <Dialog v-model:visible="isModal" modal header=" ">
         <template #header>
             <div class="p-modal-header">
             </div>
@@ -35,15 +34,15 @@
         <template #closeicon>
             <span class="close-icon-modal">X</span>
         </template>
-        <div class="modal-header">Вы действительно хотите удалить коментарий?</div>
+        <div class="modal-header">{{ $t('deleteCommentWarning') }}?</div>
 
         <div class="modal-btns">
-            <button @click="isModal = false">Отменить</button>
-            <button @click="confirmDelete">Удалить</button>
+            <button @click="isModal = false">{{ $t('cancel') }}</button>
+            <button @click="confirmDelete">{{ $t('delete') }}</button>
         </div>
     </Dialog>
 
-    <Dialog v-model:visible="isEditModal" modal header="" :style="{ width: '400px' }">
+    <Dialog v-model:visible="isEditModal" modal header=" " :style="{ width: '400px' }">
         <ReviewsEditForm :item="item" />
     </Dialog>
 
@@ -72,7 +71,7 @@ const confirmDelete = async () => {
         const response = await http.delete(`/api/v1/ProductReview/delete-review-by-id/${props?.item?.id}`);
         console.log('response delete', response);
         if (response.status === 200) {
-      
+
 
 
             useNotif('success', 'Комментарий удален', 'Успешно')

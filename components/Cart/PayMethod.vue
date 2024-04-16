@@ -1,18 +1,13 @@
 <template>
     <div class="magazine">
-        <h3>Способ оплаты</h3>
+        <h3>{{ $t('typeOfPayMethod') }}</h3>
         <div class="flex flex-row flex-wrap gap-4">
             <button v-for="payOption in payOptions" :key="payOption" class="gray-buttons-border"
                 @click="selPayMethod(payOption)" :class="{ 'selected-btn': payMethod === payOption }">
                 {{ payOption }}
                 <img src="../../assets/icons/carbon_checkmark-filled (1).svg" alt="carbon"
                     v-show="payMethod === payOption">
-
-
             </button>
-
-
-
         </div>
     </div>
 </template>

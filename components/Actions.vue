@@ -1,44 +1,42 @@
 <template>
     <div class="each-section">
         <div class="sub-header-section">
-            <h5 class='each-section-header'>Акции</h5>
+            <h5 class='each-section-header'>{{ $t('discounts') }}</h5>
 
             <button class="look-all-btn">
-                <span>Смотреть все</span>
+                <span>{{ $t('lookAll') }}</span>
                 <img src='../assets/icons/icon=components-more.svg' />
 
             </button>
         </div>
         <div class="actions-block">
             <div class="actions-block-item">
-                <div class="actions-block-item-header">Скидки на краски "Tikkurila"</div>
+                <div class="actions-block-item-header">{{ $t('discountHeader') }}</div>
                 <p class="actions-block-item-info">
-                    В каждом магазине "Мастер Краска" ежемесячно вас ждут скидки на продукцию компании "TIKKURILA"
+               {{ $t('discoutText') }}
                 </p>
             </div>
             <div class="actions-block-item">
-
-                <div class="actions-block-item-header">Скидки на краски "Tikkurila"</div>
+                <div class="actions-block-item-header">{{ $t('discountHeader') }}</div>
                 <p class="actions-block-item-info">
-                    В каждом магазине "Мастер Краска" ежемесячно вас ждут скидки на продукцию компании "TIKKURILA"
+               {{ $t('discoutText') }}
                 </p>
             </div>
             <div class="actions-block-item">
-
-                <div class="actions-block-item-header">Скидки на краски "Tikkurila"</div>
+                <div class="actions-block-item-header">{{ $t('discountHeader') }}</div>
                 <p class="actions-block-item-info">
-                    В каждом магазине "Мастер Краска" ежемесячно вас ждут скидки на продукцию компании "TIKKURILA"
+               {{ $t('discoutText') }}
                 </p>
             </div>
+          
         </div>
 
 
         <div class="brands-info">
-            <h5 class='each-section-header brands'>Бренды</h5>
-            <p class="brands-text">Компания "Мастер Краска" является официальным поставщиком лакокрасочных материалов
-                следующих брендов:</p>
+            <h5 class='each-section-header brands'>{{ $t('brands') }}</h5>
+            <p class="brands-text">{{ $t('brandsInfo') }}</p>
             <button class="look-all-btn" @click="navigateTo('/brands')">
-                <span>Смотреть все</span>
+                <span>{{ $t('lookAll') }}</span>
                 <img src='../assets/icons/icon=components-more.svg' />
 
 

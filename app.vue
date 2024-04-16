@@ -5,7 +5,9 @@
     <NuxtPage />
     <NuxtSnackbar />
   </section>
+  
   <NuxtLayout name="footer"></NuxtLayout>
+
 
 </template>
 

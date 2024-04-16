@@ -2,19 +2,20 @@
     <form class='order-form' @submit.prevent="sendCheckPayment">
         <h3>MBank</h3>
         <div class="flex flex-column gap-2 mt-4">
-            <span for="basic">Номер телефона</span>
+            <span for="basic">{{ $t('phoneNumber') }}</span>
             <InputMask id="basic" mask="999999999999" placeholder="996700555555"
                 v-model="payStore.getMbank.mbankPhone.value" @input="payStore.clearError('mbankPhone')" />
             <span v-if='payStore.getMbank.mbankPhone.error' class="err-input-msg">{{ payStore.getMbank.mbankPhone.error
                 }}</span>
         </div>
-        <div class="btn"> <button class="bg-white-btn" type="submit">Отправить</button></div>
+        <div class="btn"> <button class="bg-white-btn" type="submit">{{ $t('submitData') }}</button></div>
     </form>
 
     <div v-if="payStore.getMbank?.openConfirm">
         <InputOtp v-model="payStore.getMbank.otp.value" :length='4' id="code" @input="payStore.clearError('otp')" />
         <span v-if='payStore.getMbank.otp.error' class="err-input-msg">{{ payStore.getMbank.otp.error }}</span>
-        <div class="btn"> <button class="bg-white-btn" type="submit" @click='sendOtp'>Отправить</button></div>
+        <div class="btn"> <button class="bg-white-btn" type="submit" @click='sendOtp'>{{ $t('submitData') }}</button>
+        </div>
     </div>
 
 
@@ -44,10 +45,10 @@ const sendOtp = async () => {
     const response = await payStore.confirmMbank();
     console.log('response from the apin setntop', response)
     if (response === 'Платеж в обработке...') {
-       
 
 
-        useNotif('success',payStore.getMbank.status,'Успешно')
+
+        useNotif('success', payStore.getMbank.status, 'Успешно')
         setTimeout(() => {
             return navigateTo('/cart')
         }, 1000)

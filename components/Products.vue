@@ -1,16 +1,16 @@
 <template>
     <div class="each-section">
         <ProductsPopular />
+
         <ProductsUseful />
+
         <ProductsRecommended />
 
 
         <div class="koler">
-            <h5 class="koler-header">Колеровка</h5>
-            <p class="koler-text">Вы можете выбрать любой понравившийся цвет среди заданных фирм и посмотреть, как будет
-                выглядеть тот или
-                иной оттенок на поверхности</p>
-            <button class="bg-white-btn" @click="navigateTo('/koler')">Начать процедуру</button>
+            <h5 class="koler-header">{{ $t('tinting') }}</h5>
+            <p class="koler-text">{{ $t('tintingInfo') }}</p>
+            <button class="bg-white-btn" @click="navigateTo('/koler')">{{ $t('startProcedure') }}</button>
         </div>
     </div>
 </template>

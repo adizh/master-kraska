@@ -1,10 +1,10 @@
 <template>
     <section>
         <div class="header-help">
-            <h1> {{ category?.name }}</h1>
+            <h1> {{ authStore.getSelectedLang === 'ru' ? category?.nameRu : category?.nameKg }}</h1>
             <div class="header-help-icons">
-                <input type="text" placeholder="Поиск краски" class="main-header-input">
-
+                <input type="text" :placeholder="$t('searchPaint')" class="main-header-input" v-model="productName"
+                    @input="handleSearch">
                 <div>
                     <img src="../../assets/icons/ep_menu.svg" alt="ep menu" @click="visibleMethod = 'vertical'">
                     <img src="../../assets/icons/f7_menu.svg" alt="menu" @click="visibleMethod = 'horizontal'">
@@ -19,13 +19,27 @@
 </template>
 
 <script setup lang="ts">
+type visibleMethod = 'vertical' | 'horizontal'
+const visibleMethod = ref<visibleMethod>('vertical');
+
 const route = useRoute();
 const id = route.params.id;
-const { data: category } = useApi(`/api/v1/Category/get-category/${id}`) as any;
-type visibleMethod = 'vertical' | 'horizontal'
-const visibleMethod = ref<visibleMethod>('vertical')
+const authStore = useAuthStore();
+const { data: category } = useApi(`/api/v1/Category/get-category/${id}`, {
+
+}) as any;
+
+
+
+
 const productStore = useProductsSstore()
 
+const productName = defineModel('');
+const handleSearch = (event: any) => {
+    productStore.filterProducts(event.target.value)
+    console.log(event)
+
+}
 onMounted(() => {
     productStore.setCategoryId(id as string);
     productStore.filterProducts()

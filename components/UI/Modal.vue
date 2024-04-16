@@ -5,7 +5,6 @@
                 <div class="modal-content" :style="modalStyle">
                     <span class="close" @click="closeModal">&times;</span>
 
-
                     <a href="#">{{ title }}</a>
 
 

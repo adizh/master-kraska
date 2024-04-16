@@ -3,10 +3,10 @@
         <div class="tabs-select">
             <div>
                 <button class="tab-btns-prod" :class="{ 'active-tab-btn': activeTab === 1 }" @click="selectTab(1)">
-                    Описание</button>
+                    {{ $t('desctiption') }}</button>
             </div>
             <div> <button class="tab-btns-prod" :class="{ 'active-tab-btn': activeTab === 2 }" @click="selectTab(2)">
-                    Сертификаты
+                    {{ $t('certificates') }}
                 </button></div>
         </div>
 
@@ -34,7 +34,6 @@
                 <span>Подготовка поверхности</span>
                 <p>
                     {{ prodSurface }}
-
                     <button class="read-all-btn" @click="toggleProdSurface"
                         v-if="!isSurfaceOpen && isSurfaceLong">Читать
                         все</button>
@@ -42,7 +41,7 @@
                 </p>
             </div>
         </div>
-        <div class="certificate-part" v-else>Сертификаты</div>
+        <div class="certificate-part" v-else>{{ $t('certificates') }}</div>
 
 
 

@@ -1,23 +1,25 @@
 <template>
     <div class="notif">
-        <div class="notif-header">Настройки уведомления</div>
+        <div class="notif-header">{{ $t('notifSettings') }}</div>
         <span class="notif-subheader">
-            Контролируйте, как вы получаете обновления и оповещения от нашего сайта
+            {{ $t('notifControl') }}
         </span>
         <ul class="notif-list">
-            <li><span>Статус заказов</span>
+            <li><span>{{ $t('orderStatus') }}</span>
 
                 <InputSwitch v-model="checked" />
             </li>
 
             <li>
-                <span>Акции</span>
+                <span>{{ $t('discounts') }}</span>
                 <InputSwitch v-model="checked" />
             </li>
+
             <li>
-                <span>Новости</span>
+                <span>{{ $t('news') }}</span>
                 <InputSwitch v-model="checked" />
             </li>
+            
         </ul>
     </div>
 </template>

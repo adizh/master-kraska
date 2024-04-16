@@ -1,33 +1,36 @@
 <template>
     <div class="main-header">
         <div class="left" @click="backHome">
-            <!-- <NuxtImg src="/logo-master.png"></NuxtImg> -->
-            <img src="../assets/images/logo-master.png" alt="" class="logo-img">
+            <img src="../assets/images/logo-master.png" alt="logo" class="logo-img">
         </div>
         <div class="right">
             <ul class="top">
+                <li>
+                    <button @click="changelan('kg')">kg</button>
+                    <button @click="changelan('ru')">ru</button>
+                </li>
                 <li class="phone">
                     <img src="../assets/icons/icon=phone loight.svg" alt="">
                     +996 509 910 148
                 </li>
                 <li @click="navigateTo('/cart')">
-                    <img src="../assets/icons/icon=cart.svg" alt="">Корзина
+                    <img src="../assets/icons/icon=cart.svg" alt="">{{ $t('cart') }}
                 </li>
-                <li @click="toggleProfile"><img src="../assets/icons/icon=user.svg" alt="">Профиль</li>
+                <li @click="toggleProfile"><img src="../assets/icons/icon=user.svg" alt="">{{ $t('profile') }}</li>
             </ul>
             <ul class="bottom">
-                <li class="catalog-li" @mouseover="toggleCatalog">Каталог
+                <li class="catalog-li" @mouseover="toggleCatalog">{{ $t('catalog') }}
                     <img class="arrow" :class="{ 'rotated': isCatalogOpen }"
                         src="../assets/icons/icon=components-closed-arrow.svg" alt="open-arrow">
                 </li>
 
-                <li @click="navigateTo('/koler')">Колеровка</li>
+                <li @click="navigateTo('/koler')">{{ $t('tinting') }}</li>
 
-                <li @click="navigateTo('/pay-deliver')">Оплата и доставка</li>
+                <li @click="navigateTo('/pay-deliver')">{{ $t('payDelivery') }}</li>
                 <li>
-                    <NuxtLink to="/about-us">О нас</NuxtLink>
+                    <NuxtLink to="/about-us">{{ $t('aboutUs') }}</NuxtLink>
                 </li>
-                <li @click="navigateTo('/contacts')">Контакты</li>
+                <li @click="navigateTo('/contacts')">{{ $t('contacts') }}</li>
 
 
                 <li class="search-place"><input type="text" class="main-header-input"
@@ -57,16 +60,19 @@
 
 <script setup lang="ts">
 import { CatalogItem } from '~/types/Catalog';
-
-
+const { locale, setLocale } = useI18n()
 const isCatalogOpen = ref(false);
 const isSearchOpen = ref(false);
 const isProfileOpen = ref();
 const authStore = useAuthStore();
-
 const productStore = useProductsSstore()
 
-console.log('authStore email', authStore.getUserId)
+const changelan = (lang: string) => {
+    setLocale(lang);
+    authStore.setLang(lang)
+}
+
+
 
 const toggleCatalog = () => {
     isCatalogOpen.value = true
@@ -100,6 +106,7 @@ const toggleProfile = () => {
 const closeProfileOpen = () => {
     isProfileOpen.value = false
 }
+
 provide('closeProfileOpen', closeProfileOpen)
 
 
@@ -107,6 +114,7 @@ provide('closeProfileOpen', closeProfileOpen)
 
 <style scoped lang="scss">
 @import '../assets/tabs.scss';
+
 .logo-img {
     width: 100%;
 }
@@ -212,5 +220,4 @@ provide('closeProfileOpen', closeProfileOpen)
     outline: none;
     @extend %header-nav;
 }
-
 </style>

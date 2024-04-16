@@ -1,30 +1,30 @@
 <template>
     <div class="register-auth">
-        <p class="register-auth-header">Введите данные чтобы войти в аккаунт</p>
+        <p class="register-auth-header">{{ $t('typeDataLogin') }}</p>
         <div class="register-auth-options">
-            <input type="text" class="basic-input" placeholder="Email" v-model.trim="inputs.email.value"
+            <input type="text" class="basic-input" :placeholder="$t('email')" v-model.trim="inputs.email.value"
                 @input="handleValues('email', 'email')">
             <span class="err-input-msg " v-if="inputs.email.error">{{ inputs.email.error }}</span>
             <div class="password-block-input">
-                <input :type="isPasswordOpen ? 'text' : 'password'" class="basic-input col-12" placeholder="Пароль"
-                    v-model.trim="inputs.password.value" @input="handleValues('password', 'password')">
+                <input :type="isPasswordOpen ? 'text' : 'password'" class="basic-input col-12"
+                    :placeholder="$t('password')" v-model.trim="inputs.password.value"
+                    @input="handleValues('password', 'password')">
                 <span class="err-input-msg " v-if="inputs.password.error">{{ inputs.password.error }}</span>
                 <img src="../../assets/icons/black/ri-eye-open.svg" alt="open" v-if="isPasswordOpen"
                     @click="togglePassword(false)" class="password-icon">
                 <img src="../../assets/icons/black/ri_eye-off-line.svg" alt="close" v-else @click="togglePassword(true)"
                     class="password-icon">
             </div>
-            <span class="sm-blue-text" @click="isPasswordReset = true">Забыли пароль?</span>
+            <span class="sm-blue-text" @click="isPasswordReset = true">{{ $t('forgotPassword') }}?</span>
 
 
-            <button @click="submitLogin" class="register-auth-btn">Войти</button>
+            <button @click="submitLogin" class="register-auth-btn">{{ $t('login') }}</button>
 
         </div>
     </div>
 
 
     <Dialog v-model:visible="isPasswordReset" modal :style="{ width: '600px' }">
-
         <AuthResetPassword />
     </Dialog>
 </template>

@@ -1,47 +1,46 @@
 <template>
     <form @submit.prevent="submitRegister">
-        <p class="register-auth-header margin-bottom-40 margin-top-30">Электронная почта</p>
+        <p class="register-auth-header margin-bottom-40 margin-top-30">{{ $t('email') }}</p>
         <div class="grid">
 
             <div class="col-12 flex flex-column  col-password">
-                <input type="text" class="basic-input col-12 password" placeholder="Имя" v-model="inputs.name.value"
-                    @input="handleValues('name', 'string')">
+                <input type="text" class="basic-input col-12 password" :placeholder="$t('FirstName')"
+                    v-model="inputs.name.value" @input="handleValues('name', 'string')">
                 <span class="err-input-msg"> {{ inputs.name.error }}</span>
             </div>
             <div class="col-12 flex flex-column  col-password">
-                <input type="text" class="basic-input col-12 password" placeholder="Фамилия"
+                <input type="text" class="basic-input col-12 password" :placeholder="$t('LastName')"
                     v-model="inputs.surname.value" @input="handleValues('surname', 'string')">
                 <span class="err-input-msg"> {{ inputs.surname.error }}</span>
             </div>
 
 
             <div class="col-12 flex flex-column  col-password">
-                <input type="email" class="basic-input col-12 password" placeholder="Почта" v-model="inputs.email.value"
-                    @input="handleValues('email', 'email')">
+                <input type="email" class="basic-input col-12 password" :placeholder="$t('email')"
+                    v-model="inputs.email.value" @input="handleValues('email', 'email')">
                 <span class="err-input-msg"> {{ inputs.email.error }}</span>
             </div>
 
             <div class="col-12 flex flex-column  col-password">
-
                 <InputMask id="basic" v-model="inputs.phone.value" mask="+999 999 99 99 99"
                     placeholder="+996 777 66 55 44" @update:modelValue="handleValues('phone', 'number')" />
                 <span class="err-input-msg"> {{ inputs.phone.error }}</span>
             </div>
 
             <div class="col-12 flex flex-column  col-password password-block-input">
-
                 <input :type="isPasswordOpen ? 'text' : 'password'" v-model="inputs.password.value"
-                    class="basic-input col-12 password" placeholder="Придумайте пароль"
+                    class="basic-input col-12 password" :placeholder="$t('choosePassword')"
                     @input="handleValues('password', 'password')">
                 <img src="../../assets/icons/black/ri-eye-open.svg" alt="open" v-if="isPasswordOpen"
                     @click="togglePassword(false)" class="password-icon">
                 <img src="../../assets/icons/black/ri_eye-off-line.svg" alt="close" v-else @click="togglePassword(true)"
                     class="password-icon">
                 <span class="err-input-msg">{{ inputs.password.error }}</span>
+
             </div>
             <div class="col-12 flex flex-column  col-password password-block-input">
                 <input :type="isPasswordRepeatOpen ? 'text' : 'password'" v-model="inputs.passwordRepeat.value"
-                    class="basic-input col-12 password" placeholder="Повторите пароль"
+                    class="basic-input col-12 password" :placeholder="$t('repeatPassword')"
                     @input="handleValues('passwordRepeat', 'passwordRepeat')">
                 <img src="../../assets/icons/black/ri-eye-open.svg" alt="open" v-if="isPasswordRepeatOpen"
                     @click="togglePasswordRepeat(false)" class="password-icon">
@@ -50,10 +49,8 @@
                 <span class="err-input-msg"> {{ inputs.passwordRepeat.error }}</span>
             </div>
 
-            <button class="col-12 register-auth-btn" type="submit" >Зарегистрироваться</button>
-
+            <button class="col-12 register-auth-btn" type="submit">{{ $t('register') }}</button>
         </div>
-
     </form>
 
 </template>
@@ -73,6 +70,7 @@ const inputs = ref<Inputs>({
     passwordRepeat: { value: '', error: '' },
     phone: { value: '', error: '' }
 })
+
 const emit = defineEmits<{
     closeModal: []
 }>()

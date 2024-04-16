@@ -1,24 +1,28 @@
+// import i18n from "../../i18n/i18n.config";
+
+// const { t } = i18n?.global;
+
 export const advantagesOptions = [
   { number: 1, header: "Прямые поставки ", text: "Официальный дистрибьютор" },
   {
     number: 2,
     header: "Большой опыт",
-    text: "Профессионалы с 15 летнимстажем",
+    text: "professionalExperience",
   },
   {
     number: 3,
     header: "В ногу со временем",
-    text: "Современное колеровочное оборудование",
+    text: "modernTechnics",
   },
-  { number: 4, header: "Масштабность", text: "Сеть магазинов по Кыргызстану" },
+  { number: 4, header: "Масштабность", text: "storesWeb" },
   {
     number: 5,
     header: "Богатый выбор",
-    text: "Самый широкий ассортимент товаров ЛКМ",
+    text: "mostWideProducts",
   },
   {
     number: 6,
     header: " Экология о природе",
-    text: "Экологически безопасная пролукиция",
+    text: "ecoSafeProducts",
   },
 ];

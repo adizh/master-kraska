@@ -1,6 +1,6 @@
 <template>
     <div class="similar-prod-item">
-        <h5 class='each-section-header'>Совместно покупают</h5>
+        <h5 class='each-section-header'>{{ $t('alsoBuy') }}</h5>
         <div class="similar-prod-item-list">
 
             <ProductsProductItem v-for="item in similarItems" :key="item?.id" :product="item" />

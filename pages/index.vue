@@ -1,7 +1,9 @@
 <template>
     <section>
         <IndexMain />
+      
         <Products />
+        
         <Actions />
         <Advantages />
     </section>

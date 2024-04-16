@@ -8,28 +8,25 @@
         <input type="file" @change="uploadLogo($event)" accept="image/*" id="fileInput" class="select-input">
         <div class="grid">
             <div class="col-6 each-field">
-                <label for="name">Имя</label>
+                <label for="name">{{ $t('FirstName') }}</label>
                 <input class='basic-input col-12' type="text" id="name" v-model="inputs.firstName.value"
                     @input="validate('firstName', 'string')">
                 <span v-if="inputs.firstName.error" class="err-input-msg">{{ inputs.firstName.error }}</span>
             </div>
             <div class="col-6 each-field">
-                <label for="surname">Фамилия</label>
+                <label for="surname">{{ $t('LastName') }}</label>
                 <input class='basic-input col-12' type="text" id="surname" v-model="inputs.lastName.value"
                     @input="validate('lastName', 'string')">
                 <span class="err-input-msg"> {{ inputs.lastName.error }}</span>
             </div>
 
-            <div class="col-6 each-field"> <label for="phone">Телефон</label>
-
-
-
+            <div class="col-6 each-field"> <label for="phone">{{ $t('phone') }}</label>
                 <InputMask id="phone" v-model="inputs.phone.value" mask="+999 999 99 99 99"
                     placeholder="+996 777 66 55 44" @update:modelValue="validate('phone', 'string')" />
                 <span class="err-input-msg" v-if="inputs.phone.error"> {{ inputs.phone.error
                     }}</span>
             </div>
-            <div class="col-6 each-field"> <label for="email">Почта</label>
+            <div class="col-6 each-field"> <label for="email">{{ $t('email') }}</label>
                 <input class='basic-input  col-12' type="text" id="email" v-model="inputs.email.value"
                     @input="validate('email', 'email')">
                 <span class="err-input-msg"> {{ inputs.email.error }}</span>
@@ -37,24 +34,23 @@
             </div>
 
             <div class="col-6 each-field">
-                <label for="address"> Адрес доставки</label>
+                <label for="address">{{ $t('deliverAddress') }}</label>
                 <input class='basic-input col-12' type="text" id="address" v-model="inputs.address.value"
                     @input="validate('address', 'string')">
                 <span class="err-input-msg"> {{ inputs.address.error }}</span>
             </div>
 
             <div class="col-6 each-field">
-                <label for="password"> Пароль</label>
+                <label for="password">{{ $t('password') }}</label>
                 <button class="change-password-btn col-12" type="button"
-                    @click="isPasswordChangOpen = !isPasswordChangOpen">Изменить
-
-                    пароль</button>
+                    @click="isPasswordChangOpen = !isPasswordChangOpen">
+                    {{ $t('changePassword') }}</button>
             </div>
         </div>
 
         <div class="col-12 edit-btn">
             <button type="submit" class="bg-white-btn">
-                Редактировать
+                {{ $t('edit') }}
             </button>
         </div>
 
@@ -62,7 +58,7 @@
     <Toast />
 
 
-    <Dialog v-model:visible="isPasswordChangOpen" modal :style="{ width: '600px' }">
+    <Dialog v-model:visible="isPasswordChangOpen" modal :style="{ width: '600px' }" header=" ">
 
         <AuthChangePassword />
     </Dialog>
@@ -184,6 +180,7 @@ div {
 .no-logo {
     border-radius: 100%;
     border: 1px solid #dddddd;
+
 }
 
 

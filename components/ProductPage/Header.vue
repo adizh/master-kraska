@@ -10,20 +10,20 @@
                 {{ product?.name }}
             </div>
             <div>
-                <p class="each-block-info-col">Торговая марка:</p>
+                <p class="each-block-info-col">{{ $t('storeMark') }}:</p>
                 <!-- <NuxtImg src="/brands/marshall.png" /> -->
                 <img src="../../assets/images/test-kraska.png" alt="">
             </div>
-            <div class="middle-review"><span class="each-block-info-col">Рейтинг</span>
+            <div class="middle-review"><span class="each-block-info-col">{{ $t('rating') }}</span>
                 <div class='middle-rating'>
                     <span class="middle-review-number">{{ product?.rating.toFixed(2) }}</span>
                     <Rating v-model="ratingValue" :cancel="false" />
-                    <span class="middle-review-text">Отзывы</span>
+                    <span class="middle-review-text">{{ $t('reviews') }}</span>
                 </div>
 
             </div>
             <div class="middle-volume">
-                <span class="each-block-info-col">Объем</span>
+                <span class="each-block-info-col">{{ $t('volume') }}</span>
 
                 <div class="middle-volume-buttons">
                     <button v-for="(btn, index) in product?.variants" :key="btn?.id"
@@ -37,22 +37,24 @@
 
 
             <div class="middle-koler">
-                <span class="each-block-info-col">База под колеровку</span>
-                <button class="middle-koler-btn">А (белая, светлые тона)</button>
+                <span class="each-block-info-col">{{ $t('baseTinting') }}</span>
+                <button class="middle-koler-btn">А (белая, {{ $t('lightTinting') }})</button>
             </div>
             <div>
                 <span class="each-block-info-col">
-                    Расход
+                    {{ $t('consumption') }}
                 </span>
                 <p>1л=7-12КВ.М. 9л=63.00-108.00КВ.М.</p>
             </div>
             <div>
-                <span class="each-block-info-col">Параметры</span>
+                <span class="each-block-info-col">{{ $t('parameters') }}
+
+                </span>
                 <div class="middle-parameters">
-                    <button><span>Выбрать цвет</span>
+                    <button><span>{{ $t('selectColor') }}</span>
                         <img src="../../assets/icons/mingcute_color-picker-fill.svg" />
                     </button>
-                    <button @click="toggle"><span>Рассчитать</span>
+                    <button @click="toggle"><span>{{ $t('count') }}</span>
                         <img src='../../assets/icons/ion_calculator-outline.svg' />
                     </button>
                 </div>
@@ -60,13 +62,13 @@
         </div>
         <div class="right">
             <div class="header">
-                <span>Цены</span>
+                <span>{{ $t('Цены') }}</span>
                 <UIBookmarks :product="product" />
 
             </div>
 
             <div class="numbers">
-                <p><span>шт</span>
+                <p><span>{{ $t('piece') }}</span>
                     <span class="numbers-price">{{ selectedProductPrice }} сом</span>
                 </p>
                 <p><span>л</span>500 сом</p>
@@ -74,7 +76,7 @@
             </div>
 
             <div class="count">
-                <span class="each-block-info-col">Количество</span>
+                <span class="each-block-info-col">{{ $t('quantity') }}</span>
                 <button class="prod-count-buttons">
                     <span @click="decreaseCount">-</span>
                     <span>{{ countToBuy }}</span>
@@ -83,15 +85,15 @@
             </div>
 
             <div class="count">
-                <span class="each-block-info-col">Сумма</span>
+                <span class="each-block-info-col">{{ $t('sum') }}</span>
                 {{
                     selectedProductPrice * countToBuy }} сом
             </div>
 
             <div class="buy-btns"> <button @click="addToCart">
-                    {{ isProductExistsInCart ? 'Добавить в корзину' : "Добавлено в корзину" }}
+                    {{ isProductExistsInCart ? $t('addToCart') : $t('addedToCart') }}
                 </button>
-                <button @click.capture="buyNow">Купить сразу</button>
+                <button @click.capture="buyNow">{{ $t('buyNow') }}</button>
             </div>
         </div>
     </div>
@@ -99,44 +101,44 @@
 
     <OverlayPanel ref="countOverlay" class="countOverlay" style="width: 38%">
         <div class="count-overlay">
-            <span class="header">Рассчитать цену</span>
+            <span class="header">{{ $t('count') }}</span>
             <div class="count-overlay-inputs">
                 <div class="count-overlay-inputs-block">
-                    <span>Длина</span>
+                    <span>{{ $t('length') }}</span>
                     <input type="text" placeholder="0 м" v-model="length" />
 
                 </div>
                 <div class="count-overlay-inputs-block sign">x</div>
                 <div class="count-overlay-inputs-block">
-                    <span>Ширина</span>
+                    <span>{{ $t('width') }}</span>
                     <input type="text" placeholder="0 м" v-model="width" />
 
                 </div>
                 <div class="count-overlay-inputs-block sign">=</div>
                 <div class="count-overlay-inputs-block">
-                    <span>Площадь</span>
+                    <span>{{ $t('square') }}</span>
                     <input type="text" placeholder="0 м" v-model="sumHeight" disabled />
                 </div>
             </div>
 
             <div class="count-overlay-res sizes">
 
-                <span>Рекомендуемое количество краски:</span>
+                <span>{{ $t('recommendedQuantitty') }}</span>
                 <div class="btns">
-                    <button>1 слой 0л</button>
-                    <button>2 слоя 0 л</button>
+                    <button>1 {{ $t('layer') }} 0л</button>
+                    <button>2 {{ $t('layer2') }} 0 л</button>
                 </div>
             </div>
             <div class="count-overlay-res">
 
-                <span>Вам нужно:</span>
+                <span>{{ $t('youNeed') }}:</span>
                 <p>6 банок по 9л + 2 банки по 2.7л</p>
             </div>
             <div class="count-overlay-finish">
-                <span>Итого</span>
+                <span>{{ $t('inTotal') }}</span>
                 <span>5000сом</span>
             </div>
-            <button>В корзину</button>
+            <button>{{ $t('toCart') }}</button>
         </div>
     </OverlayPanel>
 

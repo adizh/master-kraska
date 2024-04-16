@@ -43,7 +43,11 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "usebootstrap",
     "nuxt-snackbar",
+    "@nuxtjs/i18n",
   ],
+  i18n: {
+    vueI18n: "./i18n/i18n.config.ts",
+  },
   snackbar: {
     bottom: true,
     right: true,

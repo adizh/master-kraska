@@ -2,8 +2,6 @@
     <div class="cart-main-info-prod">
         <div class="cart-main-info-prod-items">
             <div class="cart-main-info-prod-img">
-
-
                 <img src="../../assets/images/test-kraska.png" alt="">
             </div>
             <div class="cart-main-info-middle">
@@ -11,13 +9,13 @@
 
                 <div class="item-block-info">
                     <div class="each-block-info-col">
-                        <span class="text">Расход: </span>
+                        <span class="text">{{ $t('Расход') }}: </span>
                         <span class="text-data">{{ item?.expenditure }}</span>
                     </div>
-                    <div class="each-block-info-col"> <span class="text">Фасовка: </span>
+                    <div class="each-block-info-col"> <span class="text">{{ $t('packing') }}: </span>
                         <span class="text-data">{{ item?.packing }}</span>
                     </div>
-                    <div class="each-block-info-col"> <span class="text">Бренд: </span>
+                    <div class="each-block-info-col"> <span class="text">{{ $t('brand') }}: </span>
                         <span class="text-data">{{ item?.brandName }}</span>
                     </div>
                 </div>

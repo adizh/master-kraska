@@ -1,7 +1,7 @@
 <template>
     <div class='each-section'>
 
-        <h5 class='each-section-header'>Наши преимущества</h5>
+        <h5 class='each-section-header'>{{ $t('outAdvantages') }}</h5>
         <div class="advan-block">
             <div class="left">
                 <div class="left-item" v-for="item in advantagesOptions" :key="item.number">
@@ -37,11 +37,8 @@ import { advantagesOptions } from '@/assets/js/advantages'
 .right {
     width: 35%;
 
-
-
     img {
         width: 100%;
-
     }
 }
 

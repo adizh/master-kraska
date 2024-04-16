@@ -1,14 +1,13 @@
 <template>
     <section>
-        <h1 class="margin-bottom-40 ">Подбор по параметрам</h1>
+        <h1 class="margin-bottom-40 ">{{ $t('selectByParameters') }}</h1>
         <div class="params-first blocks" v-for="(item, index) in firstBlock" :key="item?.id">
             <div class="params-header">
                 <span>{{ index + 1 }}</span>
-                <p>Для каких работ вам необходима краска</p>
+                <p>{{ $t('whichTypeOfWork') }}</p>
             </div>
 
             <div class='flex flex-row gap-4'>
-
                 <button v-for="btn in item?.subdirectory" :key="btn?.id" class="gray-buttons-border"
                     :class="{ 'selected-btn': typeOfWork === btn.id }"
                     @click="updateCheckboxState(item?.id, btn?.id, 'select-btn')">
@@ -17,14 +16,13 @@
                         v-if="typeOfWork === btn.id">
                 </button>
             </div>
-
         </div>
 
 
         <div class="params-first blocks second">
             <div class="params-header">
                 <span>2</span>
-                <p>Для каких работ вам необходима краска</p>
+                <p>{{ $t('whichTypeOfWork') }}</p>
             </div>
 
             <div v-for="item in secondBlock" :key="item?.id" class="mb-5">
@@ -41,7 +39,7 @@
                     </p>
                 </div>
                 <p v-if="getRemainingItemCount(item) > 0" class="open-block" @click="setOpenBlock(item?.id)">
-                    {{ opensIncludes(item.id) ? 'Свернуть' : 'Еще' }} <span v-if="!opensIncludes(item.id)">{{
+                    {{ opensIncludes(item.id) ? $t('closeBlock') : $t('more') }} <span v-if="!opensIncludes(item.id)">{{
             getRemainingItemCount(item) }}</span>
                     <img class="arrow" :class="{ 'rotated': opensIncludes(item.id) }"
                         src="../assets/icons/arrow-down-blue.svg" alt="open-arrow">
@@ -54,7 +52,7 @@
         <div class="params-first blocks third">
             <div class="params-header">
                 <span>3</span>
-                <p>Какое покрытие вы хотите получить в результате</p>
+                <p>{{ $t('whichTypeCoating') }}</p>
             </div>
 
             <div v-for="item in thirdBlock" :key="item?.id" class="mb-5">
@@ -71,7 +69,7 @@
                 </div>
 
                 <p v-if="getRemainingItemCount(item) > 0" class="open-block" @click="setOpenBlock(item?.id)">
-                    {{ opensIncludes(item.id) ? 'Свернуть' : 'Еще' }} <span v-if="!opensIncludes(item.id)">{{
+                    {{ opensIncludes(item.id) ? $t('closeBlock') : $t('more') }} <span v-if="!opensIncludes(item.id)">{{
             getRemainingItemCount(item) }}</span>
                     <img class="arrow" :class="{ 'rotated': opensIncludes(item.id) }"
                         src="../assets/icons/arrow-down-blue.svg" alt="open-arrow">
@@ -83,20 +81,20 @@
         <div class="params-first blocks fourth">
             <div class="params-header">
                 <span>4</span>
-                <p>Оцените бюджет на покупку</p>
+                <p>{{ $t('rateBudget') }}</p>
             </div>
 
             <div class="buttons-price">
-                <input type="text" placeholder="От" class="basic-input" v-model="minPrice">
-                <input type="text" placeholder="До" class="basic-input" v-model="maxPrice">
+                <input type="text" :placeholder="$t('from')" class="basic-input" v-model="minPrice">
+                <input type="text" :placeholder="$t('to')" class="basic-input" v-model="maxPrice">
             </div>
-            <button class="bg-white-btn" @click="filterProductParams">Применить</button>
+            <button class="bg-white-btn" @click="filterProductParams">{{ $t('applyFilter') }}</button>
         </div>
 
 
         <div class="params-results" v-if="showResults">
             <h3>
-                Краски по вашему запросу
+                {{ $t('yourSearchResults') }}
             </h3>
 
             <div class="params-result-prod" v-if="productsStore.getFilteredProducts?.length">
@@ -104,7 +102,7 @@
                     :product="product" />
             </div>
 
-            <div v-else>Нет данных</div>
+            <div v-else>{{ $t('noData') }}</div>
         </div>
     </section>
 </template>

@@ -1,16 +1,16 @@
 <template>
     <div class="prod-item-reviews">
         <div class="prod-item-reviews-create">
-            <span>Оцените товар</span>
+            <span>{{ $t('rateProduct') }}</span>
             <Rating v-model="inputs.ratingValue.value" :cancel="false" />
             <span class="err-input-msg">{{ inputs.ratingValue.error }}</span>
-            <input type="text" class="basic-input" placeholder="Название" v-model="inputs.title.value"
+            <input type="text" class="basic-input" :placeholder="$t('name')" v-model="inputs.title.value"
                 @input="handleInput('title', 'string')" />
             <span class="err-input-msg">{{ inputs.title.error }}</span>
-            <input type="text" class="basic-input" placeholder="Текст" v-model="inputs.text.value"
+            <input type="text" class="basic-input" :placeholder="$t('text')" v-model="inputs.text.value"
                 @input="handleInput('text', 'string')" />
             <span class="err-input-msg">{{ inputs.text.error }}</span>
-            <button @click="createReview">Сохранить отзыв</button>
+            <button @click="createReview">{{ $t('saveReview') }}</button>
         </div>
     </div>
 
@@ -18,8 +18,6 @@
 
 <script setup lang="ts">
 import { Review } from '~/types/Review';
-import Item from './Item.vue';
-
 const authStore = useAuthStore()
 
 const props = defineProps<{
@@ -32,10 +30,12 @@ const inputs = ref({
     ratingValue: { value: props?.item?.rating, error: '' }
 });
 
-const { handleValues } = useInputValidation()
+const { handleValues } = useInputValidation();
+
 const handleInput = (field: string, type: string) => {
     handleValues(inputs.value, field, type);
 }
+
 const createReview = async () => {
     const validationTypes: any = {
         title: 'string',
@@ -65,7 +65,6 @@ const createReview = async () => {
                 inputs.value.text.value = ''
                 inputs.value.title.value = ''
                 inputs.value.ratingValue.value = 0;
-          
                 useNotif('success', 'Отзыв оставлен!', 'Успешно')
             }
             console.log('response update review', response)
@@ -75,7 +74,6 @@ const createReview = async () => {
     }
 }
 
-
 </script>
 
 <style scoped lang='scss'>
@@ -83,16 +81,13 @@ const createReview = async () => {
     margin-top: 20px;
     padding-bottom: 20px;
     @include flex(column, center, center, 20px);
-
     &-create {
         @include flex(column, start, start, 20px);
-
         button {
             @extend %button-shared;
             @include footerSpan(20px, 20px);
             padding: 12px 20px !important;
         }
-
         input {
             width: 100%;
         }

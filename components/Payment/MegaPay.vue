@@ -2,28 +2,29 @@
     <form class='order-form' @submit.prevent="sendCheckPayment">
         <h3>MegaPay</h3>
         <div class="flex flex-column gap-2 mt-4">
-            <span for="basic">Номер телефона</span>
+            <span for="basic">{{ $t('phoneNumber') }}</span>
             <InputMask id="basic" mask="999999999999" placeholder="996700555555"
                 v-model="payStore.getMega.megaPhone.value" @input="payStore.clearErrorMega('megaPhone')" />
             <span v-if='payStore.getMega.megaPhone.error' class="err-input-msg">{{ payStore.getMega.megaPhone.error
                 }}</span>
 
+            <label for="account">{{ $t('account') }}</label>
 
-            <label for="account">Account</label>
-            <input type="text" placeholder="account" id="account" v-model="payStore.getMega.megaAccount.value"
+            <input type="text" :placeholder="$t('account')" id="account" v-model="payStore.getMega.megaAccount.value"
                 class="basic-input">
             <span v-if='payStore.getMega.megaAccount.error' class="err-input-msg">{{ payStore.getMega.megaAccount.error
                 }}</span>
         </div>
-        <div class="btn"> <button class="bg-white-btn" type="submit">Отправить</button></div>
+        <div class="btn"> <button class="bg-white-btn" type="submit">{{ $t('submitData') }}</button></div>
     </form>
 
     <div v-if="payStore.getMega.openConfirm">
         <div class="flex flex-column gap-2">
-            <label for="user">User</label>
+            <label for="user">{{ $t('user') }}</label>
             <InputMask id="basic" mask="999999999999" placeholder="996700555555" v-model="payStore.getMega.user.value"
                 @input="payStore.clearErrorMega('user')" />
         </div>
+
         <span v-if='payStore.getMega.user.error' class="err-input-msg">{{ payStore.getMega.user.error
             }}</span>
 
@@ -32,7 +33,8 @@
                 class="mb-2" />
             <span v-if='payStore.getMega.otp.error' class="err-input-msg">{{ payStore.getMega.otp.error }}</span>
         </div>
-        <div class="btn"> <button class="bg-white-btn" type="submit" @click='sendPayment'>Отправить</button></div>
+        <div class="btn"> <button class="bg-white-btn" type="submit" @click='sendPayment'>{{ $t('submitData')
+                }}</button></div>
     </div>
 
 
@@ -69,7 +71,7 @@ const sendPayment = async () => {
     }
     payStore.iniPaymentMegapay(params, cartStore.getCurrentOrder?.orderNumber)
 
-  
+
 
 
 }

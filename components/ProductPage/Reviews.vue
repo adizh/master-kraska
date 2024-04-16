@@ -1,23 +1,23 @@
 <template>
     <div class="prod-item-reviews">
-        <h5 class='each-section-header'>Отзывы</h5>
-        <span class="no-review" v-if="!itemReviews">Отзывов еще нет</span>
+        <h5 class='each-section-header'>{{ $t('reviews') }}</h5>
+        <span class="no-review" v-if="!itemReviews">{{ $t('noReviews') }}</span>
 
         <ul v-else>
             <ReviewsItem v-for="item in itemReviews" :key="item.id" :item="item" type="product" />
         </ul>
 
         <div class="prod-item-reviews-create">
-            <span>Оцените товар</span>
+            <span>{{ $t('rateProduct') }}</span>
             <Rating v-model="inputs.ratingValue.value" :cancel="false" />
             <span class="err-input-msg">{{ inputs.ratingValue.error }}</span>
-            <input type="text" class="basic-input" placeholder="Название" v-model="inputs.title.value"
+            <input type="text" class="basic-input" :placeholder="$t('name')" v-model="inputs.title.value"
                 @input="handleInput('title', 'string')" />
             <span class="err-input-msg">{{ inputs.title.error }}</span>
-            <input type="text" class="basic-input" placeholder="Текст" v-model="inputs.text.value"
+            <input type="text" class="basic-input" :placeholder="$t('text')" v-model="inputs.text.value"
                 @input="handleInput('text', 'string')" />
             <span class="err-input-msg">{{ inputs.text.error }}</span>
-            <button @click="createReview">Оставить отзыв</button>
+            <button @click="createReview">{{ $t('leaveReview') }}</button>
         </div>
     </div>
 
@@ -80,7 +80,7 @@ const createReview = async () => {
                     inputs.value.title.value = ''
                     inputs.value.ratingValue.value = 0;
 
-                    useNotif('success', 'Отзыв оставлен!','Успешно')
+                    useNotif('success', 'Отзыв оставлен!', 'Успешно')
                 }
                 console.log('response create review', response)
             } catch (err) {

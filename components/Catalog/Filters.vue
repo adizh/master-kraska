@@ -2,15 +2,16 @@
     <div class='filters'>
         <div class="price">
             <label for="price" class="filters-help">
-                Цена
+                {{ $t('price') }}
             </label>
-            <div> <input type="text" placeholder="От" class="basic-input">
-                <input type="text" placeholder="До" class="basic-input">
+            <div> <input type="text" :placeholder="$t('from')" class="basic-input"
+                    v-model="productsStore.filters.minPrice" @input="handlePrices">
+
+                <input type="text" :placeholder="$t('to')" class="basic-input" v-model="productsStore.filters.maxPrice"
+                    @input="handlePrices">
             </div>
         </div>
-
         <div class="filters-block">
-
             <div>
                 <div v-for="item in catalogStore.getAllCatalogs" :key="item?.id">
                     <h4 class="filters-block-header">{{ item?.name }}</h4>
@@ -27,18 +28,18 @@
                     <p v-else-if="!item?.subdirectory?.length && selectedBoolValues[item?.id]">
                     <div class="custom-radio">
                         <input type="radio" :id="'radio_' + item.id + '_true'" :value="true"
-                            v-model="selectedBoolValues[item.id].value" @change="handleInputChange(item.id)">
+                            v-model="selectedBoolValues[item.id].value" @change="handleInputChange()">
                         <label :for="'radio_' + item?.id + '_true'">
                             <span class="radio-icon"></span>
-                            Да
+                            {{ $t('yes') }}
                         </label>
                     </div>
                     <div class="custom-radio mt-2">
                         <input type="radio" :id="'radio_' + item.id + '_false'" :value="false"
-                            v-model="selectedBoolValues[item.id].value" @change="handleInputChange(item.id)">
+                            v-model="selectedBoolValues[item.id].value" @change="handleInputChange()">
                         <label :for="'radio_' + item?.id + '_false'">
                             <span class="radio-icon"></span>
-                            Нет
+                            {{ $t('no') }}
                         </label>
                     </div>
 
@@ -46,13 +47,12 @@
                     </p>
 
                     <p v-if="getRemainingItemCount(item) > 0" class="open-block" @click="setOpenBlock(item?.id)">
-                        {{ opensIncludes(item.id) ? 'Свернуть' : 'Еще' }} <span v-if="!opensIncludes(item.id)">{{
+                        {{ opensIncludes(item.id) ? $t('closeBlock') : $t('more') }} <span
+                            v-if="!opensIncludes(item.id)">{{
                     getRemainingItemCount(item) }}</span>
                         <img class="arrow" :class="{ 'rotated': opensIncludes(item.id) }"
                             src="../../assets/icons/arrow-down-blue.svg" alt="open-arrow">
                     </p>
-
-
                 </div>
             </div>
         </div>
@@ -62,40 +62,13 @@
 
 <script setup lang="ts">
 import { AllCatalog, CatalogCheckbox, CatalogItem, SubCatalog } from '@/types/Catalog'
-import Catalog from '../Catalog.vue';
-const value = ref(false);
-const productsStore = useProductsSstore()
-const catalogStore = useCatalogStore();
-const route = useRoute()
-const id = route.params?.id;
-
-const selectedItemBool = ref('')
-const allSubCatalogs = ref<any>([]);
-const checkboxStates = ref<{ [key: string]: CatalogCheckbox }>({});
-const initializeCheckboxStates = async () => {
-    return await catalogStore.getAllCatalogs.map(item => {
-        return checkboxStates.value[item.id] = {
-            name: item.name,
-            id: item.id,
-            values: item.subdirectory.map(sub => ({ id: sub.id, value: false }))
-        };
-    });
-};
 
 
-
-
-
-const getCheckboxValue = computed(() => (itemId: string, subId: string) => {
-    return checkboxStates.value[itemId]?.values.find((val: { id: string }) => val.id === subId)?.value || false;
-});
-
-
-const isChecked = (itemId: string, subId: string) => {
-    return checkboxStates?.value[itemId]?.values?.find((val: { id: string }) => val.id === subId)?.value || false;
-};
-
-
+type BoolValues = {
+    value: boolean,
+    id: string;
+    name: string;
+}
 
 interface BoolCatalog {
     id: string;
@@ -103,21 +76,42 @@ interface BoolCatalog {
 }
 
 
-
-interface BoolCatalogWithValues extends BoolCatalog {
-    value: boolean
-}
-
-type BoolValues = {
-    value: boolean,
-    id: string;
-    name: string;
-}
+const value = ref(false);
+const productsStore = useProductsSstore()
+const catalogStore = useCatalogStore();
+const route = useRoute()
+const authStore = useAuthStore();
+const checkboxStates = ref<{ [key: string]: CatalogCheckbox }>({});
 const selectedBoolValues: Ref<Record<string, BoolValues>> = ref({});
+const openedBlockFilters = ref<string[]>([]);
 
-const boolCatalogs = computed(() => {
-    return catalogStore.getAllCatalogs.filter((item) => !item?.subdirectory?.length)
-})
+const initializeCheckboxStates = async () => {
+    await catalogStore.getAllCatalogs.map(item => {
+        checkboxStates.value[item.id] = {
+            name: item.name,
+            id: item.id,
+            values: item.subdirectory.map(sub => ({ id: sub.id, value: false, name: sub?.name }))
+        };
+    });
+    console.log('initializeCheckboxStates checkboxStates', checkboxStates)
+
+};
+
+
+
+
+const handlePrices = () => {
+    setTimeout(() => {
+        productsStore.filterProducts()
+    }, 600)
+
+}
+
+
+const isChecked = (itemId: string, subId: string) => {
+    return checkboxStates?.value[itemId]?.values?.find((val: { id: string }) => val.id === subId)?.value || false;
+};
+
 
 const initBools = async () => {
     return await boolCatalogs.value.map((item: BoolCatalog) => {
@@ -129,46 +123,32 @@ const initBools = async () => {
     });
 
 }
-console.log('selectedBoolValues', selectedBoolValues)
+const boolCatalogs = computed(() => {
+    return catalogStore.getAllCatalogs.filter((item) => !item?.subdirectory?.length)
+})
 
-const handleInputChange = (id: string) => {
+
+const handleInputChange = () => {
     const allBoolValues = {
-        fastDrying: 'БЫСТРОСОХНУЩАЯ',
-        approvedByThePaintQualityAssociation: 'ОДОБРЕНО АССОЦИАЦИЕЙ КАЧЕСТВА КРАСКИ',
-        withoutSmell: 'БЕЗ ЗАПАХА',
-        washableCoating: 'МОЮЩЕЕСЯ ПОКРЫТИЕ',
-        weatherResistantCoating: 'АТМОСФЕРОСТОЙКОЕ ПОКРЫТИЕ',
-        wearResistantCoating: 'ИЗНОСОСТОЙКОЕ ПОКРЫТИЕ',
-        dirtAndWaterRepellentCoating: 'ГРЯЗЕ И ВОДООТТАЛКИВАЮЩЕЕ ПОКРЫТИЕ'
-
+        'Быстросохнущая': 'fastDrying',
+        'Одобрено Ассоциацией Качества Краски': 'approvedByThePaintQualityAssociation',
+        'Без запаха': 'withoutSmell',
+        'Моющееся покрытие': 'washableCoating',
+        'Атмосферостойкое покрытие': 'weatherResistantCoating',
+        'Износостойкое покрытие': 'wearResistantCoating',
+        'Грязе и водооталкивающее покрытие': 'dirtAndWaterRepellentCoating'
     }
-    //  [{ name: "ОДОБРЕНО АССОЦИАЦИЕЙ КАЧЕСТВА КРАСКИ" },
-    // { name: "БЫСТРОСОХНУЩАЯ", id: "2d0c8c8c-a456-4fbb-9b8d-6174b4e44709", value: false },
-    // { name: "АТМОСФЕРОСТОЙКОЕ ПОКРЫТИЕ", id: "5dba6512-f0de-4265-a66b-3ccaa1a5a203", value: false },
-    // { name: "МОЮЩЕЕСЯ ПОКРЫТИЕ", id: "27aa1137-c685-45bb-a7f7-ca8d323d7a63", value: true },
-    // { name: "ГРЯЗЕ И ВОДООТТАЛКИВАЮЩЕЕ ПОКРЫТИЕ", id: "441dd4d7-55a0-4937-9e2d-c29c1594e8ef", value: false },
-    // { name: "БЕЗ ЗАПАХА", id: "6852bea6-56c4-4ba5-8c36-e5b41d532dc1", value: false },
-    // { name: "ИЗНОСОСТОЙКОЕ ПОКРЫТИЕ", id: "a3103539-913b-4dc8-a87c-66b16aad4078", value: false }]
 
-    const query: { [key: string]: boolean } = {};
-    for (const key in allBoolValues) {
-        if (allBoolValues.hasOwnProperty(key)) {
-            const value = allBoolValues[key as keyof typeof allBoolValues]
-            const boolObject = Object.values(selectedBoolValues?.value)?.find((obj: BoolValues) => obj?.name === value);
-            if (boolObject && boolObject?.value !== undefined) {
-                query[key] = boolObject?.value;
-            }
-
-        }
-    }
+    let query: { [key: string]: boolean } = {};
+    Object.values(selectedBoolValues.value).map((item) => {
+        query[allBoolValues[item?.name as keyof typeof allBoolValues]] = item?.value
+    })
 
 
     productsStore.setBoolParams(query);
     productsStore.filterProducts()
 
-
-
-};
+}
 
 
 
@@ -188,7 +168,7 @@ const updateCheckboxState = (itemId: string, subId: string, event: any) => {
         productsStore.setSubDirectories(null);
     }
 
-
+    console.log('checkboxStates', checkboxStates)
     productsStore.setSubDirectories(filteredValues)
 
 
@@ -199,7 +179,7 @@ const updateCheckboxState = (itemId: string, subId: string, event: any) => {
 
 
 
-const openedBlockFilters = ref<string[]>([]);
+
 const opensIncludes = (id: string) => {
     return openedBlockFilters.value.includes(id)
 }
@@ -218,7 +198,7 @@ const getSlicedSubdirectories = (item: AllCatalog) => {
     } else {
         return item.subdirectory.slice(0, 5)
     }
-    // return item?.subdirectory ? item.subdirectory.slice(0, 5) : [];
+
 }
 const getRemainingItemCount = (item: AllCatalog) => {
     return item?.subdirectory ? Math.max(item.subdirectory.length - 5, 0) : 0;
@@ -231,7 +211,16 @@ onMounted(async () => {
 })
 
 
-console.log('checkboxStates', checkboxStates)
+watch(() => authStore.getSelectedLang, async (newVal, oldVal) => {
+    await catalogStore.fetchAllCatalogs();
+    initializeCheckboxStates();
+
+    console.log('lan has beeen changed');
+    console.log('checkboxStates', checkboxStates);
+    console.log('getAllCatalogs', catalogStore.getAllCatalogs)
+});
+
+
 
 </script>
 

@@ -1,15 +1,14 @@
 <template>
     <div class="profile-section-header">
         <TabView v-if="selectedReg === 0">
-            <TabPanel header="Регистрация">
+            <TabPanel :header="$t('registration')">
                 <AuthEmailRegister @closeModal="emit('closeModal')" />
             </TabPanel>
-            <TabPanel header="Войти">
+            <TabPanel :header="$t('login')">
                 <AuthLogin @closeLoginModal="emit('closeModal')" />
             </TabPanel>
         </TabView>
         <div v-else-if='selectedReg === 1'>
-
             <AuthEmailRegister @closeModal="emit('closeModal')" />
         </div>
     </div>

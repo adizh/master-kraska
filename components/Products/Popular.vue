@@ -1,12 +1,11 @@
 <template>
     <div class="popular-products">
-        <h5 class='each-section-header'>Популярные товары</h5>
+        <h5 class='each-section-header'>{{ $t('popularProducts') }}</h5>
         <div class="products-list">
             <Swiper :slides-per-view="4" :navigation="true" id="mySlider" :modules="[SwiperNavigation]"
                 :style='{ "--swiper-navigation-size": "15px", "padding": "20px 0" }'>
                 <SwiperSlide v-for="product in popularItems" :key="product.id">
                     <ProductsProductItem :product="product" />
-
                 </SwiperSlide>
             </Swiper>
         </div>

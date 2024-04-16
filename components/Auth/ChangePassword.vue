@@ -2,32 +2,32 @@
     <div class="main">
         <header>
             <img src="../../assets/icons/mdi_password-outline.svg" alt="locked">
-            <div class="main-header">Изменить пароль</div>
+            <div class="main-header">{{ $t('changePassword') }}</div>
         </header>
 
         <div class="grid form" v-if="!isPasswordsOpen">
             <div class="col-12 each-field">
-                <div class="steps"><span>1</span><label for="name">Введите адрес, который вы использовали при создании
-                        этого
-                        аккаунта</label></div>
-                <input class='col-12 basic-input' type="text" id="name" placeholder="Введите свою почту"
+                <div class="steps"><span>1</span><label for="name">
+                        {{ $t('registerEmilPass') }}
+                    </label></div>
+                <input class='col-12 basic-input' type="text" id="name" :placeholder="$t('typeEmail')"
                     v-model="inputs.email.value" @input="handleInput('email', 'email')">
                 <span v-if="inputs.email.error" class="err-input-msg">{{ inputs.email.error }}</span>
             </div>
             <div class="send-email">
-                <button @click="sendEmail" class="bg-white-btn">Отправить</button>
+                <button @click="sendEmail" class="bg-white-btn">{{ $t('submitData') }}</button>
             </div>
 
             <div class="col-12" v-if="isOTPOpen">
                 <div class="col-12 each-field">
-                    <div class="steps"><span>2</span><label for="code">Введите код, который мы использовали при создании
-                            этого аккаунта</label></div>
+                    <div class="steps"><span>2</span><label for="code">
+                            {{ $t('emailOtpRegister') }} </label></div>
                     <InputOtp v-model="inputs.code.value" :length='6' @input="handleInput('code', 'string')"
                         id="code" />
                     <span v-if="inputs.code.error" class="err-input-msg">{{ inputs.code.error }}</span>
                 </div>
                 <div class="send-email code">
-                    <button @click="sendCode" class="bg-white-btn">Отправить</button>
+                    <button @click="sendCode" class="bg-white-btn">{{ $t('submitData') }}</button>
                 </div>
             </div>
         </div>
@@ -35,11 +35,10 @@
 
 
         <div class="grid form" v-else>
-
             <div class="col-12 each-field password-block-input">
-                <label for="password">Старый пароль</label>
+                <label for="password">{{ $t('oldPassword') }}</label>
                 <input class='col-12 basic-input' :type="isOldPasswordOpen ? 'text' : 'password'" id="password"
-                    placeholder="Старый пароль" v-model="inputs.oldPassword.value"
+                    :placeholder="$t('oldPassword')" v-model="inputs.oldPassword.value"
                     @input="handleInput('oldPassword', 'string')">
                 <img src="../../assets/icons/black/ri-eye-open.svg" alt="open" v-if="isOldPasswordOpen"
                     @click="isOldPasswordOpen = false" class="password-icon">
@@ -48,9 +47,9 @@
                 <span v-if="inputs.oldPassword.error" class="err-input-msg">{{ inputs.oldPassword.error }}</span>
             </div>
             <div class="col-12 each-field password-block-input">
-                <label for="password">Новый пароль</label>
+                <label for="password">{{ $t('newPassword') }}</label>
                 <input class='col-12 basic-input ' :type="isPasswordOpen ? 'text' : 'password'" id="password"
-                    placeholder="Новый пароль" v-model="inputs.password.value"
+                    :placeholder="$t('newPassword')" v-model="inputs.password.value"
                     @input="handleInput('password', 'password')">
                 <img src="../../assets/icons/black/ri-eye-open.svg" alt="open" v-if="isPasswordOpen"
                     @click="isPasswordOpen = false" class="password-icon">
@@ -60,9 +59,9 @@
             </div>
 
             <div class="col-12 each-field password-block-input">
-                <label for="passwordRepeat"> Повторите пароль</label>
+                <label for="passwordRepeat"> {{ $t('repeatPassword') }}</label>
                 <input class='col-12 basic-input' :type="isNewPasswordOpen ? 'text' : 'password'" id="passwordRepeat"
-                    placeholder="Повторите пароль" v-model="inputs.passwordRepeat.value"
+                    :placeholder="$t('repeatPassword')" v-model="inputs.passwordRepeat.value"
                     @input="handleInput('passwordRepeat', 'passwordRepeat')">
 
                 <img src="../../assets/icons/black/ri-eye-open.svg" alt="open" v-if="isNewPasswordOpen"
@@ -72,7 +71,7 @@
                 <span v-if="inputs.passwordRepeat.error" class="err-input-msg">{{ inputs.passwordRepeat.error }}</span>
             </div>
             <div class="change-password">
-                <button @click="changePassword" class="register-auth-btn">Изменить</button>
+                <button @click="changePassword" class="register-auth-btn">{{ $t('change') }}</button>
             </div>
 
         </div>

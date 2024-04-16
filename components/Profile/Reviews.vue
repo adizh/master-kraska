@@ -1,6 +1,6 @@
 <template>
 
-   <NoContent title="Вы не оставляли коментарии" v-if="!reviewsUser?.length">
+   <NoContent :title="$t('noCommentsLeft')" v-if="!reviewsUser?.length">
       <template #icon>
          <img src="../../assets/icons/comments.svg" alt="comment">
       </template>

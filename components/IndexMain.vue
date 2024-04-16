@@ -8,10 +8,10 @@
             }">
                 <div class="left">
                     <h1>Мастер Краска</h1>
-                    <div class="sub-header">Официальный представитель мировых брендов лакокрасочной продукции
+                    <div class="sub-header">{{ $t('officialRepres') }}
                     </div>
                     <button class="pink-button" @click="navigateTo('/parameters')">
-                        Пободбрать по параметрам</button>
+                        {{ $t('searchByParams') }}</button>
                 </div>
                 <div class="right">
 
@@ -25,10 +25,10 @@
             }">
                 <div class="left">
                     <h1>Мастер Краска 1</h1>
-                    <div class="sub-header">Официальный представитель мировых брендов лакокрасочной продукции
+                    <div class="sub-header">{{ $t('officialRepres') }}
                     </div>
                     <button class="pink-button">
-                        Пободбрать по параметрам</button>
+                        {{ $t('searchByParams') }}</button>
                 </div>
                 <div class="right">
 
@@ -42,10 +42,10 @@
             }">
                 <div class="left">
                     <h1>Мастер Краска 2</h1>
-                    <div class="sub-header">Официальный представитель мировых брендов лакокрасочной продукции
+                    <div class="sub-header">{{ $t('officialRepres') }}
                     </div>
                     <button class="pink-button">
-                        Пободбрать по параметрам</button>
+                        {{ $t('searchByParams') }}</button>
                 </div>
                 <div class="right">
 

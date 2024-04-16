@@ -1,6 +1,6 @@
 <template>
     <section>
-        <h1>История заказов</h1>
+        <h1>{{ $t('ordersHistory') }}</h1>
         <div class="order-history">
             <OrdersItem />
         </div>
