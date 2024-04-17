@@ -6,9 +6,11 @@
             {{ $t('aboutMainHeader') }}
 
             <br />
-            {{ $t('aboutSubHeader') }}
-            <button class="read-all-btn">
+            {{ subHeader }}
+            <button class="read-all-btn" @click="openBlock" v-if="!openInfo">
                 {{ $t('Еще') }}</button>
+            <button class="read-all-btn" @click="closeBlock" v-else>
+                {{ $t('closeBlock') }}</button>
         </p>
 
         <h4>{{ $t('welcomeHeader') }}!</h4>
@@ -55,9 +57,25 @@
 
 <script setup lang="ts">
 const brandsStore = useBrandsStore();
+const { t } = useI18n();
+const openInfo = ref(false)
+
+
+const openBlock = () => {
+    openInfo.value = true;
+
+}
+const closeBlock = () => {
+    openInfo.value = false;
+}
+
+const subHeader = computed(() => !openInfo.value ? t('aboutSubHeader').slice(0, 340) + '...' : t('aboutSubHeader'))
+
 onMounted(() => {
     brandsStore.fetchAllSellers()
 })
+
+
 </script>
 
 <style scoped lang="scss">
