@@ -9,15 +9,13 @@
             </div>
             <div class="second">
                 <span><a href="/news">{{ $t('news') }}
-
                         <img src="../assets/icons/arrow-footer.svg" alt="arrow">
                     </a></span>
                 <span><a href="/contacts">{{ $t('allOutStores') }} <img src="../assets/icons/arrow-footer.svg"
                             alt="arrow"></a></span>
                 <span><a href="/contacts">{{ $t('contacts') }} <img src="../assets/icons/arrow-footer.svg"
                             alt="arrow"></a></span>
-                <span><a href="">{{ $t('tinting') }} <img src="../assets/icons/arrow-footer.svg"
-                            alt="arrow"></a></span>
+                <span><a href="">{{ $t('tinting') }} <img src="../assets/icons/arrow-footer.svg" alt="arrow"></a></span>
             </div>
             <div class="third">
                 <span><a href="">{{ $t('searchByParams') }} <img src="../assets/icons/arrow-footer.svg"
@@ -35,8 +33,7 @@
                             alt="arrow"></a></span>
                 <span><a href="">{{ $t('payDelivery') }} <img src="../assets/icons/arrow-footer.svg"
                             alt="arrow"></a></span>
-                <span><a href="">{{ $t('experts') }} <img src="../assets/icons/arrow-footer.svg"
-                            alt="arrow"></a></span>
+                <span><a href="">{{ $t('experts') }} <img src="../assets/icons/arrow-footer.svg" alt="arrow"></a></span>
             </div>
         </div>
         <div class="middle">
@@ -90,11 +87,11 @@
 
 .top {
     @include flex(row, space-between, center);
+    flex-wrap: wrap;
 
     .white-logo {
         width: 100%
     }
-
 
     a {
         img {
@@ -103,6 +100,7 @@
 
         transition: .4s ease-in all;
         @include flex(row, center, center);
+        white-space: nowrap;
 
         &:hover {
             img {

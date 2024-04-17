@@ -23,14 +23,14 @@ export default defineNuxtConfig({
           rel: "stylesheet",
           href: "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css",
         },
+        {
+          rel: "stylesheet",
+          href: "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css",
+        },
       ],
       script: [
         {
           src: "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js",
-        },
-
-        {
-          //  src: "https://api-maps.yandex.ru/v3/?apikey=7a61a60d-10c2-4b7b-8779-5101f3a5e2a0&lang=ru_RU",
         },
       ],
     },
@@ -39,11 +39,11 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "nuxt-swiper",
     "nuxt-primevue",
-    "vue-yandex-maps/nuxt",
     "@pinia/nuxt",
     "usebootstrap",
     "nuxt-snackbar",
     "@nuxtjs/i18n",
+    "nuxt3-leaflet",
   ],
   i18n: {
     vueI18n: "./i18n/i18n.config.ts",
@@ -53,9 +53,7 @@ export default defineNuxtConfig({
     right: true,
     duration: 5000,
   },
-  yandexMaps: {
-    apikey: "7a61a60d-10c2-4b7b-8779-5101f3a5e2a0",
-  },
+
   $development: {
     image: {
       dir: "assets/images",

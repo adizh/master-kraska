@@ -43,26 +43,20 @@
             </div>
         </div>
 
-        <ClientOnly>
-            <div class="margin-top-40 margin-bottom-40">
-                <YandexMap :settings="{
-            location: {
-                center: [74.585016, 42.835826],
-                zoom: 16,
-            },
-        }" width="100%" height="500px">
-                    <yandex-map-default-scheme-layer />
-                    <yandex-map-default-features-layer />
-                    <template v-for="(coordinate, index) in markers" :key="index">
-                        <yandex-map-marker :settings="coordinate">
-                            <div class="marker" />
-                        </yandex-map-marker>
-                    </template>
 
-                </YandexMap>
-            </div>
-
-        </ClientOnly>
+        <div class="margin-top-40 margin-bottom-40" id="map">
+            <LMap ref="map" :zoom="15" :center="markers[0]?.coordinates" :geoJSON="geoJson">
+                <LTileLayer url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    attribution="&amp;copy; <a href=&quot;https://www.openstreetmap.org/&quot;>OpenStreetMap</a> contributors"
+                    layer-type="base" name="OpenStreetMap" />
+                <LMarker v-for="item in markers" :key="item.id" :lat-lng="item.coordinates">
+                    <LIcon ref="icon">
+                        <img class="restaurant-icon" src='/static/location-mark-map.png' />
+                    </LIcon>
+                    <LTooltip :options="{ permanent: false, interactive: true }">{{ item?.name }}</LTooltip>
+                </LMarker>
+            </LMap>
+        </div>
 
 
         <div class="maps-address-list" v-if="type === 'contacts'">
@@ -81,18 +75,10 @@ defineProps<{
     type: string
 }>()
 
-import { YandexMap, YandexMapDefaultSchemeLayer, YandexMapMarker, YandexMapDefaultFeaturesLayer } from 'vue-yandex-maps';
-const markers: any = [
-    {
-        coordinates: [74.585016, 42.835826],
-
-    },
-    {
-        coordinates: [54.76778893634, 57.108481458691],
-
-    },
+const geoJson = ref({})
+const markers = [
+    { id: 1, coordinates: [42.835826, 74.585016], name: "пр. Чынгыз Айтматова, 93/1 лит А" },
 ]
-
 
 </script>
 
@@ -144,5 +130,15 @@ const markers: any = [
     color: red;
     font-weight: bold;
     line-height: 20px;
+}
+
+#map {
+    width: 100%;
+    height: 300px;
+}
+
+.restaurant-icon {
+    height: 30px;
+    width: auto;
 }
 </style>
