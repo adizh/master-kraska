@@ -1,6 +1,5 @@
-
 export const advantagesOptions = [
-  { number: 1, header: "Прямые поставки ", text: "Официальный дистрибьютор" },
+  { number: 1, header: "Прямые поставки ", text: "officialDistr" },
   {
     number: 2,
     header: "Большой опыт",

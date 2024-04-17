@@ -1,8 +1,9 @@
-import { Brands } from "~/types/Brands";
+import { Brands, Seller } from "~/types/Brands";
 
 export const useBrandsStore = defineStore("brandsStore", {
   state: () => ({
     brands: [] as Brands[],
+    sellers: [] as Seller[],
   }),
   actions: {
     async fetchAllBrands() {
@@ -16,10 +17,31 @@ export const useBrandsStore = defineStore("brandsStore", {
         console.log(err);
       }
     },
+    async fetchAllSellers() {
+      const authStore = useAuthStore();
+      try {
+        const response = await http("/api/v1/Seller/get-all-sellers");
+        if (response.status === 200) {
+          const filtered = response.data.map((seller: Seller) => {
+            if (authStore.getSelectedLang === "ru") {
+              return { ...seller, sellerInfo: seller?.descriptionRu };
+            } else {
+              return { ...seller, sellerInfo: seller?.descriptionKg };
+            }
+          });
+          this.sellers = filtered
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    },
   },
   getters: {
     getAllBrands(state) {
       return state.brands;
+    },
+    getAllSellers(state) {
+      return state.sellers;
     },
   },
 });
