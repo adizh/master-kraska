@@ -26,20 +26,10 @@
                     <img src="../assets/icons/icon=cart.svg" alt="">{{ $t('cart') }}
                 </li>
                 <li @click="toggleProfile"><img src="../assets/icons/icon=user.svg" alt="">{{ $t('profile') }}</li>
-
-                <!-- <li class="search-place"><input type="text" class="main-header-input"
-                        v-model="productStore.filters.search" @input="handleSearch">
-                    <img src="../assets/icons/icon=search.svg" alt="search" class="search-icon">
-
-                    <SearchOptions :isSearchOpen="isSearchOpen" @closeSearch="isSearchOpen = false" />
-                    <div class="overlay-header-options" v-show="isSearchOpen" :class="{ 'open': isSearchOpen }"></div>
-
-                </li> -->
             </ul>
         </div>
 
 
-        <div class="overlay-header-options" v-show="isCatalogOpen" :class="{ 'open': isCatalogOpen }"></div>
     </div>
 
 
@@ -52,7 +42,7 @@
 import { CatalogItem } from '~/types/Catalog';
 const { locale, setLocale } = useI18n()
 const isCatalogOpen = ref(false);
-const isSearchOpen = ref(false);
+
 const isProfileOpen = ref();
 const authStore = useAuthStore();
 const productStore = useProductsSstore()
@@ -71,10 +61,7 @@ const closeCatalog = () => {
     isCatalogOpen.value = false
 }
 
-const handleSearch = (event: any) => {
-    isSearchOpen.value = event.target.value.trim().length > 0;
-    productStore.filterProducts()
-}
+
 
 const goToCatalog = (item: CatalogItem) => {
     navigateTo(`/catalog/${item.id}`);
@@ -183,16 +170,6 @@ provide('closeProfileOpen', closeProfileOpen)
 
 
 
-.search-place {
-    position: relative;
-    width: 25%;
-}
-
-.search-icon {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-}
 
 .catalog-li {
     display: flex;
