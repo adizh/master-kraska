@@ -1,6 +1,3 @@
-// import i18n from "../../i18n/i18n.config";
-
-// const { t } = i18n?.global;
 
 export const advantagesOptions = [
   { number: 1, header: "Прямые поставки ", text: "Официальный дистрибьютор" },

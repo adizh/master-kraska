@@ -23,6 +23,7 @@
     "swiper": "^11.0.7",
     "usebootstrap": "^3.5.5",
     "vue": "^3.4.21",
+    "vue-i18n": "^9.12.1",
     "vue-router": "^4.3.0",
     "vue-yandex-maps": "^2.1.0"
   },

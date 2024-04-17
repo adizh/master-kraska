@@ -143,7 +143,7 @@
   "cancedlOrderWarn": "Вы хотите отменить заказ",
   "cancelOrderTextWarn": "Оформление заказа будет отменен в случае выхода",
   "bookmarks": "Избранное",
-  "ordersHistory": "История заказовs",
+  "ordersHistory": "История заказов",
   "selectByParameters": "Подбор по параметрам",
   "whichTypeOfWork": "Для каких работ вам необходима краска",
   "whichTypeCoating": "Какое покрытие вы хотите получить в результате",
@@ -209,5 +209,9 @@
   "discoutText": "В каждом магазине 'Мастер Краска' ежемесячно вас ждут скидки на продукцию компании 'TIKKURILA'",
   "productsCatalog": "Каталог товаров",
   "whichProSearch": "Какой товар ищете",
-  "language": "Язык"
+  "language": "Язык",
+  "personalInfo": "Личная информация",
+  "myReviews": "Мои отзывы",
+  "notificationSettings": "Настройки уведомлений",
+  "boormarksProfile":"Избранные"
 }

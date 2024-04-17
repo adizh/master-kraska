@@ -38,8 +38,9 @@
 </template>
 
 <script setup lang="ts">
+//import { useI18n } from 'vue-i18n';
 import { CatalogItem } from '~/types/Catalog';
-const { locale, setLocale } = useI18n()
+//const { locale, setLocale } = useI18n()
 const isCatalogOpen = ref(false);
 
 const isProfileOpen = ref();
@@ -47,7 +48,7 @@ const authStore = useAuthStore();
 const productStore = useProductsSstore()
 
 const changelan = (lang: string) => {
-    setLocale(lang);
+    // setLocale(lang);
     authStore.setLang(lang)
 }
 

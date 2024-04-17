@@ -8,7 +8,7 @@
                     <span class="left-item-number">{{ item.number }}</span>
                     <div>
                         <div class="left-item-text">{{ item.header }}</div>
-                        <p class="left-item-subtext">{{ item.text }}</p>
+                        <p class="left-item-subtext">{{ $t(item.text) }}</p>
                     </div>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 import ru from "./ru.json";
 import kg from "./kg.json";
-//selectedLanguage
+
 let lan = "ru";
 if (process.client) {
   const localLan = localStorage.getItem("selectedLanguage");

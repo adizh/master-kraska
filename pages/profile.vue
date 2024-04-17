@@ -111,13 +111,16 @@
 
 <script setup lang="ts">
 import { Product } from '~/types/Product';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n()
 
 const isLogoutOpen = ref(false);
 const userBookmarks = ref<Product[]>([])
 let selectedTab: Ref<number>;
-const tabsOptions = ['Личная информация', 'История заказов', 'Корзина', 'Мои отзывы', 'Настройки уведомлений', 'Избранные'];
+const tabsOptions = [t('personalInfo'), t('ordersHistory'), t('cart'), t('myReviews'), t('notificationSettings'), t('boormarksProfile')];
 const store = useAuthStore();
 const productsStore = useProductsSstore();
+
 const cartStore = useCartStore()
 
 const openLogout = () => {

@@ -72,8 +72,14 @@
 </template>
 
 <script setup lang="ts">
-import { LanguageOptions } from '@/types/Items'
+import { useI18n } from 'vue-i18n';
 const { locale, setLocale } = useI18n()
+import { LanguageOptions } from '@/types/Items'
+
+
+
+
+
 const store = useAuthStore();
 const userLogo = ref('');
 const initLan = ref({ name: store.getSelectedLang === 'ru' ? 'Русский' : "Кыргызча", value: store.getSelectedLang })
