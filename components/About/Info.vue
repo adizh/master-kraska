@@ -39,17 +39,25 @@
 
                 </button>
             </div>
-            <div class="info-certif-img">
-                <img src="../../assets/images/seller1.png" alt="">
-                <img src="../../assets/images/seller1.png" alt="">
-                <img src="../../assets/images/seller1.png" alt="">
+
+            <div class="all-sellers-blocks">
+                <div v-for="seller in brandsStore.getAllSellers?.slice(0, 4)" :key="seller?.id"
+                    class="all-sellers-each">
+                    <img :src="seller?.image" alt="seller" class="seller-pic">
+                    <h3 class='text-center'>{{ seller?.name }}</h3>
+                    <span class="sub-info-seller">{{ seller?.sellerInfo }}</span>
+                    <img :src="seller?.certificateImage" alt="certificate" class="certificate">
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-
+const brandsStore = useBrandsStore();
+onMounted(() => {
+    brandsStore.fetchAllSellers()
+})
 </script>
 
 <style scoped lang="scss">

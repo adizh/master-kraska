@@ -37,28 +37,4 @@ onMounted(() => {
 .seller-pic {
     width: 140px;
 }
-
-.all-sellers {
-    &-blocks {
-        @include flex(row, space-around, center);
-        flex-wrap: wrap;
-
-    }
-
-    &-info {
-        margin: 20px 0 0px 0;
-        max-width: 680px;
-        @extend %sub-info;
-    }
-
-    &-each {
-        @include flex(column, center, center);
-        margin-top: 50px;
-        width: 22%;
-    }
-
-    .certificate {
-        width: 100%;
-    }
-}
 </style>

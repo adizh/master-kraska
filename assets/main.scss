@@ -509,3 +509,37 @@ h2 {
   @extend %button-shared;
   padding: 16px 20px !important;
 }
+
+%sub-info {
+  @include textFormat(16px, 24px, 400, #000);
+}
+
+.sub-info-seller {
+  @extend %sub-info;
+  color: #000 !important;
+  max-width: 200px;
+  text-align: center;
+}
+
+.seller-pic {
+  width: 140px;
+}
+
+.all-sellers-blocks {
+  @include flex(row, space-around, center);
+  flex-wrap: wrap;
+
+  .certificate {
+    width: 100%;
+  }
+}
+.all-sellers-each {
+  @include flex(column, center, center);
+  margin-top: 50px;
+  width: 22%;
+}
+.all-sellers-info {
+  margin: 20px 0 0px 0;
+  max-width: 680px;
+  @extend %sub-info;
+}
