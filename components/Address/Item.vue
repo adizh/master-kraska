@@ -6,8 +6,11 @@
                 <img src="../../assets/icons/black/icon=components-location.svg" alt="location">
                 <span>{{ location }}</span>
             </p>
-            <p><img src="../../assets/icons/black/icon=components-phone.svg" alt="phone">
-                <span class="phone">{{ phone }}</span>
+            <p>
+            <div class="bottom-list-phones"> <span class="phone flex flex-row align-items-center gap-1"
+                    v-for="number in phone" :key="number"><img src="../../assets/icons/black/icon=components-phone.svg"
+                        alt="phone">{{ number
+                    }}</span></div>
             </p>
             <p>
                 <img src="../../assets/icons/black/icon=components-time.svg" alt="time">
@@ -37,6 +40,10 @@ const props = defineProps<{
 </script>
 
 <style scoped lang='scss'>
+.bottom-list-phones {
+    @include flex(column, center, center, 4px)
+}
+
 .maps-address-list {
 
 

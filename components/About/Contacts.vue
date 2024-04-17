@@ -45,11 +45,11 @@
 
 
         <div class="margin-top-40 margin-bottom-40" id="map">
-            <LMap ref="map" :zoom="15" :center="markers[0]?.coordinates" :geoJSON="geoJson">
+            <LMap ref="map" :zoom="12" :center="[42.860131, 74.608273]" :geoJSON="geoJson">
                 <LTileLayer url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution="&amp;copy; <a href=&quot;https://www.openstreetmap.org/&quot;>OpenStreetMap</a> contributors"
                     layer-type="base" name="OpenStreetMap" />
-                <LMarker v-for="item in markers" :key="item.id" :lat-lng="item.coordinates">
+                <LMarker v-for="item in addressList" :key="item?.id" :lat-lng="item?.coordinates">
                     <LIcon ref="icon">
                         <img class="restaurant-icon" src='/static/location-mark-map.png' />
                     </LIcon>
@@ -70,6 +70,7 @@
 <script setup lang="ts">
 
 import { AddressList } from '@/types/Items'
+
 defineProps<{
     addressList: AddressList[];
     type: string
