@@ -4,7 +4,7 @@ export type AddressList = {
   phone: string;
   time: string;
   email: string;
-  id:string
+  id: string;
 };
 
 export interface InputProperties {
@@ -32,3 +32,8 @@ export type PaymentTypes =
   | "MegaPay"
   | "Элкарт"
   | "";
+
+export type LanguageOptions = {
+  name: string;
+  value: string;
+};

@@ -44,7 +44,13 @@ export const useAuthStore = defineStore("authStore", {
           : "";
       }
     },
-    getSelectedLang(state){
+    getSelectedLang(state) {
+      if (process.client) {
+        const localLan = localStorage.getItem("selectedLanguage");
+        if (localLan) {
+          return localLan;
+        }
+      }
       return state.selectedLanguage;
     },
     getUser: (state) => {

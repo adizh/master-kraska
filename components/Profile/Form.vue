@@ -37,6 +37,7 @@
                 <label for="address">{{ $t('deliverAddress') }}</label>
                 <input class='basic-input col-12' type="text" id="address" v-model="inputs.address.value"
                     @input="validate('address', 'string')">
+
                 <span class="err-input-msg"> {{ inputs.address.error }}</span>
             </div>
 
@@ -45,6 +46,12 @@
                 <button class="change-password-btn col-12" type="button"
                     @click="isPasswordChangOpen = !isPasswordChangOpen">
                     {{ $t('changePassword') }}</button>
+            </div>
+            <div class="col-6 each-field">
+                <label for="password">{{ $t('language') }}</label>
+                <UIDropdown :isDropdownOpen="isUIDropdownOpen" :selectedValue="initLan" :options="lanOptions"
+                    @toggleDropdownUI="toggleDropdownUI" @selectValue="selectLanguage" />
+
             </div>
         </div>
 
@@ -65,8 +72,19 @@
 </template>
 
 <script setup lang="ts">
+import { LanguageOptions } from '@/types/Items'
+const { locale, setLocale } = useI18n()
 const store = useAuthStore();
 const userLogo = ref('');
+const initLan = ref({ name: store.getSelectedLang === 'ru' ? 'Русский' : "Кыргызча", value: store.getSelectedLang })
+const isUIDropdownOpen = ref(false);
+const lanOptions = [
+    { name: 'Русский', value: 'ru' }, { name: 'Кыргызча', value: 'kg' }
+]
+
+const toggleDropdownUI = () => {
+    isUIDropdownOpen.value = !isUIDropdownOpen.value
+}
 const isPasswordChangOpen = ref(false)
 const inputs = ref({
     firstName: { value: '', error: '' },
@@ -75,9 +93,15 @@ const inputs = ref({
     phone: { value: '', error: '' },
     address: { value: '', error: '' },
     image: { value: '', error: '' },
-
-
 });
+
+const selectLanguage = (item: LanguageOptions) => {
+    initLan.value = item;
+    isUIDropdownOpen.value = false;
+    store.setLang(item?.value);
+    setLocale(item?.value);
+    localStorage.setItem('selectedLanguage', item?.value)
+}
 
 onMounted(async () => {
     await store.fetchUser();
