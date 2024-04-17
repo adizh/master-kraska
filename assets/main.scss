@@ -113,7 +113,7 @@ ul li {
 }
 
 .phone {
-  color: $blue-color;
+  color: $blue-color !important;
 }
 .main-header-h1 {
   @include footerSpan(36px, 32px);

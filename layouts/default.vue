@@ -4,20 +4,6 @@
             <img src="../assets/images/logo-master.png" alt="logo" class="logo-img">
         </div>
         <div class="right">
-            <ul class="top">
-                <li>
-                    <button @click="changelan('kg')">kg</button>
-                    <button @click="changelan('ru')">ru</button>
-                </li>
-                <li class="phone">
-                    <img src="../assets/icons/icon=phone loight.svg" alt="">
-                    +996 509 910 148
-                </li>
-                <li @click="navigateTo('/cart')">
-                    <img src="../assets/icons/icon=cart.svg" alt="">{{ $t('cart') }}
-                </li>
-                <li @click="toggleProfile"><img src="../assets/icons/icon=user.svg" alt="">{{ $t('profile') }}</li>
-            </ul>
             <ul class="bottom">
                 <li class="catalog-li" @mouseover="toggleCatalog" @mouseleave="closeCatalog">{{ $t('catalog') }}
                     <img class="arrow" :class="{ 'rotated': isCatalogOpen }"
@@ -32,16 +18,23 @@
                     <NuxtLink to="/about-us">{{ $t('aboutUs') }}</NuxtLink>
                 </li>
                 <li @click="navigateTo('/contacts')">{{ $t('contacts') }}</li>
+                <li class="phone">
+                    <img src="../assets/icons/icon=phone loight.svg" alt="">
+                    +996 509 910 148
+                </li>
+                <li @click="navigateTo('/cart')">
+                    <img src="../assets/icons/icon=cart.svg" alt="">{{ $t('cart') }}
+                </li>
+                <li @click="toggleProfile"><img src="../assets/icons/icon=user.svg" alt="">{{ $t('profile') }}</li>
 
-
-                <li class="search-place"><input type="text" class="main-header-input"
+                <!-- <li class="search-place"><input type="text" class="main-header-input"
                         v-model="productStore.filters.search" @input="handleSearch">
                     <img src="../assets/icons/icon=search.svg" alt="search" class="search-icon">
 
                     <SearchOptions :isSearchOpen="isSearchOpen" @closeSearch="isSearchOpen = false" />
                     <div class="overlay-header-options" v-show="isSearchOpen" :class="{ 'open': isSearchOpen }"></div>
 
-                </li>
+                </li> -->
             </ul>
         </div>
 
@@ -117,7 +110,7 @@ provide('closeProfileOpen', closeProfileOpen)
 }
 
 .main-header {
-    @include flex(row, start, end, 4rem);
+    @include flex(row, start, center, 4rem);
     padding: 20px 2.5rem;
     box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.06);
     position: fixed;
@@ -132,7 +125,7 @@ provide('closeProfileOpen', closeProfileOpen)
 
 
 .left {
-    width: 15%
+    width: 10%
 }
 
 .left:hover {
@@ -151,6 +144,7 @@ provide('closeProfileOpen', closeProfileOpen)
     li {
         transition: .2s ease;
         color: $main-black;
+        @include flex(row, start, center);
 
         &:hover {
             color: $main-pink !important;
