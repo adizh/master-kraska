@@ -56,18 +56,12 @@ ul li {
   cursor: pointer;
 }
 
+
+
 .overlay-header-options {
-  position: fixed;
-  padding-bottom: 40px;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 4;
-  opacity: 0;
-  visibility: hidden;
-  transition: 0.3s ease all;
+  @extend %dark-bg-effect;
 }
+
 
 .overlay-header-options.open {
   opacity: 1;

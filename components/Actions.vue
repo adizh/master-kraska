@@ -13,22 +13,22 @@
             <div class="actions-block-item">
                 <div class="actions-block-item-header">{{ $t('discountHeader') }}</div>
                 <p class="actions-block-item-info">
-               {{ $t('discoutText') }}
+                    {{ $t('discoutText') }}
                 </p>
             </div>
             <div class="actions-block-item">
                 <div class="actions-block-item-header">{{ $t('discountHeader') }}</div>
                 <p class="actions-block-item-info">
-               {{ $t('discoutText') }}
+                    {{ $t('discoutText') }}
                 </p>
             </div>
             <div class="actions-block-item">
                 <div class="actions-block-item-header">{{ $t('discountHeader') }}</div>
                 <p class="actions-block-item-info">
-               {{ $t('discoutText') }}
+                    {{ $t('discoutText') }}
                 </p>
             </div>
-          
+
         </div>
 
 
@@ -129,9 +129,13 @@ onMounted(() => {
 }
 
 
-@media (min-width:768px) and (max-width:992px) {
+
+
+@media (min-width:320px) and (max-width:1000px) {
     .brands-pictures img {
-        width: 180px;
+        width: 100% !important;
     }
+
+ 
 }
 </style>

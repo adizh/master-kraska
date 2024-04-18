@@ -1,4 +1,5 @@
 <template>
+    <div class="backdrop" :class="{ 'show': isCatalogOpen }"></div>
     <div class="catalog-options" :class="{ 'open': isCatalogOpen }" @mouseleave="closeCatalogOptions">
         <h5 class='each-section-header'>{{ $t('productsCatalog') }}</h5>
         <div class="options-list">
@@ -6,14 +7,13 @@
                 <li v-for="item in getAllCategories?.slice(0, 9)" :key="item.id"
                     @click.stop="navigateTo(`/catalog/${item.id}`)">
                     {{ formatName(item?.name) }}
-
                 </li>
             </ul>
+
             <ul class="second-col">
                 <li v-for="item in getAllCategories?.slice(9)" :key="item.id"
                     @click.stop="navigateTo(`/catalog/${item.id}`)">
                     {{ formatName(item?.name) }}
-
                 </li>
             </ul>
         </div>
@@ -67,7 +67,22 @@ watch(() => authStore.getSelectedLang, () => {
 ul li {
     list-style: none;
     margin: 10px 0;
+}
 
+.backdrop {
+    position: fixed;
+    top: 7rem;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9;
+    display: none;
+    pointer-events: none;
+}
+
+.backdrop.show {
+    display: block;
 }
 
 li {
@@ -83,7 +98,7 @@ li {
 
 
 .catalog-options {
-    @include openedOptionsHeader(100%, 20px 4rem, 6rem)
+    @include openedOptionsHeader(100%, 20px 4rem, 4rem)
 }
 
 .catalog-options.open {

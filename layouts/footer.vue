@@ -141,11 +141,22 @@ span a {
     @include flex(row, start, center, 15px)
 }
 
+@media (min-width:320px) and (max-width:715px) {
 
-@media (min-width:768px) and (max-width:992px) {
+    .fourth,
+    .third {
+        margin-top: 30px;
+    }
+}
+
+@media (min-width:715px) and (max-width:992px) {
     .callback-btn {
         padding: 6px 13px;
         font-size: 14px;
+    }
+
+    .fourth {
+        margin-top: 30px
     }
 
     .top img {

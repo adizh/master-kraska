@@ -1,6 +1,5 @@
 <template>
     <section>
-
         <div class="search-place">
             <div class="flex flex-row gap-4">
                 <div class='input-block'>
@@ -8,22 +7,17 @@
                         @input="handleSearch" :placeholder="$t('whichProSearch')">
                     <img src="../assets/icons/icon=search.svg" alt="search" class="search-icon">
                 </div>
-
-
                 <div class="btn-block">
                     <button>Найти</button>
                 </div>
 
             </div>
-
             <SearchOptions :isSearchOpen="isSearchOpen" @closeSearch="isSearchOpen = false" />
             <div class="overlay-header-options" v-show="isSearchOpen" :class="{ 'open': isSearchOpen }"></div>
 
         </div>
         <IndexMain />
-
         <Products />
-
         <Actions />
         <Advantages />
     </section>

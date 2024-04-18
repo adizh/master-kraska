@@ -16,6 +16,18 @@ $advan-bg: #000a1a;
 $rating-color: #f2c94c;
 $light-blue: #33587d1a;
 
+%dark-bg-effect {
+  position: fixed;
+  padding-bottom: 40px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 4;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s ease all;
+}
 %button-shared {
   padding: 16px 20px;
   background: $main-pink;
