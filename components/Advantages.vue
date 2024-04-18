@@ -70,4 +70,29 @@ import { advantagesOptions } from '@/assets/js/advantages'
         }
     }
 }
+
+@media (min-width:320px) and (max-width:768px) {
+    .advan-block {
+        align-items: end;
+        padding-bottom: 18rem;
+        position: relative;
+    }
+
+    .right {
+        position: absolute;
+        bottom: 0;
+        width: 60%;
+        right: 0;
+    }
+
+    .left {
+        flex-direction: column;
+        align-items: start;
+        margin: 20px 0;
+
+        &-item {
+            width: 100%;
+        }
+    }
+}
 </style>

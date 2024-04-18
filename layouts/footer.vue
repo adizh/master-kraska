@@ -141,13 +141,6 @@ span a {
     @include flex(row, start, center, 15px)
 }
 
-@media (min-width:320px) and (max-width:715px) {
-
-    .fourth,
-    .third {
-        margin-top: 30px;
-    }
-}
 
 @media (min-width:715px) and (max-width:992px) {
     .callback-btn {
@@ -162,11 +155,21 @@ span a {
     .top img {
         width: 75%;
     }
-}
 
-@media (min-width:768px) and (max-width:992px) {
     .middle {
         flex-wrap: wrap;
+    }
+}
+
+
+@media (min-width:320px) and (max-width:715px) {
+    .footer-section {
+        padding: 30px;
+    }
+
+    .fourth,
+    .third {
+        margin-top: 30px;
     }
 }
 </style>

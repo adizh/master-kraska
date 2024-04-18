@@ -75,7 +75,6 @@ onMounted(() => {
 .actions-block {
     @include flex(row, space-between, start);
 
-
     &-item {
         background: $main-white;
         padding: 20px 10px 25px 10px;
@@ -131,11 +130,20 @@ onMounted(() => {
 
 
 
-@media (min-width:320px) and (max-width:1000px) {
+@media (max-width:1000px) {
     .brands-pictures img {
         width: 100% !important;
     }
+}
 
- 
+
+@media (min-width:320px) and (max-width:768px) {
+    .actions-block {
+        flex-wrap: wrap;
+    }
+
+    .brands-text {
+        max-width: 100%;
+    }
 }
 </style>

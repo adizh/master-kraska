@@ -199,4 +199,8 @@ h1 {
 :deep(.swiper-slide) {
     @include flex(row, space-between, center !important)
 }
+
+@media (min-width:320px) and (max-width:468px){
+    
+}
 </style>

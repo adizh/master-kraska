@@ -53,13 +53,25 @@
         padding-bottom: .1rem;
 
         &-header {
-            font-size: 48px;
-            line-height: 65px;
+            font-size: 48px !important;
+            line-height: 65px !important;
         }
 
         &-text {
             max-width: 100%;
         }
     }
+}
+
+@media (min-width:320px) and (max-width:468px) {
+    .koler {
+        padding-bottom: .1rem;
+
+        &-header {
+            font-size: 28px !important;
+            line-height: 38px !important;
+        }
+    }
+
 }
 </style>
