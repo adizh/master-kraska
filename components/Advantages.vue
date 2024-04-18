@@ -89,6 +89,7 @@ import { advantagesOptions } from '@/assets/js/advantages'
         flex-direction: column;
         align-items: start;
         margin: 20px 0;
+        width: 100%;
 
         &-item {
             width: 100%;

@@ -281,6 +281,9 @@ provide('closeProfileOpen', closeProfileOpen)
     }
 }
 
+
+
+
 @media (max-width:992px) {
     .burger-menu {
         display: flex !important
@@ -309,10 +312,6 @@ provide('closeProfileOpen', closeProfileOpen)
         gap: 30px
     }
 
-    .left {
-        width: 15%;
-    }
-
     .catalog-options {
         top: 4rem
     }
@@ -322,11 +321,33 @@ provide('closeProfileOpen', closeProfileOpen)
     }
 }
 
+@media(max-width:786px) {
+    .left {
+        width: 25%;
+    }
+}
 
+@media(max-width:576px) {
+    .bottom-part {
+        top: 4.6rem !important;
+        position: absolute;
+        background: white;
+        padding: 20px;
+        width: 100%;
+        left: 0;
+        right: 0;
+        justify-content: start;
+        gap: 30px;
+        flex-direction: column;
+        height: 350px
+    }
+
+    .overlay {
+        top: 23rem
+    }
+}
 
 @media (min-width:320px) and (max-width:468px) {
-
-
     .main-header {
         flex-direction: column;
         gap: 1.5rem;
@@ -336,8 +357,6 @@ provide('closeProfileOpen', closeProfileOpen)
         justify-content: space-between;
     }
 
-    .left {
-        width: 25%;
-    }
+
 }
 </style>

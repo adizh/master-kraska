@@ -14,8 +14,8 @@
                         {{ $t('searchByParams') }}</button>
                 </div>
                 <div class="right">
-
-                    <img src="../assets/images/main-page.png" alt="">
+                    <img src="../assets/images/main-page.png" alt="large" class="large-image">
+                    <img src="../assets/images/vertical-main.png" alt="small" class="small-image">
                 </div>
             </div>
 
@@ -162,6 +162,7 @@ h1 {
     line-height: 92px;
     font-weight: 600;
     font-size: 74px;
+    margin-bottom: 20px;
 }
 
 .sub-header {
@@ -200,7 +201,60 @@ h1 {
     @include flex(row, space-between, center !important)
 }
 
-@media (min-width:320px) and (max-width:468px){
-    
+.small-image {
+    display: none;
+}
+
+
+@media (max-width:786px) {
+    .sub-header {
+        font-size: 18px;
+        max-width: 340px;
+    }
+
+    h1 {
+        font-size: 48px;
+
+    }
+
+    .main-page-header {
+        padding: 40px 20px;
+    }
+
+    .pink-button {
+        font-size: 18px;
+        padding: 10px 20px;
+    }
+
+}
+
+@media (max-width:468px) {
+    .main-page-header {
+        flex-direction: column;
+        gap: 28px
+    }
+
+    h1 {
+        font-size: 36px !important;
+    }
+
+    .sub-header {
+        font-size: 16px;
+        max-width: 440px;
+    }
+
+    .pink-button {
+        font-size: 16px;
+        padding: 8px 20px;
+        margin: 1.3rem;
+    }
+
+    .large-image {
+        display: none;
+    }
+
+    .small-image {
+        display: block;
+    }
 }
 </style>

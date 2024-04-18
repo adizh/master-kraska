@@ -23,12 +23,10 @@
 .koler {
     background-image: url('/static/sofa.png');
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
     height: 100vh;
     background-position: center center;
-
     width: 100%;
-
     @include flex(column, center, start);
     padding-left: 3rem;
 
@@ -48,9 +46,11 @@
 
 }
 
-@media (min-width:768px) and (max-width:992px) {
+@media (min-width:786px) and (max-width:992px) {
     .koler {
-        padding-bottom: .1rem;
+        padding: 1rem 20px 1rem 20px;
+        background-size: cover;
+        height: 100%;
 
         &-header {
             font-size: 48px !important;
@@ -59,19 +59,52 @@
 
         &-text {
             max-width: 100%;
+
         }
+    }
+}
+
+
+
+@media(min-width:468px) and (max-width:786px) {
+    .koler {
+        background-size: cover;
+        height: 100%;
+        padding: 40px 0 40px 10px;
+
+        &-text {
+            max-width: 70%;
+            width: 100%;
+        }
+
+        &-header {
+            font-size: 48px !important;
+            line-height: 65px !important;
+        }
+
     }
 }
 
 @media (min-width:320px) and (max-width:468px) {
     .koler {
-        padding-bottom: .1rem;
+        background-size: cover;
+        height: 100%;
+        padding: 40px 0 40px 10px;
 
         &-header {
             font-size: 28px !important;
             line-height: 38px !important;
         }
-    }
 
+        &-text {
+            max-width: 100%;
+            width: 100%;
+        }
+
+        button {
+            padding: 8px 18px;
+            font-size: 14px;
+        }
+    }
 }
 </style>

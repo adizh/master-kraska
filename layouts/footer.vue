@@ -171,5 +171,15 @@ span a {
     .third {
         margin-top: 30px;
     }
+
+    .top {
+        flex-direction: column;
+        align-items: start;
+        gap: 20px;
+    }
+
+    .middle {
+        flex-direction: column;
+    }
 }
 </style>

@@ -10,16 +10,13 @@
             <div class="grid koler-section-select">
                 <div class="col-2 koler-section-select-line">
                     <p v-for="item in filteredBrands" :key="item?.id" class="koler-section-select-names"
-                        @click="chooseBrand(item?.name)" :class="{ 'active': item?.name === selectedBrand }">
+                        @click="chooseBrand(item?.name)" :class="{ 'active': item?.name === selectedBrand?.name }">
                         {{ item?.name }}
                     </p>
-
                 </div>
 
                 <div class="col-9">
-
                     <input type="text" name="search" id="searcg" placeholder="Введите код цвета" class="basic-input">
-
                     <div class="danger-text">
                         {{ $t('kolerWarning') }}
                     </div>
@@ -30,8 +27,6 @@
                         <div class="koler-colors">
                             <div class="top">
                                 <div class="prev">
-
-
                                 </div>
                                 <div class="first-slide" v-if="slideNumber === 1"> <span v-for="item in 72" :key="item"
                                         class="koler-colors-item"></span></div>
@@ -44,7 +39,6 @@
 
                             <div class="bottom">
                                 <p v-for="item in 18" :key="item" class="bottom-item">
-
                                 </p>
 
                             </div>
@@ -63,10 +57,10 @@
 
 <script setup lang="ts">
 import { Brands } from "~/types/Brands";
-const brandsStore = useBrandsStore();
-
-const slideNumber = ref(1)
-
+import { Tinting } from '@/types/Tinting'
+const slideNumber = ref(1);
+const currentBrandsColors = ref()
+const allTingings = ref<Tinting[]>([])
 const brandsNames = ['Marshall', 'Dulux',
     'Caparol',
     'Текс',
@@ -81,22 +75,78 @@ const brandsNames = ['Marshall', 'Dulux',
     'Monto',
     'ROYAL']
 
-const filteredBrands = computed(() => {
-    return brandsStore.getAllBrands.filter((item: Brands) => {
-        return brandsNames.includes(item?.name)
-    })
-})
-onMounted(() => {
-    brandsStore.fetchAllBrands()
-})
 
-console.log('filteredBrands', filteredBrands)
-
-
-const selectedBrand = ref('');
-const chooseBrand = (value: string) => {
-    selectedBrand.value = value;
+const filteredBrands = ref<Brands[]>([])
+const fetchBrandsId = async (id: string) => {
+    try {
+        const response = await http(`/api/v1/Brand/get-brand/${id}`);
+        if (response.status === 200) {
+            return response.data
+        }
+    } catch (err) {
+        console.log(err)
+    }
 }
+
+
+
+const fetchAllData = async (ids: string[]) => {
+    const results = [];
+    for (const id of ids) {
+        const data = await fetchBrandsId(id);
+        if (data !== null) {
+            results.push(data);
+        }
+    }
+    console.log('what is results', results);
+    filteredBrands.value = results.filter((item: Brands) => Boolean(item));
+    selectedBrand.value = results[0];
+
+    return results;
+}
+
+
+const fetchAllTintings = async () => {
+    try {
+        const response = await http('/api/v1/Tinting/get-all-tintings');
+        if (response.status === 200) {
+            allTingings.value = response.data;
+            //currentBrandsColors.value = response.data.filter((item: Tinting) => item?.brandId === selectedBrand.value?.id)
+
+            const uniqueIds = response.data.reduce((ids: any, obj: Tinting) => {
+                if (!ids.includes(obj?.brandId)) {
+                    ids.push(obj?.brandId);
+                }
+                return ids;
+            }, []);
+
+            await fetchAllData(uniqueIds)
+        }
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+const currentBrand = computed(async () => {
+    return await allTingings.value.filter((item: Tinting) => item?.brandId === selectedBrand.value?.id)
+})
+
+console.log('currentBrand', currentBrand)
+
+
+
+
+const selectedBrand = ref<Brands>({} as Brands);
+const chooseBrand = (value: string) => {
+    //selectedBrand.value?.name = value;
+}
+
+
+onMounted(() => {
+    fetchAllTintings();
+
+    console.log('selectedBrand', selectedBrand)
+})
 </script>
 
 <style scoped lang="scss">
@@ -209,9 +259,6 @@ const chooseBrand = (value: string) => {
     .danger-text {
         @include textFormat(16px, 20px, 500, #EB5757);
         margin: 20px 0 40px 0;
-
-
-
     }
 
     &-select {
@@ -228,7 +275,6 @@ const chooseBrand = (value: string) => {
             &.active {
                 color: $main-blue;
             }
-
         }
 
         &-line {
@@ -261,7 +307,7 @@ img {
     position: absolute;
     height: 100vh;
     width: 411px;
-    background: yellow;
+    background: #8D9275;
     top: 0;
     mix-blend-mode: hue;
     transform: translate3d(0, 0, 0);

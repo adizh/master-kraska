@@ -213,7 +213,6 @@ const openedBlockFilters = ref<string[]>([]);
 
 const updateCheckboxState = (itemId: string, subId: string, event: any) => {
     const subIndex = checkboxStates?.value[itemId]?.values?.findIndex((val: { id: string }) => val.id === subId);
-
     if (event === 'select-btn' && subIndex !== -1) {
         if (checkboxStates.value[itemId]?.values) {
             checkboxStates.value[itemId].values[subIndex].value = true;
@@ -222,7 +221,6 @@ const updateCheckboxState = (itemId: string, subId: string, event: any) => {
                     val.value = false;
                 }
             });
-            // Set the typeOfWork to the id of the clicked button
             typeOfWork.value = subId;
         }
     }
@@ -285,6 +283,7 @@ const filterProductParams = () => {
 
 </script>
 
+
 <style scoped lang="scss">
 .black-checkbox input[type="checkbox"] {
     display: none;
@@ -293,7 +292,6 @@ const filterProductParams = () => {
 .black-checkbox-span {
     position: relative;
     display: inline-block;
-    /* Ensure proper rendering of the pseudo-element */
 }
 
 .black-checkbox-span::before {
@@ -385,14 +383,33 @@ const filterProductParams = () => {
     margin-top: 12px;
 }
 
-
-
-
-
-
 .bg-white-btn {
     box-shadow: 0px 0px 0px 0.5px #0000000D;
     box-shadow: 0px 0.5px 2.5px 0px #0000004D;
     margin-top: 40px;
+}
+
+
+
+@media (max-width:768px) {
+    h1 {
+        font-size: 28px;
+        line-height: 28px;
+    }
+
+    .params-header p {
+        font-size: 24px;
+        line-height: 24px;
+    }
+
+    .params-header span {
+        font-size: 48px;
+        line-height: 28px;
+    }
+
+    .filters-block-header {
+        font-size: 20px;
+        line-height: 20px;
+    }
 }
 </style>
