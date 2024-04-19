@@ -21,32 +21,44 @@
                         {{ $t('kolerWarning') }}
                     </div>
 
-
-
                     <div class="koler-part">
                         <div class="koler-colors">
                             <div class="top">
                                 <div class="prev">
                                 </div>
-                                <div class="first-slide" v-if="slideNumber === 1"> <span v-for="item in 72" :key="item"
-                                        class="koler-colors-item"></span></div>
+                                <div class="first-slide" v-if="slideNumber === 1"> <span
+                                        v-for="(item, index) in currentBrandsColors.slice(0, 66)" :key="item?.id"
+                                        class="koler-colors-item" :style="{ backgroundColor: '#' + item?.rgb }"
+                                        @click="nextColor(item, index)"
+                                        :class="{ 'selected-color': item?.id === selectedColor?.id }"></span>
+                                </div>
                                 <div class="second-slide" v-else-if="slideNumber === 2">second slider</div>
-
                                 <div class="next">
-
                                 </div>
                             </div>
 
                             <div class="bottom">
-                                <p v-for="item in 18" :key="item" class="bottom-item">
-                                </p>
+                                <div v-for="(item, index) in firstRow" :key="item.id" class="bottom-item"
+                                    :class="{ 'selected-color': isColorSync(index, item?.id) }"
+                                    :style="{ background: '#' + item.rgb, display: index >= startIndex && index < startIndex + 3 ? 'block' : 'none' }"
+                                    @click="selectColor(item)">
+                                    {{ item.code }}
+                                </div>
+                            </div>
 
+                            <div class="bottom">
+                                <div v-for="(item, index) in secondRow" :key="item.id" class="bottom-item"
+                                    :class="{ 'selected-color': isColorSync(index, item?.id) }"
+                                    :style="{ background: '#' + item.rgb, display: index + 10 >= startIndexSecondBlock && index + 10 < startIndexSecondBlock + 3 ? 'block' : 'none' }"
+                                    @click="selectColor(item)">
+                                    {{ item.code }}
+                                </div>
                             </div>
                         </div>
+
                         <div class="koler-change">
                             <img src="../assets/images/koler.png" alt="">
-                            <div id="bg"></div>
-
+                            <div id="bg" :style="{ background: '#' + selectedColor?.rgb || 'white' }"></div>
                         </div>
                     </div>
                 </div>
@@ -59,8 +71,11 @@
 import { Brands } from "~/types/Brands";
 import { Tinting } from '@/types/Tinting'
 const slideNumber = ref(1);
-const currentBrandsColors = ref()
+const currentBrandsColors = ref<Tinting[]>([]);
+const bottomContainer = ref<HTMLElement | null>(null);
 const allTingings = ref<Tinting[]>([])
+const startIndex = ref(0);
+const startIndexSecondBlock = ref(10);
 const brandsNames = ['Marshall', 'Dulux',
     'Caparol',
     'Текс',
@@ -75,8 +90,42 @@ const brandsNames = ['Marshall', 'Dulux',
     'Monto',
     'ROYAL']
 
+const selectedColor = ref({} as Tinting)
+const visibleItems = ref(3)
 
-const filteredBrands = ref<Brands[]>([])
+const firstRow = computed(() => allTingings.value.slice(0, 10));
+const secondRow = computed(() => allTingings.value.slice(10, 20));
+const selectColor = (item: Tinting) => {
+    selectedColor.value = item;
+}
+
+const startIndexForSecondRow = computed(() => {
+    return startIndex.value >= 10 ? startIndex.value - 10 : 0;
+});
+
+const isColorSync = (indx: number, id: string) => {
+    console.log('wjat is indx in second', indx)
+    const res = selectedColor?.value?.id === id;
+
+    return res
+}
+const nextColor = (item: Tinting, index: number) => {
+
+    selectedColor.value = item;
+
+    if (index >= 10) {
+        //   startIndexSecondBlock.value = 10 + (Math.floor((index - 10) / 3) * 3);
+        startIndexSecondBlock.value = 10 + Math.floor((index - 10) / 3) * 3;
+        console.log('what is startIndexSecondBlock', startIndexSecondBlock)
+    } else {
+        startIndex.value = Math.floor(index / 3) * 3;
+    }
+
+    console.log('what is index nextcolor', index)
+}
+
+const filteredBrands = ref<Brands[]>([]);
+
 const fetchBrandsId = async (id: string) => {
     try {
         const response = await http(`/api/v1/Brand/get-brand/${id}`);
@@ -87,7 +136,6 @@ const fetchBrandsId = async (id: string) => {
         console.log(err)
     }
 }
-
 
 
 const fetchAllData = async (ids: string[]) => {
@@ -126,12 +174,16 @@ const fetchAllTintings = async () => {
         console.log(err)
     }
 }
+const remainingItems = computed(() => {
+    const startIndex = currentPage.value * itemsPerPage;
+    return currentBrandsColors.value.slice(startIndex + itemsPerPage);
+});
+const currentPage = ref(0);
 
-const currentBrand = computed(async () => {
-    return await allTingings.value.filter((item: Tinting) => item?.brandId === selectedBrand.value?.id)
-})
+const itemsPerRow = 3;
+const itemsPerPage = 18;
 
-console.log('currentBrand', currentBrand)
+
 
 
 
@@ -142,10 +194,10 @@ const chooseBrand = (value: string) => {
 }
 
 
-onMounted(() => {
-    fetchAllTintings();
-
-    console.log('selectedBrand', selectedBrand)
+onMounted(async () => {
+    await fetchAllTintings();
+    currentBrandsColors.value = allTingings.value?.filter((item: Tinting) => item?.brandId === selectedBrand?.value.id)
+    console.log('currentBrandsColors', currentBrandsColors)
 })
 </script>
 
@@ -153,6 +205,13 @@ onMounted(() => {
 .koler-part {
     @include flex(row, start, start)
 }
+
+
+
+.selected-color {
+    border: 1px solid $main-black !important;
+}
+
 
 .koler-colors {
     .first-slide {
@@ -163,7 +222,6 @@ onMounted(() => {
     &-item {
         width: 39px;
         height: 40px;
-        background: #C992B1;
         display: block;
         margin: 2px;
 
@@ -219,16 +277,18 @@ onMounted(() => {
         }
     }
 
+
+    .bottom-item:nth-child(n + 11) {
+        width: 170px;
+    }
+
     .bottom {
-        @include flex(row, start, start, 2px);
-        flex-wrap: wrap;
+        display: flex;
         margin-top: 20px;
 
         &-item {
-            width: 168px;
             background: #AC5E97;
-            display: block;
-            padding: 23px 34px;
+            padding: 23px;
             margin: 2px;
             border-radius: 4px;
             border: 1px solid transparent;
@@ -307,7 +367,7 @@ img {
     position: absolute;
     height: 100vh;
     width: 411px;
-    background: #8D9275;
+
     top: 0;
     mix-blend-mode: hue;
     transform: translate3d(0, 0, 0);
