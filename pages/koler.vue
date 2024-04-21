@@ -9,10 +9,10 @@
             </h1>
             <div class="grid koler-section-select">
                 <div class="col-2 koler-section-select-line">
-                    <!-- <p v-for="item in filteredBrands" :key="item?.id" class="koler-section-select-names"
+                    <p v-for="item in filteredBrands" :key="item?.id" class="koler-section-select-names"
                         @click="chooseBrand(item)" :class="{ 'active': item?.name === selectedBrand?.name }">
                         {{ item?.name }}
-                    </p> -->
+                    </p>
                 </div>
 
                 <div class="col-9">
@@ -26,17 +26,17 @@
                             <div class="top">
                                 <div class="prev">
                                 </div>
-                                <!-- <div class="first-slide" v-if="slideNumber === 1"> <span
+                                <div class="first-slide" v-if="slideNumber === 1"> <span
                                         v-for="(item, index) in slicedColors" :key="item?.id" class="koler-colors-item"
                                         :style="{ backgroundColor: '#' + item?.rgb }"
                                         @click="nextColor(item, index + 1)"
                                         :class="{ 'selected-color': item?.id === selectedColor?.id }"></span>
-                                </div> -->
-                                <!-- <div class="second-slide" v-else-if="slideNumber === 2">second slider</div> -->
+                                </div>
+                                <div class="second-slide" v-else-if="slideNumber === 2">second slider</div>
                                 <div class="next">
                                 </div>
                             </div>
-                            <!-- <div class="bottom" v-if="slicedColors?.length && totalRows && itemsPerRow">
+                            <div class="bottom" v-if="slicedColors?.length && totalRows && itemsPerRow">
                                 <div v-for="rowIndex in totalRows" :key="rowIndex" class="each-row">
                                     <div v-for="(item, index) in  getRowItems(rowIndex) " :key="item.id"
                                         class="bottom-item"
@@ -47,22 +47,15 @@
                                         <span> {{ item.code }}</span>
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
 
-                            <!-- <div class="bottom">
-                                <div v-for="(item, index) in secondRow" :key="item.id" class="bottom-item"
-                                    :class="{ 'selected-color': isColorSync(index, item?.id) }"
-                                    :style="{ background: '#' + item.rgb, display: index + 10 >= startIndexSecondBlock && index + 10 < startIndexSecondBlock + 3 ? 'block' : 'none' }"
-                                    @click="selectColor(item)">
-                                    {{ item.code }}
-                                </div>
-                            </div> -->
+
                         </div>
 
-                        <!-- <div class="koler-change">
+                        <div class="koler-change">
                             <img src="../assets/images/koler.png" alt="">
                             <div id="bg" :style="{ background: '#' + selectedColor?.rgb || 'white' }"></div>
-                        </div> -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -70,59 +63,44 @@
     </section>
 </template>
 
-<!-- <script setup lang="ts">
+<script setup lang="ts">
 import { Brands } from "~/types/Brands";
 import { Tinting } from '@/types/Tinting'
 const slideNumber = ref(1);
 const currentBrandsColors = ref<Tinting[]>([]);
 const allTingings = ref<Tinting[]>([])
 const startIndex = ref(0);
-const startIndexSecondBlock = ref(10);
 
+const selectedBrand = ref<Brands>({} as Brands);
 
 const itemsPerRow = ref(10);
-let windowWidth = ref(window.innerWidth)
+let windowWidth = ref(window?.innerWidth)
 
 
 const totalRows = ref(6);
 
 
 
-const indexFromStart = ref(-0)
-// const getRowItems = (rowIndex: number) => {
-//     if (slicedColors?.value && itemsPerRow?.value) {
-//         const startIdx = (rowIndex - 1) * itemsPerRow?.value;
-//         const endIdx = Math.min(startIdx + itemsPerRow?.value, slicedColors?.value?.length);
-//         const results = slicedColors?.value?.slice(startIdx, endIdx);
 
-//         return results;
-//     } else {
-//         return []
-//     }
+const getRowItems = (rowIndex: number) => {
+    if (slicedColors?.value && itemsPerRow?.value) {
+        const startIdx = (rowIndex - 1) * itemsPerRow?.value;
+        const endIdx = Math.min(startIdx + itemsPerRow?.value, slicedColors?.value?.length);
+        const results = slicedColors?.value?.slice(startIdx, endIdx);
+        return results;
+    } else {
+        return []
+    }
 
-// };
+};
 
 const nextColor = (item: any, index: number) => {
     selectedColor.value = item;
     startIndex.value = index;
-    console.log('nexxt Color index', index);
-
-
-    // console.log('startIndex', startIndex)
-    // if (index > 2 && index % 3 === 0) {
-    //     indexFromStart.value += 3;
-    //     startIndex.value += 3
-    // } else {
-    //     startIndex.value = index;
-    // }
-
 };
 
 const selectColor = (item: Tinting, itemIndex: number, rowIndex: number) => {
-    // startIndex.value = itemIndex
     selectedColor.value = item;
-    console.log('select color itemIndex', itemIndex);
-    console.log('select color startIndex value', startIndex)
     let actual = itemIndex * rowIndex;
     if (rowIndex === 1) {
         actual = itemIndex
@@ -130,66 +108,43 @@ const selectColor = (item: Tinting, itemIndex: number, rowIndex: number) => {
         actual = (rowIndex * itemsPerRow.value) - itemsPerRow?.value + itemIndex
     }
 
-    console.log('selectColor actual', actual);
+
 
     let incudedActual: any = []
     for (let i = 1; i < 2; i++) {
         const current = (i * itemsPerRow?.value) - itemsPerRow?.value + itemIndex;
-        console.log('selectCoor inside the loop current', current);
-        console.log('startIndex', startIndex)
         incudedActual.push(current - 1, current, current + 1)
     }
 
 
-    //  console.log('select incudedActual', incudedActual)
+}
 
-    const whichRow = rowIndex * itemsPerRow?.value + startIndex.value
 
+const shouldShow = (index: number, rowIndex: number) => {
+
+    let actual = index * rowIndex;
+    if (rowIndex === 1) {
+        actual = index
+    } else {
+        actual = (rowIndex * itemsPerRow.value) - itemsPerRow?.value + index
+    }
+
+
+    let incudedActual: any = []
+    for (let i = 1; i <= totalRows?.value; i++) {
+        const current = (i * itemsPerRow?.value) - itemsPerRow?.value + index;
+        incudedActual.push(current - 1, current, current + 1)
+    }
+
+    const final = incudedActual?.includes(startIndex?.value - 1) ? incudedActual : [];
+    return final !== null && final && final?.includes(index)
+
+    // return actual === startIndex?.value || prevActual === startIndex?.value || nextActual === startIndex?.value
 
 }
 
-const finalArr = ref<number[]>([])
-// const shouldShow = (index: number, rowIndex: number) => {
-
-//     let actual = index * rowIndex;
-//     if (rowIndex === 1) {
-//         actual = index
-//     } else {
-//         actual = (rowIndex * itemsPerRow.value) - itemsPerRow?.value + index
-//     }
-
-//     let prevActual = actual - 1;
-//     const nextActual = actual + 1;
-
-//     let incudedActual: any = []
-//     for (let i = 1; i <= totalRows?.value; i++) {
-//         const current = (i * itemsPerRow?.value) - itemsPerRow?.value + index;
-
-//         incudedActual.push(current - 1, current, current + 1)
-//     }
-
-
-
-
-
-//     const final = incudedActual?.includes(startIndex?.value - 1) ? incudedActual : [];
-//     console.log('final', final);
-//     console.log('actual', actual);
-
-
-//     finalArr.value = final;
-
-
-//     return final !== null && final && final?.includes(index)
-
-//     // return actual === startIndex?.value || prevActual === startIndex?.value || nextActual === startIndex?.value
-
-// }
-
 
 const calculateLayout = async (width: number) => {
-    console.log('calculateLayout width', width)
-    // Adjust items per row based on window width
     if (width > 1300) {
         itemsPerRow.value = 10;
     } else if (width < 768) {
@@ -202,18 +157,13 @@ const calculateLayout = async (width: number) => {
         itemsPerRow.value = 10;
     }
 
-
     totalRows.value = Math.ceil(slicedColors.value.length / itemsPerRow.value);
-    console.log('slicedColors in calcaultae layou', slicedColors);
-    console.log('itemsPerRow in calcaultae layou', itemsPerRow);
     console.log('totalRows', totalRows)
 };
 
 
 const isColorSync = (indx: number, id: string, rowIndex: number) => {
     const res = selectedColor?.value?.id === id;
-    //  console.log('indx isColorSync', indx);
-    //console.log('indx rowIndex', rowIndex);
     return res
 }
 
@@ -221,25 +171,25 @@ const isColorSync = (indx: number, id: string, rowIndex: number) => {
 const slicedColors = computed(() => {
     return currentBrandsColors?.value?.slice(0, Math.ceil(currentBrandsColors.value?.length / 2));
 });
-// const resizeHandler = async () => {
-//     const newWindowWidth = window.innerWidth;
-//     if (newWindowWidth !== windowWidth.value) {
-//         windowWidth.value = newWindowWidth;
-//         await calculateLayout(windowWidth.value);
-//         console.log('Items per row updated:', itemsPerRow.value);
-//     }
-// };
+const resizeHandler = async () => {
+    const newWindowWidth = window.innerWidth;
+    if (newWindowWidth !== windowWidth?.value) {
+        windowWidth.value = newWindowWidth;
+        await calculateLayout(windowWidth?.value);
+
+    }
+};
 
 onMounted(async () => {
-  //  await fetchAllTintings();
-    //window.addEventListener('resize', resizeHandler);
-   // await resizeHandler()
-    //await calculateLayout(windowWidth.value)
-   // currentBrandsColors.value = allTingings.value?.filter((item: Tinting) => item?.brandId === selectedBrand?.value.id)
+    await fetchAllTintings();
+    window.addEventListener('resize', resizeHandler);
+    await resizeHandler()
+    await calculateLayout(windowWidth.value)
+    currentBrandsColors.value = allTingings.value?.filter((item: Tinting) => item?.brandId === selectedBrand?.value.id)
 });
 
 onUnmounted(() => {
-   // window.removeEventListener('resize', resizeHandler);
+    window.removeEventListener('resize', resizeHandler);
 });
 
 const selectedColor = ref({} as Tinting)
@@ -262,18 +212,22 @@ const fetchBrandsId = async (id: string) => {
 
 
 const fetchAllData = async (ids: string[]) => {
-    //const results = [];
-    for (const id of ids) {
-      //  const data = await fetchBrandsId(id);
-        // if (data !== null) {
-        //     results.push(data);
-        // }
-    }
-    // console.log('what is results', results);
-   // filteredBrands.value = results.filter((item: Brands) => Boolean(item));
-  //  selectedBrand.value = results[0];
-    // currentBrandsColors.value = allTingings.value?.filter((item: Tinting) => item?.brandId === selectedBrand?.value.id)
+    const idsNull = ['902dea30-e9a6-4d6c-accf-97d4590d9852', '8b9f00af-1ff0-400e-be67-3f4753c89970'];
+    const filtered = ids.filter((item) => !idsNull.includes(item))
 
+    const results = [];
+    for (const id of filtered) {
+        const data = await fetchBrandsId(id);
+
+
+        if (data !== null) {
+            results.push(data);
+        }
+    }
+
+    filteredBrands.value = results.filter((item: Brands) => Boolean(item));
+    selectedBrand.value = results[0];
+    currentBrandsColors.value = allTingings.value?.filter((item: Tinting) => item?.brandId === selectedBrand?.value.id)
     return []
 }
 
@@ -283,8 +237,6 @@ const fetchAllTintings = async () => {
         const response = await http('/api/v1/Tinting/get-all-tintings');
         if (response.status === 200) {
             allTingings.value = response.data;
-            //currentBrandsColors.value = response.data.filter((item: Tinting) => item?.brandId === selectedBrand.value?.id)
-
             const uniqueIds = response.data.reduce((ids: any, obj: Tinting) => {
                 if (!ids.includes(obj?.brandId)) {
                     ids.push(obj?.brandId);
@@ -302,17 +254,16 @@ const fetchAllTintings = async () => {
 
 
 
-const selectedBrand = ref<Brands>({} as Brands);
-const chooseBrand = (value: Brands) => {
+
+const chooseBrand = async (value: Brands) => {
     selectedBrand.value = value;
     currentBrandsColors.value = allTingings.value?.filter((item: Tinting) => item?.brandId === selectedBrand?.value.id);
-    console.log('chooseBrand value', value)
-    console.log('chooseBrand currentBrandsColors', currentBrandsColors)
-
+    resizeHandler();
+    await calculateLayout(windowWidth?.value)
 }
 
 
-</script> -->
+</script>
 
 <style scoped lang="scss">
 .koler-part {
