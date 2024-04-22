@@ -34,4 +34,29 @@ onMounted(() => {
     }
 
 }
+
+@media (max-width:768px) {
+    .brands-list {
+        margin: 40px 0 40px 0;
+
+        gap: 25px;
+
+        div {
+            width: 30%;
+        }
+
+    }
+}
+
+
+@media (max-width:480px) {
+    .brands-list {
+
+
+        div {
+            width: 45%;
+        }
+
+    }
+}
 </style>
