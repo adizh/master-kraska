@@ -38,8 +38,8 @@
             <div v-for="item in catalogStore.getAllCatalogs" :key="item?.id" class="each-filter-block"
                 :class="{ 'each-filter-block open': opensIncludes(item.id) }">
                 <h4 class="filters-block-header">{{ item?.name }}</h4>
-                <p v-if="item?.subdirectory?.length" v-for="(sub, index) in getSlicedSubdirectories(item)" :key="index"
-                    class="each-sub-item">
+                <p v-if="!helpersRadio?.includes(item?.nameRu) && item?.subdirectory?.length"
+                    v-for="(sub, index) in getSlicedSubdirectories(item)" :key="index" class="each-sub-item">
                     <label class="custom-checkbox">
                         <input type="checkbox" :id="`${item.id}-${index}`" :value="sub.id"
                             :checked="isChecked(item.id, sub.id)"
@@ -48,7 +48,7 @@
                     </label>
                 </p>
 
-                <p v-else-if="!item?.subdirectory?.length && selectedBoolValues[item?.id]">
+                <p v-else-if="selectedBoolValues[item?.id] || helpersRadio?.includes(item?.nameRu)">
                 <div class="custom-radio">
                     <input type="radio" :id="'radio_' + item.id + '_true'" :value="true"
                         v-model="selectedBoolValues[item.id].value" @change="handleInputChange()">
@@ -105,7 +105,11 @@ const brandsStore = useBrandsStore();
 const queryBrand = route?.query
 const isBrandOpen = ref(false)
 
+const helpersRadio = ['Без запаха', 'Моющееся покрытие', 'Атмосферостойкое покрытие', 'Износостойкое покрытие', 'Одобрено Ассоциацией Качества Краски', 'Быстросохнущая', 'Грязе и водоотталкивающее покрытие']
 
+const radiosCatalogs = computed(() => {
+    return catalogStore.getAllCatalogs.filter((item) => helpersRadio.includes(item?.nameRu))
+})
 const getRemainingBrands = computed(() => {
     return brandsStore.getAllBrands?.length - 5
 })
@@ -146,7 +150,7 @@ const isChecked = (itemId: string, subId: string) => {
 
 
 const initBools = async () => {
-    return await boolCatalogs.value.map((item: BoolCatalog) => {
+    return await radiosCatalogs.value.map((item: BoolCatalog) => {
         selectedBoolValues.value[item.id] = {
             name: item.name,
             id: item.id,
@@ -155,9 +159,7 @@ const initBools = async () => {
     });
 
 }
-const boolCatalogs = computed(() => {
-    return catalogStore.getAllCatalogs.filter((item) => !item?.subdirectory?.length)
-})
+
 
 
 const updateBrandsInputs = (brand: Brands, event: any) => {
@@ -260,7 +262,7 @@ onMounted(async () => {
     await initializeCheckboxStates();
     brandsStore.fetchAllBrands()
     initBools()
-    if (queryBrand) {
+    if (queryBrand && queryBrand?.id) {
         isBrandOpen.value = true
         productsStore?.filters.brandId.push(queryBrand?.id as string);
         productsStore.filterProducts()
