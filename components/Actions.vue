@@ -3,31 +3,17 @@
         <div class="sub-header-section">
             <h5 class='each-section-header'>{{ $t('discounts') }}</h5>
 
-            <button class="look-all-btn">
+            <button class="look-all-btn" @click="navigateTo('/discount')">
                 <span>{{ $t('lookAll') }}</span>
                 <img src='../assets/icons/icon=components-more.svg' />
 
             </button>
         </div>
         <div class="actions-block">
-            <div class="actions-block-item">
-                <div class="actions-block-item-header">{{ $t('discountHeader') }}</div>
-                <p class="actions-block-item-info">
-                    {{ $t('discoutText') }}
-                </p>
-            </div>
-            <div class="actions-block-item">
-                <div class="actions-block-item-header">{{ $t('discountHeader') }}</div>
-                <p class="actions-block-item-info">
-                    {{ $t('discoutText') }}
-                </p>
-            </div>
-            <div class="actions-block-item">
-                <div class="actions-block-item-header">{{ $t('discountHeader') }}</div>
-                <p class="actions-block-item-info">
-                    {{ $t('discoutText') }}
-                </p>
-            </div>
+
+            <DiscountItem />
+            <DiscountItem />
+            <DiscountItem />
 
         </div>
 
@@ -72,26 +58,7 @@ onMounted(() => {
     @include flex(row, space-between, center);
 }
 
-.actions-block {
-    @include flex(row, space-between, start);
 
-    &-item {
-        background: $main-white;
-        padding: 20px 10px 25px 10px;
-        border-radius: 10px;
-        text-align: center;
-
-        &-header {
-            font-size: 20px;
-            font-weight: 600;
-        }
-
-        &-info {
-            color: $main-dark-grey;
-            font-size: 16px;
-        }
-    }
-}
 
 .brands-info {
     margin-top: 3rem;

@@ -10,7 +10,9 @@ button:hover {
 input:focus {
   outline: none;
 }
-
+.actions-block {
+  @include flex(row, space-between, start);
+}
 a {
   text-decoration: none;
 }
@@ -56,12 +58,9 @@ ul li {
   cursor: pointer;
 }
 
-
-
 .overlay-header-options {
   @extend %dark-bg-effect;
 }
-
 
 .overlay-header-options.open {
   opacity: 1;
