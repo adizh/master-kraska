@@ -14,13 +14,18 @@
             <label for="price" class="filters-help">
                 {{ $t('brands') }}
             </label>
-            <div>
+            <div class="brands-list" :class="{ 'each-filter-block open': opensIncludes('brands') }"
+                @click="setOpenBlock('brands')">
                 <p v-if="brandsStore.getAllBrands" v-for="(brand, index) in computedBrands" :key="brand?.id"
                     class="each-sub-item">
-                    <label class="custom-checkbox">
+                    <label class="black-checkbox">
                         <input type="checkbox" :id="`${brand?.id}`" :value="brand.id"
                             @input="updateBrandsInputs(brand, $event)" :checked="brand?.id === queryBrand?.id" />
-                        <p><span>{{ brand?.name }}</span></p>
+                        <p><span class='black-checkbox-span'
+                                :class="{ 'black-checkbox-span open': opensIncludes('brands') }">
+                                <p :class="{ 'black-checkbox-span-name': opensIncludes('brands') }"> {{ brand?.name }}
+                                </p>
+                            </span></p>
 
                     </label>
                 </p>
@@ -38,15 +43,22 @@
             <div v-for="item in catalogStore.getAllCatalogs" :key="item?.id" class="each-filter-block"
                 :class="{ 'each-filter-block open': opensIncludes(item.id) }">
                 <h4 class="filters-block-header">{{ item?.name }}</h4>
-                <p v-if="!helpersRadio?.includes(item?.nameRu) && item?.subdirectory?.length"
-                    v-for="(sub, index) in getSlicedSubdirectories(item)" :key="index" class="each-sub-item">
-                    <label class="custom-checkbox">
-                        <input type="checkbox" :id="`${item.id}-${index}`" :value="sub.id"
-                            :checked="isChecked(item.id, sub.id)"
-                            @change="updateCheckboxState(item.id, sub.id, $event)" />
-                        <p><span>{{ sub?.name }}</span></p>
-                    </label>
-                </p>
+                <div class="main-block" v-if="!helpersRadio?.includes(item?.nameRu) && item?.subdirectory?.length">
+                    <p v-for="(sub, index) in getSlicedSubdirectories(item)" :key="index" class="each-sub-item">
+                        <label class="black-checkbox">
+                            <input type="checkbox" :id="`${item.id}-${index}`" :value="sub.id"
+                                :checked="isChecked(item.id, sub.id)"
+                                @change="updateCheckboxState(item.id, sub.id, $event)" />
+                            <p><span class="black-checkbox-span"
+                                    :class="{ 'black-checkbox-span open': opensIncludes(item?.id) }">
+
+
+                                    <p :class="{ 'black-checkbox-span-name': opensIncludes(item?.id) }">{{ sub?.name }}
+                                    </p>
+                                </span></p>
+                        </label>
+                    </p>
+                </div>
 
                 <p v-else-if="selectedBoolValues[item?.id] || helpersRadio?.includes(item?.nameRu)">
                 <div class="custom-radio">
@@ -152,8 +164,8 @@ const isChecked = (itemId: string, subId: string) => {
 const initBools = async () => {
     return await radiosCatalogs.value.map((item: BoolCatalog) => {
         selectedBoolValues.value[item.id] = {
-            name: item.name,
-            id: item.id,
+            name: item?.name,
+            id: item?.id,
             value: false
         };
     });
@@ -195,7 +207,7 @@ const handleInputChange = () => {
     }
 
     let query: { [key: string]: boolean } = {};
-    Object.values(selectedBoolValues.value).map((item) => {
+    Object.values(selectedBoolValues?.value)?.map((item) => {
         query[allBoolValues[item?.name as keyof typeof allBoolValues]] = item?.value
     })
 
@@ -286,11 +298,39 @@ watch(() => authStore.getSelectedLang, async (newVal, oldVal) => {
     margin-top: 12px;
 }
 
-
+.black-checkbox-span-name {
+    margin-left: 30px;
+}
 
 
 .each-sub-item {
     margin: 7px 0;
+}
+
+.each-filter-block.open {
+    border: 1px solid $slider-border-color;
+    padding: 12px 10px;
+    max-height: 217px;
+    height: 100%;
+    scrollbar-gutter: stable;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: #222;
+        border-radius: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: #D9D9D9;
+        border-radius: 10px;
+
+    }
+
+
 }
 
 .filters {
@@ -310,31 +350,7 @@ watch(() => authStore.getSelectedLang, async (newVal, oldVal) => {
         margin-top: 40px;
     }
 
-    .each-filter-block.open {
-        border: 1px solid $slider-border-color;
-        padding: 12px 10px;
-        max-height: 217px;
-        height: 100%;
-        scrollbar-gutter: stable;
-        overflow-y: auto;
 
-        &::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        &::-webkit-scrollbar-thumb {
-            background-color: #222;
-            border-radius: 5px;
-        }
-
-        &::-webkit-scrollbar-track {
-            background: #D9D9D9;
-            border-radius: 10px;
-
-        }
-
-
-    }
 
 
 
@@ -368,14 +384,12 @@ watch(() => authStore.getSelectedLang, async (newVal, oldVal) => {
 
 .custom-radio input[type="radio"] {
     display: none;
-    /* Hide the default radio button */
 }
 
 .custom-radio label {
     position: relative;
     cursor: pointer;
     padding-left: 25px;
-    /* Space for the custom icon */
     margin-right: 15px;
     font-size: 16px;
 }
@@ -388,9 +402,9 @@ watch(() => authStore.getSelectedLang, async (newVal, oldVal) => {
     height: 20px;
     border-radius: 50%;
     background-color: #fff;
-    /* Circle color */
+
     border: 2px solid #000;
-    /* Circle border color */
+
 }
 
 .custom-radio input[type="radio"]:checked+label .radio-icon::after {
@@ -400,10 +414,76 @@ watch(() => authStore.getSelectedLang, async (newVal, oldVal) => {
     height: 10px;
     border-radius: 50%;
     background-color: #000;
-    /* Custom icon color */
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.black-checkbox input[type="checkbox"] {
+    display: none;
+}
+
+.black-checkbox-span {
+    position: relative;
+    display: inline-block;
+}
+
+.black-checkbox-span.open::before {
+    left: 0;
+}
+
+.black-checkbox-span::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    max-width: 18px;
+    height: 18px;
+    border: 1px solid black;
+    left: -30px;
+
+
+}
+
+.black-checkbox input[type="checkbox"]:checked+.black-checkbox-span::before {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    content: url("../../assets/icons/check-icon-vector.svg");
+    width: 18px;
+    height: 18px;
+
+
+    background: black;
+}
+
+@media(max-width:1000px) {
+
+    .brands-list,
+    .main-block {
+        @include flex(row, start, center, 2rem);
+        flex-wrap: wrap;
+        padding-left: 30px;
+    }
+
+    .each-sub-item {
+        margin: 0 3rem 0 0;
+    }
+
+    .filters-help {
+        margin-bottom: 20px;
+        font-size: 18px;
+        line-height: 20px;
+    }
+
+    .filters-block-header {
+        font-size: 18px;
+        line-height: 20px;
+    }
+
+    .basic-input {
+        padding: 8px !important;
+    }
+
 }
 </style>

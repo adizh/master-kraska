@@ -52,6 +52,7 @@
         <div class="params-first blocks third">
             <div class="params-header">
                 <span>3</span>
+                
                 <p>{{ $t('whichTypeCoating') }}</p>
             </div>
 
