@@ -15,13 +15,22 @@
                 {{ $t('brands') }}
             </label>
             <div>
-                <p v-if="brandsStore.getAllBrands" v-for="(brand, index) in brandsStore.getAllBrands" :key="brand?.id"
+                <p v-if="brandsStore.getAllBrands" v-for="(brand, index) in computedBrands" :key="brand?.id"
                     class="each-sub-item">
                     <label class="custom-checkbox">
                         <input type="checkbox" :id="`${brand?.id}`" :value="brand.id"
-                            @input="updateBrandsInputs(brand, $event)" />
+                            @input="updateBrandsInputs(brand, $event)" :checked="brand?.id === queryBrand?.id" />
                         <p><span>{{ brand?.name }}</span></p>
+
                     </label>
+                </p>
+                <p class="open-block" v-if="getRemainingBrands">
+                    <span @click="openBrands" v-if="!isBrandOpen"> {{ $t('more') }} {{ getRemainingBrands }}
+                    </span>
+                    <span @click="isBrandOpen = false" v-else> {{ $t('closeBlock') }}
+                    </span>
+                    <img class="arrow" :class="{ 'rotated': isBrandOpen }" src="../../assets/icons/arrow-down-blue.svg"
+                        alt="open-arrow">
                 </p>
             </div>
         </div>
@@ -74,8 +83,6 @@
 <script setup lang="ts">
 import { AllCatalog, CatalogCheckbox } from '@/types/Catalog'
 import { Brands } from '~/types/Brands';
-
-
 type BoolValues = {
     value: boolean,
     id: string;
@@ -87,15 +94,30 @@ interface BoolCatalog {
     name: string;
 }
 
-
-
+const route = useRoute()
 const productsStore = useProductsSstore()
 const catalogStore = useCatalogStore();
 const authStore = useAuthStore();
 const checkboxStates = ref<{ [key: string]: CatalogCheckbox }>({});
 const selectedBoolValues: Ref<Record<string, BoolValues>> = ref({});
 const openedBlockFilters = ref<string[]>([]);
-const brandsStore = useBrandsStore()
+const brandsStore = useBrandsStore();
+const queryBrand = route?.query
+const isBrandOpen = ref(false)
+
+
+const getRemainingBrands = computed(() => {
+    return brandsStore.getAllBrands?.length - 5
+})
+
+const openBrands = () => {
+    isBrandOpen.value = true
+}
+
+const computedBrands = computed(() => {
+    return !isBrandOpen.value ? brandsStore.getAllBrands.slice(0, 5) : brandsStore.getAllBrands
+})
+
 const initializeCheckboxStates = async () => {
     await catalogStore.getAllCatalogs.map(item => {
         checkboxStates.value[item.id] = {
@@ -107,8 +129,6 @@ const initializeCheckboxStates = async () => {
     console.log('initializeCheckboxStates checkboxStates', checkboxStates)
 
 };
-
-
 
 
 const handlePrices = () => {
@@ -147,18 +167,17 @@ const updateBrandsInputs = (brand: Brands, event: any) => {
     const brandIndex = productsStore.filters.brandId.indexOf(brand?.id);
 
     if (event.target.checked === true) {
-        // If the brand is not already in the array, add it
+
         if (brandIndex === -1) {
             productsStore.filters.brandId.push(brand?.id);
         }
     } else {
-        // If the brand is in the array, remove it
+
         if (brandIndex !== -1) {
             productsStore.filters.brandId.splice(brandIndex, 1);
         }
     }
 
-    console.log('productsStore.filters.brandId', productsStore.filters.brandId);
     productsStore.filterProducts()
 };
 
@@ -185,8 +204,6 @@ const handleInputChange = () => {
 }
 
 
-
-
 const updateCheckboxState = (itemId: string, subId: string, event: any) => {
     const checked = event.target.checked;
     const subIndex = checkboxStates?.value[itemId]?.values?.findIndex((val: { id: string }) => val.id === subId);
@@ -209,11 +226,10 @@ const updateCheckboxState = (itemId: string, subId: string, event: any) => {
 };
 
 
-
-
 const opensIncludes = (id: string) => {
     return openedBlockFilters.value.includes(id)
 }
+
 const setOpenBlock = (id: string) => {
     if (openedBlockFilters.value.includes(id)) {
         openedBlockFilters.value = openedBlockFilters.value.filter((itemId: string) => itemId !== id)
@@ -231,14 +247,24 @@ const getSlicedSubdirectories = (item: AllCatalog) => {
     }
 
 }
+
 const getRemainingItemCount = (item: AllCatalog) => {
     return item?.subdirectory ? Math.max(item.subdirectory.length - 5, 0) : 0;
 }
+
+
+
+
 onMounted(async () => {
     await catalogStore.fetchAllCatalogs();
     await initializeCheckboxStates();
     brandsStore.fetchAllBrands()
     initBools()
+    if (queryBrand) {
+        isBrandOpen.value = true
+        productsStore?.filters.brandId.push(queryBrand?.id as string);
+        productsStore.filterProducts()
+    }
 
 })
 
@@ -247,7 +273,6 @@ watch(() => authStore.getSelectedLang, async (newVal, oldVal) => {
     await catalogStore.fetchAllCatalogs();
     initializeCheckboxStates();
 });
-
 
 
 </script>

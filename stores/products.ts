@@ -103,6 +103,10 @@ export const useProductsSstore = defineStore("productsStore", {
           ? this.filters.subdirectoryIds?.join(",")
           : null;
 
+      const allBrands =
+        this.filters?.brandId?.length > 0
+          ? this.filters.brandId?.join(",")
+          : null;
       console.log("filter products subDirs", subDirs);
 
       console.log("in filter product bool values", this.filters.fastDrying);
@@ -120,7 +124,7 @@ export const useProductsSstore = defineStore("productsStore", {
         dirtAndWaterRepellentCoating: this.filters.dirtAndWaterRepellentCoating,
         minPrice: this.filters.minPrice,
         maxPrice: this.filters.maxPrice,
-        brandId: this.filters.brandId?.join(","),
+        brandId: allBrands,
       };
 
       try {

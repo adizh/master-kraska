@@ -34,7 +34,9 @@
                 disableOnInteraction: true,
             }">
                 <SwiperSlide v-for="item in brandsStore.getAllBrands" :key="item.id">
-                    <img :src="item?.logo" />
+
+                    <img :src="item?.logo"
+                        @click="navigateTo({ path: `/catalog/${firstCategoryItem?.id}`, query: item })" />
                 </SwiperSlide>
             </Swiper>
         </div>
@@ -43,9 +45,14 @@
 
 <script setup lang="ts">
 const brandsStore = useBrandsStore()
+const catalogStore = useCatalogStore()
 onMounted(() => {
     brandsStore.fetchAllBrands()
+    catalogStore.fetchAllCategories()
 })
+
+
+const firstCategoryItem = catalogStore.getAllCategories[0];
 
 </script>
 
