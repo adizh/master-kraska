@@ -7,11 +7,11 @@
                 <p>{{ $t('whichTypeOfWork') }}</p>
             </div>
 
-            <div class='flex flex-row gap-4'>
+            <div class='flex  gap-4  first-button-block'>
                 <button v-for="btn in item?.subdirectory" :key="btn?.id" class="gray-buttons-border"
                     :class="{ 'selected-btn': typeOfWork === btn.id }"
                     @click="updateCheckboxState(item?.id, btn?.id, 'select-btn')">
-                    {{ btn?.name }}
+                    {{ formatNameUpper(btn?.name) }}
                     <img src="../assets/icons/carbon_checkmark-filled (1).svg" alt="carbon"
                         v-if="typeOfWork === btn.id">
                 </button>
@@ -116,12 +116,7 @@ const authStore = useAuthStore()
 const minPrice = ref(0)
 const maxPrice = ref(0)
 const typeOfWork = ref('')
-const selectTypeOfWork = (item: SubCatalog) => {
-    //  typeOfWork.value = [item]
-    console.log('firstBlock', firstBlock);
-    productsStore.setTypeOfWork(typeOfWork.value)
 
-}
 const items = [
     {
         id: "d12f4dfb-6f54-4a37-9cd3-1d6d5423e084",
@@ -153,22 +148,25 @@ const filteredCatalogs = computed(() => {
 })
 
 const firstBlock = computed(() => {
-    return filteredCatalogs.value.filter((item: AllCatalog) => {
-        return item?.id === 'd12f4dfb-6f54-4a37-9cd3-1d6d5423e084'
+    return filteredCatalogs.value?.filter((item: AllCatalog) => {
+        return item?.name.toLowerCase() === 'ТИП РАБОТ'.toLocaleLowerCase()
     })
 })
 
+console.log('firstBlock', firstBlock)
+console.log('filteredCatalogs', filteredCatalogs)
+
 const secondOptions = [
-    '5ff5e6eb-884b-4e64-ae7b-d99bede77b9b', 'd637e138-5784-4d3d-bb91-77a7a185469e', '4b5d79cb-b7fd-4646-8dc2-6fafd0d3fd3e'
+    'МАТЕРИАЛ РАБОЧЕЙ ПОВЕРХНОСТИ', 'ТИП ОБЪЕКТА', 'РАЗБАВИТЕЛЬ'
 ]
 const secondBlock = computed(() => {
     return filteredCatalogs.value.filter((item) => {
-        return secondOptions?.includes(item?.id)
+        return secondOptions?.includes(item?.name?.toUpperCase())
     })
 })
 
 const thirdBlock = computed(() => {
-    return filteredCatalogs.value.filter((item) => item?.id === 'c8409cbf-4b89-492d-bbb6-fce1813815d3')
+    return filteredCatalogs.value.filter((item) => item?.name?.toLocaleLowerCase() === 'ТИП ЛКМ'.toLocaleLowerCase())
 })
 
 
@@ -331,6 +329,10 @@ const filterProductParams = () => {
     }
 }
 
+.first-button-block {
+    flex-direction: row
+}
+
 .buttons-price {
     @include flex(flex, start, start, 60px);
 }
@@ -393,7 +395,7 @@ const filterProductParams = () => {
 
 @media (max-width:768px) {
     h1 {
-        font-size: 28px;
+        font-size: 28px !important;
         line-height: 28px;
     }
 
@@ -410,6 +412,48 @@ const filterProductParams = () => {
     .filters-block-header {
         font-size: 20px;
         line-height: 20px;
+    }
+
+    .all-inputs {
+        gap: 3rem
+    }
+
+    .buttons-price {
+        gap: 20p
+    }
+}
+
+@media (max-width:480px) {
+    .buttons-price {
+        flex-direction: column;
+    }
+
+    .first-button-block {
+        flex-direction: column;
+    }
+
+    .all-inputs {
+        gap: 6rem !important;
+    }
+
+    h1 {
+        font-size: 24px !important;
+        line-height: 32px;
+    }
+
+    .params-header p {
+        font-size: 20px;
+        line-height: 28px;
+    }
+
+    .params-header span {
+        font-size: 48px;
+        line-height: 28px;
+    }
+
+    .filters-block-header {
+        font-size: 14px;
+        line-height: 24px;
     }
 }
 </style>

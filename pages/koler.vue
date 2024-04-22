@@ -24,25 +24,41 @@
                     <div class="koler-part">
                         <div class="koler-colors">
                             <div class="top">
-                                <div class="prev">
-                                </div>
-                                <div class="first-slide" v-if="slideNumber === 1"> <span
-                                        v-for="(item, index) in slicedColors" :key="item?.id" class="koler-colors-item"
-                                        :style="{ backgroundColor: '#' + item?.rgb }"
-                                        @click="nextColor(item, index + 1)"
-                                        :class="{ 'selected-color': item?.id === selectedColor?.id }"></span>
-                                </div>
-                                <div class="second-slide" v-else-if="slideNumber === 2">second slider</div>
-                                <div class="next">
-                                </div>
+                                <!-- <div class="prev">
+                                </div> -->
+
+                                <Swiper :slides-per-view="1" :navigation="true" id="mySlider" @change="onSwiper"
+                                    :modules="[SwiperNavigation]"
+                                    :style='{ "--swiper-navigation-size": "15px", "padding": "20px 0" }'>
+                                    <SwiperSlide>
+                                        <div class="first-slide" v-if="slideNumber === 1"> <span
+                                                v-for="(item, index) in slicedColors2" :key="item?.id"
+                                                class="koler-colors-item" :style="{ backgroundColor: '#' + item?.rgb }"
+                                                @click="nextColor(item, index + 1)"
+                                                :class="{ 'selected-color': item?.id === selectedColor?.id }"></span>
+                                        </div>
+
+                                    </SwiperSlide>
+                                    <SwiperSlide>
+                                        <div class="first-slide" v-if="slideNumber === 1"> <span
+                                                v-for="(item, index) in slicedColors3" :key="item?.id"
+                                                class="koler-colors-item" :style="{ backgroundColor: '#' + item?.rgb }"
+                                                @click="nextColor3(item, index + 1)"
+                                                :class="{ 'selected-color': item?.id === selectedColor?.id }"></span>
+                                        </div>
+                                    </SwiperSlide>
+                                    <button @click="onSwiper">nexr</button>
+                                    <button @click="onSwiper">prev</button>
+                                </Swiper>
+
                             </div>
-                            <div class="bottom" v-if="slicedColors?.length && totalRows && itemsPerRow">
+                            <div class="bottom" v-if="slicedColors2?.length && totalRows && itemsPerRow">
                                 <div v-for="rowIndex in totalRows" :key="rowIndex" class="each-row">
                                     <div v-for="(item, index) in  getRowItems(rowIndex) " :key="item.id"
                                         class="bottom-item"
                                         :class="{ 'selected-color': isColorSync(index, item?.id, rowIndex) }"
                                         :style="{ background: '#' + item.rgb }"
-                                        @click="selectColor(item, index + 1, rowIndex)"
+                                        @click="selectColor(item, index, rowIndex)"
                                         v-show="shouldShow(index, rowIndex)">
                                         <span> {{ item.code }}</span>
                                     </div>
@@ -64,12 +80,15 @@
 </template>
 
 <script setup lang="ts">
+const swiper = useSwiper()
 import { Brands } from "~/types/Brands";
 import { Tinting } from '@/types/Tinting'
 const slideNumber = ref(1);
 const currentBrandsColors = ref<Tinting[]>([]);
 const allTingings = ref<Tinting[]>([])
-const startIndex = ref(0);
+const halfOfBrands = ref(0)
+const startIndex = ref(1);
+const slicedColors = ref<any[]>([])
 
 const selectedBrand = ref<Brands>({} as Brands);
 
@@ -80,14 +99,21 @@ let windowWidth = ref(window?.innerWidth)
 const totalRows = ref(6);
 
 
-
-
+const onSwiper = (swiper: any) => {
+    // swiper.nextSlide()
+    console.log('swiper changes', swiper.target.innerHTML)
+}
 const getRowItems = (rowIndex: number) => {
-    if (slicedColors?.value && itemsPerRow?.value) {
+    if (slicedColors2?.value && itemsPerRow?.value) {
         const startIdx = (rowIndex - 1) * itemsPerRow?.value;
-        const endIdx = Math.min(startIdx + itemsPerRow?.value, slicedColors?.value?.length);
-        const results = slicedColors?.value?.slice(startIdx, endIdx);
-        return results;
+        const endIdx = Math.min(startIdx + itemsPerRow?.value, slicedColors2?.value?.length);
+        const results = slicedColors2?.value?.slice(startIdx, endIdx);
+        if (startIndex?.value === 1) {
+            return results.slice(0, 3)
+        } else {
+            return results;
+        }
+
     } else {
         return []
     }
@@ -98,6 +124,11 @@ const nextColor = (item: any, index: number) => {
     selectedColor.value = item;
     startIndex.value = index;
 };
+const nextColor3 = (item: any, index: number) => {
+    selectedColor.value = item;
+    startIndex.value = index;
+};
+
 
 const selectColor = (item: Tinting, itemIndex: number, rowIndex: number) => {
     selectedColor.value = item;
@@ -108,13 +139,14 @@ const selectColor = (item: Tinting, itemIndex: number, rowIndex: number) => {
         actual = (rowIndex * itemsPerRow.value) - itemsPerRow?.value + itemIndex
     }
 
-
-
     let incudedActual: any = []
-    for (let i = 1; i < 2; i++) {
+    for (let i = 1; i <= totalRows?.value; i++) {
         const current = (i * itemsPerRow?.value) - itemsPerRow?.value + itemIndex;
         incudedActual.push(current - 1, current, current + 1)
     }
+
+
+
 
 
 }
@@ -136,10 +168,18 @@ const shouldShow = (index: number, rowIndex: number) => {
         incudedActual.push(current - 1, current, current + 1)
     }
 
-    const final = incudedActual?.includes(startIndex?.value - 1) ? incudedActual : [];
-    return final !== null && final && final?.includes(index)
+    let final = []
+    final = incudedActual?.includes(startIndex?.value - 1) ? incudedActual : [];
+    if (startIndex?.value === 1) {
+        return true;
+    } else {
+        return final !== null && final && final?.includes(index)
+    }
 
-    // return actual === startIndex?.value || prevActual === startIndex?.value || nextActual === startIndex?.value
+
+
+
+
 
 }
 
@@ -157,8 +197,8 @@ const calculateLayout = async (width: number) => {
         itemsPerRow.value = 10;
     }
 
-    totalRows.value = Math.ceil(slicedColors.value.length / itemsPerRow.value);
-    console.log('totalRows', totalRows)
+    totalRows.value = Math.ceil(slicedColors2.value.length / itemsPerRow.value);
+
 };
 
 
@@ -168,9 +208,16 @@ const isColorSync = (indx: number, id: string, rowIndex: number) => {
 }
 
 
-const slicedColors = computed(() => {
-    return currentBrandsColors?.value?.slice(0, Math.ceil(currentBrandsColors.value?.length / 2));
+
+
+const slicedColors2 = computed(() => {
+    return currentBrandsColors?.value?.slice(0, Math.ceil(currentBrandsColors.value?.length / 2))
 });
+const slicedColors3 = computed(() => {
+    return currentBrandsColors?.value?.slice(Math.ceil(currentBrandsColors.value?.length / 2))
+});
+
+console.log('slicedColors', slicedColors)
 const resizeHandler = async () => {
     const newWindowWidth = window.innerWidth;
     if (newWindowWidth !== windowWidth?.value) {
@@ -179,22 +226,26 @@ const resizeHandler = async () => {
 
     }
 };
+const fetchSlicedColots = async () => {
+    // halfOfBrands.value = await (Math.ceil(currentBrandsColors.value?.length / 2));
+    // slicedColors.value = await currentBrandsColors.value?.slice(0, halfOfBrands.value)
+}
 
 onMounted(async () => {
     await fetchAllTintings();
-    window.addEventListener('resize', resizeHandler);
+    window.addEventListener('resize', () => resizeHandler());
     await resizeHandler()
     await calculateLayout(windowWidth.value)
-    currentBrandsColors.value = allTingings.value?.filter((item: Tinting) => item?.brandId === selectedBrand?.value.id)
-});
+    currentBrandsColors.value = allTingings.value?.filter((item: Tinting) => item?.brandId === selectedBrand?.value.id);
+    fetchSlicedColots()
 
+});
+fetchSlicedColots()
 onUnmounted(() => {
-    window.removeEventListener('resize', resizeHandler);
+    window.removeEventListener('resize', () => resizeHandler());
 });
 
 const selectedColor = ref({} as Tinting)
-
-
 
 
 const filteredBrands = ref<Brands[]>([]);
@@ -227,7 +278,8 @@ const fetchAllData = async (ids: string[]) => {
 
     filteredBrands.value = results.filter((item: Brands) => Boolean(item));
     selectedBrand.value = results[0];
-    currentBrandsColors.value = allTingings.value?.filter((item: Tinting) => item?.brandId === selectedBrand?.value.id)
+    currentBrandsColors.value = allTingings.value?.filter((item: Tinting) => item?.brandId === selectedBrand?.value.id);
+    fetchSlicedColots()
     return []
 }
 
@@ -257,15 +309,33 @@ const fetchAllTintings = async () => {
 
 const chooseBrand = async (value: Brands) => {
     selectedBrand.value = value;
-    currentBrandsColors.value = allTingings.value?.filter((item: Tinting) => item?.brandId === selectedBrand?.value.id);
-    resizeHandler();
-    await calculateLayout(windowWidth?.value)
+    currentBrandsColors.value = await allTingings.value?.filter((item: Tinting) => item?.brandId === selectedBrand?.value.id);
+    await resizeHandler();
+    await calculateLayout(windowWidth?.value);
+    fetchSlicedColots()
+
+
 }
 
 
 </script>
 
 <style scoped lang="scss">
+:deep(.swiper-button-next,
+    .swiper-button-prev),
+:deep(.swiper-button-prev) {
+    color: black !important;
+    border: 1px solid $slider-border-color !important;
+    padding: 10px;
+    border-radius: 100%;
+    width: 36px;
+    height: 36px
+}
+
+:deep(#mySlider) {
+    width: 500px !important;
+}
+
 .koler-part {
     @include flex(row, start, start)
 }
@@ -300,6 +370,8 @@ const chooseBrand = async (value: Brands) => {
 
     .top {
         position: relative;
+        width: 100%;
+        max-width: 100%;
         padding: 10px 20px;
 
         .prev,
