@@ -23,46 +23,14 @@
 
                     <div class="koler-part">
                         <div class="koler-colors">
-                            <div class="top">
-                                <!-- <div class="prev">
-                                </div> -->
-
-                                <Swiper :slides-per-view="1" :navigation="true" id="mySlider" @change="onSwiper"
-                                    :modules="[SwiperNavigation]"
-                                    :style='{ "--swiper-navigation-size": "15px", "padding": "20px 0" }'>
-                                    <SwiperSlide>
-                                        <div class="first-slide" v-if="slideNumber === 1"> <span
-                                                v-for="(item, index) in slicedColors2" :key="item?.id"
-                                                class="koler-colors-item" :style="{ backgroundColor: '#' + item?.rgb }"
-                                                @click="nextColor(item, index + 1)"
-                                                :class="{ 'selected-color': item?.id === selectedColor?.id }"></span>
-                                        </div>
-
-                                    </SwiperSlide>
-                                    <SwiperSlide>
-                                        <div class="first-slide" v-if="slideNumber === 1"> <span
-                                                v-for="(item, index) in slicedColors3" :key="item?.id"
-                                                class="koler-colors-item" :style="{ backgroundColor: '#' + item?.rgb }"
-                                                @click="nextColor3(item, index + 1)"
-                                                :class="{ 'selected-color': item?.id === selectedColor?.id }"></span>
-                                        </div>
-                                    </SwiperSlide>
-                                    <button @click="onSwiper">nexr</button>
-                                    <button @click="onSwiper">prev</button>
-                                </Swiper>
-
-                            </div>
-                            <div class="bottom" v-if="slicedColors2?.length && totalRows && itemsPerRow">
-                                <div v-for="rowIndex in totalRows" :key="rowIndex" class="each-row">
-                                    <div v-for="(item, index) in  getRowItems(rowIndex) " :key="item.id"
-                                        class="bottom-item"
-                                        :class="{ 'selected-color': isColorSync(index, item?.id, rowIndex) }"
-                                        :style="{ background: '#' + item.rgb }"
-                                        @click="selectColor(item, index, rowIndex)"
-                                        v-show="shouldShow(index, rowIndex)">
-                                        <span> {{ item.code }}</span>
-                                    </div>
+                            <div class="bottom" v-if="currentBrandsColors?.length">
+                                <div v-for="item in  currentBrandsColors?.slice(0, 27)" :key="item.id"
+                                    class="bottom-item" :style="{ background: '#' + item.rgb }"
+                                    @click="selectColor(item)"
+                                    :class="{ 'selected-color': item?.id === selectedColor?.id }">
+                                    <span> {{ item.code }}</span>
                                 </div>
+
                             </div>
 
 
@@ -80,174 +48,34 @@
 </template>
 
 <script setup lang="ts">
-const swiper = useSwiper()
+
 import { Brands } from "~/types/Brands";
 import { Tinting } from '@/types/Tinting'
-const slideNumber = ref(1);
+
 const currentBrandsColors = ref<Tinting[]>([]);
 const allTingings = ref<Tinting[]>([])
-const halfOfBrands = ref(0)
-const startIndex = ref(1);
-const slicedColors = ref<any[]>([])
+
 
 const selectedBrand = ref<Brands>({} as Brands);
 
-const itemsPerRow = ref(10);
-let windowWidth = ref(window?.innerWidth)
 
-
-const totalRows = ref(6);
-
-
-const onSwiper = (swiper: any) => {
-    // swiper.nextSlide()
-    console.log('swiper changes', swiper.target.innerHTML)
-}
-const getRowItems = (rowIndex: number) => {
-    if (slicedColors2?.value && itemsPerRow?.value) {
-        const startIdx = (rowIndex - 1) * itemsPerRow?.value;
-        const endIdx = Math.min(startIdx + itemsPerRow?.value, slicedColors2?.value?.length);
-        const results = slicedColors2?.value?.slice(startIdx, endIdx);
-        if (startIndex?.value === 1) {
-            return results.slice(0, 3)
-        } else {
-            return results;
-        }
-
-    } else {
-        return []
-    }
-
-};
-
-const nextColor = (item: any, index: number) => {
+const selectColor = (item: Tinting) => {
     selectedColor.value = item;
-    startIndex.value = index;
-};
-const nextColor3 = (item: any, index: number) => {
-    selectedColor.value = item;
-    startIndex.value = index;
-};
-
-
-const selectColor = (item: Tinting, itemIndex: number, rowIndex: number) => {
-    selectedColor.value = item;
-    let actual = itemIndex * rowIndex;
-    if (rowIndex === 1) {
-        actual = itemIndex
-    } else {
-        actual = (rowIndex * itemsPerRow.value) - itemsPerRow?.value + itemIndex
-    }
-
-    let incudedActual: any = []
-    for (let i = 1; i <= totalRows?.value; i++) {
-        const current = (i * itemsPerRow?.value) - itemsPerRow?.value + itemIndex;
-        incudedActual.push(current - 1, current, current + 1)
-    }
-
-
-
-
-
-}
-
-
-const shouldShow = (index: number, rowIndex: number) => {
-
-    let actual = index * rowIndex;
-    if (rowIndex === 1) {
-        actual = index
-    } else {
-        actual = (rowIndex * itemsPerRow.value) - itemsPerRow?.value + index
-    }
-
-
-    let incudedActual: any = []
-    for (let i = 1; i <= totalRows?.value; i++) {
-        const current = (i * itemsPerRow?.value) - itemsPerRow?.value + index;
-        incudedActual.push(current - 1, current, current + 1)
-    }
-
-    let final = []
-    final = incudedActual?.includes(startIndex?.value - 1) ? incudedActual : [];
-    if (startIndex?.value === 1) {
-        return true;
-    } else {
-        return final !== null && final && final?.includes(index)
-    }
-
-
-
-
-
-
-}
-
-
-const calculateLayout = async (width: number) => {
-    if (width > 1300) {
-        itemsPerRow.value = 10;
-    } else if (width < 768) {
-        itemsPerRow.value = 8;
-    } else if (width < 576) {
-        itemsPerRow.value = 6;
-    } else if (width < 448) {
-        itemsPerRow.value = 4;
-    } else {
-        itemsPerRow.value = 10;
-    }
-
-    totalRows.value = Math.ceil(slicedColors2.value.length / itemsPerRow.value);
-
-};
-
-
-const isColorSync = (indx: number, id: string, rowIndex: number) => {
-    const res = selectedColor?.value?.id === id;
-    return res
 }
 
 
 
-
-const slicedColors2 = computed(() => {
-    return currentBrandsColors?.value?.slice(0, Math.ceil(currentBrandsColors.value?.length / 2))
-});
-const slicedColors3 = computed(() => {
-    return currentBrandsColors?.value?.slice(Math.ceil(currentBrandsColors.value?.length / 2))
-});
-
-console.log('slicedColors', slicedColors)
-const resizeHandler = async () => {
-    const newWindowWidth = window.innerWidth;
-    if (newWindowWidth !== windowWidth?.value) {
-        windowWidth.value = newWindowWidth;
-        await calculateLayout(windowWidth?.value);
-
-    }
-};
-const fetchSlicedColots = async () => {
-    // halfOfBrands.value = await (Math.ceil(currentBrandsColors.value?.length / 2));
-    // slicedColors.value = await currentBrandsColors.value?.slice(0, halfOfBrands.value)
-}
 
 onMounted(async () => {
     await fetchAllTintings();
-    window.addEventListener('resize', () => resizeHandler());
-    await resizeHandler()
-    await calculateLayout(windowWidth.value)
     currentBrandsColors.value = allTingings.value?.filter((item: Tinting) => item?.brandId === selectedBrand?.value.id);
-    fetchSlicedColots()
+
 
 });
-fetchSlicedColots()
-onUnmounted(() => {
-    window.removeEventListener('resize', () => resizeHandler());
-});
+
+
 
 const selectedColor = ref({} as Tinting)
-
-
 const filteredBrands = ref<Brands[]>([]);
 
 const fetchBrandsId = async (id: string) => {
@@ -265,12 +93,9 @@ const fetchBrandsId = async (id: string) => {
 const fetchAllData = async (ids: string[]) => {
     const idsNull = ['902dea30-e9a6-4d6c-accf-97d4590d9852', '8b9f00af-1ff0-400e-be67-3f4753c89970'];
     const filtered = ids.filter((item) => !idsNull.includes(item))
-
     const results = [];
     for (const id of filtered) {
         const data = await fetchBrandsId(id);
-
-
         if (data !== null) {
             results.push(data);
         }
@@ -279,7 +104,7 @@ const fetchAllData = async (ids: string[]) => {
     filteredBrands.value = results.filter((item: Brands) => Boolean(item));
     selectedBrand.value = results[0];
     currentBrandsColors.value = allTingings.value?.filter((item: Tinting) => item?.brandId === selectedBrand?.value.id);
-    fetchSlicedColots()
+
     return []
 }
 
@@ -307,14 +132,9 @@ const fetchAllTintings = async () => {
 
 
 
-const chooseBrand = async (value: Brands) => {
+const chooseBrand = (value: Brands) => {
     selectedBrand.value = value;
-    currentBrandsColors.value = await allTingings.value?.filter((item: Tinting) => item?.brandId === selectedBrand?.value.id);
-    await resizeHandler();
-    await calculateLayout(windowWidth?.value);
-    fetchSlicedColots()
-
-
+    currentBrandsColors.value = allTingings.value?.filter((item: Tinting) => item?.brandId === selectedBrand?.value.id);
 }
 
 
@@ -347,7 +167,11 @@ const chooseBrand = async (value: Brands) => {
 }
 
 
+
+
 .koler-colors {
+    width: 65%;
+
     .first-slide {
         @include flex(row, start, start, 2px);
         flex-wrap: wrap;
@@ -355,7 +179,6 @@ const chooseBrand = async (value: Brands) => {
     }
 
     &-item {
-        width: auto;
         box-sizing: border-box;
         width: 39px;
         height: 40px;
@@ -368,74 +191,23 @@ const chooseBrand = async (value: Brands) => {
         }
     }
 
-    .top {
-        position: relative;
-        width: 100%;
-        max-width: 100%;
-        padding: 10px 20px;
 
-        .prev,
-        .next {
-
-            color: black !important;
-            border: 1px solid $slider-border-color !important;
-            padding: 10px;
-            border-radius: 100%;
-            width: 36px;
-            height: 36px;
-            top: 44%;
-            background-size: cover !important;
-            background-repeat: no-repeat !important;
-            @include flex(row, center, center);
-            position: absolute;
-            z-index: 3;
-            background: white;
-
-            &:hover {
-                background: $main-blue;
-                cursor: pointer;
-            }
-        }
-
-        .prev {
-            left: 0;
-            background-image: url(../assets/icons/arrow-right.svg);
-
-            &:hover {
-                background-image: url(../assets/icons/white-arrow-right.svg);
-            }
-        }
-
-        .next {
-            right: 20px;
-            background-image: url(../assets/icons/arrow-left.svg);
-
-            &:hover {
-                background-image: url(../assets/icons/arrow-left-white.svg);
-            }
-        }
-    }
-
-
-    .bottom-item:nth-child(n + 11) {
-        width: 170px;
-    }
 
     .each-row {
         display: flex;
     }
 
     .bottom {
-        display: flex;
+        @include flex(row, start, center);
         margin-top: 20px;
-        flex-direction: column;
+        flex-wrap: wrap;
 
         &-item {
             background: #AC5E97;
             padding: 23px;
             margin: 2px;
             border-radius: 4px;
-            width: 170px;
+            width: 30%;
             border: 1px solid transparent;
 
             &:hover {
@@ -500,19 +272,19 @@ body {
 img {
     position: relative;
     z-index: 2;
-    width: 411px;
+    width: 100%;
     height: 540px;
 }
 
 .koler-change {
     position: relative;
+    width: 45%;
 }
 
 #bg {
     position: absolute;
     height: 100vh;
-    width: 411px;
-
+    width: 100%;
     top: 0;
     mix-blend-mode: hue;
     transform: translate3d(0, 0, 0);
@@ -522,7 +294,6 @@ img {
 
 @media (min-width:1300px) {
     .first-slide {
-
         width: 482px !important;
     }
 }
