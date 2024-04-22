@@ -7,7 +7,9 @@
                     @input="handleSearch">
                 <div>
                     <img src="../../assets/icons/ep_menu.svg" alt="ep menu" @click="visibleMethod = 'vertical'">
+
                     <img src="../../assets/icons/f7_menu.svg" alt="menu" @click="visibleMethod = 'horizontal'">
+                    
                 </div>
             </div>
         </div>

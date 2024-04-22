@@ -1,5 +1,6 @@
 import http from "@/composables/http";
 import { Product } from "@/types/Product";
+import { Brands } from "@/types/Brands";
 
 import { Category } from "@/types/Category";
 
@@ -21,6 +22,7 @@ export const useProductsSstore = defineStore("productsStore", {
       dirtAndWaterRepellentCoating: false,
       minPrice: 0,
       maxPrice: 0,
+      brandId: [] as string[],
     },
   }),
   actions: {
@@ -118,6 +120,7 @@ export const useProductsSstore = defineStore("productsStore", {
         dirtAndWaterRepellentCoating: this.filters.dirtAndWaterRepellentCoating,
         minPrice: this.filters.minPrice,
         maxPrice: this.filters.maxPrice,
+        brandId: this.filters.brandId?.join(","),
       };
 
       try {

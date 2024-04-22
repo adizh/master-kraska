@@ -6,13 +6,26 @@
             </label>
             <div> <input type="text" :placeholder="$t('from')" class="basic-input"
                     v-model="productsStore.filters.minPrice" @input="handlePrices">
-
                 <input type="text" :placeholder="$t('to')" class="basic-input" v-model="productsStore.filters.maxPrice"
                     @input="handlePrices">
             </div>
         </div>
+        <div class="brands">
+            <label for="price" class="filters-help">
+                {{ $t('brands') }}
+            </label>
+            <div>
+                <p v-if="brandsStore.getAllBrands" v-for="(brand, index) in brandsStore.getAllBrands" :key="brand?.id"
+                    class="each-sub-item">
+                    <label class="custom-checkbox">
+                        <input type="checkbox" :id="`${brand?.id}`" :value="brand.id"
+                            @input="updateBrandsInputs(brand, $event)" />
+                        <p><span>{{ brand?.name }}</span></p>
+                    </label>
+                </p>
+            </div>
+        </div>
         <div class="filters-block">
-
             <div v-for="item in catalogStore.getAllCatalogs" :key="item?.id" class="each-filter-block"
                 :class="{ 'each-filter-block open': opensIncludes(item.id) }">
                 <h4 class="filters-block-header">{{ item?.name }}</h4>
@@ -46,7 +59,6 @@
 
 
                 </p>
-
                 <p v-if="getRemainingItemCount(item) > 0" class="open-block" @click="setOpenBlock(item?.id)">
                     {{ opensIncludes(item.id) ? $t('closeBlock') : $t('more') }} <span v-if="!opensIncludes(item.id)">{{
                     getRemainingItemCount(item) }}</span>
@@ -54,7 +66,6 @@
                         src="../../assets/icons/arrow-down-blue.svg" alt="open-arrow">
                 </p>
             </div>
-
         </div>
     </div>
 
@@ -62,6 +73,7 @@
 
 <script setup lang="ts">
 import { AllCatalog, CatalogCheckbox } from '@/types/Catalog'
+import { Brands } from '~/types/Brands';
 
 
 type BoolValues = {
@@ -83,7 +95,7 @@ const authStore = useAuthStore();
 const checkboxStates = ref<{ [key: string]: CatalogCheckbox }>({});
 const selectedBoolValues: Ref<Record<string, BoolValues>> = ref({});
 const openedBlockFilters = ref<string[]>([]);
-
+const brandsStore = useBrandsStore()
 const initializeCheckboxStates = async () => {
     await catalogStore.getAllCatalogs.map(item => {
         checkboxStates.value[item.id] = {
@@ -112,6 +124,7 @@ const isChecked = (itemId: string, subId: string) => {
 };
 
 
+
 const initBools = async () => {
     return await boolCatalogs.value.map((item: BoolCatalog) => {
         selectedBoolValues.value[item.id] = {
@@ -126,6 +139,28 @@ const boolCatalogs = computed(() => {
     return catalogStore.getAllCatalogs.filter((item) => !item?.subdirectory?.length)
 })
 
+
+const updateBrandsInputs = (brand: Brands, event: any) => {
+    console.log(brand);
+    console.log(event.target.checked);
+
+    const brandIndex = productsStore.filters.brandId.indexOf(brand?.id);
+
+    if (event.target.checked === true) {
+        // If the brand is not already in the array, add it
+        if (brandIndex === -1) {
+            productsStore.filters.brandId.push(brand?.id);
+        }
+    } else {
+        // If the brand is in the array, remove it
+        if (brandIndex !== -1) {
+            productsStore.filters.brandId.splice(brandIndex, 1);
+        }
+    }
+
+    console.log('productsStore.filters.brandId', productsStore.filters.brandId);
+    productsStore.filterProducts()
+};
 
 const handleInputChange = () => {
     const allBoolValues = {
@@ -202,6 +237,7 @@ const getRemainingItemCount = (item: AllCatalog) => {
 onMounted(async () => {
     await catalogStore.fetchAllCatalogs();
     await initializeCheckboxStates();
+    brandsStore.fetchAllBrands()
     initBools()
 
 })
@@ -286,6 +322,9 @@ watch(() => authStore.getSelectedLang, async (newVal, oldVal) => {
 
 }
 
+.brands {
+    margin-top: 40px;
+}
 
 .price {
     @include flex(column, center, start, 5px);
