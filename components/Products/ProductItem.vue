@@ -10,21 +10,9 @@
 
 
         <span class="item-block-name">{{ productName }}</span>
+        <span class="item-block-description">{{ productInfo }} </span>
 
 
-
-        <div class="item-block-info">
-            <div class="each-block-info-col">
-                <span class="text">{{ $t('consumption') }}: </span>
-                <span class="text-data">{{ $t('noData') }}</span>
-            </div>
-            <div class="each-block-info-col"> <span class="text">{{ $t('packing') }}: </span>
-                <span class="text-data"> {{ $t('noData') }}</span>
-            </div>
-            <div class="each-block-info-col"> <span class="text">{{ $t('brand') }}: </span>
-                <span class="text-data">{{ prodBrand }}</span>
-            </div>
-        </div>
         <button class="pink-button">{{ product?.price }} сом</button>
 
     </div>
@@ -40,14 +28,19 @@ const props = defineProps<{
 const prodBrand = ref('')
 
 
+
 const router = useRouter()
 const emit = defineEmits<{
     addItemToBookmarks: [string]
 
 }>()
 
+console.log('props?.product?.name ', props?.product)
 const productName = computed(() => {
     return props?.product?.name && props?.product?.name?.split(' ').length > 9 ? props?.product?.name.split(' ').slice(0, 9).join(' ') + '...' : props?.product?.name
+})
+const productInfo = computed(() => {
+    return props?.product?.shortDescription && props?.product?.shortDescription?.split(' ').length > 13 ? props?.product?.shortDescription.split(' ').slice(0, 13).join(' ') + '...' : props?.product?.shortDescription
 })
 
 onMounted(async () => {
@@ -56,11 +49,20 @@ onMounted(async () => {
 </script>
 
 <style scoped lang="scss">
+.item-block-description {
+    @include textFormat(14px, 20px, 600, $main-dark-grey);
+    max-width: 95%;
+    width: 100%;
+    margin-top: 10px;
+    height: 83px;
+
+}
+
+
 .item-block {
     transition: .3s ease all;
     border-radius: 10px;
     @include flex(column, space-between, center);
-
 
 }
 
@@ -117,7 +119,5 @@ onMounted(async () => {
     box-shadow: 0px 6px 30px 0px rgba(0, 0, 0, 0.12);
     transition: .3s ease all;
 }
-
-
 
 </style>

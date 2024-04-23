@@ -28,8 +28,24 @@ export const useProductsSstore = defineStore("productsStore", {
       try {
         const response = await http("/api/v1/Product/get-all-products");
         console.log("response fetchAllProducts", response);
+        const authStore = useAuthStore();
         if (response.status === 200) {
-          this.allProducts = response.data;
+          const filtered = response.data.map((item: Product) => {
+            if (authStore.getSelectedLang === "kg") {
+              return {
+                ...item,
+                name: item?.nameKg,
+                shortDescription: item?.shortDescriptionKg,
+              };
+            } else {
+              return {
+                ...item,
+                name: item?.nameRu,
+                shortDescription: item?.shortDescriptionRu,
+              };
+            }
+          });
+          this.allProducts = filtered;
         }
       } catch (err) {
         console.log(err);
