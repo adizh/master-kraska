@@ -21,9 +21,10 @@ const toggleBoomark = (id: string) => {
     isProductBookmarked.value = !isProductBookmarked.value;
     productsStore.addToBookmarks(id)
 }
-onMounted(() => {
-    productsStore.getBookmarks(props?.product?.id);
-    isProductBookmarked.value = productsStore.getProductBookmarked
+onMounted(async () => {
+    await productsStore.getBookmarks(props?.product?.id);
+    isProductBookmarked.value = productsStore.getProductBookmarked;
+    console.log('getProductBookmarked', productsStore.getProductBookmarked)
 })
 </script>
 

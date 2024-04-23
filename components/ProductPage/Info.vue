@@ -54,11 +54,13 @@
 <script setup lang="ts">
 import { ExtendedProduct } from '~/types/Product';
 
+
 const props = defineProps<{
     item: ExtendedProduct
+
 }>()
 
-console.log('what is infod item????', props.item)
+
 
 
 const descriptionLen = ref(480);
@@ -70,6 +72,7 @@ const isProdDesctLong = computed(() => {
 })
 const isSurfaceLong = computed(() => {
     return props?.item?.surfacePreparations?.length > surfaceLen.value
+    
 })
 
 const prodDescr = computed(() => {

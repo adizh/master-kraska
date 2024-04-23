@@ -1,5 +1,5 @@
 <template>
-    <div class="item-block" @click="navigateTo(`/product/${product?.id}`)" v-if="visibleMethod === 'vertical'">
+    <div class="item-block" @click="router.push(`/product/${product?.id}`)" v-if="visibleMethod === 'vertical'">
         <div v-if="type === 'bookmark'" class="bookmark-icon-heart"
             @click.stop="emit('addItemToBookmarks', product?.id as string)">
 
@@ -10,18 +10,7 @@
         <img :src="product?.images[0]" alt="product">
         <span class="item-block-name">{{ productName(product?.name) }}</span>
 
-        <div class="item-block-info">
-            <div class="each-block-info-col">
-                <span class="text">{{ $t('consumption') }}: </span>
-                <span class="text-data">{{ $t('noData') }}</span>
-            </div>
-            <div class="each-block-info-col"> <span class="text">{{ $t('packing') }}: </span>
-                <span class="text-data"> {{ $t('noData') }}</span>
-            </div>
-            <div class="each-block-info-col"> <span class="text">{{ $t('brand') }}: </span>
-                <span class="text-data">{{ prodBrand }}</span>
-            </div>
-        </div>
+        <span class="item-block-info">{{ productInfo }}</span>
         <button class="item-block-buy">{{ product?.price }} сом</button>
     </div>
 
@@ -29,22 +18,11 @@
 
 
 
-    <div class="item-block horizontal" @click="navigateTo(`/product/${product?.id}`)" v-else>
+    <div class="item-block horizontal" @click="router.push(`/product/${product?.id}`)" v-else>
         <div class='first-col'>
             <img :src="product?.images[0]" alt="product">
             <div class="first-sub-col"> <span class="item-block-name">{{ productName(product?.name) }}</span>
-                <div class="item-block-info">
-                    <div class="each-block-info-col">
-                        <span class="text">{{ $t('consumption') }}: </span>
-                        <span class="text-data">{{ $t('noData') }}</span>
-                    </div>
-                    <div class="each-block-info-col"> <span class="text">{{ $t('packing') }}: </span>
-                        <span class="text-data"> {{ $t('noData') }}</span>
-                    </div>
-                    <div class="each-block-info-col"> <span class="text">{{ $t('brand') }}: </span>
-                        <span class="text-data">{{ prodBrand }}</span>
-                    </div>
-                </div>
+                <span>{{ productInfoHorizontal }}</span>
             </div>
         </div>
 
@@ -67,6 +45,14 @@ const props = defineProps<{
 
 
 }>()
+const router = useRouter()
+const productInfo = computed(() => {
+    return props?.product?.shortDescription && props?.product?.shortDescription?.split(' ').length > 13 ? props?.product?.shortDescription.split(' ').slice(0, 13).join(' ') + '...' : props?.product?.shortDescription
+})
+const productInfoHorizontal = computed(() => {
+    return props?.product?.shortDescription && props?.product?.shortDescription?.split(' ').length > 19 ? props?.product?.shortDescription.split(' ').slice(0, 19).join(' ') + '...' : props?.product?.shortDescription
+
+})
 const prodBrand = ref('')
 
 
@@ -82,10 +68,12 @@ onMounted(async () => {
     }
 })
 
-const productName = (name: string) => {
 
+
+const productName = (name: string) => {
     return name && name?.split(' ').length > 5 ? name?.split(' ').slice(0, 5).join(' ') : name
 }
+
 </script>
 
 <style scoped lang="scss">
@@ -97,6 +85,14 @@ const productName = (name: string) => {
 
 }
 
+.item-block-info {
+    @include textFormat(14px, 20px, 600, $main-dark-grey);
+    max-width: 95%;
+    width: 100%;
+    margin: 15px 0 2.6rem 0;
+    height: 83px;
+
+}
 
 
 .item-block {
@@ -121,6 +117,7 @@ const productName = (name: string) => {
         text-align: left;
         height: 60px;
         line-height: 20px;
+        margin-top: 10px;
 
     }
 

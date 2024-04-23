@@ -71,8 +71,7 @@ onMounted(async () => {
     padding: 20px 32px;
     overflow: hidden;
 
-    max-height: 510px;
-    height: 510px;
+
 
     img {
         width: 180px;
@@ -119,5 +118,4 @@ onMounted(async () => {
     box-shadow: 0px 6px 30px 0px rgba(0, 0, 0, 0.12);
     transition: .3s ease all;
 }
-
 </style>

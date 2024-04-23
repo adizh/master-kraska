@@ -77,34 +77,4 @@ console.log('popularItems', popularItems);
     width: 36px;
     height: 36px
 }
-
-@media (max-width:1200px) {
-    :deep(.swiper-slide) {
-        width: 40% !important;
-    }
-}
-
-@media (max-width:992px) {
-    :deep(.swiper-slide) {
-        width: 43% !important;
-    }
-}
-
-@media (max-width:768px) {
-    :deep(.swiper-slide) {
-        width: 48% !important;
-    }
-}
-
-@media (max-width:576px) {
-    :deep(.swiper-slide) {
-        width: 68% !important;
-    }
-}
-
-@media (max-width:480px) {
-    :deep(.swiper-slide) {
-        width: 90% !important;
-    }
-}
 </style>

@@ -2,7 +2,9 @@
     <section v-if="getProduct && getProduct != undefined && Object.entries(getProduct)?.length > 0 && !isLoading">
         <ProductPageHeader :productId="id" />
         <ProductPageInfo :item="getProduct?.product" />
+        
         <ProductPageSImilarItems :similarItems="getProduct?.similarProducts" />
+
         <ProductPageReviews :item='getProduct?.product' />
     </section>
 

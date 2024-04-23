@@ -70,8 +70,14 @@ export const useProductsSstore = defineStore("productsStore", {
                 name: response.data?.product?.nameKg,
                 shortDescription: response.data?.product?.shortDescriptionKg,
                 description: response.data?.product?.descriptionKg.replace(
-                  /<\/?p>/g,
+                  /<\/?p>|<\/?br>|<\/?h1>|<\/?h2>|<\/?h3>|<\/?h4>|<\/?h5>|<\/?strong>/g,
                   ""
+                ),
+              },
+              similarProducts: {
+                ...response.data.similarProducts,
+                shorDescription: response.data.similarProducts?.map(
+                  (similar: Product) => {}
                 ),
               },
             };
@@ -83,7 +89,7 @@ export const useProductsSstore = defineStore("productsStore", {
                 name: response.data?.product?.nameKg,
                 shortDescription: response.data?.product?.shortDescriptionRu,
                 description: response.data?.product?.descriptionRu.replace(
-                  /<\/?p>/g,
+                  /<\/?p>|<\/?br>|<\/?h1>|<\/?h2>|<\/?h3>|<\/?h4>|<\/?h5>|<\/?strong>/g,
                   ""
                 ),
               },
@@ -174,9 +180,17 @@ export const useProductsSstore = defineStore("productsStore", {
           this.filterProductTotal.totalPages = response.data.totalPages;
           const filtered = response.data.items?.map((item: Product) => {
             if (authStore.getSelectedLang === "kg") {
-              return { ...item, name: item?.nameKg };
+              return {
+                ...item,
+                name: item?.nameKg,
+                shortDescription: item?.shortDescriptionKg,
+              };
             } else {
-              return { ...item, name: item?.nameRu };
+              return {
+                ...item,
+                name: item?.nameRu,
+                shortDescription: item?.shortDescriptionRu,
+              };
             }
           });
 
@@ -202,8 +216,8 @@ export const useProductsSstore = defineStore("productsStore", {
             objectId: productId,
           },
         });
+        console.log("getBookmarks id", response);
 
-        console.log(" response getBookmarks", response);
         if (response.status === 200) {
           this.isProductBookmarked = response.data.message;
         }

@@ -8,6 +8,7 @@
         </div>
 
         <div v-else>{{ $t('noData') }}</div>
+        
     </div>
 </template>
 
