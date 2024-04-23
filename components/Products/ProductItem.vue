@@ -1,11 +1,12 @@
 <template>
-    <div class="item-block" @click="navigateTo(`/product/${product?.id}`)">
+    <div class="item-block" @click="router.push(`/product/${product?.id}`)">
         <div v-if="type === 'bookmark'" class="bookmark-icon-heart "
             @click.stop="emit('addItemToBookmarks', product?.id as string)">
             <img src="../../assets/icons/icon=heart fill.svg" alt="heart icon">
         </div>
         <slot name="edit-items"></slot>
-        <img :src="product?.images[0]" alt="">
+        <img :src="product?.images[0]" alt="product">
+
 
 
         <span class="item-block-name">{{ productName }}</span>
@@ -15,17 +16,17 @@
         <div class="item-block-info">
             <div class="each-block-info-col">
                 <span class="text">{{ $t('consumption') }}: </span>
-                <span class="text-data">{{ product?.expenditure }}</span>
+                <span class="text-data">{{ $t('noData') }}</span>
             </div>
             <div class="each-block-info-col"> <span class="text">{{ $t('packing') }}: </span>
-                <span class="text-data"> {{ product?.packing }}</span>
+                <span class="text-data"> {{ $t('noData') }}</span>
             </div>
             <div class="each-block-info-col"> <span class="text">{{ $t('brand') }}: </span>
-                <span class="text-data">{{ product?.brandName }}</span>
+                <span class="text-data">{{ prodBrand }}</span>
             </div>
         </div>
         <button class="pink-button">{{ product?.price }} сом</button>
-        
+
     </div>
 </template>
 
@@ -36,10 +37,10 @@ const props = defineProps<{
     product?: Product,
 
 }>()
+const prodBrand = ref('')
 
 
-
-
+const router = useRouter()
 const emit = defineEmits<{
     addItemToBookmarks: [string]
 
@@ -47,6 +48,10 @@ const emit = defineEmits<{
 
 const productName = computed(() => {
     return props?.product?.name && props?.product?.name?.split(' ').length > 9 ? props?.product?.name.split(' ').slice(0, 9).join(' ') + '...' : props?.product?.name
+})
+
+onMounted(async () => {
+    prodBrand.value = await getBrandId(props?.product?.brandId as string)
 })
 </script>
 
@@ -68,7 +73,8 @@ const productName = computed(() => {
     height: 510px;
 
     img {
-        width: 70%
+        width: 180px;
+        height: 180px;
     }
 
     &-name {
@@ -111,4 +117,7 @@ const productName = computed(() => {
     box-shadow: 0px 6px 30px 0px rgba(0, 0, 0, 0.12);
     transition: .3s ease all;
 }
+
+
+
 </style>

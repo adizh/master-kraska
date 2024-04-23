@@ -1,14 +1,14 @@
 <template>
     <div class="popular-products">
         <h5 class='each-section-header'>{{ $t('popularProducts') }}</h5>
-        <div class="products-list">
+        <div class="products-list" v-if="popularItems?.length > 0">
             <Swiper :slides-per-view="4" :navigation="true" id="mySlider" :modules="[SwiperNavigation]"
                 :style='{ "--swiper-navigation-size": "15px", "padding": "20px 0" }'>
                 <SwiperSlide v-for="product in popularItems" :key="product.id">
                     <ProductsProductItem :product="product" />
 
                 </SwiperSlide>
-                <SwiperSlide v-for="product in popularItems" :key="product.id">
+                <!-- <SwiperSlide v-for="product in popularItems" :key="product.id">
                     <ProductsProductItem :product="product" />
 
                 </SwiperSlide>
@@ -23,8 +23,12 @@
                 <SwiperSlide v-for="product in popularItems" :key="product.id">
                     <ProductsProductItem :product="product" />
 
-                </SwiperSlide>
+                </SwiperSlide> -->
             </Swiper>
+        </div>
+
+        <div v-else>
+            <ProgressSpinner />
         </div>
 
     </div>
@@ -32,6 +36,7 @@
 
 <script setup lang="ts">
 import { Product } from '~/types/Product';
+
 
 const store = useProductsSstore();
 onMounted(() => {
@@ -43,6 +48,8 @@ console.log('store.getAllProducsts', store.getAllProducsts);
 const popularItems = computed(() => {
     return store.getAllProducsts.filter((item: Product) => item.isPopular)
 })
+
+console.log('popularItems', popularItems);
 </script>
 
 <style scoped lang='scss'>

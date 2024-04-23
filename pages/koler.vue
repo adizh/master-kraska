@@ -1,5 +1,5 @@
 <template>
-    <section>
+    <section v-if="allTingings?.length > 0">
         <h1 class="main-header-h1">
             {{ $t('tinting') }}
         </h1>
@@ -47,6 +47,11 @@
                 </div>
             </div>
         </div>
+    </section>
+
+
+    <section v-else>
+        <ProgressSpinner />
     </section>
 </template>
 

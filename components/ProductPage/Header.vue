@@ -99,45 +99,13 @@
 
 
 
-    <OverlayPanel ref="countOverlay" class="countOverlay" style="width: 38%">
+    <OverlayPanel ref="countOverlay" class="countOverlay" style="width: 30%">
         <div class="count-overlay">
             <span class="header">{{ $t('count') }}</span>
-            <div class="count-overlay-inputs">
-                <div class="count-overlay-inputs-block">
-                    <span>{{ $t('length') }}</span>
-                    <input type="text" placeholder="0 м" v-model="length" />
 
-                </div>
-                <div class="count-overlay-inputs-block sign">x</div>
-                <div class="count-overlay-inputs-block">
-                    <span>{{ $t('width') }}</span>
-                    <input type="text" placeholder="0 м" v-model="width" />
+            <p class='count-overlay-info'>{{ $t('productCountInfo') }}</p>
 
-                </div>
-                <div class="count-overlay-inputs-block sign">=</div>
-                <div class="count-overlay-inputs-block">
-                    <span>{{ $t('square') }}</span>
-                    <input type="text" placeholder="0 м" v-model="sumHeight" disabled />
-                </div>
-            </div>
 
-            <div class="count-overlay-res sizes">
-
-                <span>{{ $t('recommendedQuantitty') }}</span>
-                <div class="btns">
-                    <button>1 {{ $t('layer') }} 0л</button>
-                    <button>2 {{ $t('layer2') }} 0 л</button>
-                </div>
-            </div>
-            <div class="count-overlay-res">
-
-                <span>{{ $t('youNeed') }}:</span>
-                <p>6 банок по 9л + 2 банки по 2.7л</p>
-            </div>
-            <div class="count-overlay-finish">
-                <span>{{ $t('inTotal') }}</span>
-                <span>5000сом</span>
-            </div>
             <button>{{ $t('toCart') }}</button>
         </div>
     </OverlayPanel>
@@ -185,11 +153,11 @@ ratingValue.value = getProduct.value?.product?.rating
 
 
 const selectVolumeSize = (value: string, index: number) => {
-
-
-    // volumeBtn.value = value;
-    // selectedProductPrice.value = props?.product?.variants[index].price
-
+    calcLeastAmoint()
+    volumeBtn.value = value;
+    if (getProduct.value?.product?.variants) {
+        selectedProductPrice.value = getProduct.value?.product?.variants[index].price
+    }
 }
 const decreaseCount = () => {
     if (countToBuy.value > 1) {
@@ -248,8 +216,9 @@ const isProductExistsInCart = computed(() => {
     return index !== -1 ? false : true
 })
 
-const leastSmallAmount = computed(() => {
-    const variants = getProduct.value?.product.variants;
+const leastSmallAmount = ref(0)
+const calcLeastAmoint = async () => {
+    const variants = await getProduct.value?.product.variants;
     if (!variants || variants?.length === 0 && variants == null) {
         return -1;
     } else {
@@ -262,27 +231,48 @@ const leastSmallAmount = computed(() => {
                 smallestPriceIndex = i;
             }
         }
-        return smallestPriceIndex || 0
+        leastSmallAmount.value = smallestPriceIndex || 0
     }
+}
+onUnmounted(() => {
+    leastSmallAmount.value = 0;
+});
+
+// const leastSmallAmount = computed(() => {
+//     const variants = getProduct.value?.product.variants;
+//     if (!variants || variants?.length === 0 && variants == null) {
+//         return -1;
+//     } else {
+//         let smallestPrice = variants[0]?.price;
+//         let smallestPriceIndex = 0;
+//         for (let i = 1; i < variants?.length; i++) {
+//             const variantPrice = variants[i]?.price;
+//             if (variantPrice < smallestPrice) {
+//                 smallestPrice = variantPrice;
+//                 smallestPriceIndex = i;
+//             }
+//         }
+//         return smallestPriceIndex || 0
+//     }
 
 
-
-})
+// })
 
 console.log('store.getProduct IN HEADER', productStore?.getProduct);
 console.log('wjat is PROPSID>>>', props?.productId)
 
 
 onMounted(async () => {
+
     productStore.fetchProductById(props?.productId)
     productStore.getBookmarks(getProduct.value?.product?.id);
     isProductBookmarked.value = productStore.getProductBookmarked;
-
+    calcLeastAmoint()
     if (getProduct && getProduct?.value?.product?.brandId) {
         productBrand.value = await getBrandId(getProduct?.value?.product?.brandId);
     }
 
-    if (getProduct.value?.product?.variants !== null && getProduct.value?.product?.variants && getProduct.value?.product?.variants[leastSmallAmount.value]?.price !== undefined) {
+    if (getProduct.value?.product?.variants && leastSmallAmount?.value) {
         selectedProductPrice.value = getProduct.value?.product?.variants[leastSmallAmount.value]?.price;
         volumeBtn.value = getProduct.value?.product?.variants[leastSmallAmount.value]?.size;
     } else {
@@ -296,6 +286,14 @@ onMounted(async () => {
 
 <style scoped lang="scss">
 @import '../../assets/tabs.scss';
+
+
+.count-overlay-info {
+    max-width: 256px;
+    width: 100%;
+    @include textFormat(16px, 24px, 400, #000);
+    margin-top: 40px
+}
 
 .count-overlay {
     @include flex(column, start, space-between);
