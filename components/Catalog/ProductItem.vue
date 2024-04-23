@@ -1,26 +1,28 @@
 <template>
     <div class="item-block" @click="navigateTo(`/product/${product?.id}`)" v-if="visibleMethod === 'vertical'">
-        <div v-if="type === 'bookmark'" class="bookmark-icon-heart "
+        <div v-if="type === 'bookmark'" class="bookmark-icon-heart"
             @click.stop="emit('addItemToBookmarks', product?.id as string)">
+
             <img src="../../assets/icons/icon=heart fill.svg" alt="heart icon">
+
         </div>
         <slot name="edit-items"></slot>
         <img :src="product?.images[0]" alt="">
-        <span class="item-block-name">{{ productName(product?.name) }}</span>
+        <span class="item-block-name">{{ (product?.name) }}</span>
 
         <div class="item-block-info">
             <div class="each-block-info-col">
                 <span class="text">{{ $t('consumption') }}: </span>
-                <span class="text-data">4343434</span>
+                <span class="text-data">{{ $t('noData') }}</span>
             </div>
             <div class="each-block-info-col"> <span class="text">{{ $t('packing') }}: </span>
-                <span class="text-data"> 43434</span>
+                <span class="text-data"> {{ $t('noData') }}</span>
             </div>
-            <div class="each-block-info-col"> <span class="text">: </span>
-                <span class="text-data">feererere</span>
+            <div class="each-block-info-col"> <span class="text">{{ $t('brand') }}: </span>
+                <span class="text-data">{{ prodBrand }}</span>
             </div>
         </div>
-        <button class="item-block-buy">323 сом</button>
+        <button class="item-block-buy">{{ product?.price }} сом</button>
     </div>
 
 
@@ -49,29 +51,12 @@
         </div>
 
         <div class="last-col">
-            <button class="item-block-buy">323 сом</button>
+            <button class="item-block-buy">{{ product?.price }} сом</button>
             <UIBookmarks :product="product" />
         </div>
 
 
-        <!-- <img src="../../assets/images/test-kraska.png" alt="">
 
-
-        <span class="item-block-name">{{ productName('Полуматовая универсальн') }}</span>
-
-        <div class="item-block-info">
-            <div class="each-block-info-col">
-                <span class="text">Расход: </span>
-                <span class="text-data">4343434</span>
-            </div>
-            <div class="each-block-info-col"> <span class="text">Фасовка: </span>
-                <span class="text-data"> 43434</span>
-            </div>
-            <div class="each-block-info-col"> <span class="text">Бренд: </span>
-                <span class="text-data">feererere</span>
-            </div>
-        </div>
-        <button class="item-block-buy">323 сом</button> -->
     </div>
 </template>
 
@@ -81,10 +66,10 @@ const props = defineProps<{
     type?: string,
     product: Product,
     visibleMethod: string
-    
+
 
 }>()
-
+const prodBrand = ref('')
 
 
 
@@ -93,7 +78,14 @@ const emit = defineEmits<{
 
 }>()
 
+onMounted(async () => {
+    if (props?.product) {
+        prodBrand.value = await getBrandId(props?.product?.brandId);
+    }
+})
+
 const productName = (name: string) => {
+
     return name && name?.split(' ').length > 5 ? name?.split(' ').slice(0, 5).join(' ') : name
 }
 </script>
@@ -107,12 +99,17 @@ const productName = (name: string) => {
 
 }
 
+
+
 .item-block {
     width: 35%;
     padding: 20px 32px;
     overflow: hidden;
+
+
     img {
-        width: 70%
+        width: 180px;
+        height: 180px;
     }
 
     &-name {

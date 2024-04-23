@@ -34,8 +34,6 @@ export const useCatalogStore = defineStore("catalogStore", {
             }
           );
           this.allCatalogs = filteredCatalogByLang;
-          console.log("this.allCatalogs ", this.allCatalogs);
-          console.log("filteredCatalogByLang", filteredCatalogByLang);
         }
       } catch (err) {
         console.log(err);

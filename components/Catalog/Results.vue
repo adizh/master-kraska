@@ -10,6 +10,7 @@ const props = defineProps<{
     visibleMethod: string
 }>()
 
+
 const productStore = useProductsSstore()
 
 

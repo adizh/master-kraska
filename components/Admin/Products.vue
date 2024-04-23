@@ -2,12 +2,16 @@
     <div>
         <h1>Update products</h1>
 
-        <div class="all-prods">
+        <div class="all-prods" v-if="productsStore?.getAllProducsts?.length > 0">
             <ProductsProductItem v-for="item in productsStore.getAllProducsts" :key="item?.id" :product="item">
                 <template #edit-items>
                     <div @click.stop="navigateTo(`/admin/edit-product/${item.id}`)">Edit item</div>
                 </template>
             </ProductsProductItem>
+        </div>
+
+        <div v-else>
+            <ProgressSpinner />
         </div>
 
     </div>
@@ -22,8 +26,6 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-
-
 .all-prods {
     margin-top: 40px;
     @include flex(row, center, center, 20px);

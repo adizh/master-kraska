@@ -24,7 +24,8 @@
                 <span class="text-data">{{ product?.brandName }}</span>
             </div>
         </div>
-        <button class="pink-button">{{ product?.variants[0]?.price }} сом</button>
+        <button class="pink-button">{{ product?.price }} сом</button>
+        
     </div>
 </template>
 

@@ -147,9 +147,7 @@ export const useProductsSstore = defineStore("productsStore", {
         this.filters?.brandId?.length > 0
           ? this.filters.brandId?.join(",")
           : null;
-      console.log("filter products subDirs", subDirs);
 
-      console.log("in filter product bool values", this.filters.fastDrying);
       const query = {
         productName: this.filters.search || prodName,
         categoryId: this.filters.categoryId,
@@ -166,7 +164,7 @@ export const useProductsSstore = defineStore("productsStore", {
         maxPrice: this.filters.maxPrice,
         brandId: allBrands,
       };
-
+      const authStore = useAuthStore();
       try {
         const response = await http.get(
           "/api/v1/Product/get-all-products-pagination",
@@ -174,7 +172,15 @@ export const useProductsSstore = defineStore("productsStore", {
         );
         console.log("response filterProducts", response);
         if (response.status === 200) {
-          this.filteredProducts = response.data.items;
+          const filtered = response.data.items?.map((item: Product) => {
+            if (authStore.getSelectedLang === "kg") {
+              return { ...item, name: item?.nameKg };
+            } else {
+              return { ...item, name: item?.nameRu };
+            }
+          });
+
+          this.filteredProducts = filtered;
         }
       } catch (err) {
         console.log(err);
