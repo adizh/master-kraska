@@ -1,21 +1,28 @@
 <template>
-    <section>
-        <ProductPageHeader :product="data?.product" />
+    <section v-if="getProduct && getProduct != undefined && Object.entries(getProduct)?.length > 0">
+        <ProductPageHeader :productId="id" />
         <!-- <ProductPageInfo :item="data?.product" />
         <ProductPageSImilarItems :similarItems="data?.similarProducts" />
         <ProductPageReviews :item='data?.product' /> -->
     </section>
+
+    <section v-else>loading...</section>
 </template>
 
 <script setup lang="ts">
 import { Product } from '~/types/Product';
-const route = useRoute()
-const id = ref(route.params.id)
-const { data, error, status, pending } = await useApi<Product>(`/api/v1/Product/get-product-by-id/${id.value}`, {
-    watch: [id]
+const route = useRoute();
+const authStore = useAuthStore()
+const id = route.params.id
+const product = ref<{ product: Product, similarProducts: Product[] }>({} as { product: Product, similarProducts: Product[] })
+const productsStore = useProductsSstore()
+const { getProduct } = storeToRefs(productsStore)
+onMounted(async () => {
+    await productsStore.fetchProductById(id as string)
 
-}) as any;
-console.log('data fetch single Product', data)
+
+})
+
 
 
 

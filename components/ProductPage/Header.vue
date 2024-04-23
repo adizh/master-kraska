@@ -1,99 +1,102 @@
 <template>
-    <div class="item-page-header">
-        <div class="left">
-            <img :src="product?.images[0]" alt="product">
-        </div>
-        <div class="middle">
-            <div class="middle-header">
-                {{ product?.name }}
+    <ClientOnly>
+        <div class="item-page-header">
+            <div class="left">
+                <img :src="getProduct?.product?.images[0]" alt="product">
             </div>
-            <div>
-                <p class="each-block-info-col">{{ $t('storeMark') }}:</p>
-                <!-- <img :src="product?.images[0]" alt="product"> -->
-            </div>
-            <div class="middle-review"><span class="each-block-info-col">{{ $t('rating') }}</span>
-                <div class='middle-rating'>
-                    <span class="middle-review-number">{{ product?.rating?.toFixed(2) }}</span>
-                    <Rating v-model="ratingValue" :cancel="false" />
-                    <span class="middle-review-text">{{ $t('reviews') }}</span>
+            <div class="middle">
+                <div class="middle-header">
+                    {{ getProduct?.product?.name }}
+                </div>
+                <div>
+                    <p class="each-block-info-col">{{ $t('storeMark') }}: {{ productBrand }} </p>
+                </div>
+                <div class="middle-review"><span class="each-block-info-col">{{ $t('rating') }}</span>
+                    <div class='middle-rating'>
+                        <span class="middle-review-number">{{ getProduct?.product?.rating?.toFixed(2) }}</span>
+                        <Rating v-model="ratingValue" :cancel="false" />
+                        <span class="middle-review-text">{{ $t('reviews') }}</span>
+                    </div>
+
+                </div>
+                <div class="middle-volume">
+                    <span class="each-block-info-col">{{ $t('volume') }}</span>
+
+                    <div class="middle-volume-buttons" v-if="getProduct?.product?.variants">
+                        <button v-for="(btn, index) in getProduct?.product?.variants" :key="btn?.id"
+                            :class="{ 'active-btn': volumeBtn === btn?.size }"
+                            @click='selectVolumeSize(btn?.size, index)'>
+                            {{ btn?.size }}
+                        </button>
+
+                    </div>
                 </div>
 
-            </div>
-            <div class="middle-volume">
-                <span class="each-block-info-col">{{ $t('volume') }}</span>
 
-                <div class="middle-volume-buttons" v-if="product?.variants">
-                    <button v-for="(btn, index) in product?.variants" :key="btn?.id"
-                        :class="{ 'active-btn': volumeBtn === btn?.size }" @click='selectVolumeSize(btn?.size, index)'>
-                        {{ btn?.size }}
-                    </button>
-                    <!-- <button>{{ product?.packing }} л</button> -->
-                    <!-- <button>{{ product?.size }} л</button> -->
+                <div class="middle-koler">
+                    <span class="each-block-info-col">{{ $t('baseTinting') }}</span>
+                    <button class="middle-koler-btn">А (белая, {{ $t('lightTinting') }})</button>
+                </div>
+                <div>
+                    <span class="each-block-info-col">
+                        {{ $t('consumption') }}
+                    </span>
+                    <p>1л=7-12КВ.М. 9л=63.00-108.00КВ.М.</p>
+                </div>
+                <div>
+                    <span class="each-block-info-col">{{ $t('parameters') }}
+
+                    </span>
+                    <div class="middle-parameters">
+                        <button><span>{{ $t('selectColor') }}</span>
+                            <img src="../../assets/icons/mingcute_color-picker-fill.svg" />
+                        </button>
+                        <button @click="toggle"><span>{{ $t('count') }}</span>
+                            <img src='../../assets/icons/ion_calculator-outline.svg' />
+                        </button>
+                    </div>
                 </div>
             </div>
+            <div class="right">
+                <div class="header">
+                    <span>{{ $t('Цены') }}</span>
+                    <UIBookmarks :product="getProduct?.product" />
 
+                </div>
 
-            <div class="middle-koler">
-                <span class="each-block-info-col">{{ $t('baseTinting') }}</span>
-                <button class="middle-koler-btn">А (белая, {{ $t('lightTinting') }})</button>
-            </div>
-            <div>
-                <span class="each-block-info-col">
-                    {{ $t('consumption') }}
-                </span>
-                <p>1л=7-12КВ.М. 9л=63.00-108.00КВ.М.</p>
-            </div>
-            <div>
-                <span class="each-block-info-col">{{ $t('parameters') }}
+                <div class="numbers">
+                    <p><span>{{ $t('piece') }}</span>
+                        <span class="numbers-price">{{ selectedProductPrice }} сом</span>
+                    </p>
+                    <p><span>л</span>500 сом</p>
+                    <p><span>м2</span>50 сом</p>
+                </div>
 
-                </span>
-                <div class="middle-parameters">
-                    <button><span>{{ $t('selectColor') }}</span>
-                        <img src="../../assets/icons/mingcute_color-picker-fill.svg" />
+                <div class="count">
+                    <span class="each-block-info-col">{{ $t('quantity') }}</span>
+                    <button class="prod-count-buttons">
+                        <span @click="decreaseCount">-</span>
+                        <span>{{ countToBuy }}</span>
+                        <span @click="increaseCount">+</span>
                     </button>
-                    <button @click="toggle"><span>{{ $t('count') }}</span>
-                        <img src='../../assets/icons/ion_calculator-outline.svg' />
+                </div>
+
+                <div class="count">
+                    <span class="each-block-info-col">{{ $t('sum') }}</span>
+                    {{
+                    selectedProductPrice * countToBuy }} сом
+                </div>
+
+                <div class="buy-btns"> <button @click="addToCart">
+                        {{ isProductExistsInCart ? $t('addToCart') : $t('addedToCart') }}
                     </button>
+                    <button @click.capture="buyNow">{{ $t('buyNow') }}</button>
                 </div>
             </div>
         </div>
-        <div class="right">
-            <div class="header">
-                <span>{{ $t('Цены') }}</span>
-                <UIBookmarks :product="product" />
+    </ClientOnly>
 
-            </div>
 
-            <div class="numbers">
-                <p><span>{{ $t('piece') }}</span>
-                    <span class="numbers-price">{{ selectedProductPrice }} сом</span>
-                </p>
-                <p><span>л</span>500 сом</p>
-                <p><span>м2</span>50 сом</p>
-            </div>
-
-            <div class="count">
-                <span class="each-block-info-col">{{ $t('quantity') }}</span>
-                <button class="prod-count-buttons">
-                    <span @click="decreaseCount">-</span>
-                    <span>{{ countToBuy }}</span>
-                    <span @click="increaseCount">+</span>
-                </button>
-            </div>
-
-            <div class="count">
-                <span class="each-block-info-col">{{ $t('sum') }}</span>
-                {{
-                selectedProductPrice * countToBuy }} сом
-            </div>
-
-            <div class="buy-btns"> <button @click="addToCart">
-                    {{ isProductExistsInCart ? $t('addToCart') : $t('addedToCart') }}
-                </button>
-                <button @click.capture="buyNow">{{ $t('buyNow') }}</button>
-            </div>
-        </div>
-    </div>
 
 
     <OverlayPanel ref="countOverlay" class="countOverlay" style="width: 38%">
@@ -151,8 +154,10 @@
 import Rating from 'primevue/rating';
 import { Product } from '@/types/Product'
 
+
+
 const props = defineProps<{
-    product: Product
+    productId: string
 }>()
 const ratingValue = ref(0);
 const countOverlay = ref();
@@ -162,13 +167,13 @@ const totalPrice = ref(0)
 const authStore = useAuthStore();
 const productStore = useProductsSstore()
 const store = useCartStore()
-
+const productBrand = ref('')
 const selectedProductPrice = ref(0)
 const length = ref(0)
 const width = ref(0)
 const isProductBookmarked = ref(false)
 const isProfileOpen = ref(false)
-
+const { getProduct } = storeToRefs(productStore)
 const sumHeight = computed(() => length.value * width.value);
 
 const toggle = (event: any) => {
@@ -176,13 +181,7 @@ const toggle = (event: any) => {
 }
 
 
-ratingValue.value = props?.product?.rating
-
-
-
-
-
-
+ratingValue.value = getProduct.value?.product?.rating
 
 
 const selectVolumeSize = (value: string, index: number) => {
@@ -220,7 +219,7 @@ const buyNow = () => {
 }
 const addToCart = () => {
     if (authStore.getUserId) {
-        const prodItem = { ...props.product, count: countToBuy.value, totalProdSum: totalPrice.value, initPrice: selectedProductPrice.value }
+        const prodItem = { ...getProduct.value?.product, count: countToBuy.value, totalProdSum: totalPrice.value, initPrice: selectedProductPrice.value }
         store.addToCart(prodItem)
     }
 
@@ -239,18 +238,18 @@ const { data: getBookmarkItem } = useApi('/api/v1/Bookmark/get-bookmarks', {
     method: 'get',
     query: {
         userId: authStore.getUserId,
-        objectId: props?.product?.id
+        objectId: getProduct.value?.product?.id
     }
 }) as any;
 
 
 const isProductExistsInCart = computed(() => {
-    const index = store.getAllCart?.findIndex((item) => item?.id === props?.product?.id);
+    const index = store.getAllCart?.findIndex((item) => item?.id === getProduct.value?.product?.id);
     return index !== -1 ? false : true
 })
 
 const leastSmallAmount = computed(() => {
-    const variants = props?.product?.variants;
+    const variants = getProduct.value?.product.variants;
     if (!variants || variants?.length === 0 && variants == null) {
         return -1;
     } else {
@@ -268,20 +267,26 @@ const leastSmallAmount = computed(() => {
 
 
 
+})
 
-});
+console.log('store.getProduct IN HEADER', productStore?.getProduct);
+console.log('wjat is PROPSID>>>', props?.productId)
 
-console.log('leastSmallAmount', leastSmallAmount)
-onMounted(() => {
-    productStore.getBookmarks(props?.product?.id);
-    console.log('product in component child itseld', props)
+
+onMounted(async () => {
+    productStore.fetchProductById(props?.productId)
+    productStore.getBookmarks(getProduct.value?.product?.id);
     isProductBookmarked.value = productStore.getProductBookmarked;
 
-    if (props.product?.variants !== null && props.product?.variants && props.product?.variants[leastSmallAmount.value]?.price !== undefined) {
-        selectedProductPrice.value = props.product?.variants[leastSmallAmount.value]?.price;
-        volumeBtn.value = props.product?.variants[leastSmallAmount.value]?.size;
+    if (getProduct && getProduct?.value?.product?.brandId) {
+        productBrand.value = await getBrandId(getProduct?.value?.product?.brandId);
+    }
+
+    if (getProduct.value?.product?.variants !== null && getProduct.value?.product?.variants && getProduct.value?.product?.variants[leastSmallAmount.value]?.price !== undefined) {
+        selectedProductPrice.value = getProduct.value?.product?.variants[leastSmallAmount.value]?.price;
+        volumeBtn.value = getProduct.value?.product?.variants[leastSmallAmount.value]?.size;
     } else {
-        selectedProductPrice.value = props.product?.price
+        selectedProductPrice.value = getProduct.value?.product?.price
     }
 
     totalPrice.value = countToBuy.value * selectedProductPrice.value

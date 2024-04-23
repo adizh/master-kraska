@@ -3,7 +3,15 @@ import { Review } from "./Review";
 export type Product = {
   id: string;
   name: string;
+  nameKg: string;
+  nameRu: string;
+
   description: string;
+  descriptionKg: string;
+  descriptionRu: string;
+  shortDescriptionKg: string;
+  shortDescriptionRu: string;
+  shortDescription: string;
   categoryId: string;
   subcategoryId: string;
   brandId: string;
@@ -27,7 +35,7 @@ export type Product = {
   subdirectoryId: string[];
   images: string[];
   reviews: Review[];
-price:number,
+  price: number;
   helpersMain: {
     id: string;
     name: string;
@@ -44,5 +52,5 @@ price:number,
 export interface ExtendedProduct extends Product {
   count: number;
   totalProdSum: number;
-  initPrice:number
+  initPrice: number;
 }

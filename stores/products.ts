@@ -9,6 +9,7 @@ export const useProductsSstore = defineStore("productsStore", {
     allProducts: [] as Product[],
     filteredProducts: [] as Product[],
     isProductBookmarked: false,
+    product: {} as { product: Product; similarProducts: Product[] },
     filters: {
       search: "",
       categoryId: "",
@@ -32,6 +33,41 @@ export const useProductsSstore = defineStore("productsStore", {
         console.log("response fetchAllProducts", response);
         if (response.status === 200) {
           this.allProducts = response.data;
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+    async fetchProductById(productId: string) {
+      console.log("productId is reviev????", productId);
+      const authStore = useAuthStore();
+      try {
+        const response = await http(
+          `/api/v1/Product/get-product-by-id/${productId}`
+        );
+        if (response.status === 200) {
+          let filtered = [];
+
+          if (authStore.getSelectedLang === "kg") {
+            filtered = await {
+              ...response.data,
+              product: {
+                ...response.data.product,
+                name: response.data?.product?.nameKg,
+              },
+            };
+          } else {
+            filtered = await {
+              ...response.data,
+              product: {
+                ...response.data.product,
+                name: response.data?.product?.nameKg,
+              },
+            };
+          }
+
+          this.product = filtered;
         }
       } catch (err) {
         console.log(err);
@@ -173,6 +209,9 @@ export const useProductsSstore = defineStore("productsStore", {
     },
     getProductBookmarked(state) {
       return state.isProductBookmarked;
+    },
+    getProduct(state) {
+      return state.product;
     },
   },
 });

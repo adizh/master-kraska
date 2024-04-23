@@ -29,7 +29,18 @@ export const useBrandsStore = defineStore("brandsStore", {
               return { ...seller, sellerInfo: seller?.descriptionKg };
             }
           });
-          this.sellers = filtered
+          this.sellers = filtered;
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async fetchAllBrandId(brandId: string) {
+      try {
+        const response = await http(`/api/v1/Brand/get-brand/${brandId}`);
+        console.log("response brands", response);
+        if (response.status === 200) {
+          return response.data;
         }
       } catch (err) {
         console.log(err);
