@@ -14,7 +14,8 @@
                 <div class="middle-review"><span class="each-block-info-col">{{ $t('rating') }}</span>
                     <div class='middle-rating'>
                         <span class="middle-review-number">{{ getProduct?.product?.rating?.toFixed(2) }}</span>
-                        <Rating v-model="ratingValue" :cancel="false" />
+                        <Rating v-model="ratingValue" :cancel="false" :value="ratingValue" disabled />
+
                         <span class="middle-review-text">{{ $t('reviews') }}</span>
                     </div>
 
@@ -48,9 +49,7 @@
 
                     </span>
                     <div class="middle-parameters">
-                        <button><span>{{ $t('selectColor') }}</span>
-                            <img src="../../assets/icons/mingcute_color-picker-fill.svg" />
-                        </button>
+
                         <button @click="toggle"><span>{{ $t('count') }}</span>
                             <img src='../../assets/icons/ion_calculator-outline.svg' />
                         </button>

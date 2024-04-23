@@ -11,7 +11,7 @@
             <span>{{ $t('rateProduct') }}</span>
             <Rating v-model="inputs.ratingValue.value" :cancel="false" />
             <span class="err-input-msg">{{ inputs.ratingValue.error }}</span>
-            <input type="text" class="basic-input" :placeholder="$t('name')" v-model="inputs.title.value"
+            <input type="text" class="basic-input" :placeholder="$t('title')" v-model="inputs.title.value"
                 @input="handleInput('title', 'string')" />
             <span class="err-input-msg">{{ inputs.title.error }}</span>
             <input type="text" class="basic-input" :placeholder="$t('text')" v-model="inputs.text.value"

@@ -8,7 +8,7 @@
         </div>
 
         <div v-else>{{ $t('noData') }}</div>
-        
+
     </div>
 </template>
 
@@ -30,7 +30,12 @@ console.log('similarItems', props?.similarItems)
 .similar-prod-item {
     &-list {
         @include flex(row, start, center);
-        flex-wrap: wrap;
+
     }
+
+    .item-block {
+        width: 24%;
+    }
+
 }
 </style>
