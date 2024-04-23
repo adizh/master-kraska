@@ -93,13 +93,9 @@ export const useProductsSstore = defineStore("productsStore", {
             },
           }
         );
-        console.log("respponse", response);
+        console.log("respponse addToBookmarks", response);
         if (response.status === 200) {
-          // toast.add({
-          //   severity: "success",
-          //   summary: "Успех",
-          //   detail: "Добавленов в Избранное",
-          // });
+          useNotif("success", "Успешно обновлено", "Успех");
         }
       } catch (err) {
         console.log(err);

@@ -3,55 +3,55 @@
         <div class="left" @click="backHome">
             <img src="../assets/images/logo-master.png" alt="logo" class="logo-img">
         </div>
-        <div class="right">
-            <ul class="bottom">
-                <div class="overlay" v-if="isBurgerMenuOpen" @click="closeBurgerMenu"></div>
-                <div class="bottom-part" :class="{ 'open-bottom-part': isBurgerMenuOpen }">
-                    <li class="catalog-li" @mouseover="toggleCatalog" @mouseleave="closeCatalog">{{
+
+        <ul class="bottom">
+            <div class="overlay" v-if="isBurgerMenuOpen" @click="closeBurgerMenu"></div>
+            <div class="bottom-part" :class="{ 'open-bottom-part': isBurgerMenuOpen }">
+                <li class="catalog-li" @mouseover="toggleCatalog" @mouseleave="closeCatalog">{{
             $t('catalog') }}
-                        <img class="arrow" :class="{ 'rotated': isCatalogOpen }"
-                            src="../assets/icons/icon=components-closed-arrow.svg" alt="open-arrow">
-                        <Catalog :isCatalogOpen="isCatalogOpen" @closeCatalog="closeCatalog" />
+                    <img class="arrow" :class="{ 'rotated': isCatalogOpen }"
+                        src="../assets/icons/icon=components-closed-arrow.svg" alt="open-arrow">
+                    <Catalog :isCatalogOpen="isCatalogOpen" @closeCatalog="closeCatalog" />
 
-                    </li>
-                    <li @click="navigateTo('/koler')">{{ $t('tinting') }}</li>
-                    <li @click="navigateTo('/pay-deliver')">{{ $t('payDelivery') }}</li>
-                    <li>
-                        <NuxtLink to="/about-us">{{ $t('aboutUs') }}</NuxtLink>
-                    </li>
-                    <li @click="navigateTo('/contacts')">{{ $t('contacts') }}</li>
-                </div>
-                <div class='top-part'>
-                    <li class="phone">
-                        <img src="../assets/icons/icon=phone loight.svg" alt="">
-                        +996 509 910 148
-                    </li>
-                    <li @click="navigateTo('/cart')">
-                        <img src="../assets/icons/icon=cart.svg" alt="">
-                        <span v-if="screenSize === 'large'">{{ $t('cart') }}</span>
-                    </li>
+                </li>
+                <li @click="navigateTo('/koler')">{{ $t('tinting') }}</li>
+                <li @click="navigateTo('/pay-deliver')">{{ $t('payDelivery') }}</li>
+                <li>
+                    <NuxtLink to="/about-us">{{ $t('aboutUs') }}</NuxtLink>
+                </li>
+                <li @click="navigateTo('/contacts')">{{ $t('contacts') }}</li>
+            </div>
+            <div class='top-part'>
+                <li class="phone">
+                    <img src="../assets/icons/icon=phone loight.svg" alt="">
+                    +996 509 910 148
+                </li>
+                <li @click="navigateTo('/cart')">
+                    <img src="../assets/icons/icon=cart.svg" alt="">
+                    <span v-if="screenSize === 'large'">{{ $t('cart') }}</span>
+                </li>
 
 
-                    <li @click="toggleProfile"><img src="../assets/icons/icon=user.svg" alt="">
-                        <span v-if="screenSize === 'large'">{{ $t('profile') }}</span>
-                    </li>
+                <li @click="toggleProfile"><img src="../assets/icons/icon=user.svg" alt="">
+                    <span v-if="screenSize === 'large'">{{ $t('profile') }}</span>
+                </li>
 
-                    <li class="burger-menu" v-if="!isBurgerMenuOpen" @click="openBurger">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </li>
+                <li class="burger-menu" v-if="!isBurgerMenuOpen" @click="openBurger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </li>
 
-                    <li v-else @click="isBurgerMenuOpen = false">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M16.9938 5L11.8529 10.1397L6.71322 5L5 6.71322L10.1397 11.8529L5 16.9926L6.71322 18.7058L11.8529 13.5661L16.9938 18.7058L18.707 16.9926L13.5673 11.8529L18.707 6.71322L16.9938 5Z"
-                                fill="#222222" />
-                        </svg>
-                    </li>
-                </div>
-            </ul>
-        </div>
+                <li v-else @click="isBurgerMenuOpen = false">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M16.9938 5L11.8529 10.1397L6.71322 5L5 6.71322L10.1397 11.8529L5 16.9926L6.71322 18.7058L11.8529 13.5661L16.9938 18.7058L18.707 16.9926L13.5673 11.8529L18.707 6.71322L16.9938 5Z"
+                            fill="#222222" />
+                    </svg>
+                </li>
+            </div>
+        </ul>
+
     </div>
 
 
@@ -188,7 +188,7 @@ provide('closeProfileOpen', closeProfileOpen)
 }
 
 .bottom-part {
-    width: 72%;
+    width: 61%;
     @include flex(row, space-between, center)
 }
 
@@ -207,7 +207,7 @@ provide('closeProfileOpen', closeProfileOpen)
 .bottom {
     width: 100%;
     list-style: none;
-    @include flex(row, start, center);
+    @include flex(row, start, center, 2rem);
 
     li {
         transition: .2s ease;

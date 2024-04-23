@@ -33,8 +33,8 @@
                             <img src="../assets/icons/icon=trash.svg" alt="">
                         </template>
                     </CartProductItem>
-                    <div class="flex justify-content-end flex-row"> <button class="btn-white-bg"
-                            @click='cartStore.saveNewCart'>
+                    <div v-if="cartStore.getAllCart?.length > 0" class="flex justify-content-end flex-row"> <button
+                            class="btn-white-bg" @click='cartStore.saveNewCart'>
                             {{ $t('saveChanges') }}</button>
                     </div>
 
@@ -168,7 +168,14 @@ const fetchUserBookmarks = async () => {
         const response = await http.get(`/api/v1/Bookmark/get-bookmark-by-user-id/${store.getUserId}`);
         console.log('response fetchUserBookmarks', response);
         if (response.status == 200) {
-            userBookmarks.value = response.data.products
+            const filtered = response.data.products.map((item: Product) => {
+                if (store.getSelectedLang === 'kg') {
+                    return { ...item, name: item?.nameKg }
+                } else {
+                    return { ...item, name: item?.nameRu }
+                }
+            })
+            userBookmarks.value = filtered
         }
     } catch (err) {
         console.log(err)
@@ -253,7 +260,9 @@ li.active {
 }
 
 .item-block {
-    width: 35%
+    width: 35%;
+    max-height: 600px;
+    height: 100%
 }
 
 @media (max-width:1000px) {

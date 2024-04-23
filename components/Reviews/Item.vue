@@ -23,16 +23,17 @@
         <p class="info">
             {{ item?.ratingText }}
         </p>
-        
+
     </li>
 
-    <Dialog v-model:visible="isModal" modal header=" ">
+    <Dialog v-model:visible="isModal" modal header=" " :style="{ padding: '20px 40px 50px 20px' }">
         <template #header>
             <div class="p-modal-header">
             </div>
         </template>
         <template #closeicon>
             <span class="close-icon-modal">X</span>
+
         </template>
         <div class="modal-header">{{ $t('deleteCommentWarning') }}?</div>
 
