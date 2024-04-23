@@ -16,7 +16,8 @@
                 </div>
 
                 <div class="col-9 second-block">
-                    <input type="text" name="search" id="searcg" placeholder="Введите код цвета" class="basic-input">
+                    <input type="text" name="search" id="searcg" placeholder="Введите код цвета" class="basic-input"
+                        v-model="tintingSearch" @input="handleSearch">
                     <div class="danger-text">
                         {{ $t('kolerWarning') }}
                     </div>
@@ -27,7 +28,10 @@
                                 <div v-for="item in activeBrand" :key="item.id" class="bottom-item"
                                     :style="{ background: '#' + item.rgb }" @click="selectColor(item)"
                                     :class="{ 'selected-color': item?.id === selectedColor?.id }">
-                                    <span> {{ item.code }}</span>
+                                    <p class='flex flex-row align-items-center gap-1'> <span>{{ item.code }}</span>
+                                        <img src="../assets/icons/carbon_checkmark-filled (1).svg" alt="carbon"
+                                            class='carbon' v-show="item?.id === selectedColor?.id">
+                                    </p>
                                 </div>
 
                             </div>
@@ -39,7 +43,7 @@
                         </div>
 
                         <div class="koler-change">
-                            <img src="../assets/images/koler.png" alt="">
+                            <img src="../assets/images/koler.png" alt="" id="img">
                             <div id="bg" :style="{ background: '#' + selectedColor?.rgb || 'white' }"></div>
                         </div>
                     </div>
@@ -62,6 +66,8 @@ import { Tinting } from '@/types/Tinting'
 const currentBrandsColors = ref<Tinting[]>([]);
 const allTingings = ref<Tinting[]>([])
 const activeBrand = ref<Tinting[]>([]);
+const activeFiltered = ref<Tinting[]>([]);
+const tintingSearch = ref('')
 const currentPage = ref(1);
 const pageSize = ref(27)
 const totalPages = ref(10)
@@ -83,10 +89,13 @@ const selectColor = (item: Tinting) => {
 onMounted(async () => {
     await fetchAllTintings();
     currentBrandsColors.value = allTingings.value?.filter((item: Tinting) => item?.brandId === selectedBrand?.value.id);
-
-
 });
 
+
+const handleSearch = () => {
+    const value = tintingSearch?.value;
+    activeBrand.value = activeFiltered?.value.filter((item: Tinting) => item?.code.toLowerCase().includes(value.toLocaleLowerCase()))
+}
 
 
 const selectedColor = ref({} as Tinting)
@@ -129,6 +138,7 @@ const fetchTintingsByBrand = async (brand: Brands) => {
         console.log('response fetchTintingsByBrand', response);
         if (response.status === 200) {
             activeBrand.value = response.data.items;
+            activeFiltered.value = response.data.items;
             totalPages.value = response.data.totalPages
         }
     } catch (err) {
@@ -187,6 +197,8 @@ const chooseBrand = (value: Brands) => {
     width: 500px !important;
 }
 
+
+
 .koler-part {
     @include flex(row, start, start)
 }
@@ -201,7 +213,7 @@ const chooseBrand = (value: Brands) => {
 
 
 .koler-colors {
-    width: 65%;
+    width: 70%;
 
     .first-slide {
         @include flex(row, start, start, 2px);
@@ -299,7 +311,7 @@ body {
     overflow: hidden;
 }
 
-img {
+#img {
     position: relative;
     z-index: 2;
     width: 100%;
