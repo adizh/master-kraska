@@ -5,14 +5,14 @@
         <div class="options-list">
             <ul class="first-col">
                 <li v-for="item in getAllCategories?.slice(0, Math.ceil(getAllCategories?.length / 2))"
-                    :key="item?.category?.id" @click.stop="navigateTo(`/catalog/${item?.category?.id}`)">
+                    :key="item?.category?.id" @click.stop.prevent="router.push(`/catalog/${item?.category?.id}`)">
                     {{ formatName(item?.category?.name) }}
                 </li>
             </ul>
 
             <ul class="second-col">
                 <li v-for="item in getAllCategories?.slice(getAllCategories?.length / 2)" :key="item?.category?.id"
-                    @click.stop="navigateTo(`/catalog/${item?.category?.id}`)">
+                    @click.stop.prevent="() => router.push(`/catalog/${item?.category?.id}`)">
                     {{ formatName(item?.category?.name) }}
                 </li>
             </ul>
@@ -26,7 +26,7 @@
 import { Category } from '@/types/Category'
 const authStore = useAuthStore();
 const catalogStore = useCatalogStore()
-
+const router = useRouter()
 const { getAllCategories } = storeToRefs(catalogStore)
 
 

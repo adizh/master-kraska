@@ -14,14 +14,15 @@
 
         <div class="desc-part" v-if="activeTab === 1">
             <div class="desc-part-info">
-                <span>Глубокоматовая краска для потолков</span>
+                <span>{{ item?.name }}</span>
 
-                <p class="toggle-descr">
+                <p class="toggle-descr" v-if="prodDescr">
                     {{ prodDescr }}
                     <button class="read-all-btn" @click="toggleProdDesc" v-if="!isDescrOpen && isProdDesctLong">Читать
                         все</button>
                     <button class="read-all-btn" @click="toggleProdDesc" v-else-if="isDescrOpen">Закрыть</button>
                 </p>
+                <p v-else>{{ $t('noData') }}</p>
 
             </div>
             <div class="desc-part-info">
@@ -32,13 +33,14 @@
             </div>
             <div class="desc-part-info">
                 <span>Подготовка поверхности</span>
-                <p>
+                <p v-if="prodSurface">
                     {{ prodSurface }}
                     <button class="read-all-btn" @click="toggleProdSurface"
                         v-if="!isSurfaceOpen && isSurfaceLong">Читать
                         все</button>
                     <button class="read-all-btn" @click="toggleProdSurface" v-else-if="isSurfaceOpen">Закрыть</button>
                 </p>
+                <p v-else>{{ $t('noData') }}</p>
             </div>
         </div>
         <div class="certificate-part" v-else>{{ $t('certificates') }}</div>
@@ -55,6 +57,8 @@ import { ExtendedProduct } from '~/types/Product';
 const props = defineProps<{
     item: ExtendedProduct
 }>()
+
+console.log('what is infod item????', props.item)
 
 const descriptionLen = ref(480);
 const surfaceLen = ref(480);
