@@ -1,7 +1,13 @@
 <template>
-    <div class="results" :class="{ 'horizontal': visibleMethod === 'horizontal' }">
+    <div class="results" :class="{ 'horizontal': visibleMethod === 'horizontal' }"
+        v-if="productStore?.getFilteredProducts?.length > 0">
         <CatalogProductItem v-for="item in productStore.getFilteredProducts" :key="item?.id"
             :visibleMethod="visibleMethod" :product="item" />
+    </div>
+
+
+    <div v-else>
+        <ProgressSpinner />
     </div>
 </template>
 

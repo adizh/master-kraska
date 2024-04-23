@@ -1,8 +1,5 @@
 import http from "@/composables/http";
 import { Product } from "@/types/Product";
-import { Brands } from "@/types/Brands";
-
-import { Category } from "@/types/Category";
 
 export const useProductsSstore = defineStore("productsStore", {
   state: () => ({
@@ -14,13 +11,6 @@ export const useProductsSstore = defineStore("productsStore", {
       search: "",
       categoryId: "",
       subdirectoryIds: [] as any,
-      fastDrying: false,
-      approvedByThePaintQualityAssociation: false,
-      withoutSmell: false,
-      washableCoating: false,
-      weatherResistantCoating: false,
-      wearResistantCoating: false,
-      dirtAndWaterRepellentCoating: false,
       minPrice: 0,
       maxPrice: 0,
       brandId: [] as string[],
@@ -103,18 +93,6 @@ export const useProductsSstore = defineStore("productsStore", {
       }
     },
 
-    setBoolParams(query: any) {
-      console.log("setBoolParams query", query);
-      this.filters.fastDrying = query.fastDrying;
-      this.filters.approvedByThePaintQualityAssociation =
-        query.approvedByThePaintQualityAssociation;
-      this.filters.withoutSmell = query.withoutSmell;
-      this.filters.washableCoating = query.washableCoating;
-      this.filters.weatherResistantCoating = query.weatherResistantCoating;
-      this.filters.dirtAndWaterRepellentCoating =
-        query.dirtAndWaterRepellentCoating;
-      this.filters.wearResistantCoating = query.wearResistantCoating;
-    },
     setPrices(minPrice: number, maxPrice: number) {
       this.filters.minPrice = minPrice;
       this.filters.maxPrice = maxPrice;
@@ -152,16 +130,8 @@ export const useProductsSstore = defineStore("productsStore", {
         productName: this.filters.search || prodName,
         categoryId: this.filters.categoryId,
         subdirectoryIds: subDirs,
-        fastDrying: this.filters.fastDrying,
-        approvedByThePaintQualityAssociation:
-          this.filters.approvedByThePaintQualityAssociation,
-        withoutSmell: this.filters.withoutSmell,
-        washableCoating: this.filters.washableCoating,
-        weatherResistantCoating: this.filters.weatherResistantCoating,
-        wearResistantCoating: this.filters.wearResistantCoating,
-        dirtAndWaterRepellentCoating: this.filters.dirtAndWaterRepellentCoating,
-        minPrice: this.filters.minPrice,
-        maxPrice: this.filters.maxPrice,
+        minPrice: this.filters.minPrice || null,
+        maxPrice: this.filters.maxPrice || null,
         brandId: allBrands,
       };
       const authStore = useAuthStore();

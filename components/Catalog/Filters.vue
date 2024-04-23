@@ -21,11 +21,16 @@
                     <label class="black-checkbox">
                         <input type="checkbox" :id="`${brand?.id}`" :value="brand.id"
                             @input="updateBrandsInputs(brand, $event)" :checked="brand?.id === queryBrand?.id" />
-                        <p><span class='black-checkbox-span'
+                        <span class='black-checkbox-span'
+                            :class="{ 'black-checkbox-span open': opensIncludes('brands') }">
+                            <p :class="{ 'black-checkbox-span-name': opensIncludes('brands') }"> {{ brand?.name }}
+                            </p>
+                        </span>
+                        <!-- <p><span class='black-checkbox-span'
                                 :class="{ 'black-checkbox-span open': opensIncludes('brands') }">
                                 <p :class="{ 'black-checkbox-span-name': opensIncludes('brands') }"> {{ brand?.name }}
                                 </p>
-                            </span></p>
+                            </span></p> -->
 
                     </label>
                 </p>
@@ -43,44 +48,25 @@
             <div v-for="item in catalogStore.getAllCatalogs" :key="item?.id" class="each-filter-block"
                 :class="{ 'each-filter-block open': opensIncludes(item.id) }">
                 <h4 class="filters-block-header">{{ item?.name }}</h4>
-                <div class="main-block" v-if="!helpersRadio?.includes(item?.nameRu) && item?.subdirectory?.length">
+                <div class="main-block" v-if="item?.subdirectory?.length">
                     <p v-for="(sub, index) in getSlicedSubdirectories(item)" :key="index" class="each-sub-item">
                         <label class="black-checkbox">
                             <input type="checkbox" :id="`${item.id}-${index}`" :value="sub.id"
                                 :checked="isChecked(item.id, sub.id)"
                                 @change="updateCheckboxState(item.id, sub.id, $event)" />
-                            <p><span class="black-checkbox-span"
-                                    :class="{ 'black-checkbox-span open': opensIncludes(item?.id) }">
+                            <span class="black-checkbox-span"
+                                :class="{ 'black-checkbox-span open': opensIncludes(item?.id) }">
 
 
-                                    <p :class="{ 'black-checkbox-span-name': opensIncludes(item?.id) }">{{ sub?.name }}
-                                    </p>
-                                </span></p>
+                                <p :class="{ 'black-checkbox-span-name': opensIncludes(item?.id) }">{{ sub?.name }}
+                                </p>
+                            </span>
+
                         </label>
                     </p>
                 </div>
 
-                <!-- <p
-                    v-else-if="selectedBoolValues && selectedBoolValues != undefined && selectedBoolValues[item?.id] || helpersRadio?.includes(item?.nameRu)">
-                <div class="custom-radio">
-                    <input type="radio" :id="'radio_' + item.id + '_true'" :value="true"
-                        v-model="selectedBoolValues[item.id].value" @change="handleInputChange">
-                    <label :for="'radio_' + item?.id + '_true'">
-                        <span class="radio-icon"></span>
-                        {{ $t('yes') }}
-                    </label>
-                </div>
-                <div class="custom-radio mt-2">
-                    <input type="radio" :id="'radio_' + item.id + '_false'" :value="false"
-                        v-model="selectedBoolValues[item.id].value" @change="handleInputChange">
-                    <label :for="'radio_' + item?.id + '_false'">
-                        <span class="radio-icon"></span>
-                        {{ $t('no') }}
-                    </label>
-                </div>
 
-
-                </p> -->
                 <p v-if="getRemainingItemCount(item) > 0" class="open-block" @click="setOpenBlock(item?.id)">
                     {{ opensIncludes(item.id) ? $t('closeBlock') : $t('more') }} <span v-if="!opensIncludes(item.id)">{{
                     getRemainingItemCount(item) }}</span>
@@ -112,17 +98,12 @@ const productsStore = useProductsSstore()
 const catalogStore = useCatalogStore();
 const authStore = useAuthStore();
 const checkboxStates = ref<{ [key: string]: CatalogCheckbox }>({});
-const selectedBoolValues: Ref<Record<string, BoolValues>> = ref({});
+
 const openedBlockFilters = ref<string[]>([]);
 const brandsStore = useBrandsStore();
 const queryBrand = route?.query
 const isBrandOpen = ref(false)
 
-const helpersRadio = ['Без запаха', 'Моющееся покрытие', 'Атмосферостойкое покрытие', 'Износостойкое покрытие', 'Одобрено Ассоциацией Качества Краски', 'Быстросохнущая', 'Грязе и водоотталкивающее покрытие']
-
-const radiosCatalogs = computed(() => {
-    return catalogStore.getAllCatalogs.filter((item) => helpersRadio.includes(item?.nameRu))
-})
 const getRemainingBrands = computed(() => {
     return brandsStore.getAllBrands?.length - 5
 })
@@ -149,9 +130,10 @@ const initializeCheckboxStates = async () => {
 
 
 const handlePrices = () => {
-    setTimeout(() => {
-        productsStore.filterProducts()
-    }, 600)
+    if (productsStore?.filters.minPrice > 0 && productsStore?.filters?.maxPrice > 0)
+        setTimeout(() => {
+            productsStore.filterProducts()
+        }, 600)
 
 }
 
@@ -160,18 +142,6 @@ const isChecked = (itemId: string, subId: string) => {
     return checkboxStates?.value[itemId]?.values?.find((val: { id: string }) => val.id === subId)?.value || false;
 };
 
-
-
-const initBools = async () => {
-    return radiosCatalogs && radiosCatalogs?.value?.map((item: BoolCatalog) => {
-        return selectedBoolValues.value[item.id] = {
-            name: item?.name,
-            id: item?.id,
-            value: false
-        };
-    });
-
-}
 
 
 
@@ -192,31 +162,9 @@ const updateBrandsInputs = (brand: Brands, event: any) => {
             productsStore.filters.brandId.splice(brandIndex, 1);
         }
     }
-
     productsStore.filterProducts()
 };
 
-const handleInputChange = () => {
-    const allBoolValues = {
-        'Быстросохнущая': 'fastDrying',
-        'Одобрено Ассоциацией Качества Краски': 'approvedByThePaintQualityAssociation',
-        'Без запаха': 'withoutSmell',
-        'Моющееся покрытие': 'washableCoating',
-        'Атмосферостойкое покрытие': 'weatherResistantCoating',
-        'Износостойкое покрытие': 'wearResistantCoating',
-        'Грязе и водооталкивающее покрытие': 'dirtAndWaterRepellentCoating'
-    }
-
-    let query: { [key: string]: boolean } = {};
-    Object.values(selectedBoolValues?.value)?.map((item) => {
-        query[allBoolValues[item?.name as keyof typeof allBoolValues]] = item?.value
-    })
-
-
-    productsStore.setBoolParams(query);
-    productsStore.filterProducts()
-
-}
 
 
 const updateCheckboxState = (itemId: string, subId: string, event: any) => {
@@ -274,7 +222,6 @@ onMounted(async () => {
     await catalogStore.fetchAllCatalogs();
     await initializeCheckboxStates();
     brandsStore.fetchAllBrands()
-    initBools()
     if (queryBrand && queryBrand?.id) {
         isBrandOpen.value = true
         productsStore?.filters.brandId.push(queryBrand?.id as string);
@@ -334,6 +281,44 @@ watch(() => authStore.getSelectedLang, async (newVal, oldVal) => {
 
 }
 
+.custom-radio input[type="radio"] {
+    display: none;
+}
+
+.custom-radio label {
+    position: relative;
+    cursor: pointer;
+    padding-left: 25px;
+    margin-right: 15px;
+    font-size: 16px;
+}
+
+.custom-radio .radio-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #fff;
+
+    border: 2px solid #000;
+
+}
+
+.custom-radio input[type="radio"]:checked+label .radio-icon::after {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #000;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 .filters {
     .basic-input {
         padding: 9px;
@@ -385,43 +370,7 @@ watch(() => authStore.getSelectedLang, async (newVal, oldVal) => {
 }
 
 
-.custom-radio input[type="radio"] {
-    display: none;
-}
 
-.custom-radio label {
-    position: relative;
-    cursor: pointer;
-    padding-left: 25px;
-    margin-right: 15px;
-    font-size: 16px;
-}
-
-.custom-radio .radio-icon {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: #fff;
-
-    border: 2px solid #000;
-
-}
-
-.custom-radio input[type="radio"]:checked+label .radio-icon::after {
-    content: '';
-    display: block;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #000;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
 
 .black-checkbox input[type="checkbox"] {
     display: none;
@@ -455,13 +404,15 @@ watch(() => authStore.getSelectedLang, async (newVal, oldVal) => {
     content: url("../../assets/icons/check-icon-vector.svg");
     width: 18px;
     height: 18px;
-
-
     background: black;
 }
 
+
+
 .main-block {
     padding-left: 30px;
+
+
 }
 
 @media(max-width:1000px) {

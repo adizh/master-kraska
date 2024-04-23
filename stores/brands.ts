@@ -9,7 +9,7 @@ export const useBrandsStore = defineStore("brandsStore", {
     async fetchAllBrands() {
       try {
         const response = await http("/api/v1/Brand/get-all-brands");
-        console.log("response brands", response);
+       
         if (response.status === 200) {
           this.brands = response.data;
         }
@@ -38,7 +38,7 @@ export const useBrandsStore = defineStore("brandsStore", {
     async fetchAllBrandId(brandId: string) {
       try {
         const response = await http(`/api/v1/Brand/get-brand/${brandId}`);
-        console.log("response brands", response);
+
         if (response.status === 200) {
           return response.data;
         }

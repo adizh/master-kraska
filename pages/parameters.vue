@@ -23,10 +23,13 @@
             <div class="params-header">
                 <span>2</span>
                 <p>{{ $t('whichTypeOfWork') }}</p>
+
             </div>
 
             <div v-for="item in secondBlock" :key="item?.id" class="mb-5">
+
                 <h4 class="filters-block-header">{{ item?.name }}</h4>
+
                 <div class="all-inputs">
                     <p v-if="item?.subdirectory?.length" v-for="(sub, index) in getSlicedSubdirectories(item)"
                         :key="index" class="each-sub-item">
@@ -301,8 +304,6 @@ const filterProductParams = () => {
     height: 18px;
     border: 1px solid black;
     left: -30px;
-
-
 }
 
 .black-checkbox input[type="checkbox"]:checked+.black-checkbox-span::before {
@@ -312,8 +313,6 @@ const filterProductParams = () => {
     content: url("../assets/icons/check-icon-vector.svg");
     width: 18px;
     height: 18px;
-
-
     background: black;
 }
 
@@ -368,11 +367,6 @@ const filterProductParams = () => {
         }
     }
 }
-
-
-
-
-
 
 
 .params-subinfo {
@@ -457,4 +451,6 @@ const filterProductParams = () => {
         line-height: 24px;
     }
 }
+
+
 </style>
