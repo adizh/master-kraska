@@ -1,48 +1,38 @@
 <template>
-    <div class="cart-main-info-prod">
+    <div class="cart-main-info-prod" @click.stop="router.push(`/product/${item?.id}`)">
         <div class="cart-main-info-prod-items">
             <div class="cart-main-info-prod-img">
                 <img src="../../assets/images/test-kraska.png" alt="">
             </div>
             <div class="cart-main-info-middle">
                 <h3>{{ item?.name }}</h3>
+                <span class="item-block-description">{{ productInfoHorizontal }}</span>
 
-                <div class="item-block-info">
-                    <div class="each-block-info-col">
-                        <span class="text">{{ $t('Расход') }}: </span>
-                        <span class="text-data">{{ item?.expenditure }}</span>
-                    </div>
-                    <div class="each-block-info-col"> <span class="text">{{ $t('packing') }}: </span>
-                        <span class="text-data">{{ item?.packing }}</span>
-                    </div>
-                    <div class="each-block-info-col"> <span class="text">{{ $t('brand') }}: </span>
-                        <span class="text-data">{{ item?.brandName }}</span>
-                    </div>
-                </div>
             </div>
         </div>
-
 
         <div class="cart-main-info-count">
 
             <slot name="count-buttons"></slot>
-            <!-- <button class="prod-count-buttons">
-                <span>-</span>
-                <span>12</span>
-                <span>+</span>
-            </button> -->
 
-            <!-- <img src="../assets/icons/icon=trash.svg" alt=""> -->
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
 import { ExtendedProduct } from '~/types/Product';
-
+const router = useRouter()
 const props = defineProps<{
     item: ExtendedProduct
 }>()
+const productInfoHorizontal = computed(() => {
+    return props?.item?.shortDescription && props?.item?.shortDescription?.split(' ').length > 19 ? props?.item?.shortDescription.split(' ').slice(0, 19).join(' ') + '...' : props?.item?.shortDescription
+
+})
 </script>
 
-<style scoped></style>
+<style scoped>
+.cart-main-info-prod:hover {
+    cursor: pointer;
+}
+</style>

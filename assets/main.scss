@@ -536,3 +536,11 @@ h2 {
   max-width: 680px;
   @extend %sub-info;
 }
+
+.item-block-description {
+  @include textFormat(14px, 20px, 600, $main-dark-grey);
+  max-width: 95%;
+  width: 100%;
+  margin-top: 10px;
+  height: 83px;
+}

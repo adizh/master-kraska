@@ -49,14 +49,6 @@ onMounted(async () => {
 </script>
 
 <style scoped lang="scss">
-.item-block-description {
-    @include textFormat(14px, 20px, 600, $main-dark-grey);
-    max-width: 95%;
-    width: 100%;
-    margin-top: 10px;
-    height: 83px;
-
-}
 
 
 .item-block {

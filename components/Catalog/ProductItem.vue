@@ -22,7 +22,9 @@
         <div class='first-col'>
             <img :src="product?.images[0]" alt="product">
             <div class="first-sub-col"> <span class="item-block-name">{{ productName(product?.name) }}</span>
-                <span>{{ productInfoHorizontal }}</span>
+                <span class="item-block-description">{{ productInfoHorizontal }}</span>
+
+
             </div>
         </div>
 

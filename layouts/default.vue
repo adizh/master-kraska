@@ -27,8 +27,9 @@
                     +996 509 910 148
                 </li>
                 <li @click="navigateTo('/cart')">
-                    <img src="../assets/icons/icon=cart.svg" alt="">
+                    <img src="../assets/icons/icon=cart.svg" alt="cart">
                     <span v-if="screenSize === 'large'">{{ $t('cart') }}</span>
+                    {{ cartStore?.getAllCart?.length }}
                 </li>
 
 
@@ -69,7 +70,7 @@ const isCatalogOpen = ref(false);
 const isProfileOpen = ref();
 const authStore = useAuthStore();
 
-
+const cartStore = useCartStore()
 
 
 const closeBurgerMenu = () => {
@@ -177,9 +178,8 @@ provide('closeProfileOpen', closeProfileOpen)
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    /* Adjust opacity and color as needed */
+
     z-index: 9
-        /* Ensure overlay is above other content */
 }
 
 .top-part {
