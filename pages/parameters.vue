@@ -55,7 +55,7 @@
         <div class="params-first blocks third">
             <div class="params-header">
                 <span>3</span>
-                
+
                 <p>{{ $t('whichTypeCoating') }}</p>
             </div>
 
@@ -101,12 +101,15 @@
                 {{ $t('yourSearchResults') }}
             </h3>
 
-            <div class="params-result-prod" v-if="productsStore.getFilteredProducts?.length">
+            <ProgressSpinner v-if="productsStore.getLoadingState && !productsStore.getFilteredProducts?.length" />
+            <div class="params-result-prod"
+                v-if="productsStore.getFilteredProducts?.length && !productsStore.getLoadingState">
                 <ProductsProductItem v-for="product in productsStore.getFilteredProducts" :key="product?.id"
                     :product="product" />
             </div>
 
-            <div v-else>{{ $t('noData') }}</div>
+            <div v-else-if="!productsStore.getLoadingState && !productsStore.getFilteredProducts?.length">{{
+                $t('noData') }}</div>
         </div>
     </section>
 </template>
@@ -273,14 +276,19 @@ const checkboxStates = ref<{ [key: string]: CatalogCheckbox }>({});
 
 
 const filterProductParams = () => {
+
     if (minPrice?.value >= 0 && maxPrice.value > 0) {
         productsStore.setPrices(minPrice.value, maxPrice.value)
     }
 
     showResults.value = true
     setTimeout(() => {
-        productsStore.filterProducts()
+        productsStore.filterProducts();
+
     }, 500)
+
+
+
 }
 
 </script>
@@ -316,10 +324,14 @@ const filterProductParams = () => {
     background: black;
 }
 
+.item-block {
+    width: 25%;
+}
 
 
 .params-result-prod {
     @include flex(flex, start, start);
+    flex-wrap: wrap;
 
 }
 
@@ -416,6 +428,10 @@ const filterProductParams = () => {
     .buttons-price {
         gap: 20p
     }
+
+    .item-block {
+        width: 40%;
+    }
 }
 
 @media (max-width:480px) {
@@ -450,7 +466,9 @@ const filterProductParams = () => {
         font-size: 14px;
         line-height: 24px;
     }
+
+    .item-block {
+        width: 100% !important;
+    }
 }
-
-
 </style>
