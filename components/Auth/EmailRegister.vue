@@ -88,24 +88,24 @@ const handleValues = (fieldName: keyof Inputs, validationType: string) => {
     inputs.value[fieldName].error = '';
     if (validationType === 'string') {
         if (typeof value !== 'string' || value.trim() === '') {
-            inputs.value[fieldName].error = "Это поле обязательно"
+            inputs.value[fieldName].error = t('requiredField')
         }
     } else if (validationType === 'email') {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(value)) {
-            inputs.value[fieldName].error = 'Неправильный формат почты';
+            inputs.value[fieldName].error = t('incorrectEmail')
         }
     } else if (validationType === 'number') {
         console.log('value  nuber', value)
         if (value === '') {
-            inputs.value[fieldName].error = "Это поле обязательно"
+            inputs.value[fieldName].error = t('requiredField')
         } else if (!value.startsWith('+996')) {
-            inputs.value[fieldName].error = "Неправильный формат телефона"
+            inputs.value[fieldName].error = t('incorrectPhone')
         }
     } else if (validationType === 'password') {
-        inputs.value[fieldName].error = value?.length < 8 ? 'Пароль должен быть больше 8 символов' : ''
+        inputs.value[fieldName].error = value?.length < 8 ? t('passwordRequire') : ''
     } else if (validationType === 'passwordRepeat') {
-        inputs.value[fieldName].error = value !== inputs.value.password.value ? 'Пароли должны совпадать' : !value ? "Это поле обязательно" : ''
+        inputs.value[fieldName].error = value !== inputs.value.password.value ? t('passwordSync') : !value ? t('requiredField') : ''
 
     }
 };
@@ -160,7 +160,7 @@ const submitRegister = async () => {
 
             if (err.status === 400 || err.response.data.includes('email')) {
                 inputs.value.email.error = t('emailError');
-                console.log('is this  err working????????????')
+
             }
         }
     } else {
