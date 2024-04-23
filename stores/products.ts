@@ -74,12 +74,12 @@ export const useProductsSstore = defineStore("productsStore", {
                   ""
                 ),
               },
-              similarProducts: {
-                ...response.data.similarProducts,
-                shorDescription: response.data.similarProducts?.map(
-                  (similar: Product) => {}
-                ),
-              },
+              similarProducts: response.data.similarProducts?.map(
+                (similar: Product) => ({
+                  ...similar,
+                  shortDescription: similar.shortDescriptionKg,
+                })
+              ),
             };
           } else {
             filtered = await {
@@ -93,6 +93,12 @@ export const useProductsSstore = defineStore("productsStore", {
                   ""
                 ),
               },
+              similarProducts: response.data.similarProducts?.map(
+                (similar: Product) => ({
+                  ...similar,
+                  shortDescription: similar.shortDescriptionRu,
+                })
+              ),
             };
           }
 
