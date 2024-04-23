@@ -53,7 +53,10 @@ export const useProductsSstore = defineStore("productsStore", {
                 ...response.data.product,
                 name: response.data?.product?.nameKg,
                 shortDescription: response.data?.product?.shortDescriptionKg,
-                description: response.data?.product?.descriptionKg,
+                description: response.data?.product?.descriptionKg.replace(
+                  /<\/?p>/g,
+                  ""
+                ),
               },
             };
           } else {
@@ -63,7 +66,10 @@ export const useProductsSstore = defineStore("productsStore", {
                 ...response.data.product,
                 name: response.data?.product?.nameKg,
                 shortDescription: response.data?.product?.shortDescriptionRu,
-                description: response.data?.product?.descriptionRu,
+                description: response.data?.product?.descriptionRu.replace(
+                  /<\/?p>/g,
+                  ""
+                ),
               },
             };
           }

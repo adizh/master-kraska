@@ -56,6 +56,7 @@
 </template>
 
 <script setup lang="ts">
+const { t } = useI18n()
 import { Inputs } from '@/types/Items'
 import http from '@/composables/http'
 const isPasswordOpen = ref(false)
@@ -113,6 +114,7 @@ const handleValues = (fieldName: keyof Inputs, validationType: string) => {
 
 const submitRegister = async () => {
     const validationTypes: Record<keyof Inputs, string> = {
+
         name: 'string',
         surname: 'string',
         email: 'email',
@@ -149,8 +151,13 @@ const submitRegister = async () => {
                 }, 1000)
             }
             console.log('response', response)
-        } catch (err) {
-            console.log('errr', err)
+        } catch (err: any) {
+            console.log('errr', err);
+
+            if (err.status === 400 || err.response.data.includes('email')) {
+                inputs.value.email.error = t('emailError');
+                console.log('is this  err working????????????')
+            }
         }
     } else {
         console.log('still some errroe')

@@ -60,6 +60,7 @@ const props = defineProps<{
 
 console.log('what is infod item????', props.item)
 
+
 const descriptionLen = ref(480);
 const surfaceLen = ref(480);
 const isDescrOpen = ref(false)
