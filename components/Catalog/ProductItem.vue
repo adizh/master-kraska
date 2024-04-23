@@ -7,8 +7,8 @@
 
         </div>
         <slot name="edit-items"></slot>
-        <img :src="product?.images[0]" alt="">
-        <span class="item-block-name">{{ (product?.name) }}</span>
+        <img :src="product?.images[0]" alt="product">
+        <span class="item-block-name">{{ productName(product?.name) }}</span>
 
         <div class="item-block-info">
             <div class="each-block-info-col">
@@ -31,20 +31,18 @@
 
     <div class="item-block horizontal" @click="navigateTo(`/product/${product?.id}`)" v-else>
         <div class='first-col'>
-            <img src="../../assets/images/test-kraska.png" alt="">
-            <div class="first-sub-col"> <span class="item-block-name">Полуматовая универсальная эмаль на водной основе
-                    MARSHALL EXPORT
-                    AQUA</span>
+            <img :src="product?.images[0]" alt="product">
+            <div class="first-sub-col"> <span class="item-block-name">{{ productName(product?.name) }}</span>
                 <div class="item-block-info">
                     <div class="each-block-info-col">
-                        <span class="text">Расход: </span>
-                        <span class="text-data">4343434</span>
+                        <span class="text">{{ $t('consumption') }}: </span>
+                        <span class="text-data">{{ $t('noData') }}</span>
                     </div>
-                    <div class="each-block-info-col"> <span class="text">Фасовка: </span>
-                        <span class="text-data"> 43434</span>
+                    <div class="each-block-info-col"> <span class="text">{{ $t('packing') }}: </span>
+                        <span class="text-data"> {{ $t('noData') }}</span>
                     </div>
-                    <div class="each-block-info-col"> <span class="text">Бренд: </span>
-                        <span class="text-data">feererere</span>
+                    <div class="each-block-info-col"> <span class="text">{{ $t('brand') }}: </span>
+                        <span class="text-data">{{ prodBrand }}</span>
                     </div>
                 </div>
             </div>
@@ -153,13 +151,11 @@ const productName = (name: string) => {
     width: 100%;
     @include flex(row, space-between, start);
 
-    img {
-        width: 35%;
-    }
+
 
     .first-col {
         max-width: 65%;
-        @include flex(row, space-between, start);
+        @include flex(row, space-between, start, 50px);
     }
 
     .first-sub-col {
