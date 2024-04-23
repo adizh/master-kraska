@@ -3,7 +3,7 @@
         <h1 class="main-header-h1">{{ $t('company') }}</h1>
         <h5 class='each-section-header'>{{ $t('aboutUs') }}</h5>
         <p class="info-text">
-            {{ $t('aboutMainHeader') }}
+
 
             <br />
             {{ subHeader }}

@@ -23,10 +23,9 @@
 
                     <div class="koler-part">
                         <div class="koler-colors">
-                            <div class="bottom" v-if="currentBrandsColors?.length">
-                                <div v-for="item in  currentBrandsColors?.slice(0, 27)" :key="item.id"
-                                    class="bottom-item" :style="{ background: '#' + item.rgb }"
-                                    @click="selectColor(item)"
+                            <div class="bottom" v-if="activeBrand?.length">
+                                <div v-for="item in activeBrand" :key="item.id" class="bottom-item"
+                                    :style="{ background: '#' + item.rgb }" @click="selectColor(item)"
                                     :class="{ 'selected-color': item?.id === selectedColor?.id }">
                                     <span> {{ item.code }}</span>
                                 </div>
@@ -34,7 +33,7 @@
                             </div>
 
 
-                            <UIPagination :total="10" :currentActive="currentPage" @changePage="changePage" />
+                            <UIPagination :total="totalPages" :currentActive="currentPage" @changePage="changePage" />
 
 
                         </div>
@@ -62,10 +61,13 @@ import { Tinting } from '@/types/Tinting'
 
 const currentBrandsColors = ref<Tinting[]>([]);
 const allTingings = ref<Tinting[]>([])
-
+const activeBrand = ref<Tinting[]>([]);
 const currentPage = ref(1);
+const pageSize = ref(27)
+const totalPages = ref(10)
 const changePage = (page: number) => {
     currentPage.value = page;
+    fetchTintingsByBrand(selectedBrand.value)
 }
 
 const selectedBrand = ref<Brands>({} as Brands);
@@ -82,8 +84,7 @@ onMounted(async () => {
     await fetchAllTintings();
     currentBrandsColors.value = allTingings.value?.filter((item: Tinting) => item?.brandId === selectedBrand?.value.id);
 
-    const alllitems = await http('api/v1/Category/get-all-top-categories');
-    console.log('api/v1/Category/get-all-top-categories', alllitems)
+
 });
 
 
@@ -117,16 +118,32 @@ const fetchAllData = async (ids: string[]) => {
     filteredBrands.value = results.filter((item: Brands) => Boolean(item));
     selectedBrand.value = results[0];
     currentBrandsColors.value = allTingings.value?.filter((item: Tinting) => item?.brandId === selectedBrand?.value.id);
-
+    fetchTintingsByBrand(selectedBrand.value)
     return []
 }
 
 
+const fetchTintingsByBrand = async (brand: Brands) => {
+    try {
+        const response = await http(`/api/v1/Tinting/get-all-tintings-pagination?page=${currentPage.value}&pageSize=${pageSize?.value}&brandId=${brand?.id}`);
+        console.log('response fetchTintingsByBrand', response);
+        if (response.status === 200) {
+            activeBrand.value = response.data.items;
+            totalPages.value = response.data.totalPages
+        }
+    } catch (err) {
+        console.log(err)
+    }
+}
+
 const fetchAllTintings = async () => {
     try {
-        const response = await http('/api/v1/Tinting/get-all-tintings');
+        const response = await http('/api/v1/Tinting/get-all-tintings')
+        // const response = await http(`/api/v1/Tinting/get-all-tintings-pagination?page=${currentPage.value}&pageSize=${pageSize?.value}&brandId=${selectedBrand?.value.id}`);
         if (response.status === 200) {
-            allTingings.value = response.data;
+            allTingings.value = response.data
+
+            console.log('response data fetchAllTintings', response.data)
             const uniqueIds = response.data.reduce((ids: any, obj: Tinting) => {
                 if (!ids.includes(obj?.brandId)) {
                     ids.push(obj?.brandId);
@@ -148,6 +165,7 @@ const fetchAllTintings = async () => {
 const chooseBrand = (value: Brands) => {
     selectedBrand.value = value;
     currentBrandsColors.value = allTingings.value?.filter((item: Tinting) => item?.brandId === selectedBrand?.value.id);
+    fetchTintingsByBrand(selectedBrand.value)
 }
 
 
@@ -218,7 +236,7 @@ const chooseBrand = (value: Brands) => {
 
         &-item {
             background: #AC5E97;
-            padding: 23px;
+            padding: 15px 17px;
             margin: 2px;
             border-radius: 4px;
             width: 30%;
