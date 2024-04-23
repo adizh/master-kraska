@@ -15,7 +15,7 @@
                     </p>
                 </div>
 
-                <div class="col-9">
+                <div class="col-9 second-block">
                     <input type="text" name="search" id="searcg" placeholder="Введите код цвета" class="basic-input">
                     <div class="danger-text">
                         {{ $t('kolerWarning') }}
@@ -34,6 +34,9 @@
                             </div>
 
 
+                            <UIPagination :total="10" :currentActive="currentPage" @changePage="changePage" />
+
+
                         </div>
 
                         <div class="koler-change">
@@ -48,13 +51,17 @@
 </template>
 
 <script setup lang="ts">
-
 import { Brands } from "~/types/Brands";
 import { Tinting } from '@/types/Tinting'
+
 
 const currentBrandsColors = ref<Tinting[]>([]);
 const allTingings = ref<Tinting[]>([])
 
+const currentPage = ref(1);
+const changePage = (page: number) => {
+    currentPage.value = page;
+}
 
 const selectedBrand = ref<Brands>({} as Brands);
 
@@ -70,7 +77,8 @@ onMounted(async () => {
     await fetchAllTintings();
     currentBrandsColors.value = allTingings.value?.filter((item: Tinting) => item?.brandId === selectedBrand?.value.id);
 
-
+    const alllitems = await http('api/v1/Category/get-all-top-categories');
+    console.log('api/v1/Category/get-all-top-categories', alllitems)
 });
 
 
@@ -201,6 +209,7 @@ const chooseBrand = (value: Brands) => {
         @include flex(row, start, center);
         margin-top: 20px;
         flex-wrap: wrap;
+        margin-bottom: 42px;
 
         &-item {
             background: #AC5E97;
@@ -265,8 +274,6 @@ const chooseBrand = (value: Brands) => {
 
 body {
     overflow: hidden;
-
-
 }
 
 img {
@@ -283,7 +290,7 @@ img {
 
 #bg {
     position: absolute;
-    height: 100vh;
+    height: 95% !important;
     width: 100%;
     top: 0;
     mix-blend-mode: hue;
@@ -292,39 +299,77 @@ img {
     z-index: 1
 }
 
-@media (min-width:1300px) {
-    .first-slide {
-        width: 482px !important;
-    }
-}
 
-@media (max-width:1300px) {
-    .first-slide {
-        width: 482px !important;
+
+
+@media (max-width:1000px) {
+
+    .img {
+        height: 440px !important;
+    }
+
+    .koler-section {
+        padding: 0;
+        border: none;
+    }
+
+    .koler-section-select-line {
+        margin-right: 15px;
+        word-wrap: break-word;
+    }
+
+    .col-9 {
+        width: 80% !important;
+    }
+
+    .koler-colors .bottom-item {
+        width: 45%;
+        padding: 10px 20px;
     }
 }
 
 @media (max-width:768px) {
-    .first-slide {
-        width: 402px !important;
+    .koler-part {
+        flex-direction: column
+    }
+
+    .koler-change {
+        width: 65%;
+        margin-top: 30px;
+    }
+
+    .koler-colors {
+        width: 100%;
+    }
+
+    .koler-colors .bottom-item {
+        width: 30%;
+    }
+
+
+    .koler-section-select {
+        flex-direction: column;
+    }
+
+    .koler-section-select-line {
+        flex-direction: row;
+        width: 100% !important;
+        flex-wrap: wrap;
     }
 }
 
 @media (max-width:576px) {
-    .first-slide {
-        width: 382px !important;
-    }
-}
 
-@media (max-width:448px) {
-    .first-slide {
-        width: 302px !important;
+    .second-block,
+    .koler-change {
+        width: 100% !important;
     }
-}
 
-@media (max-width:320px) {
-    .first-slide {
-        width: 202px !important;
+    .koler-colors .bottom-item {
+        width: 45%;
     }
+
+
+
 }
 </style>

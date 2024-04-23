@@ -9,11 +9,11 @@
 
         </div>
 
-        <!-- <NoContent title="Избранные пусто">
+        <NoContent title="Избранные пусто">
             <template #icon>
                 <img src="../assets/icons/icon=heart.svg" alt="heart" class="no-content-img">
             </template>
-</NoContent> -->
+        </NoContent>
     </section>
 </template>
 

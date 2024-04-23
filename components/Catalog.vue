@@ -4,16 +4,16 @@
         <h5 class='each-section-header'>{{ $t('productsCatalog') }}</h5>
         <div class="options-list">
             <ul class="first-col">
-                <li v-for="item in getAllCategories?.slice(0, 9)" :key="item.id"
-                    @click.stop="navigateTo(`/catalog/${item.id}`)">
-                    {{ formatName(item?.name) }}
+                <li v-for="item in getAllCategories?.slice(0, Math.ceil(getAllCategories?.length / 2))"
+                    :key="item?.category?.id" @click.stop="navigateTo(`/catalog/${item?.category?.id}`)">
+                    {{ formatName(item?.category?.name) }}
                 </li>
             </ul>
 
             <ul class="second-col">
-                <li v-for="item in getAllCategories?.slice(9)" :key="item.id"
-                    @click.stop="navigateTo(`/catalog/${item.id}`)">
-                    {{ formatName(item?.name) }}
+                <li v-for="item in getAllCategories?.slice(getAllCategories?.length / 2)" :key="item?.category?.id"
+                    @click.stop="navigateTo(`/catalog/${item?.category?.id}`)">
+                    {{ formatName(item?.category?.name) }}
                 </li>
             </ul>
         </div>
@@ -35,7 +35,9 @@ const formatName = (name: string) => {
 }
 
 const props = defineProps<{
-    isCatalogOpen: boolean
+
+    isCatalogOpen: boolean;
+
 }>();
 
 const emit = defineEmits<{
@@ -45,18 +47,23 @@ const emit = defineEmits<{
 
 
 const closeCatalogOptions = () => {
+
     emit('closeCatalog');
+
 };
 
 
 onMounted(() => {
-    catalogStore.fetchAllCategories()
+    catalogStore.fetchAllCategories();
 })
+
+console.log('getAllCategories IN A COMPONSNE', catalogStore.getAllCategories)
 
 
 watch(() => authStore.getSelectedLang, () => {
     catalogStore.fetchAllCategories();
 });
+
 </script>
 
 <style scoped lang='scss'>
@@ -94,8 +101,6 @@ li {
         color: $main-blue
     }
 }
-
-
 
 .catalog-options {
     @include openedOptionsHeader(100%, 20px 4rem, 4rem)

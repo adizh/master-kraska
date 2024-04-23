@@ -1,9 +1,7 @@
 <template>
     <div class="item-page-header">
         <div class="left">
-            <!-- <NuxtImg src="/test-kraska.png" /> -->
-
-            <img src="../../assets/images/test-kraska.png" alt="">
+            <img :src="product?.images[0]" alt="product">
         </div>
         <div class="middle">
             <div class="middle-header">
@@ -11,12 +9,11 @@
             </div>
             <div>
                 <p class="each-block-info-col">{{ $t('storeMark') }}:</p>
-                <!-- <NuxtImg src="/brands/marshall.png" /> -->
-                <img src="../../assets/images/test-kraska.png" alt="">
+                <!-- <img :src="product?.images[0]" alt="product"> -->
             </div>
             <div class="middle-review"><span class="each-block-info-col">{{ $t('rating') }}</span>
                 <div class='middle-rating'>
-                    <span class="middle-review-number">{{ product?.rating.toFixed(2) }}</span>
+                    <span class="middle-review-number">{{ product?.rating?.toFixed(2) }}</span>
                     <Rating v-model="ratingValue" :cancel="false" />
                     <span class="middle-review-text">{{ $t('reviews') }}</span>
                 </div>
@@ -25,7 +22,7 @@
             <div class="middle-volume">
                 <span class="each-block-info-col">{{ $t('volume') }}</span>
 
-                <div class="middle-volume-buttons">
+                <div class="middle-volume-buttons" v-if="product?.variants">
                     <button v-for="(btn, index) in product?.variants" :key="btn?.id"
                         :class="{ 'active-btn': volumeBtn === btn?.size }" @click='selectVolumeSize(btn?.size, index)'>
                         {{ btn?.size }}
@@ -87,7 +84,7 @@
             <div class="count">
                 <span class="each-block-info-col">{{ $t('sum') }}</span>
                 {{
-                    selectedProductPrice * countToBuy }} сом
+                selectedProductPrice * countToBuy }} сом
             </div>
 
             <div class="buy-btns"> <button @click="addToCart">
@@ -189,8 +186,10 @@ ratingValue.value = props?.product?.rating
 
 
 const selectVolumeSize = (value: string, index: number) => {
-    volumeBtn.value = value;
-    selectedProductPrice.value = props?.product?.variants[index].price
+
+
+    // volumeBtn.value = value;
+    // selectedProductPrice.value = props?.product?.variants[index].price
 
 }
 const decreaseCount = () => {
@@ -277,8 +276,14 @@ onMounted(() => {
     productStore.getBookmarks(props?.product?.id);
     console.log('product in component child itseld', props)
     isProductBookmarked.value = productStore.getProductBookmarked;
-    volumeBtn.value = props.product?.variants[leastSmallAmount.value]?.size;
-    selectedProductPrice.value = props.product?.variants[leastSmallAmount.value]?.price;
+
+    if (props.product?.variants !== null && props.product?.variants && props.product?.variants[leastSmallAmount.value]?.price !== undefined) {
+        selectedProductPrice.value = props.product?.variants[leastSmallAmount.value]?.price;
+        volumeBtn.value = props.product?.variants[leastSmallAmount.value]?.size;
+    } else {
+        selectedProductPrice.value = props.product?.price
+    }
+
     totalPrice.value = countToBuy.value * selectedProductPrice.value
 })
 

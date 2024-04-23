@@ -27,7 +27,7 @@ export type Product = {
   subdirectoryId: string[];
   images: string[];
   reviews: Review[];
-
+price:number,
   helpersMain: {
     id: string;
     name: string;
@@ -38,7 +38,7 @@ export type Product = {
   }[];
   products: [];
   category: null;
-  variants: { id: string; size: string; price: number }[];
+  variants?: { id: string; size: string; price: number }[];
 };
 
 export interface ExtendedProduct extends Product {

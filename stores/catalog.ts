@@ -69,18 +69,26 @@ export const useCatalogStore = defineStore("catalogStore", {
     async fetchAllCategories() {
       const authStore = useAuthStore();
       try {
-        const response = await http("/api/v1/Category/get-all-categories");
+        const response = await http("/api/v1/Category/get-all-top-categories");
         console.log("response all categories", response);
         if (response.status === 200) {
           const filtered = response.data.map((item: Category) => {
             if (authStore.getSelectedLang === "kg") {
-              return { ...item, name: item?.nameKg };
+              return {
+                ...item,
+                category: { ...item?.category, name: item?.category?.nameKg },
+              };
             } else {
-              return { ...item, name: item?.nameRu };
+              return {
+                ...item,
+                category: { ...item?.category, name: item?.category?.nameKg },
+              };
             }
           });
 
           this.allCategories = filtered;
+
+          console.log(" this.allCategories in pinia", this.allCategories);
         }
       } catch (err) {
         console.log(err);

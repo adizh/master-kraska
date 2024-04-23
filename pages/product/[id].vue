@@ -1,9 +1,9 @@
 <template>
     <section>
         <ProductPageHeader :product="data?.product" />
-        <ProductPageInfo :item="data?.product" />
+        <!-- <ProductPageInfo :item="data?.product" />
         <ProductPageSImilarItems :similarItems="data?.similarProducts" />
-        <ProductPageReviews :item='data?.product' />
+        <ProductPageReviews :item='data?.product' /> -->
     </section>
 </template>
 

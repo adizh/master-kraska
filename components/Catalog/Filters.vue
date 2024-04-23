@@ -60,10 +60,11 @@
                     </p>
                 </div>
 
-                <p v-else-if="selectedBoolValues[item?.id] || helpersRadio?.includes(item?.nameRu)">
+                <!-- <p
+                    v-else-if="selectedBoolValues && selectedBoolValues != undefined && selectedBoolValues[item?.id] || helpersRadio?.includes(item?.nameRu)">
                 <div class="custom-radio">
                     <input type="radio" :id="'radio_' + item.id + '_true'" :value="true"
-                        v-model="selectedBoolValues[item.id].value" @change="handleInputChange()">
+                        v-model="selectedBoolValues[item.id].value" @change="handleInputChange">
                     <label :for="'radio_' + item?.id + '_true'">
                         <span class="radio-icon"></span>
                         {{ $t('yes') }}
@@ -71,7 +72,7 @@
                 </div>
                 <div class="custom-radio mt-2">
                     <input type="radio" :id="'radio_' + item.id + '_false'" :value="false"
-                        v-model="selectedBoolValues[item.id].value" @change="handleInputChange()">
+                        v-model="selectedBoolValues[item.id].value" @change="handleInputChange">
                     <label :for="'radio_' + item?.id + '_false'">
                         <span class="radio-icon"></span>
                         {{ $t('no') }}
@@ -79,7 +80,7 @@
                 </div>
 
 
-                </p>
+                </p> -->
                 <p v-if="getRemainingItemCount(item) > 0" class="open-block" @click="setOpenBlock(item?.id)">
                     {{ opensIncludes(item.id) ? $t('closeBlock') : $t('more') }} <span v-if="!opensIncludes(item.id)">{{
                     getRemainingItemCount(item) }}</span>
@@ -162,8 +163,8 @@ const isChecked = (itemId: string, subId: string) => {
 
 
 const initBools = async () => {
-    return await radiosCatalogs.value.map((item: BoolCatalog) => {
-        selectedBoolValues.value[item.id] = {
+    return radiosCatalogs && radiosCatalogs?.value?.map((item: BoolCatalog) => {
+        return selectedBoolValues.value[item.id] = {
             name: item?.name,
             id: item?.id,
             value: false
@@ -367,7 +368,9 @@ watch(() => authStore.getSelectedLang, async (newVal, oldVal) => {
 
 .brands {
     margin-top: 40px;
+    padding-left: 30px;
 }
+
 
 .price {
     @include flex(column, center, start, 5px);
@@ -457,13 +460,16 @@ watch(() => authStore.getSelectedLang, async (newVal, oldVal) => {
     background: black;
 }
 
+.main-block {
+    padding-left: 30px;
+}
+
 @media(max-width:1000px) {
 
-    .brands-list,
-    .main-block {
+    .brands-list {
         @include flex(row, start, center, 2rem);
         flex-wrap: wrap;
-        padding-left: 30px;
+
     }
 
     .each-sub-item {

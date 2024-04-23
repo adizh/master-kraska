@@ -246,4 +246,10 @@ img {
     border-radius: 10px;
     margin-bottom: 5px !important;
 }
+
+@media (max-width:576px) {
+    .each-field {
+        width: 100% !important;
+    }
+}
 </style>

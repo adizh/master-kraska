@@ -11,8 +11,7 @@
             $t('catalog') }}
                         <img class="arrow" :class="{ 'rotated': isCatalogOpen }"
                             src="../assets/icons/icon=components-closed-arrow.svg" alt="open-arrow">
-                        <Catalog :isCatalogOpen="isCatalogOpen" @closeCatalog="closeCatalog"
-                            @goToCatalog="goToCatalog" />
+                        <Catalog :isCatalogOpen="isCatalogOpen" @closeCatalog="closeCatalog" />
 
                     </li>
                     <li @click="navigateTo('/koler')">{{ $t('tinting') }}</li>
@@ -38,13 +37,9 @@
                     </li>
 
                     <li class="burger-menu" v-if="!isBurgerMenuOpen" @click="openBurger">
-
                         <span></span>
-
                         <span></span>
-
                         <span></span>
-
                     </li>
 
                     <li v-else @click="isBurgerMenuOpen = false">

@@ -3,7 +3,7 @@
         <section>
             <h1>{{ $t('profile') }}</h1>
             <div class="profile-main grid">
-                <ul class="sidebar col-3">
+                <ul class="sidebar col-12 sm:col-12 lg:col-3">
                     <li v-for="(item, index) in tabsOptions" :key="item" @click="() => selectTab(index + 1)"
                         :class="{ 'active': index + 1 === selectedTab }">
                         {{ item }}
@@ -11,7 +11,7 @@
                     <li @click="openLogout" class="">{{ $t('logoutext') }}</li>
                 </ul>
 
-                <div class="col-8 right-side" v-if="selectedTab === 1">
+                <div class="col-12 sm:col-12 md:col-9 lg:col-8 right-side" v-if="selectedTab === 1">
                     <ProfileForm />
                 </div>
                 <div class="col-8 right-side orders" v-else-if="selectedTab === 2">
@@ -77,14 +77,20 @@
                     <ProfileReviews></ProfileReviews>
                 </div>
 
-                <div class="col-8 right-side orders" v-else-if="selectedTab === 5">
+                <div class="col-12 md:col-12 lg:col-8 right-side" v-else-if="selectedTab === 5">
                     <ProfileNotifications />
                 </div>
                 <div class="col-8 right-side orders" v-else-if="selectedTab === 6">
-                    <div class="bookmarked-list">
+                    <div class="bookmarked-list" v-if="userBookmarks?.length">
                         <ProductsProductItem type="bookmark" v-for="item in userBookmarks" :key="item.id"
                             :product="item" @addItemToBookmarks="addItemToBookmarks" />
                     </div>
+
+                    <NoContent title="Избранные пусто" v-else>
+                        <template #icon>
+                            <img src="../assets/icons/icon=heart.svg" alt="heart" class="no-content-img">
+                        </template>
+                    </NoContent>
                 </div>
             </div>
         </section>
@@ -115,6 +121,7 @@ import { useI18n } from 'vue-i18n';
 const { t } = useI18n()
 
 const isLogoutOpen = ref(false);
+
 const userBookmarks = ref<Product[]>([])
 let selectedTab: Ref<number>;
 const tabsOptions = [t('personalInfo'), t('ordersHistory'), t('cart'), t('myReviews'), t('notificationSettings'), t('boormarksProfile')];
@@ -247,5 +254,34 @@ li.active {
 
 .item-block {
     width: 35%
+}
+
+@media (max-width:1000px) {
+    .profile-main {
+        border: none;
+    }
+
+    .sidebar {
+        flex-wrap: wrap;
+        display: flex;
+        flex-direction: row;
+        border: none;
+
+        li {
+            height: 8%;
+            border-bottom: none;
+        }
+    }
+
+    .edit-btn {
+        justify-content: flex-start;
+    }
+
+}
+
+@media (max-width:576px) {
+    .right-side {
+        padding: 5px
+    }
 }
 </style>
