@@ -5,9 +5,11 @@
 
                 <div class="buttons-pgn">
                     <button class="pagination-arrow prev" :disabled="currentPage === 1" @click="previousPage">
-
                     </button>
+                    <span v-if="ellipseShowFirst" class="last-page" @click="changePage(1)">{{
+                        1 }}</span>
                     <span v-if="ellipseShowFirst" class="ellipse">...</span>
+
                     <ul v-for="page in visiblePages" :key="page">
                         <li class="each-button-pag" :class="`${currentPage === page ? 'current-page' : ''}`"
                             @click="changePage(page)">
@@ -36,12 +38,12 @@ import { ref, computed, defineProps, defineEmits } from "vue";
 const emit = defineEmits(['changePage']);
 interface PaginationProps {
     total: number;
-    currentActive?: number;
+    currentActive: number;
 }
 
 const props = defineProps<PaginationProps>();
 
-const currentPage = ref<number>(1);
+const currentPage = ref(props.currentActive)
 const buttonsToShow = ref<number>(3);
 
 const totalPages = computed(() => {
@@ -143,6 +145,17 @@ const nextPage = () => {
         cursor: pointer;
         border: none !important;
 
+    }
+}
+
+.last-page {
+    border: 1px solid white;
+    padding: 4px 10px;
+    border-radius: 4px;
+
+    &:hover {
+        cursor: pointer;
+        border-color: $main-pink;
     }
 }
 

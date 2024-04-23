@@ -5,7 +5,12 @@ export const useProductsSstore = defineStore("productsStore", {
   state: () => ({
     allProducts: [] as Product[],
     filteredProducts: [] as Product[],
+    filterProductTotal: {
+      totalPages: 0,
+      totalItems: 0,
+    },
     isProductBookmarked: false,
+    areFiltersLoading: false,
     product: {} as { product: Product; similarProducts: Product[] },
     filters: {
       search: "",
@@ -14,6 +19,8 @@ export const useProductsSstore = defineStore("productsStore", {
       minPrice: 0,
       maxPrice: 0,
       brandId: [] as string[],
+      currentPage: 1,
+      pageSize: 10,
     },
   }),
   actions: {
@@ -116,6 +123,7 @@ export const useProductsSstore = defineStore("productsStore", {
       }
     },
     async filterProducts(prodName?: string) {
+      this.areFiltersLoading = true;
       const subDirs =
         this.filters.subdirectoryIds?.length > 0
           ? this.filters.subdirectoryIds?.join(",")
@@ -133,6 +141,8 @@ export const useProductsSstore = defineStore("productsStore", {
         minPrice: this.filters.minPrice || null,
         maxPrice: this.filters.maxPrice || null,
         brandId: allBrands,
+        page: this.filters.currentPage,
+        pageSize: this.filters.pageSize,
       };
       const authStore = useAuthStore();
       try {
@@ -142,6 +152,8 @@ export const useProductsSstore = defineStore("productsStore", {
         );
         console.log("response filterProducts", response);
         if (response.status === 200) {
+          this.filterProductTotal.totalItems = response.data.totalItems;
+          this.filterProductTotal.totalPages = response.data.totalPages;
           const filtered = response.data.items?.map((item: Product) => {
             if (authStore.getSelectedLang === "kg") {
               return { ...item, name: item?.nameKg };
@@ -154,6 +166,8 @@ export const useProductsSstore = defineStore("productsStore", {
         }
       } catch (err) {
         console.log(err);
+      } finally {
+        this.areFiltersLoading = false;
       }
     },
     setCategoryId(categoryId: string) {
@@ -192,6 +206,12 @@ export const useProductsSstore = defineStore("productsStore", {
     },
     getProduct(state) {
       return state.product;
+    },
+    getProdTotal(state) {
+      return state.filterProductTotal;
+    },
+    getLoadingState(state) {
+      return state.areFiltersLoading;
     },
   },
 });

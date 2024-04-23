@@ -14,6 +14,7 @@
 <script setup lang="ts">
 const route = useRoute();
 
+
 const id = ref(route.params.id)
 const productsStore = useProductsSstore()
 const { getProduct } = storeToRefs(productsStore);
