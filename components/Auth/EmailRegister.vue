@@ -99,6 +99,8 @@ const handleValues = (fieldName: keyof Inputs, validationType: string) => {
         console.log('value  nuber', value)
         if (value === '') {
             inputs.value[fieldName].error = "Это поле обязательно"
+        } else if (!value.startsWith('+996')) {
+            inputs.value[fieldName].error = "Неправильный формат телефона"
         }
     } else if (validationType === 'password') {
         inputs.value[fieldName].error = value?.length < 8 ? 'Пароль должен быть больше 8 символов' : ''
