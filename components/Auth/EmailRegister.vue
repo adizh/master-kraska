@@ -149,7 +149,9 @@ const submitRegister = async () => {
                 setTimeout(() => {
                     emit('closeModal')
                 }, 1000)
+                window.location.reload()
             }
+
             console.log('response', response)
         } catch (err: any) {
             console.log('errr', err);

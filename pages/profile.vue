@@ -158,6 +158,9 @@ const selectTab = (tab: number) => {
     if (tab === 7) {
         openLogout();
     }
+    else if (tab === 5) {
+        fetchUserBookmarks()
+    }
     localStorage.setItem('selectedTab', selectedTab.value.toString());
 }
 
@@ -170,9 +173,9 @@ const fetchUserBookmarks = async () => {
         if (response.status == 200) {
             const filtered = response.data.products.map((item: Product) => {
                 if (store.getSelectedLang === 'kg') {
-                    return { ...item, name: item?.nameKg }
+                    return { ...item, name: item?.nameKg, shortDescription: item?.shortDescriptionKg }
                 } else {
-                    return { ...item, name: item?.nameRu }
+                    return { ...item, name: item?.nameRu, shortDescription: item?.shortDescriptionRu }
                 }
             })
             userBookmarks.value = filtered
@@ -187,10 +190,10 @@ const addItemToBookmarks = (objectId: string) => {
 }
 
 
-// onBeforeRouteLeave((to, from, next) => {
-//     localStorage.removeItem('selectedTab')
+onUnmounted(() => {
+    localStorage.removeItem('selectedTab')
 
-// });
+});
 
 onMounted(() => {
     store.fetchUser();
@@ -260,9 +263,7 @@ li.active {
 }
 
 .item-block {
-    width: 35%;
-    max-height: 600px;
-    height: 100%
+    width: 38%;
 }
 
 @media (max-width:1000px) {
