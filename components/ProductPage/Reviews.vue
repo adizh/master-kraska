@@ -11,9 +11,7 @@
             <span>{{ $t('rateProduct') }}</span>
             <Rating v-model="inputs.ratingValue.value" :cancel="false" />
             <span class="err-input-msg">{{ inputs.ratingValue.error }}</span>
-            <input type="text" class="basic-input" :placeholder="$t('title')" v-model="inputs.title.value"
-                @input="handleInput('title', 'string')" />
-            <span class="err-input-msg">{{ inputs.title.error }}</span>
+
             <input type="text" class="basic-input" :placeholder="$t('text')" v-model="inputs.text.value"
                 @input="handleInput('text', 'string')" />
             <span class="err-input-msg">{{ inputs.text.error }}</span>
@@ -40,7 +38,7 @@ const props = defineProps<{
 const itemReviews = ref<Review[]>([])
 
 const inputs = ref({
-    title: { value: '', error: '' },
+
     text: { value: '', error: '' },
     ratingValue: { value: 0, error: '' }
 });
@@ -52,7 +50,7 @@ const handleInput = (field: string, type: string) => {
 const createReview = async () => {
     if (authStore.getUserId) {
         const validationTypes: any = {
-            title: 'string',
+
             text: 'string',
             ratingValue: 'rating'
         };
@@ -72,12 +70,12 @@ const createReview = async () => {
                     "userId": authStore.getUserId,
                     "rating": inputs.value.ratingValue.value,
                     "ratingText": inputs.value.text.value,
-                    "title": inputs.value.title.value
+                    "title": ''
                 }
                 const response = await http.post('/api/v1/ProductReview/create-review', body);
                 if (response.status === 200) {
                     inputs.value.text.value = ''
-                    inputs.value.title.value = ''
+
                     inputs.value.ratingValue.value = 0;
 
                     useNotif('success', 'Отзыв оставлен!', 'Успешно')

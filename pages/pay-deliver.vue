@@ -234,4 +234,12 @@
         font-size: 60px !important
     }
 }
+
+@media (max-width:576px) {
+    .header h1 {
+        margin: 0;
+        font-size: 50px;
+        line-height: 70px;
+    }
+}
 </style>

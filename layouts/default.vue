@@ -150,10 +150,6 @@ provide('closeProfileOpen', closeProfileOpen)
     width: 100%;
 }
 
-.dimmed-body {
-    background-color: rgba(0, 0, 0, 0.5) !important;
-    /* Adjust opacity value as needed */
-}
 
 
 
@@ -279,7 +275,7 @@ provide('closeProfileOpen', closeProfileOpen)
 
 
 
-@media (max-width:992px) {
+@media (max-width:1000px) {
     .burger-menu {
         display: flex !important
     }
