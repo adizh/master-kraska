@@ -3,8 +3,8 @@
         <div class="subcategories">
             <div v-for="subCategory in catalogStore?.getCategory[0]?.subcategories" :key="subCategory?.id">
                 <label class="black-checkbox">
-                    <input type="checkbox" :id="`${subCategory.id}`" :value="subCategory.id"
-                        class="subcategoryCheckboxes" />
+                    <input type="checkbox" :id="`${subCategory.id}`" :value="subCategory.id" 
+                        class="subcategoryCheckboxes" @input="handleSubCategories(subCategory, $event)" />
                     <span class="black-checkbox-span"
                         :class="{ 'black-checkbox-span open': opensIncludes(subCategory?.id) }">
                         <p :class="{ 'black-checkbox-span-name': opensIncludes(subCategory?.id) }">{{ subCategory?.name
@@ -99,6 +99,7 @@
 <script setup lang="ts">
 import { AllCatalog, CatalogCheckbox } from '@/types/Catalog'
 import { Brands } from '~/types/Brands';
+import { CategorySys } from '~/types/Category';
 type BoolValues = {
     value: boolean,
     id: string;
@@ -126,6 +127,25 @@ const getRemainingBrands = computed(() => {
 })
 
 
+const handleSubCategories = (item: CategorySys, event: any) => {
+    const subCategoryIndex = productsStore.filters.categoryId.indexOf(item?.id);
+
+
+    if (event.target.checked === true) {
+        if (subCategoryIndex === -1) {
+            productsStore.filters.categoryId.push(item?.id);
+
+        }
+    }
+    else {
+        if (subCategoryIndex !== -1) {
+            productsStore.filters.categoryId.splice(subCategoryIndex, 1);
+        }
+    }
+
+    productsStore.filterProducts()
+
+}
 const resetFilters = () => {
 
     let allBrandsInputs = Array.from(document.querySelectorAll('.brandsCheckboxes')) as HTMLInputElement[];
@@ -154,7 +174,7 @@ const resetFilters = () => {
     }
 
     productsStore.filters.search = "";
-    productsStore.filters.categoryId = ''
+    productsStore.filters.categoryId = []
     productsStore.filters.subdirectoryIds = []
     productsStore.filters.minPrice = 0
     productsStore.filters.maxPrice = 0
@@ -184,7 +204,6 @@ const initializeCheckboxStates = async () => {
 
 };
 
-
 const handlePrices = () => {
     if (productsStore?.filters.minPrice > 0 && productsStore?.filters?.maxPrice > 0)
         setTimeout(() => {
@@ -193,12 +212,9 @@ const handlePrices = () => {
 
 }
 
-
 const isChecked = (itemId: string, subId: string) => {
     return checkboxStates?.value[itemId]?.values?.find((val: { id: string }) => val.id === subId)?.value || false;
 };
-
-
 
 
 const updateBrandsInputs = (brand: Brands, event: any) => {

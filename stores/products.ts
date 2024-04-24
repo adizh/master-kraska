@@ -14,7 +14,7 @@ export const useProductsSstore = defineStore("productsStore", {
     product: {} as { product: Product; similarProducts: Product[] },
     filters: {
       search: "",
-      categoryId: "",
+      categoryId: [] as string[],
       subdirectoryIds: [] as any,
       minPrice: 0,
       maxPrice: 0,
@@ -109,7 +109,6 @@ export const useProductsSstore = defineStore("productsStore", {
       }
     },
 
-  
     async addToBookmarks(objectId: string) {
       const authStore = useAuthStore();
       try {
@@ -166,9 +165,16 @@ export const useProductsSstore = defineStore("productsStore", {
           ? this.filters.brandId?.join(",")
           : null;
 
+      const categoriesId =
+        this.filters?.categoryId?.length > 0 &&
+        this.filters?.categoryId !== null
+          ? this.filters?.categoryId.join(",")
+          : null;
+
+      console.log("categoriesId", categoriesId);
       const query = {
         productName: this.filters.search || prodName,
-        categoryId: this.filters.categoryId,
+        categoryId: categoriesId,
         subdirectoryIds: subDirs,
         minPrice: this.filters.minPrice || null,
         maxPrice: this.filters.maxPrice || null,
@@ -211,7 +217,8 @@ export const useProductsSstore = defineStore("productsStore", {
       }
     },
     setCategoryId(categoryId: string) {
-      this.filters.categoryId = categoryId;
+      this.filters.categoryId.push(categoryId);
+      this.filterProducts();
     },
 
     async getBookmarks(productId: string) {
