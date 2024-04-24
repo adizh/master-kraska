@@ -9,10 +9,11 @@
                     :class="{ 'active': activeCategory.category?.id === item?.category?.id }">
                     <span> {{ formatName(item?.category?.name) }}</span>
 
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M14.0913 11.5L9 6.44422L10.4544 5L17 11.5L10.4544 18L9 16.5558L14.0913 11.5Z"
-                            fill="#DDDDDD" />
-                    </svg>
+                    <span class="arrow-right"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14.0913 11.5L9 6.44422L10.4544 5L17 11.5L10.4544 18L9 16.5558L14.0913 11.5Z"
+                                fill="#DDDDDD" />
+                        </svg></span>
 
                 </li>
             </ul>
@@ -61,7 +62,7 @@ const fromtTop = ref('60px')
 const selectCategory = (item: Category, event: any) => {
     const rect = event.target.getBoundingClientRect();
     console.log('rect', rect)
-    
+
 
 
     fromtTop.value = (Math.floor(rect.top) - 70).toString()
@@ -172,5 +173,34 @@ li {
 
 .options-list {
     @include flex(row, start, start);
+}
+
+@media (max-width:768px) {
+    .second-col {
+        padding: 0;
+    }
+
+    .catalog-options {
+        padding: 20px
+    }
+}
+
+@media (max-width:576px) {
+    .backdrop {
+        top: 23rem;
+    }
+
+    .catalog-options {
+        top: 18rem;
+    }
+
+    .second-col {
+        display: none;
+    }
+
+    .arrow-right {
+        display: none;
+    }
+
 }
 </style>

@@ -334,18 +334,21 @@ provide('closeProfileOpen', closeProfileOpen)
     }
 
     .overlay {
-        top: 23rem
+        top: 23rem;
+
     }
+
+
+
 }
 
 @media (min-width:320px) and (max-width:468px) {
     .main-header {
-        flex-direction: column;
-        gap: 1.5rem;
+        gap: 10px
     }
 
     .top-part {
-        justify-content: space-between;
+        justify-content: start;
     }
 
 
