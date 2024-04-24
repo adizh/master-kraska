@@ -11,7 +11,7 @@
                 </div>
             </div>
         </div>
-        <div class="grid align-items-start">
+        <div class="grid align-items-start main-filters">
             <div class='small-screen-filter'><span>{{ $t('filters') }}</span>
                 <p v-if="!isFilterOpen" class="closed-filters" @click="isFilterOpen = true">
                     <span></span>
@@ -29,13 +29,14 @@
             </div>
             <CatalogFilters class="col-3" :class="{ 'close-filters': !isFilterOpen, 'col-12': isFilterOpen }" />
 
-            <CatalogResults class="col-9 all-catalog-results" :visibleMethod="visibleMethod"
-                :class="{ 'close': isFilterOpen }" />
+            <CatalogResults class="col-12 md:col-12 sm:col-12 lg:col-9 all-catalog-results"
+                :visibleMethod="visibleMethod" :class="{ 'close': isFilterOpen }" />
         </div>
     </section>
 </template>
 
 <script setup lang="ts">
+
 type visibleMethod = 'vertical' | 'horizontal'
 const visibleMethod = ref<visibleMethod>('vertical');
 
@@ -124,6 +125,10 @@ onMounted(() => {
 }
 
 @media (max-width:1000px) {
+    .main-filters {
+        flex-direction: column;
+    }
+
     h1 {
         font-size: 28px !important;
         line-height: 28px !important;
@@ -140,6 +145,11 @@ onMounted(() => {
     .all-catalog-results.close {
         display: none;
     }
+
+}
+
+@media (max-width:768px) {
+  
 }
 
 @media (max-width:576px) {
@@ -150,6 +160,8 @@ onMounted(() => {
     .header-help-icons {
         width: 100%;
     }
+
+  
 }
 
 @media (max-width:480px) {

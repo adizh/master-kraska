@@ -9,6 +9,7 @@
             <UIPagination :total="productStore.getProdTotal?.totalPages"
                 :currentActive="productStore.filters.currentPage" @changePage="changePage" />
         </div>
+        
     </div>
 
 

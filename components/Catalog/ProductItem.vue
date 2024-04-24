@@ -110,7 +110,7 @@ const productName = (name: string) => {
 
     &-name {
         max-width: $product-item-width;
-        text-align: center;
+        text-align: center !important;
         font-size: 18px;
         font-weight: 600;
         color: $main-black;
@@ -121,11 +121,13 @@ const productName = (name: string) => {
         line-height: 20px;
         margin-top: 10px;
 
+
     }
 
     &-info {
         max-width: $product-item-width;
         width: $product-item-width;
+        word-break: break-all !important;
     }
 
     &-buy {
@@ -179,5 +181,23 @@ const productName = (name: string) => {
 
 .each-block-info-col {
     justify-content: start;
+}
+
+@media (max-width:1000px) {
+    .item-block {
+        width: 42%;
+    }
+}
+
+@media (max-width:768px) {
+    .item-block {
+        width: 45%;
+    }
+}
+
+@media (max-width:576px) {
+    .item-block {
+        width: 100%;
+    }
 }
 </style>
