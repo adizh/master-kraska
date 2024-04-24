@@ -66,7 +66,7 @@ import { Tinting } from '@/types/Tinting'
 const currentBrandsColors = ref<Tinting[]>([]);
 const allTingings = ref<Tinting[]>([])
 const activeBrand = ref<Tinting[]>([]);
-const activeFiltered = ref<Tinting[]>([]);
+
 const tintingSearch = ref('')
 const currentPage = ref(1);
 const pageSize = ref(27)
@@ -94,7 +94,7 @@ onMounted(async () => {
 
 const handleSearch = () => {
     const value = tintingSearch?.value;
-    activeBrand.value = activeFiltered?.value.filter((item: Tinting) => item?.code.toLowerCase().includes(value.toLocaleLowerCase()))
+    fetchTintingsByBrand(selectedBrand?.value)
 }
 
 
@@ -134,11 +134,11 @@ const fetchAllData = async (ids: string[]) => {
 
 const fetchTintingsByBrand = async (brand: Brands) => {
     try {
-        const response = await http(`/api/v1/Tinting/get-all-tintings-pagination?page=${currentPage.value}&pageSize=${pageSize?.value}&brandId=${brand?.id}`);
+        const response = await http(`/api/v1/Tinting/get-all-tintings-pagination?page=${currentPage.value}&pageSize=${pageSize?.value}&brandId=${brand?.id}&code=${tintingSearch?.value}`);
         console.log('response fetchTintingsByBrand', response);
         if (response.status === 200) {
             activeBrand.value = response.data.items;
-            activeFiltered.value = response.data.items;
+
             totalPages.value = response.data.totalPages
         }
     } catch (err) {
@@ -175,6 +175,7 @@ const fetchAllTintings = async () => {
 const chooseBrand = (value: Brands) => {
     selectedBrand.value = value;
     currentBrandsColors.value = allTingings.value?.filter((item: Tinting) => item?.brandId === selectedBrand?.value.id);
+    tintingSearch.value = ''
     fetchTintingsByBrand(selectedBrand.value)
 }
 

@@ -87,8 +87,11 @@ const closeCatalogOptions = () => {
 
 onMounted(() => {
     catalogStore.fetchAllCategories();
-    activeCategory.value = getAllCategories.value[0]
-    getSubs()
+    if (getAllCategories?.value?.length) {
+        activeCategory.value = getAllCategories?.value[0]
+        getSubs()
+    }
+
 })
 
 console.log('getAllCategories IN A COMPONSNE', catalogStore.getAllCategories)
