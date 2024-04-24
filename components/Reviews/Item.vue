@@ -1,5 +1,5 @@
 <template>
-    <li class="margin-top-40 ">
+    <li class="margin-top-40 " @click="router.push(`/product/${item?.productId}`)">
         <div class="header">
             <span class="header-icon">{{ item?.fullName.slice(0, 1) }}</span>
             <div class="header-info">
@@ -8,7 +8,7 @@
                     <div class='flex flex-row gap-4'>
                         <Rating :cancel="false" v-model="rating" />
                         <button v-if="type === 'profile'" class="look-all-btn"
-                            @click="navigateTo(`/product/${item?.productId}`)"> {{ $t('goToCommnent') }}
+                            @click="router.push(`/product/${item?.productId}`)"> {{ $t('goToCommnent') }}
                             <img src='../../assets/icons/icon=components-more.svg' />
                         </button>
                     </div>
@@ -57,7 +57,7 @@ const rating = ref(4);
 
 const isModal = ref(false);
 const isEditModal = ref(false);
-
+const router = useRouter()
 
 const props = defineProps<{
     item: Review,
@@ -154,5 +154,11 @@ const confirmDelete = async () => {
 
 img:hover {
     cursor: pointer;
+}
+
+@media (max-width:1000px) {
+    .look-all-btn {
+        display: none;
+    }
 }
 </style>

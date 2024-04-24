@@ -73,7 +73,7 @@
                 </div>
 
 
-                <div class="col-8 right-side orders" v-else-if="selectedTab === 4">
+                <div class="col-12 md:col-12 lg:col-8 right-side " v-else-if="selectedTab === 4">
                     <ProfileReviews></ProfileReviews>
                 </div>
 
@@ -317,6 +317,11 @@ li.active {
 
     .item-block {
         width: 100%;
+    }
+
+    .modal-header,
+    .modal-btns button {
+        font-size: 15px;
     }
 }
 </style>
