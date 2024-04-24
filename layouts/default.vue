@@ -26,10 +26,10 @@
                     <img src="../assets/icons/icon=phone loight.svg" alt="">
                     +996 509 910 148
                 </li>
-                <li @click="navigateTo('/cart')">
+                <li @click="navigateTo('/cart')" class='cart-li'>
                     <img src="../assets/icons/icon=cart.svg" alt="cart">
                     <span v-if="screenSize === 'large'">{{ $t('cart') }}</span>
-                    {{ cartStore?.getAllCart?.length }}
+                    <span class="cart-li-num">{{ cartStore?.getAllCart?.length }}</span>
                 </li>
 
 
@@ -150,6 +150,23 @@ provide('closeProfileOpen', closeProfileOpen)
     width: 100%;
 }
 
+.cart-li {
+    position: relative;
+
+    &-num {
+        position: absolute;
+        top: -15px;
+        right: -23px;
+        display: inline-block;
+        background: #EB5757;
+        border-radius: 100%;
+        padding: 12px;
+        width: 16px;
+        height: 16px;
+        color: white;
+        @include flex(row, center, center)
+    }
+}
 
 
 
