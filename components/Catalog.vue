@@ -61,13 +61,14 @@ const fromtTop = ref('60px')
 const selectCategory = (item: Category, event: any) => {
     const rect = event.target.getBoundingClientRect();
     console.log('rect', rect)
+    
 
 
     fromtTop.value = (Math.floor(rect.top) - 70).toString()
 
 
     console.log('fromTop value', fromtTop)
-
+    router.push(`/catalog/${item?.category?.id}`)
     activeCategory.value = item;
     getSubs()
     //  console.log('subCategories', subCategories)

@@ -1,9 +1,10 @@
 import { AllCatalog } from "~/types/Catalog";
-import { Category } from "~/types/Category";
+import { Category, CategorySys } from "~/types/Category";
 export const useCatalogStore = defineStore("catalogStore", {
   state: () => ({
     allCatalogs: [] as AllCatalog[],
     allCategories: [] as Category[],
+    category: [] as Category[],
   }),
   actions: {
     async fetchAllCatalogs() {
@@ -34,6 +35,48 @@ export const useCatalogStore = defineStore("catalogStore", {
             }
           );
           this.allCatalogs = filteredCatalogByLang;
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+    async fetchCategoryById(categoryId: string) {
+      const authStore = useAuthStore();
+      try {
+        const response = await http(
+          `/api/v1/Category/get-top-category-by-id?id=${categoryId}`
+        );
+        if (response.status === 200) {
+          console.log("respons get top category byif", response);
+          const filtered = response.data.map((item: Category) => {
+            if (authStore?.getSelectedLang === "kg") {
+              return {
+                ...item,
+                category: { ...item?.category, name: item?.category?.nameKg },
+                subcategories: response.data[0].subcategories?.map(
+                  (subItem: CategorySys) => ({
+                    ...subItem,
+                    name: subItem?.nameKg,
+                  })
+                ),
+              };
+            } else {
+              return {
+                ...item,
+                category: { ...item?.category, name: item?.category?.nameRu },
+                subcategories: response.data[0].subcategories?.map(
+                  (subItem: CategorySys) => ({
+                    ...subItem,
+                    name: subItem?.nameRu,
+                  })
+                ),
+              };
+            }
+          });
+
+          this.category = filtered;
+          console.log("top category id", this.category);
         }
       } catch (err) {
         console.log(err);
@@ -99,6 +142,9 @@ export const useCatalogStore = defineStore("catalogStore", {
     },
     getAllCategories(state) {
       return state.allCategories;
+    },
+    getCategory(state) {
+      return state.category;
     },
   },
 });

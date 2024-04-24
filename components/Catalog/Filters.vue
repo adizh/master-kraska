@@ -1,5 +1,20 @@
 <template>
     <div class='filters'>
+        <div class="subcategories">
+            <div v-for="subCategory in catalogStore?.getCategory[0]?.subcategories" :key="subCategory?.id">
+                <label class="black-checkbox">
+                    <input type="checkbox" :id="`${subCategory.id}`" :value="subCategory.id" />
+                    <span class="black-checkbox-span"
+                        :class="{ 'black-checkbox-span open': opensIncludes(subCategory?.id) }">
+                        <p :class="{ 'black-checkbox-span-name': opensIncludes(subCategory?.id) }">{{ subCategory?.name
+                            }}
+                        </p>
+                    </span>
+
+                </label>
+            </div>
+        </div>
+
         <div class="price">
             <label for="price" class="filters-help">
                 {{ $t('price') }}
@@ -10,12 +25,11 @@
                     @input="handlePrices">
             </div>
         </div>
-        <div class="brands">
+        <div class="brands" :class="{ 'each-filter-block open': opensIncludes('brands') }">
             <label for="price" class="filters-help">
                 {{ $t('brands') }}
             </label>
-            <div class="brands-list" :class="{ 'each-filter-block open': opensIncludes('brands') }"
-                @click="setOpenBlock('brands')">
+            <div class="brands-list" @click="setOpenBlock('brands')">
                 <p v-if="brandsStore.getAllBrands" v-for="(brand, index) in computedBrands" :key="brand?.id"
                     class="each-sub-item">
                     <label class="black-checkbox">
@@ -26,11 +40,7 @@
                             <p :class="{ 'black-checkbox-span-name': opensIncludes('brands') }"> {{ brand?.name }}
                             </p>
                         </span>
-                        <!-- <p><span class='black-checkbox-span'
-                                :class="{ 'black-checkbox-span open': opensIncludes('brands') }">
-                                <p :class="{ 'black-checkbox-span-name': opensIncludes('brands') }"> {{ brand?.name }}
-                                </p>
-                            </span></p> -->
+
 
                     </label>
                 </p>
@@ -69,7 +79,7 @@
 
                 <p v-if="getRemainingItemCount(item) > 0" class="open-block" @click="setOpenBlock(item?.id)">
                     {{ opensIncludes(item.id) ? $t('closeBlock') : $t('more') }} <span v-if="!opensIncludes(item.id)">{{
-                    getRemainingItemCount(item) }}</span>
+                getRemainingItemCount(item) }}</span>
                     <img class="arrow" :class="{ 'rotated': opensIncludes(item.id) }"
                         src="../../assets/icons/arrow-down-blue.svg" alt="open-arrow">
                 </p>
@@ -124,7 +134,7 @@ const initializeCheckboxStates = async () => {
             values: item.subdirectory.map(sub => ({ id: sub.id, value: false, name: sub?.name }))
         };
     });
-    console.log('initializeCheckboxStates checkboxStates', checkboxStates)
+    // console.log('initializeCheckboxStates checkboxStates', checkboxStates)
 
 };
 
@@ -146,8 +156,7 @@ const isChecked = (itemId: string, subId: string) => {
 
 
 const updateBrandsInputs = (brand: Brands, event: any) => {
-    console.log(brand);
-    console.log(event.target.checked);
+
 
     const brandIndex = productsStore.filters.brandId.indexOf(brand?.id);
 
@@ -182,9 +191,9 @@ const updateCheckboxState = (itemId: string, subId: string, event: any) => {
         productsStore.setSubDirectories(null);
     }
 
-    console.log('checkboxStates', checkboxStates)
+
     productsStore.setSubDirectories(filteredValues)
-    console.log('filteredValues', filteredValues)
+
     productsStore.filterProducts()
 };
 
@@ -216,16 +225,19 @@ const getRemainingItemCount = (item: AllCatalog) => {
 }
 
 
-
+console.log('what is the cyrrecnt category od', catalogStore.getCategory)
 
 onMounted(async () => {
     await catalogStore.fetchAllCatalogs();
     await initializeCheckboxStates();
+    await catalogStore.fetchCategoryById(route?.params?.id as string)
     brandsStore.fetchAllBrands()
     if (queryBrand && queryBrand?.id) {
         isBrandOpen.value = true
         productsStore?.filters.brandId.push(queryBrand?.id as string);
         productsStore.filterProducts()
+
+
     }
 
 })
@@ -279,6 +291,12 @@ watch(() => authStore.getSelectedLang, async (newVal, oldVal) => {
     }
 
 
+}
+
+.subcategories {
+    padding-left: 30px;
+    margin-bottom: 40px;
+    @include flex(column, start, start, 7px)
 }
 
 .custom-radio input[type="radio"] {
@@ -353,8 +371,16 @@ watch(() => authStore.getSelectedLang, async (newVal, oldVal) => {
 
 .brands {
     margin-top: 40px;
-    padding-left: 30px;
+
+    .each-sub-item {
+        padding-left: 30px;
+    }
+
+    .filters-help {
+        margin-bottom: 22px;
+    }
 }
+
 
 
 .price {

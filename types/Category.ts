@@ -1,4 +1,4 @@
-type CategorySys = {
+export type CategorySys = {
   id: string;
   name: string;
   isActive: boolean;
