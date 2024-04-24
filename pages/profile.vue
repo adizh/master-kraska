@@ -14,13 +14,13 @@
                 <div class="col-12 sm:col-12 md:col-9 lg:col-8 right-side" v-if="selectedTab === 1">
                     <ProfileForm />
                 </div>
-                <div class="col-8 right-side orders" v-else-if="selectedTab === 2">
+                <div class="col-12 md:col-12 lg:col-8 right-side orders" v-else-if="selectedTab === 2">
                     <div class="order-history">
                         <OrdersItem />
                     </div>
                 </div>
 
-                <div class="col-8 right-side orders" v-else-if="selectedTab === 3">
+                <div class="col-12 md:col-12 lg:col-8 right-side " v-else-if="selectedTab === 3">
                     <CartProductItem v-if="cartStore.getAllCart?.length" v-for="item in cartStore.getAllCart"
                         :key="item?.id" :item="item">
                         <template #count-buttons>
@@ -39,7 +39,7 @@
                     </div>
 
                     <div class="cart-main-info-price col-12" v-if="cartStore.getAllCart?.length">
-                        <div class="col-6">
+                        <div class="lg:col-6 col-12 md:col-9">
                             <button class="pink-button">{{ $t('goToRegister') }}</button>
                             <div class="cart-main-info-price-block">
                                 <div class="first">

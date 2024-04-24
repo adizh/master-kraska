@@ -1,5 +1,5 @@
 <template>
-    <div v-if="userOrders?.length > 0">
+    <div >
         <div class="item" v-for="order in userOrders" :key="order?.id">
             <span class="item-date">11/12/24</span>
             <div class="item-info grid">
@@ -54,11 +54,11 @@
     </div>
 
 
-    <NoContent v-else :title="$t('noHistoryOrder')">
+    <!-- <NoContent v-else :title="$t('noHistoryOrder')">
         <template #icon>
             <img src="../../assets/icons/black/icon=components -time-notfill.svg" alt="">
         </template>
-    </NoContent>
+    </NoContent> -->
 
     <Dialog v-model:visible="isConfirmOpen" modal :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
         header=" ">

@@ -42,13 +42,29 @@ console.log('cart prop imte', props?.item)
     .cart-main-info-prod-img {
         width: 50%;
     }
+
+    .cart-main-info-prod h3 {
+        font-size: 18px;
+        line-height: 20px;
+    }
 }
+
+
 
 @media (max-width:768px) {
     .cart-main-info-prod-img {
-        width: 70%;
+        width: 90%;
     }
 
-    
+    .cart-main-info-prod {
+        flex-direction: column;
+    }
+
+    .cart-main-info-count {
+        margin-top: 20px;
+        flex-direction: column;
+        align-items: center
+    }
+
 }
 </style>
