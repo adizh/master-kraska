@@ -66,13 +66,11 @@ const selectCategory = (item: Category, event: any) => {
 
 
     fromtTop.value = (Math.floor(rect.top) - 70).toString()
-
-
     console.log('fromTop value', fromtTop)
     router.push(`/catalog/${item?.category?.id}`)
     activeCategory.value = item;
     getSubs()
-    //  console.log('subCategories', subCategories)
+
 }
 
 const getSubs = async () => {
@@ -89,6 +87,8 @@ const closeCatalogOptions = () => {
 
 onMounted(() => {
     catalogStore.fetchAllCategories();
+    activeCategory.value = getAllCategories.value[0]
+    getSubs()
 })
 
 console.log('getAllCategories IN A COMPONSNE', catalogStore.getAllCategories)
