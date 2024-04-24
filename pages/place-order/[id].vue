@@ -2,7 +2,7 @@
     <section>
         <div class="main-header-h1">{{ $t('orderRegister') }}</div>
         <div class="orders grid">
-            <div class="col-8 orders-first">
+            <div class="orders-first lg:col-8 md-col-12 col-12">
                 <h3>{{ $t('waysOfOrder') }}</h3>
                 <div class="buttons-sel">
                     <button class="gray-buttons-border" @click="selMethod(1)"
@@ -54,7 +54,7 @@
             </div>
 
 
-            <div class="cart-main-info-price col-3 ml-4">
+            <div class="cart-main-info-price lg:col-4 md:col-6 sm:col-12 col-12">
 
                 <div class="cart-main-info-price-block">
                     <div class="first">
@@ -74,7 +74,7 @@
                 <button class="margin-top-20 pink-button" @click="submitOrder">{{ $t('confirmOrder') }}</button>
             </div>
         </div>
-        <div class="ordered-items margin-top-40 col-8">
+        <div class="ordered-items margin-top-40  lg:col-8 md:col-12  col-12">
             <h2>{{ $t('productCap') }}</h2>
             <CartProductItem v-for="item in cartStore.getAllCart" :key="item.id" :item="item">
                 <template #count-buttons>
@@ -87,7 +87,7 @@
 
 
 
-    <Dialog v-model:visible="isMagVisible" modal :style="{ width: '65rem', padding: '10px 20px' }" class="dialog-mag">
+    <Dialog v-model:visible="isMagVisible" modal :style="{ padding: '10px 20px' }" class="dialog-mag">
         <template #header>
             <h5 class="m-3">{{ $t('Выбрать магазин') }}</h5>
         </template>
@@ -248,8 +248,6 @@ const submitOrder = async () => {
             if (!selectedMarket?.value?.id) {
                 pickupErr.value.store = 'Выберите магазин'
             }
-
-
         }
     } else {
         for (const fieldName in orderStore.delForm) {
@@ -281,9 +279,10 @@ const submitOrder = async () => {
             const result = await orderStore.sendOrder(body);
             console.log('result in submitOrder', result);
             if (result?.status === 200) {
-                isPaymentOpen.value = true
-            }
+                isPaymentOpen.value = true;
+                console.log('isPaymentOpen', isPaymentOpen)
 
+            }
 
         }
 
@@ -345,21 +344,15 @@ onBeforeRouteLeave((to, from, next) => {
 }
 
 
-
-
-
-
-
 .buttons-sel {
     @include flex(row, start, center, 20px);
     margin: 20px 0;
 }
 
 .dialog-mag {
+    width: 70%;
     padding: 64px 20px;
 }
-
-
 
 h3 {
     margin-bottom: 20px;
@@ -385,8 +378,6 @@ h3 {
     }
 }
 
-
-
 .p-dialog .p-dialog-header .p-dialog-header-icon {
     background-color: none !important;
     outline: none !important;
@@ -394,9 +385,21 @@ h3 {
 }
 
 
-
-
 :deep(.p-dialog-header) {
     @include flex(row, flex-end !important, center)
+}
+
+@media (max-width:1000px) {
+
+    .main-header-h1 {
+        font-size: 28px !important;
+        line-height: 28px;
+    }
+}
+
+@media (max-width:480px) {
+    .dialog-mag {
+        width: 100%;
+    }
 }
 </style>

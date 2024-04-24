@@ -1,11 +1,11 @@
 export type AddressList = {
   name: string;
   location: string;
-  phone: string;
-  time: string[]
+  phone: string[];
+  time: string;
   email: string;
   id: string;
-  coordinates: string[];
+  coordinates: number[];
 };
 
 export interface InputProperties {

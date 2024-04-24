@@ -232,6 +232,7 @@
     .header h1 {
         margin-top: 4rem;
         font-size: 60px !important
+        
     }
 }
 

@@ -41,7 +41,8 @@ const props = defineProps<{
 
 <style scoped lang='scss'>
 .bottom-list-phones {
-    @include flex(column, center, center, 4px)
+    @include flex(column, center, center, 4px);
+
 }
 
 .maps-address-list {
@@ -62,6 +63,7 @@ const props = defineProps<{
 }
 
 .bottom-list {
+    flex-wrap: wrap;
     @include flex(row, space-between, center);
     margin-top: 20px;
 

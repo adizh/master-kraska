@@ -95,6 +95,7 @@ const createOrder = async () => {
     const allOrderItems = [] as Order[]
     for (let item of cartStore.getAllCart) {
         console.log('what is item in cart store create-order', item)
+        
         allOrderItems.push({
             customerId: authStore.getUserId ? authStore.getUserId : '',
             productId: item?.id,
