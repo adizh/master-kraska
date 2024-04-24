@@ -4,18 +4,32 @@
         <h5 class='each-section-header'>{{ $t('productsCatalog') }}</h5>
         <div class="options-list">
             <ul class="first-col">
-                <li v-for="item in getAllCategories?.slice(0, Math.ceil(getAllCategories?.length / 2))"
-                    :key="item?.category?.id" @click.stop="router.push(`/catalog/${item?.category?.id}`)">
-                    {{ formatName(item?.category?.name) }}
+                <li v-for="item in getAllCategories" :key="item?.category?.id"
+                    @click.stop="selectCategory(item, $event)"
+                    :class="{ 'active': activeCategory.category?.id === item?.category?.id }">
+                    <span> {{ formatName(item?.category?.name) }}</span>
+
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M14.0913 11.5L9 6.44422L10.4544 5L17 11.5L10.4544 18L9 16.5558L14.0913 11.5Z"
+                            fill="#DDDDDD" />
+                    </svg>
+
                 </li>
             </ul>
 
-            <ul class="second-col">
-                <li v-for="item in getAllCategories?.slice(getAllCategories?.length / 2)" :key="item?.category?.id"
-                    @click.stop="() => router.push(`/catalog/${item?.category?.id}`)">
-                    {{ formatName(item?.category?.name) }}
+            <ul class="second-col" v-if="subCategories?.length > 0">
+                <li v-for=" item in subCategories[0]?.subcategories" :key="item?.id">
+                    <span> {{ formatName(item?.nameRu) }}</span>
+
+
+
                 </li>
             </ul>
+
+
+            <div class="second-col" v-else>
+                {{ $t("noData") }}
+            </div>
         </div>
     </div>
 
@@ -28,28 +42,46 @@ const authStore = useAuthStore();
 const catalogStore = useCatalogStore()
 const router = useRouter()
 const { getAllCategories } = storeToRefs(catalogStore)
-
-
+const activeCategory = ref({} as Category)
+const subCategories = ref([] as Category[])
 const formatName = (name: string) => {
     return name?.slice(0, 1).toUpperCase() + name?.slice(1).toLowerCase()
 }
 
 const props = defineProps<{
-
     isCatalogOpen: boolean;
-
 }>();
 
 const emit = defineEmits<{
     closeCatalog: [],
 }>();
 
+const fromtTop = ref('60px')
+
+const selectCategory = (item: Category, event: any) => {
+    const rect = event.target.getBoundingClientRect();
+    console.log('rect', rect)
+
+
+    fromtTop.value = (Math.floor(rect.top) - 70).toString()
+
+
+    console.log('fromTop value', fromtTop)
+
+    activeCategory.value = item;
+    getSubs()
+    //  console.log('subCategories', subCategories)
+}
+
+const getSubs = async () => {
+    subCategories.value = await getAllCategories?.value.filter((item: Category) => {
+        return item?.category?.id === activeCategory.value?.category?.id
+    })
+}
 
 
 const closeCatalogOptions = () => {
-
     emit('closeCatalog');
-
 };
 
 
@@ -71,9 +103,21 @@ watch(() => authStore.getSelectedLang, () => {
     font-size: 30px;
 }
 
+.second-col {
+    padding-left: 40px;
+
+}
+
+.first-col {
+    border-right: 1px solid $slider-border-color;
+    padding-right: 20px;
+}
+
 ul li {
     list-style: none;
     margin: 10px 0;
+    word-break: break-all;
+    @include flex(row, space-between, center)
 }
 
 .backdrop {
@@ -92,27 +136,40 @@ ul li {
     display: block;
 }
 
+
+.active {
+    cursor: pointer;
+    background: #F5F5F5;
+}
+
 li {
     @include footerSpan(32px, 18px);
     color: $main-black;
+    padding: 6px 10px 4px 10px;
+    border-radius: 4px;
 
     &:hover {
         cursor: pointer;
-        color: $main-blue
+        background: #F5F5F5;
     }
 }
 
 .catalog-options {
-    @include openedOptionsHeader(100%, 20px 4rem, 4rem)
+    @include openedOptionsHeader(100%, 20px 4rem, 4rem);
+
 }
 
 .catalog-options.open {
     opacity: 1;
     visibility: visible;
     transition: .3s ease all;
+    height: 100vh;
+    overflow-y: scroll;
+    padding-bottom: 4rem;
+
 }
 
 .options-list {
-    @include flex(row, space-between, start)
+    @include flex(row, start, start);
 }
 </style>
