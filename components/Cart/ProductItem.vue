@@ -12,7 +12,6 @@
         </div>
 
         <div class="cart-main-info-count">
-
             <slot name="count-buttons"></slot>
 
         </div>

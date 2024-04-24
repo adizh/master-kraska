@@ -218,12 +218,12 @@ h2 {
 }
 
 .cart-main-info-prod {
-  @include flex(row, space-between, start);
+  @include flex(row, space-between, center);
   @extend %border-bottoms;
   padding: 50px 0 20px 0;
 
   &-items {
-    @include flex(row, start, start, 20px);
+    @include flex(row, start, center, 20px);
   }
 
   h3 {

@@ -1,6 +1,6 @@
 <template>
     <div class="popular-products">
-        <h5 class='each-section-header'>{{ $t('recommendedProducts') }}</h5>
+        <h5 class='each-section-header'>{{ $t('recommendeProducts') }}</h5>
         <div class="products-list" v-if="popularItems?.length > 0">
             <Swiper :slides-per-view="slidesPerView" :navigation="true" id="mySlider" :modules="[SwiperNavigation]"
                 :style='{ "--swiper-navigation-size": "15px", "padding": "20px 0" }'>

@@ -26,11 +26,11 @@
                         <template #count-buttons>
                             <span class="price">{{ item.totalProdSum }} сом</span>
                             <button class="prod-count-buttons">
-                                <span @click="cartStore.decreaseCount(item)">-</span>
+                                <span @click.stop="cartStore.decreaseCount(item)">-</span>
                                 <span>{{ cartStore.getTotalItemCount(item?.count) }}</span>
-                                <span @click="cartStore.increaseCount(item)">+</span>
+                                <span @click.stop="cartStore.increaseCount(item)">+</span>
                             </button>
-                            <img src="../assets/icons/icon=trash.svg" alt="">
+                            <img @click.stop="removeFromCart(item)" src="../assets/icons/icon=trash.svg" alt="">
                         </template>
                     </CartProductItem>
                     <div v-if="cartStore.getAllCart?.length > 0" class="flex justify-content-end flex-row"> <button
@@ -116,7 +116,7 @@
 </template>
 
 <script setup lang="ts">
-import { Product } from '~/types/Product';
+import { Product, ExtendedProduct } from '~/types/Product';
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n()
 
@@ -135,6 +135,9 @@ const openLogout = () => {
 }
 
 
+const removeFromCart = (item: ExtendedProduct) => {
+    cartStore.removeFromCart(item)
+}
 if (process.client) {
     if (localStorage.getItem('selectedTab') && localStorage.getItem('selectedTab') !== null) {
         selectedTab = ref<number>(parseInt(localStorage.getItem('selectedTab') as string));
