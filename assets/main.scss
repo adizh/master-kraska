@@ -175,7 +175,7 @@ h2 {
 
 //cart
 .cart-main-info-price {
-  width: 30% !important;
+  width: 30%;
   margin-top: 50px;
 
   &-block {
@@ -544,4 +544,43 @@ h2 {
   margin-top: 10px;
   height: 83px;
   word-break: break-all;
+}
+
+@media (max-width: 576px) {
+  .cart-main-info-prod {
+    flex-direction: column !important;
+    align-items: center;
+
+    &-items {
+      flex-direction: column !important;
+      align-items: center;
+    }
+  }
+  .cart-main-info-middle {
+    h3 {
+      font-size: 18px !important;
+    }
+  }
+  .cart-main-info-price button:first-child,
+  .pink-button,
+  .register-auth-btn {
+    font-size: 14px;
+  }
+  .cart-main-info-price button:last-child {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 576px) {
+  .cart-main-info-price-block .last {
+    font-size: 16px;
+  }
+  .cart-main-info-price-block .first,
+  .second,
+  .basic-input {
+    font-size: 14px !important;
+  }
+  .cart-main-info-count .price {
+    font-size: 20px;
+  }
 }

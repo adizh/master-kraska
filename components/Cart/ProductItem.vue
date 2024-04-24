@@ -2,7 +2,7 @@
     <div class="cart-main-info-prod" @click.stop="router.push(`/product/${item?.id}`)">
         <div class="cart-main-info-prod-items">
             <div class="cart-main-info-prod-img">
-                <img src="../../assets/images/test-kraska.png" alt="">
+                <img :src="item?.images[0]" alt="product">
             </div>
             <div class="cart-main-info-middle">
                 <h3>{{ item?.name }}</h3>
@@ -29,10 +29,26 @@ const productInfoHorizontal = computed(() => {
     return props?.item?.shortDescription && props?.item?.shortDescription?.split(' ').length > 19 ? props?.item?.shortDescription.split(' ').slice(0, 19).join(' ') + '...' : props?.item?.shortDescription
 
 })
+console.log('cart prop imte', props?.item)
 </script>
 
 <style scoped>
 .cart-main-info-prod:hover {
     cursor: pointer;
+
+}
+
+@media (max-width:1000px) {
+    .cart-main-info-prod-img {
+        width: 50%;
+    }
+}
+
+@media (max-width:768px) {
+    .cart-main-info-prod-img {
+        width: 70%;
+    }
+
+    
 }
 </style>

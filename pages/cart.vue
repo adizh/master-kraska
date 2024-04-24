@@ -2,7 +2,7 @@
     <section>
         <div class="main-header-h1">{{ $t('cart') }}</div>
         <div class="cart-main grid" v-if="store.getAllCart?.length">
-            <div class="cart-main-info col-8">
+            <div class="cart-main-info lg:col-8 md:col-12 sm:col-12">
                 <CartProductItem v-for="cartItem in store.getAllCart" :key="cartItem.id" :item="cartItem">
                     <template #count-buttons>
                         <span class="price">{{ cartItem.totalProdSum }} сом</span>
@@ -18,7 +18,7 @@
                 </CartProductItem>
             </div>
 
-            <div class="cart-main-info-price col-3  ml-4">
+            <div class="cart-main-info-price lg:col-4 md:col-6 sm:col-12 col-12">
                 <button class="pink-button" @click='isConfirmOpen = true'>{{ $t('goToRegister') }}</button>
                 <div class="cart-main-info-price-block">
                     <div class="first">
@@ -160,4 +160,17 @@ const createOrder = async () => {
         margin: 0 auto;
     }
 }
+
+@media (max-width:1000px) {
+    .cart-main.grid {
+        flex-direction: column;
+    }
+
+    .cart-main-info-price {
+        border: 1px solid $slider-border-color;
+        border-radius: 10px;
+    }
+}
+
+
 </style>
