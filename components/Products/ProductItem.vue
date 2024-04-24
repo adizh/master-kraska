@@ -70,7 +70,6 @@ onMounted(async () => {
     }
 
     &-name {
-
         text-align: center;
         font-size: 18px;
         font-weight: 600;

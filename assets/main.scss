@@ -263,14 +263,7 @@ h2 {
   height: 44px;
 }
 
-.bookmark-icon-heart {
-  width: 100%;
-  @include flex(flex, flex-end, center);
-  img {
-    width: 28px !important;
-    height: 24px !important;
-  }
-}
+
 
 .arrow {
   transition: transform 0.3s ease;
@@ -299,6 +292,14 @@ h2 {
   margin-top: 40px;
   @include flex(row, start, center, 28px);
   flex-wrap: wrap;
+}
+.bookmark-icon-heart {
+  width: 100%;
+  @include flex(flex, flex-end, center);
+  img {
+    width: 28px !important;
+    height: 24px !important;
+  }
 }
 
 .modal-header {

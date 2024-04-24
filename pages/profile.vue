@@ -80,7 +80,7 @@
                 <div class="col-12 md:col-12 lg:col-8 right-side" v-else-if="selectedTab === 5">
                     <ProfileNotifications />
                 </div>
-                <div class="col-8 right-side orders" v-else-if="selectedTab === 6">
+                <div class="col-12 lg:col-8 md:col-12 right-side" v-else-if="selectedTab === 6">
                     <div class="bookmarked-list" v-if="userBookmarks?.length">
                         <ProductsProductItem type="bookmark" v-for="item in userBookmarks" :key="item.id"
                             :product="item" @addItemToBookmarks="addItemToBookmarks" />
@@ -263,12 +263,16 @@ li.active {
 }
 
 .item-block {
-    width: 38%;
+    width: 40%;
 }
 
 @media (max-width:1000px) {
     .profile-main {
         border: none;
+    }
+
+    .item-block {
+        width: 40%;
     }
 
     .sidebar {
@@ -289,9 +293,30 @@ li.active {
 
 }
 
+
+@media (max-width:768px) {
+    .item-block {
+        width: 45%;
+        height: 560px;
+        max-height: 560px;
+    }
+}
+
+@media (max-width:665px) {
+    .item-block {
+        &-description {
+            margin-bottom: 30px;
+        }
+    }
+}
+
 @media (max-width:576px) {
     .right-side {
         padding: 5px
+    }
+
+    .item-block {
+        width: 100%;
     }
 }
 </style>
