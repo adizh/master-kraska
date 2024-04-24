@@ -27,7 +27,8 @@
 
                 </p>
             </div>
-            <CatalogFilters class="col-3" :class="{ 'close-filters': !isFilterOpen, 'col-12': isFilterOpen }" />
+            <CatalogFilters class="col-3" :class="{ 'close-filters': !isFilterOpen, 'col-12': isFilterOpen }"
+                @applyFilter="applyFilter" />
 
             <CatalogResults class="col-12 md:col-12 sm:col-12 lg:col-9 all-catalog-results"
                 :visibleMethod="visibleMethod" :class="{ 'close': isFilterOpen }" />
@@ -40,6 +41,8 @@
 type visibleMethod = 'vertical' | 'horizontal'
 const visibleMethod = ref<visibleMethod>('vertical');
 
+
+
 const route = useRoute();
 const id = route.params.id;
 const authStore = useAuthStore();
@@ -48,7 +51,9 @@ const { data: category } = useApi(`/api/v1/Category/get-category/${id}`, {
 }) as any;
 const isFilterOpen = ref(false)
 
-
+const applyFilter = () => {
+    isFilterOpen.value = false
+}
 
 const productStore = useProductsSstore()
 
@@ -148,9 +153,7 @@ onMounted(() => {
 
 }
 
-@media (max-width:768px) {
-  
-}
+@media (max-width:768px) {}
 
 @media (max-width:576px) {
     .header-help {
@@ -161,7 +164,7 @@ onMounted(() => {
         width: 100%;
     }
 
-  
+
 }
 
 @media (max-width:480px) {

@@ -3,7 +3,8 @@
         <div class="subcategories">
             <div v-for="subCategory in catalogStore?.getCategory[0]?.subcategories" :key="subCategory?.id">
                 <label class="black-checkbox">
-                    <input type="checkbox" :id="`${subCategory.id}`" :value="subCategory.id" />
+                    <input type="checkbox" :id="`${subCategory.id}`" :value="subCategory.id"
+                        class="subcategoryCheckboxes" />
                     <span class="black-checkbox-span"
                         :class="{ 'black-checkbox-span open': opensIncludes(subCategory?.id) }">
                         <p :class="{ 'black-checkbox-span-name': opensIncludes(subCategory?.id) }">{{ subCategory?.name
@@ -25,16 +26,17 @@
                     @input="handlePrices">
             </div>
         </div>
-        <div class="brands" :class="{ 'each-filter-block open': opensIncludes('brands') }">
+        <div class="brands" :class="{ 'each-filter-block open': opensIncludes('brands') }"
+            v-if="brandsStore.getAllBrands?.length > 0">
             <label for="price" class="filters-help">
                 {{ $t('brands') }}
             </label>
             <div class="brands-list" @click="setOpenBlock('brands')">
-                <p v-if="brandsStore.getAllBrands" v-for="(brand, index) in computedBrands" :key="brand?.id"
-                    class="each-sub-item">
+                <p v-for="(brand, index) in computedBrands" :key="brand?.id" class="each-sub-item">
                     <label class="black-checkbox">
                         <input type="checkbox" :id="`${brand?.id}`" :value="brand.id"
-                            @input="updateBrandsInputs(brand, $event)" :checked="brand?.id === queryBrand?.id" />
+                            @input="(event) => updateBrandsInputs(brand, event)" :checked="brand?.id === queryBrand?.id"
+                            class="brandsCheckboxes" />
                         <span class='black-checkbox-span'
                             :class="{ 'black-checkbox-span open': opensIncludes('brands') }">
                             <p :class="{ 'black-checkbox-span-name': opensIncludes('brands') }"> {{ brand?.name }}
@@ -44,7 +46,7 @@
 
                     </label>
                 </p>
-                <p class="open-block" v-if="getRemainingBrands">
+                <p class="open-block" v-if="brandsStore.getAllBrands?.length > 0 && getRemainingBrands">
                     <span @click="openBrands" v-if="!isBrandOpen"> {{ $t('more') }} {{ getRemainingBrands }}
                     </span>
                     <span @click="isBrandOpen = false" v-else> {{ $t('closeBlock') }}
@@ -63,7 +65,7 @@
                         <label class="black-checkbox">
                             <input type="checkbox" :id="`${item.id}-${index}`" :value="sub.id"
                                 :checked="isChecked(item.id, sub.id)"
-                                @change="updateCheckboxState(item.id, sub.id, $event)" />
+                                @change="updateCheckboxState(item.id, sub.id, $event)" class="filtersCheckboxes" />
                             <span class="black-checkbox-span"
                                 :class="{ 'black-checkbox-span open': opensIncludes(item?.id) }">
 
@@ -84,6 +86,11 @@
                         src="../../assets/icons/arrow-down-blue.svg" alt="open-arrow">
                 </p>
             </div>
+        </div>
+
+        <div class="apply-filters">
+            <button class="pink-button" @click="() => emit('applyFilter')">{{ $t('applyFilter') }}</button>
+            <button class="bg-white-btn" @click="resetFilters">{{ $t('reset') }}</button>
         </div>
     </div>
 
@@ -113,10 +120,49 @@ const openedBlockFilters = ref<string[]>([]);
 const brandsStore = useBrandsStore();
 const queryBrand = route?.query
 const isBrandOpen = ref(false)
-
+const emit = defineEmits(['applyFilter'])
 const getRemainingBrands = computed(() => {
     return brandsStore.getAllBrands?.length - 5
 })
+
+
+const resetFilters = () => {
+
+    let allBrandsInputs = Array.from(document.querySelectorAll('.brandsCheckboxes')) as HTMLInputElement[];
+    let filtersCheckboxes = Array.from(document.querySelectorAll('.filtersCheckboxes')) as HTMLInputElement[];
+    let subcategoryCheckboxes = Array.from(document.querySelectorAll('.subcategoryCheckboxes')) as HTMLInputElement[];
+
+    for (let brand of allBrandsInputs) {
+        if (brand?.value) {
+            brand.value = '';
+            brand.checked = false
+        }
+    }
+
+    for (let brand of filtersCheckboxes) {
+        if (brand?.value) {
+            brand.value = '';
+            brand.checked = false
+        }
+    }
+
+    for (let brand of subcategoryCheckboxes) {
+        if (brand?.value) {
+            brand.value = '';
+            brand.checked = false
+        }
+    }
+
+    productsStore.filters.search = "";
+    productsStore.filters.categoryId = ''
+    productsStore.filters.subdirectoryIds = []
+    productsStore.filters.minPrice = 0
+    productsStore.filters.maxPrice = 0
+    productsStore.filters.brandId = []
+    productsStore.filters.currentPage = 1;
+    productsStore.filters.pageSize = 10;
+    productsStore.filterProducts();
+}
 
 const openBrands = () => {
     isBrandOpen.value = true
@@ -157,20 +203,23 @@ const isChecked = (itemId: string, subId: string) => {
 
 const updateBrandsInputs = (brand: Brands, event: any) => {
 
-
     const brandIndex = productsStore.filters.brandId.indexOf(brand?.id);
 
-    if (event.target.checked === true) {
 
+    if (event.target.checked === true) {
         if (brandIndex === -1) {
             productsStore.filters.brandId.push(brand?.id);
-        }
-    } else {
 
+        }
+    }
+    else {
         if (brandIndex !== -1) {
             productsStore.filters.brandId.splice(brandIndex, 1);
         }
     }
+
+    console.log(' productsStore.filters.brandId', productsStore.filters.brandId)
+
     productsStore.filterProducts()
 };
 
@@ -265,6 +314,19 @@ watch(() => authStore.getSelectedLang, async (newVal, oldVal) => {
 
 .each-sub-item {
     margin: 7px 0;
+}
+
+.apply-filters {
+    display: none;
+
+
+    button:last-child {
+        box-shadow: 0px 0px 0px 0.5px #0000000D;
+        box-shadow: 0px 0.5px 2.5px 0px #0000004D;
+    }
+
+
+
 }
 
 .each-filter-block.open {
@@ -442,6 +504,9 @@ watch(() => authStore.getSelectedLang, async (newVal, oldVal) => {
 }
 
 @media(max-width:1000px) {
+    .apply-filters {
+        @include flex(column, start, center);
+    }
 
     .brands-list {
         @include flex(row, start, center, 2rem);

@@ -108,6 +108,8 @@ export const useProductsSstore = defineStore("productsStore", {
         console.log(err);
       }
     },
+
+  
     async addToBookmarks(objectId: string) {
       const authStore = useAuthStore();
       try {
@@ -160,7 +162,7 @@ export const useProductsSstore = defineStore("productsStore", {
           : null;
 
       const allBrands =
-        this.filters?.brandId?.length > 0
+        this.filters?.brandId !== null && this.filters?.brandId?.length > 0
           ? this.filters.brandId?.join(",")
           : null;
 
