@@ -8,6 +8,7 @@
             <div class="overlay" v-if="isBurgerMenuOpen" @click="closeBurgerMenu"></div>
             <div class="bottom-part" :class="{ 'open-bottom-part': isBurgerMenuOpen }">
                 <li class="catalog-li" @mouseover="toggleCatalog" @mouseleave="closeCatalog">{{
+                    
             $t('catalog') }}
                     <img class="arrow" :class="{ 'rotated': isCatalogOpen }"
                         src="../assets/icons/icon=components-closed-arrow.svg" alt="open-arrow">

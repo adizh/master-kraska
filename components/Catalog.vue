@@ -13,7 +13,9 @@
                             xmlns="http://www.w3.org/2000/svg">
                             <path d="M14.0913 11.5L9 6.44422L10.4544 5L17 11.5L10.4544 18L9 16.5558L14.0913 11.5Z"
                                 fill="#DDDDDD" />
+
                         </svg></span>
+
 
                 </li>
             </ul>
@@ -61,7 +63,7 @@ const fromtTop = ref('60px')
 
 const selectCategory = (item: Category, event: any) => {
     const rect = event.target.getBoundingClientRect();
-    console.log('rect', rect)
+    
 
 
 
@@ -69,7 +71,10 @@ const selectCategory = (item: Category, event: any) => {
     console.log('fromTop value', fromtTop)
     router.push(`/catalog/${item?.category?.id}`)
     activeCategory.value = item;
-    getSubs()
+    getSubs();
+
+
+    
 
 }
 

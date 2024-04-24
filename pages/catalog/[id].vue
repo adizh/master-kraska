@@ -32,6 +32,8 @@
 
             <CatalogResults class="col-12 md:col-12 sm:col-12 lg:col-9 all-catalog-results"
                 :visibleMethod="visibleMethod" :class="{ 'close': isFilterOpen }" />
+
+                
         </div>
     </section>
 </template>
