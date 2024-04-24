@@ -35,6 +35,8 @@ const isProfileOpen = ref(false)
 const props = defineProps<{
     item: ExtendedProduct
 }>();
+
+const route = useRoute()
 const itemReviews = ref<Review[]>([])
 
 const inputs = ref({
@@ -95,8 +97,9 @@ const createReview = async () => {
 
 
 const fetchReviewsByProd = async () => {
+
     try {
-        const response = await http(`/api/v1/ProductReview/get-review-by-userId/${authStore.getUserId}`);
+        const response = await http(`/api/v1/ProductReview/get-reviews-by-productId/${props?.item?.id}`);
         console.log('response fetchReviewsByProd', response);
         if (response.status === 200) {
             itemReviews.value = response.data
@@ -105,8 +108,8 @@ const fetchReviewsByProd = async () => {
         console.log(err)
     }
 }
-onMounted(() => {
-    fetchReviewsByProd()
+onMounted(async () => {
+    await fetchReviewsByProd()
 })
 
 </script>
