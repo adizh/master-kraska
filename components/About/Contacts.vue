@@ -45,8 +45,8 @@
 
 
         <div class="margin-top-40 margin-bottom-40" id="map">
-            <LMap ref="map" :zoom="12" :center="[42.860131, 74.608273]" :geoJSON="geoJson">
-                <LTileLayer url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+            <LMap ref="map" :zoom="12" :center="[42.860131, 74.608273]" :geoJSON="geoJson" :style="{ zIndex: '1' }">
+                <LTileLayer url=" https://tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution="&amp;copy; <a href=&quot;https://www.openstreetmap.org/&quot;>OpenStreetMap</a> contributors"
                     layer-type="base" name="OpenStreetMap" />
                 <LMarker v-for="item in addressList" :key="item?.id" :lat-lng="item?.coordinates">
@@ -166,6 +166,7 @@ const markers = [
     }
 
     .maps-address .each-section-header {
+
         font-size: 20px
     }
 }

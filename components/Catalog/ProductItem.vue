@@ -66,7 +66,7 @@ const emit = defineEmits<{
 
 onMounted(async () => {
     if (props?.product) {
-        prodBrand.value = await getBrandId(props?.product?.brandId);
+        prodBrand.value = await getBrandId(props?.product?.brandId)
     }
 })
 

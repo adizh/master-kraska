@@ -96,6 +96,10 @@ h4 {
         font-size: 16px;
     }
 
+    .main-header-h1 {
+        font-size: 24px !important;
+    }
+
     .each-section-header {
         font-size: 20px;
     }

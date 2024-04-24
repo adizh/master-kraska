@@ -263,8 +263,6 @@ h2 {
   height: 44px;
 }
 
-
-
 .arrow {
   transition: transform 0.3s ease;
 }
@@ -544,9 +542,6 @@ h2 {
   .cart-main-info-price button:last-child {
     font-size: 14px;
   }
-}
-
-@media (max-width: 576px) {
   .cart-main-info-price-block .last {
     font-size: 16px;
   }
@@ -564,5 +559,9 @@ h2 {
   .main-header-h1 {
     font-size: 24px !important;
     line-height: 32px !important;
+  }
+  .each-section-header {
+    font-size: 20px !important;
+    line-height: 24px !important;
   }
 }

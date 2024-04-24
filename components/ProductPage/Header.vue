@@ -9,7 +9,12 @@
                     {{ getProduct?.product?.name }}
                 </div>
                 <div>
-                    <p class="each-block-info-col">{{ $t('storeMark') }}: {{ productBrand }} </p>
+                    <p class="each-block-info-col flex flex-column align-items-start gap-2"><span>
+                            {{ $t('storeMark') }}:
+                        </span>
+
+                        <img :src="productBrand?.logo" alt="brand" class="brand-logo">
+                    </p>
                 </div>
                 <div class="middle-review"><span class="each-block-info-col">{{ $t('rating') }}</span>
                     <div class='middle-rating'>
@@ -120,6 +125,7 @@
 <script setup lang="ts">
 import Rating from 'primevue/rating';
 import { Product } from '@/types/Product'
+import { Brands } from '~/types/Brands';
 
 
 
@@ -134,7 +140,7 @@ const totalPrice = ref(0)
 const authStore = useAuthStore();
 const productStore = useProductsSstore()
 const store = useCartStore()
-const productBrand = ref('')
+const productBrand = ref({} as Brands)
 const selectedProductPrice = ref(0)
 const length = ref(0)
 const width = ref(0)
@@ -292,6 +298,10 @@ onMounted(async () => {
     width: 100%;
     @include textFormat(16px, 24px, 400, #000);
     margin-top: 40px
+}
+
+.brand-logo {
+    width: 120px;
 }
 
 .count-overlay {
