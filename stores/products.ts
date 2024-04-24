@@ -78,6 +78,7 @@ export const useProductsSstore = defineStore("productsStore", {
                 (similar: Product) => ({
                   ...similar,
                   shortDescription: similar.shortDescriptionKg,
+                  name: similar?.nameKg,
                 })
               ),
             };
@@ -97,6 +98,7 @@ export const useProductsSstore = defineStore("productsStore", {
                 (similar: Product) => ({
                   ...similar,
                   shortDescription: similar.shortDescriptionRu,
+                  name: similar?.nameRu,
                 })
               ),
             };

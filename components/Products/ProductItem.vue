@@ -79,7 +79,7 @@ onMounted(async () => {
         display: block;
         text-align: left;
         margin-bottom: 15px;
-
+        word-break: break-all;
         max-height: 60px;
         height: 100%;
 

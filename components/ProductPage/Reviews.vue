@@ -12,7 +12,7 @@
             <Rating v-model="inputs.ratingValue.value" :cancel="false" />
             <span class="err-input-msg">{{ inputs.ratingValue.error }}</span>
 
-            <input type="text" class="basic-input" :placeholder="$t('text')" v-model="inputs.text.value"
+            <textarea type="text" class="basic-input" :placeholder="$t('text')" v-model="inputs.text.value"
                 @input="handleInput('text', 'string')" />
             <span class="err-input-msg">{{ inputs.text.error }}</span>
             <button @click="createReview">{{ $t('leaveReview') }}</button>
@@ -128,7 +128,7 @@ onMounted(() => {
             padding: 12px 20px !important;
         }
 
-        input {
+        textarea {
             width: 50%;
         }
     }
@@ -153,5 +153,17 @@ h5 {
 
 .err-input-msg {
     margin-top: -10px;
+}
+
+@media (max-width:768px) {
+    .basic-input {
+        width: 70%;
+    }
+}
+
+@media (max-width:480px) {
+    .basic-input {
+        width: 100%;
+    }
 }
 </style>

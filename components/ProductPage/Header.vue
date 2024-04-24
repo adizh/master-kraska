@@ -530,4 +530,104 @@ onMounted(async () => {
     }
 
 }
+
+@media (max-width:1000px) {
+    .item-page-header {
+        flex-wrap: wrap;
+        justify-content: start;
+        gap: 60px
+    }
+
+    .right {
+        width: 100%;
+
+        .header,
+        .numbers,
+        .count {
+
+            width: 50%;
+        }
+    }
+
+    .middle {
+
+        width: 60%;
+
+        &-header {
+            max-width: 100%;
+        }
+    }
+
+    .buy-btns {
+        width: 50%;
+        flex-direction: row;
+    }
+
+
+}
+
+@media (max-width:768px) {
+    .middle {
+        width: 50%;
+
+        &-header {
+            font-size: 24px;
+            line-height: 24px;
+        }
+    }
+
+    .left {
+        width: 35%;
+    }
+
+    .right {
+
+        .header,
+        .numbers,
+        .count,
+        .buy-btns {
+
+            width: 70%;
+        }
+    }
+}
+
+@media (max-width:480px) {
+    .item-page-header {
+        flex-direction: column;
+    }
+
+    .middle-header {
+        font-size: 20px;
+        line-height: 20px;
+    }
+
+    .left,
+    .middle,
+    .right {
+        width: 100% !important;
+
+        .header,
+        .numbers,
+        .count,
+        .buy-btns {
+
+            width: 100%;
+        }
+
+        .buy-btns {
+            flex-direction: column;
+        }
+    }
+
+    .tabs-select {
+        div:last-child {
+            display: none
+        }
+    }
+
+    div:first-child::after {
+        display: none;
+    }
+}
 </style>

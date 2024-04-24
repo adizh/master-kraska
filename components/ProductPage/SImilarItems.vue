@@ -17,10 +17,12 @@
 import { Product } from '~/types/Product';
 
 
-const props = defineProps<{
-    similarItems: PropType<Product[]>
-
-}>()
+const props = defineProps({
+    similarItems: {
+        type: Array as PropType<Product[]>
+    }
+})
+const slicedSimilarItems = computed(() => props.similarItems?.slice(0, 3))
 
 
 console.log('similarItems', props?.similarItems)
@@ -35,6 +37,54 @@ console.log('similarItems', props?.similarItems)
 
     .item-block {
         width: 24%;
+    }
+
+}
+
+
+@media (max-width:1000px) {
+    .similar-prod-item .item-block {
+        width: 30% !important;
+
+
+    }
+}
+
+@media (max-width:820px) {
+    .similar-prod-item .item-block {
+        width: 35% !important;
+
+        &-name {
+            margin-bottom: 15px;
+        }
+
+
+    }
+
+    .similar-prod-item-list {
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width:780px) {
+    .similar-prod-item-list {
+
+
+        .item-block {
+            width: 48% !important;
+
+
+        }
+    }
+
+
+}
+
+@media (max-width:576px) {
+    .similar-prod-item-list {
+        .item-block {
+            width: 100% !important;
+        }
     }
 
 }
