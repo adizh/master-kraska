@@ -204,6 +204,7 @@
     background-image: url('/static/delivery.png');
     background-repeat: no-repeat;
     background-size: cover;
+    border-radius: 10px;
     height: 100vh;
     background-position: center center;
     width: 100%;
@@ -212,7 +213,7 @@
 
     h1 {
         margin: 20.9rem 0 50px 0;
-        @include textFormat(74px !important, 101px, 600, #fff !important)
+        @include textFormat(74px, 101px, 600, #fff !important)
     }
 
     p {
@@ -228,19 +229,40 @@
     padding-left: 20px;
 }
 
-@media (min-width:768px) and (max-width:992px) {
+@media (max-width:768px) {
+    .header {
+        background-size: auto;
+        height: 60vh;
+    }
+
     .header h1 {
-        margin-top: 4rem;
-        font-size: 60px !important
-        
+        margin-top: 3rem !important
+    }
+
+    h1 {
+        font-size: 42px;
+        line-height: 42px;
     }
 }
 
 @media (max-width:576px) {
-    .header h1 {
-        margin: 0;
-        font-size: 50px;
-        line-height: 70px;
+    h1 {
+        font-size: 24px;
+        line-height: 24px;
     }
+
+}
+
+@media (max-width:480px) {
+    h1 {
+        font-size: 20px;
+        line-height: 20px;
+    }
+
+    .header {
+        display: none;
+        padding-left: 10px;
+    }
+
 }
 </style>
