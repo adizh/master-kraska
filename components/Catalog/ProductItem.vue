@@ -52,7 +52,7 @@ const productInfo = computed(() => {
     return props?.product?.shortDescription && props?.product?.shortDescription?.split(' ').length > 13 ? props?.product?.shortDescription.split(' ').slice(0, 13).join(' ') + '...' : props?.product?.shortDescription
 })
 const productInfoHorizontal = computed(() => {
-    return props?.product?.shortDescription && props?.product?.shortDescription?.split(' ').length > 19 ? props?.product?.shortDescription.split(' ').slice(0, 19).join(' ') + '...' : props?.product?.shortDescription
+    return props?.product?.shortDescription && props?.product?.shortDescription?.split(' ').length > 13 ? props?.product?.shortDescription.split(' ').slice(0, 13).join(' ') + '...' : props?.product?.shortDescription
 
 })
 const prodBrand = ref('')
@@ -73,7 +73,7 @@ onMounted(async () => {
 
 
 const productName = (name: string) => {
-    return name && name?.split(' ').length > 5 ? name?.split(' ').slice(0, 5).join(' ') : name
+    return name && name?.split(' ').length > 5 ? name?.split(' ').slice(0, 5).join(' ') + '...' : name
 }
 
 </script>
@@ -152,8 +152,6 @@ const productName = (name: string) => {
     width: 100%;
     @include flex(row, space-between, start);
 
-
-
     .first-col {
         max-width: 65%;
         @include flex(row, space-between, start, 50px);
@@ -192,12 +190,65 @@ const productName = (name: string) => {
 @media (max-width:768px) {
     .item-block {
         width: 45%;
+        padding: 10px;
+
+        &-name {
+            text-align: start !important;
+            margin-bottom: 10px;
+        }
+
+        img {
+            width: 140px;
+            height: 140px
+        }
     }
+
+    .item-block-buy {
+        padding: 13px 19px;
+        font-size: 18px;
+    }
+
+    .item-block.horizontal .first-col {
+        gap: 20px;
+    }
+
+    .item-block.horizontal {
+        gap: 20px
+    }
+
 }
 
 @media (max-width:576px) {
     .item-block {
         width: 100%;
+
+        img {
+            width: 120px;
+            height: 120px
+        }
+    }
+
+    .item-block.horizontal {
+        flex-direction: column;
+    }
+
+    .item-block.horizontal .first-col {
+        max-width: 100%;
+    }
+
+    .item-block.horizontal .last-col {
+        @include flex(row, start, center);
+        margin-top: 10px;
+
+        width: 100%;
+
+        button:first-child {
+            width: 45%;
+        }
+
+        button:last-child {
+            width: 50%
+        }
     }
 }
 </style>

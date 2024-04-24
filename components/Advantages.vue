@@ -74,8 +74,9 @@ import { advantagesOptions } from '@/assets/js/advantages'
 @media (min-width:320px) and (max-width:768px) {
     .advan-block {
         align-items: end;
-        padding-bottom: 18rem;
+        padding: 20px 20px 18rem 10px;
         position: relative;
+
     }
 
     .right {

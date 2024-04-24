@@ -1,14 +1,19 @@
 <template>
     <div class="popular-products">
         <h5 class='each-section-header'>{{ $t('beneficialProducts') }}</h5>
-        <div class="products-list">
-            <Swiper :slides-per-view="4" :navigation="true" id="mySlider" :modules="[SwiperNavigation]"
+        <div class="products-list" v-if="popularItems?.length > 0">
+            <Swiper :slides-per-view="slidesPerView" :navigation="true" id="mySlider" :modules="[SwiperNavigation]"
                 :style='{ "--swiper-navigation-size": "15px", "padding": "20px 0" }'>
                 <SwiperSlide v-for="product in popularItems" :key="product.id">
                     <ProductsProductItem :product="product" />
 
                 </SwiperSlide>
+
             </Swiper>
+        </div>
+
+        <div v-else>
+            <ProgressSpinner />
         </div>
 
     </div>
@@ -16,10 +21,24 @@
 
 <script setup lang="ts">
 import { Product } from '~/types/Product';
+const slidesPerView = ref(4)
 
+const handleResize = () => {
+    if (window.innerWidth <= 576) {
+        slidesPerView.value = 1;
+    } else if (window.innerWidth <= 992) {
+        slidesPerView.value = 2;
+    } else if (window.innerWidth <= 1280) {
+        slidesPerView.value = 3;
+    } else {
+        slidesPerView.value = 4;
+    }
+};
 const store = useProductsSstore();
 onMounted(() => {
     store.fetchAllProducts();
+    handleResize(); // Call onMounted to set initial value
+    window.addEventListener('resize', handleResize);
 })
 
 console.log('store.getAllProducsts', store.getAllProducsts);
@@ -27,6 +46,11 @@ console.log('store.getAllProducsts', store.getAllProducsts);
 const popularItems = computed(() => {
     return store.getAllProducsts.filter((item: Product) => item.isBeneficial)
 })
+
+onUnmounted(() => {
+    window.removeEventListener('resize', handleResize);
+});
+console.log('popularItems', popularItems);
 </script>
 
 <style scoped lang='scss'>
@@ -41,7 +65,6 @@ const popularItems = computed(() => {
 .products-list {
     padding-left: 20px;
 }
-
 
 
 :deep(.swiper-button-next,

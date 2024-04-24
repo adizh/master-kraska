@@ -24,9 +24,9 @@ import { Product } from '~/types/Product';
 const slidesPerView = ref(4)
 
 const handleResize = () => {
-    if (window.innerWidth <= 768) {
+    if (window.innerWidth <= 576) {
         slidesPerView.value = 1;
-    } else if (window.innerWidth <= 1024) {
+    } else if (window.innerWidth <= 992) {
         slidesPerView.value = 2;
     } else if (window.innerWidth <= 1280) {
         slidesPerView.value = 3;

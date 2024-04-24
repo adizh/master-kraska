@@ -49,8 +49,6 @@ onMounted(async () => {
 </script>
 
 <style scoped lang="scss">
-
-
 .item-block {
     transition: .3s ease all;
     border-radius: 10px;
@@ -62,7 +60,8 @@ onMounted(async () => {
     width: 28%;
     padding: 20px 32px;
     overflow: hidden;
-
+    max-height: 510px;
+    height: 510px;
 
 
     img {
@@ -81,7 +80,8 @@ onMounted(async () => {
         text-align: left;
         margin-bottom: 15px;
 
-
+        max-height: 60px;
+        height: 100%;
 
 
 
