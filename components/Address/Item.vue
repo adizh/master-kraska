@@ -71,4 +71,10 @@ const props = defineProps<{
         @include flex(row, space-between, center);
     }
 }
+
+@media (max-width:480px) {
+    .maps-address-list-block h3 {
+        font-size: 18px !important;
+    }
+}
 </style>

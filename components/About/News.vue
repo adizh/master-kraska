@@ -21,3 +21,11 @@
 
     </div>
 </template>
+
+<style scoped lang="scss">
+@media (max-width:480px) {
+    .each-section-header {
+        font-size: 20px;
+    }
+}
+</style>

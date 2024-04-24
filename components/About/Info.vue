@@ -26,8 +26,6 @@
                 <img src="../../assets/images/certif/certificate1.png" />
                 <img src="../../assets/images/certif/certificate2.png" />
                 <img src="../../assets/images/certif/certificate3.png" />
-
-
             </div>
         </div>
 
@@ -43,19 +41,15 @@
             </div>
 
             <div class="all-sellers-blocks">
-                <div v-for="seller in brandsStore.getAllSellers?.slice(0, 4)" :key="seller?.id"
-                    class="all-sellers-each">
-                    <img :src="seller?.image" alt="seller" class="seller-pic">
-                    <h3 class='text-center'>{{ seller?.name }}</h3>
-                    <span class="sub-info-seller">{{ seller?.sellerInfo }}</span>
-                    <img :src="seller?.certificateImage" alt="certificate" class="certificate">
-                </div>
+                <ItemsSeller :items="4" />
             </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
+
+
 const brandsStore = useBrandsStore();
 const { t } = useI18n();
 const openInfo = ref(false)
@@ -71,9 +65,7 @@ const closeBlock = () => {
 
 const subHeader = computed(() => !openInfo.value ? t('aboutSubHeader').slice(0, 340) + '...' : t('aboutSubHeader'))
 
-onMounted(() => {
-    brandsStore.fetchAllSellers()
-})
+
 
 
 </script>
@@ -96,6 +88,20 @@ h4 {
 
     &-certif-header {
         @include flex(row, space-between, center)
+    }
+}
+
+@media (max-width:480px) {
+    .info h4 {
+        font-size: 16px;
+    }
+
+    .each-section-header {
+        font-size: 20px;
+    }
+
+    .info-text {
+        font-size: 14px;
     }
 }
 </style>

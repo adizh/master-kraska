@@ -8,6 +8,7 @@
                 <h3 class='text-center'>{{ seller?.name }}</h3>
                 <span class="sub-info-seller">{{ seller?.sellerInfo }}</span>
                 <img :src="seller?.certificateImage" alt="certificate" class="certificate">
+                
             </div>
         </div>
     </section>

@@ -44,4 +44,25 @@
         }
     }
 }
+
+@media (max-width:768px) {
+    .news-list-block {
+        flex-direction: column;
+
+        .image {
+            width: 100%;
+        }
+
+        .info {
+            width: 100%;
+        }
+    }
+
+}
+
+@media (max-width:480px) {
+    .news-list-block .info h2 {
+        font-size: 20px !important;
+    }
+}
 </style>
