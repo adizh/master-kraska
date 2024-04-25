@@ -91,7 +91,7 @@ const inputs = ref({
 const isOldPasswordOpen = ref(false)
 const isPasswordOpen = ref(false)
 const isNewPasswordOpen = ref(false)
-
+const { t } = useI18n()
 const isOTPOpen = ref(false)
 const isPasswordsOpen = ref(false)
 const { handleValues } = useInputValidation()
@@ -113,7 +113,7 @@ const sendEmail = async () => {
         } catch (err: any) {
             console.log(err, 'error sending code')
             if (err?.response?.data?.code === 404) {
-                inputs.value.email.error = 'Пользователь не найден' || 'Ошибка'
+                inputs.value.email.error = t('userNotFound') || t('error')
             }
         }
     }
@@ -132,7 +132,7 @@ const sendCode = async () => {
             const response = await http.post(`/api/v1/User/verify-code`, body);
             console.log('response sendCode', response);
             if (response.data.code === 404) {
-                inputs.value.code.error = 'Неправильный код'
+                inputs.value.code.error = t('wrongCode')
             }
             if (response.data.code === 200) {
                 isPasswordsOpen.value = true
@@ -140,7 +140,7 @@ const sendCode = async () => {
         } catch (err: any) {
             console.log(err, 'error sending code')
             if (err?.response?.data?.code === 404) {
-                inputs.value.email.error = 'Пользователь не найден' || 'Ошибка'
+                inputs.value.email.error = t('userNotFound') || t('error')
             }
         }
     }
@@ -176,15 +176,15 @@ const changePassword = async () => {
             if (response.status === 200) {
 
 
-                useNotif('success', 'Пароль обновлен!', 'Успешно')
+                useNotif('success', t('passwordUpdated'), 'Успешно')
                 setTimeout(() => {
                     window.location.reload()
                 }, 800)
 
             }
         } catch (err: any) {
-            if (err?.response?.data?.code === 400 && err?.response?.data?.code === 'Old password is incorrect') {
-                inputs.value.oldPassword.error = 'Старый пароль неверный. Введите правильный'
+            if (err?.response?.data?.code === 400 && err?.response?.data?.message === 'Old password is incorrect') {
+                inputs.value.oldPassword.error = t('oldErroPassword')
             }
             console.log(err, 'Error changing the password')
         }
