@@ -72,7 +72,7 @@ const isProdDesctLong = computed(() => {
 })
 const isSurfaceLong = computed(() => {
     return props?.item?.surfacePreparations?.length > surfaceLen.value
-    
+
 })
 
 const prodDescr = computed(() => {
@@ -175,6 +175,17 @@ const selectTab = (tab: number) => {
             @extend %sm-span
         }
 
+    }
+}
+
+@media (max-width:768px) {
+    .tabs-select div:last-child {
+        display: none;
+    }
+
+    .tabs-select div:first-child::after {
+        background: none;
+        display: none;
     }
 }
 </style>

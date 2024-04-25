@@ -103,13 +103,10 @@
 
 
 
-    <OverlayPanel ref="countOverlay" class="countOverlay" style="width: 30%">
+    <OverlayPanel ref="countOverlay" class="countOverlay">
         <div class="count-overlay">
             <span class="header">{{ $t('count') }}</span>
-
             <p class='count-overlay-info'>{{ $t('productCountInfo') }}</p>
-
-
             <button>{{ $t('toCart') }}</button>
         </div>
     </OverlayPanel>
