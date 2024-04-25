@@ -29,13 +29,13 @@
                             alt="arrow"></a></span>
             </div>
             <div class="fourth">
-                <span><a href="">{{ $t('mobileConsultant') }}<img src="../assets/icons/arrow-footer.svg"
-                            alt="arrow"></a></span>
-                <span><a href="">{{ $t('mapPermanentCustomer') }} <img src="../assets/icons/arrow-footer.svg"
-                            alt="arrow"></a></span>
+                <!-- <span><a href="/sellers">{{ $t('mobileConsultant') }}<img src="../assets/icons/arrow-footer.svg"
+                            alt="arrow"></a></span> -->
+                <!-- <span><a href="">{{ $t('mapPermanentCustomer') }} <img src="../assets/icons/arrow-footer.svg"
+                            alt="arrow"></a></span> -->
                 <span><a href="/pay-deliver">{{ $t('payDelivery') }} <img src="../assets/icons/arrow-footer.svg"
                             alt="arrow"></a></span>
-                <span><a href="">{{ $t('experts') }} <img src="../assets/icons/arrow-footer.svg" alt="arrow"></a></span>
+                <!-- <span><a href="">{{ $t('experts') }} <img src="../assets/icons/arrow-footer.svg" alt="arrow"></a></span> -->
             </div>
         </div>
         <div class="middle">

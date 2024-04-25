@@ -41,7 +41,8 @@
             </div>
 
             <div class="all-sellers-blocks">
-                <ItemsSeller :items="4" />
+
+                <ItemsSeller :items="4" type="component" />
             </div>
         </div>
     </div>

@@ -1,9 +1,9 @@
 <template>
-    <div v-for="seller in allBrands" :key="seller?.id" class="all-sellers-each">
+    <div v-for="seller in allSellers" :key="seller?.id" class="all-sellers-each">
         <img :src="seller?.image" alt="seller" class="seller-pic">
         <h3 class='text-center'>{{ seller?.name }}</h3>
         <span class="sub-info-seller">{{ seller?.sellerInfo }}</span>
-
+        <img :src="seller?.certificateImage" alt="certificate" class="certificate" v-if="type === 'page'">
     </div>
 </template>
 
@@ -14,6 +14,10 @@ const props = defineProps({
     items: {
         type: Number,
         default: 0
+    },
+    type: {
+        type: String,
+        default: 'component' || 'page'
     }
 })
 
@@ -21,7 +25,7 @@ onMounted(() => {
     brandsStore.fetchAllSellers()
 })
 
-const allBrands = computed(() => {
+const allSellers = computed(() => {
     return props?.items ? brandsStore.getAllSellers?.slice(0, 4) : brandsStore.getAllSellers
 })
 </script>
@@ -45,7 +49,7 @@ const allBrands = computed(() => {
 
 
 .all-sellers-each {
-    @include flex(column, center, center);
+    @include flex(column, center, center !important);
     margin-top: 50px;
     width: 22%;
 }
@@ -69,6 +73,7 @@ const allBrands = computed(() => {
 }
 
 @media (max-width:480px) {
+
     .all-sellers-each {
         width: 100%;
 
