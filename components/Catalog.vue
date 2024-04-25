@@ -6,7 +6,7 @@
             <ul class="first-col">
                 <li v-for="item in getAllCategories" :key="item?.category?.id" @mouseover="selectCategory(item, $event)"
                     :class="{ 'active': activeCategory.category?.id === item?.category?.id }"
-                    @click.stop="router.push(`/catalog/${item?.category?.id}`)">
+                    @click.stop="goToCatalog(item)">
                     <span> {{ formatName(item?.category?.name) }}</span>
                     <span class="arrow-right"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
@@ -20,7 +20,7 @@
             <ul class="second-col" v-if="subCategories?.length > 0">
 
                 <li v-for="subItem in subCategories[0]?.subcategories" :key="subItem?.id"
-                    @click.stop="router.push({ path: `/catalog/${activeCategory.category?.id}`, query: { subCategory: subItem?.id } })">
+                    @click.stop="goToCatalogSub(subItem)">
                     <span> {{ formatName(subItem?.nameRu) }}</span>
                 </li>
             </ul>
@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { Category } from '@/types/Category'
+import { Category, CategorySys } from '@/types/Category'
 const authStore = useAuthStore();
 const catalogStore = useCatalogStore()
 const router = useRouter()
@@ -52,14 +52,24 @@ const props = defineProps<{
 const emit = defineEmits<{
     closeCatalog: [],
 }>();
+const goToCatalog = (item: Category) => {
+    router.push(`/catalog/${item?.category?.id}`);
+    emit('closeCatalog')
+}
+const goToCatalogSub = (subItem: CategorySys) => {
+    router.push({ path: `/catalog/${activeCategory.value?.category?.id}`, query: { subCategory: subItem?.id } })
+    emit('closeCatalog')
+}
 
 const fromtTop = ref('60px')
+
 
 const selectCategory = (item: Category, event: any) => {
     const rect = event.target.getBoundingClientRect();
     fromtTop.value = (Math.floor(rect.top) - 70).toString()
     activeCategory.value = item;
     getSubs();
+
 }
 
 const getSubs = async () => {

@@ -218,6 +218,7 @@ const updateBrandsInputs = (brand: Brands, event: any) => {
     if (event.target.checked === true) {
         if (brandIndex === -1) {
             productsStore.filters.brandId.push(brand?.id);
+            
         }
     }
     else {
