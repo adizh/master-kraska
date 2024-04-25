@@ -35,7 +35,7 @@ import http from '@/composables/http'
 
 const isPasswordOpen = ref(false);
 const isPasswordReset = ref(false);
-
+const { t } = useI18n()
 const togglePassword = (value: boolean) => {
     isPasswordOpen.value = value
 }
@@ -55,11 +55,11 @@ const handleValues = (fieldName: keyof LoginInputs, validationType: string) => {
     if (validationType === 'email') {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(value)) {
-            inputs.value[fieldName].error = 'Неправильный формат почты';
+            inputs.value[fieldName].error = t('incorrectEmail');
         }
     }
     else if (validationType === 'password') {
-        inputs.value[fieldName].error = value?.length < 1 ? 'Пароль должен быть больше 8 символов' : ''
+        inputs.value[fieldName].error = value?.length < 1 ? t('passwordRequire') : ''
     }
 };
 
@@ -98,11 +98,12 @@ const submitLogin = async () => {
             }
             console.log('response submit login', response);
         } catch (err: any) {
-            if (err?.response?.data?.code === 401) {
-                inputs.value.password.error = err?.response?.data?.message || 'Произошла ошибка'
+            if (err?.response?.data?.code === 401 && err?.response?.data?.message === 'Invalid password') {
+
+                inputs.value.password.error = t('incorrectPassword') || t('error')
             }
             if (err?.response?.data?.code === 404) {
-                inputs.value.email.error = err?.response?.data?.message || 'Произошла ошибка'
+                inputs.value.email.error = t('userNotFound') || t('error')
             }
             console.log('wjat is an error', err)
         }

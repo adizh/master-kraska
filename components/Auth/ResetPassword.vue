@@ -71,6 +71,7 @@ const { handleValues } = useInputValidation()
 const handleInput = (field: string, type: string) => {
     handleValues(inputs.value, field, type);
 }
+const { t } = useI18n()
 
 const sendEmail = async () => {
     handleValues(inputs.value, 'email', 'email');
@@ -86,7 +87,7 @@ const sendEmail = async () => {
         } catch (err: any) {
             console.log(err, 'error sending code')
             if (err?.response?.data?.code === 404) {
-                inputs.value.email.error = 'Пользователь не найден' || 'Ошибка'
+                inputs.value.email.error = t('userNotFound') || t('error')
             }
         }
     }
@@ -105,7 +106,7 @@ const sendCode = async () => {
             const response = await http.post(`/api/v1/User/verify-code`, body);
             console.log('response sendCode', response);
             if (response.data.code === 404) {
-                inputs.value.code.error = 'Неправильный код'
+                inputs.value.code.error = t('wrongCode')
             }
             if (response.data.code === 200) {
                 isPasswordsOpen.value = true;
@@ -113,7 +114,7 @@ const sendCode = async () => {
         } catch (err: any) {
             console.log(err, 'error sending code')
             if (err?.response?.data?.code === 404) {
-                inputs.value.email.error = 'Пользователь не найден' || 'Ошибка'
+                inputs.value.email.error = t('userNotFound') || t('error')
             }
         }
     }
@@ -146,7 +147,7 @@ const changePassword = async () => {
             console.log('response resetPassword', response);
             if (response.status === 200) {
 
-                useNotif('success', "Пароль сброшен и обновлен!", 'Успех')
+                useNotif('success', t('passwordReset'), t('success'))
                 setTimeout(() => {
                     window.location.reload()
                 }, 800);

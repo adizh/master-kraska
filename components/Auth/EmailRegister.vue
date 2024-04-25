@@ -147,7 +147,7 @@ const submitRegister = async () => {
             if (response.status === 200) {
                 localStorage.setItem('userId', response.data.message.id)
 
-                useNotif('success', 'Регистрация прошла успешно', 'Регистрация')
+                useNotif('success', t('successRegister'), t('registration'))
                 setTimeout(() => {
                     emit('closeModal')
                 }, 1000)

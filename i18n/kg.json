@@ -228,5 +228,9 @@
   "wrongCode": "Неправильный код",
   "userNotFound": "Пользователь не найден",
   "error": "Ошибка",
-  "passwordUpdated": "Пароль обновлен!"
+  "passwordUpdated": "Пароль обновлен!",
+  "successRegister": "Регистрация прошла успешно",
+  "incorrectPassword": "Неправильный пароль",
+  "passwordReset": "Пароль сброшен и обновлен!",
+  "success": "Успех"
 }
