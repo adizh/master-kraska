@@ -35,6 +35,7 @@
                     </CartProductItem>
                     <div v-if="cartStore.getAllCart?.length > 0" class="flex justify-content-end flex-row"> <button
                             class="btn-white-bg" @click='cartStore.saveNewCart'>
+                            
                             {{ $t('saveChanges') }}</button>
                     </div>
 

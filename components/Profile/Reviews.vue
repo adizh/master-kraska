@@ -5,6 +5,7 @@
 
 
    <div v-else-if="loading">
+      
       <ProgressSpinner />
    </div>
    <NoContent :title="$t('noCommentsLeft')" v-else>

@@ -9,10 +9,13 @@
             <UIPagination :total="productStore.getProdTotal?.totalPages"
                 :currentActive="productStore.filters.currentPage" @changePage="changePage" />
         </div>
-        
+
+
     </div>
 
-
+    <div v-else-if="!productStore.getLoadingState && !productStore?.getFilteredProducts?.length">
+        {{ $t('noData') }}
+    </div>
     <div v-else>
         <ProgressSpinner />
     </div>

@@ -35,8 +35,9 @@
             }">
                 <SwiperSlide v-for="item in brandsStore.getAllBrands" :key="item.id">
 
+
                     <img :src="item?.logo"
-                        @click="navigateTo({ path: `/catalog/${firstCategoryItem?.id}`, query: item })" />
+                        @click="navigateTo({ path: `/catalog/${firstCategoryItem?.category?.id}`, query: { brandId: item?.id } })" />
                 </SwiperSlide>
             </Swiper>
         </div>
@@ -44,15 +45,27 @@
 </template>
 
 <script setup lang="ts">
+import { Category } from '~/types/Category';
+
 const brandsStore = useBrandsStore()
-const catalogStore = useCatalogStore()
-onMounted(() => {
+const catalogStore = useCatalogStore();
+
+const firstCategoryItem = ref({} as Category)
+onMounted(async () => {
+    await catalogStore.fetchAllCategories()
     brandsStore.fetchAllBrands()
-    catalogStore.fetchAllCategories()
+
+    if (catalogStore.getAllCategories?.length > 0) {
+        firstCategoryItem.value = catalogStore.getAllCategories[0];
+    }
+
 })
 
 
-const firstCategoryItem = catalogStore.getAllCategories[0];
+
+
+console.log('firstCategoryItem', firstCategoryItem)
+console.log('catalogStore.getAllCategories', catalogStore.getAllCategories)
 
 </script>
 

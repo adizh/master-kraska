@@ -13,8 +13,9 @@
                         </button>
                     </div>
                     <div class="header-info-icons flex flex-row gap-2" v-if="type === 'profile'">
-                        <img src="../../assets/icons/icon=trash.svg" alt="trash" @click="isModal = !isModal">
-                        <img src="../../assets/icons/tdesign_edit.svg" alt="edit" @click="isEditModal = !isEditModal">
+                        <img src="../../assets/icons/icon=trash.svg" alt="trash" @click.stop="isModal = !isModal">
+                        <img src="../../assets/icons/tdesign_edit.svg" alt="edit"
+                            @click.stop="isEditModal = !isEditModal">
                     </div>
                 </div>
             </div>
@@ -44,7 +45,10 @@
     </Dialog>
 
     <Dialog v-model:visible="isEditModal" modal header=" " :style="{ width: '400px' }">
+
         <ReviewsEditForm :item="item" />
+        
+        
     </Dialog>
 
 

@@ -4,31 +4,26 @@
         <h5 class='each-section-header'>{{ $t('productsCatalog') }}</h5>
         <div class="options-list">
             <ul class="first-col">
-                <li v-for="item in getAllCategories" :key="item?.category?.id"
-                    @click.stop="selectCategory(item, $event)"
-                    :class="{ 'active': activeCategory.category?.id === item?.category?.id }">
+                <li v-for="item in getAllCategories" :key="item?.category?.id" @mouseover="selectCategory(item, $event)"
+                    :class="{ 'active': activeCategory.category?.id === item?.category?.id }"
+                    @click.stop="router.push(`/catalog/${item?.category?.id}`)">
                     <span> {{ formatName(item?.category?.name) }}</span>
-
                     <span class="arrow-right"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <path d="M14.0913 11.5L9 6.44422L10.4544 5L17 11.5L10.4544 18L9 16.5558L14.0913 11.5Z"
                                 fill="#DDDDDD" />
 
                         </svg></span>
-
-
                 </li>
             </ul>
 
             <ul class="second-col" v-if="subCategories?.length > 0">
-                <li v-for=" item in subCategories[0]?.subcategories" :key="item?.id">
-                    <span> {{ formatName(item?.nameRu) }}</span>
 
-
-
+                <li v-for="subItem in subCategories[0]?.subcategories" :key="subItem?.id"
+                    @click.stop="router.push({ path: `/catalog/${activeCategory.category?.id}`, query: { subCategory: subItem?.id } })">
+                    <span> {{ formatName(subItem?.nameRu) }}</span>
                 </li>
             </ul>
-
 
             <div class="second-col" v-else>
                 {{ $t("noData") }}
@@ -39,7 +34,6 @@
 </template>
 
 <script setup lang="ts">
-
 import { Category } from '@/types/Category'
 const authStore = useAuthStore();
 const catalogStore = useCatalogStore()
@@ -63,19 +57,9 @@ const fromtTop = ref('60px')
 
 const selectCategory = (item: Category, event: any) => {
     const rect = event.target.getBoundingClientRect();
-    
-
-
-
     fromtTop.value = (Math.floor(rect.top) - 70).toString()
-    console.log('fromTop value', fromtTop)
-    router.push(`/catalog/${item?.category?.id}`)
     activeCategory.value = item;
     getSubs();
-
-
-    
-
 }
 
 const getSubs = async () => {
@@ -90,17 +74,13 @@ const closeCatalogOptions = () => {
 };
 
 
-onMounted(() => {
-    catalogStore.fetchAllCategories();
-    if (getAllCategories?.value?.length) {
+onMounted(async () => {
+    await catalogStore.fetchAllCategories();
+    if (getAllCategories.value?.length) {
         activeCategory.value = getAllCategories?.value[0]
         getSubs()
     }
-
 })
-
-console.log('getAllCategories IN A COMPONSNE', catalogStore.getAllCategories)
-
 
 watch(() => authStore.getSelectedLang, () => {
     catalogStore.fetchAllCategories();

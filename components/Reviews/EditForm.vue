@@ -4,10 +4,8 @@
             <span>{{ $t('rateProduct') }}</span>
             <Rating v-model="inputs.ratingValue.value" :cancel="false" />
             <span class="err-input-msg">{{ inputs.ratingValue.error }}</span>
-            <input type="text" class="basic-input" :placeholder="$t('name')" v-model="inputs.title.value"
-                @input="handleInput('title', 'string')" />
-            <span class="err-input-msg">{{ inputs.title.error }}</span>
-            <input type="text" class="basic-input" :placeholder="$t('text')" v-model="inputs.text.value"
+
+            <textarea type="text" class="basic-input" :placeholder="$t('text')" v-model="inputs.text.value"
                 @input="handleInput('text', 'string')" />
             <span class="err-input-msg">{{ inputs.text.error }}</span>
             <button @click="createReview">{{ $t('saveReview') }}</button>
@@ -25,7 +23,6 @@ const props = defineProps<{
 }>()
 
 const inputs = ref({
-    title: { value: props?.item?.title, error: '' },
     text: { value: props?.item?.ratingText, error: '' },
     ratingValue: { value: props?.item?.rating, error: '' }
 });
@@ -38,7 +35,6 @@ const handleInput = (field: string, type: string) => {
 
 const createReview = async () => {
     const validationTypes: any = {
-        title: 'string',
         text: 'string',
         ratingValue: 'rating'
     };
@@ -58,14 +54,16 @@ const createReview = async () => {
                 "userId": authStore.getUserId,
                 "rating": inputs.value.ratingValue.value,
                 "ratingText": inputs.value.text.value,
-                "title": inputs.value.title.value
+
             }
             const response = await http.put(`/api/v1/ProductReview/update-review/${props?.item?.id}`, body);
             if (response.status === 200) {
                 inputs.value.text.value = ''
-                inputs.value.title.value = ''
+
                 inputs.value.ratingValue.value = 0;
-                useNotif('success', 'Отзыв оставлен!', 'Успешно')
+                useNotif('success', 'Отзыв оставлен!', 'Успешно');
+                
+                
             }
             console.log('response update review', response)
         } catch (err) {
@@ -81,13 +79,16 @@ const createReview = async () => {
     margin-top: 20px;
     padding-bottom: 20px;
     @include flex(column, center, center, 20px);
+
     &-create {
         @include flex(column, start, start, 20px);
+
         button {
             @extend %button-shared;
             @include footerSpan(20px, 20px);
             padding: 12px 20px !important;
         }
+
         input {
             width: 100%;
         }

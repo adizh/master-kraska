@@ -3,11 +3,14 @@
         <div class="subcategories">
             <div v-for="subCategory in catalogStore?.getCategory[0]?.subcategories" :key="subCategory?.id">
                 <label class="black-checkbox">
-                    <input type="checkbox" :id="`${subCategory.id}`" :value="subCategory.id" 
-                        class="subcategoryCheckboxes" @input="handleSubCategories(subCategory, $event)" />
+                    <input type="checkbox" :id="`${subCategory.id}`" :value="subCategory.id"
+                        class="subcategoryCheckboxes" @input="handleSubCategories(subCategory, $event)"
+                        :checked="subCategory?.id === route?.query?.subCategory as unknown as string" />
                     <span class="black-checkbox-span"
                         :class="{ 'black-checkbox-span open': opensIncludes(subCategory?.id) }">
+
                         <p :class="{ 'black-checkbox-span-name': opensIncludes(subCategory?.id) }">{{ subCategory?.name
+
                             }}
                         </p>
                     </span>
@@ -35,15 +38,13 @@
                 <p v-for="(brand, index) in computedBrands" :key="brand?.id" class="each-sub-item">
                     <label class="black-checkbox">
                         <input type="checkbox" :id="`${brand?.id}`" :value="brand.id"
-                            @input="(event) => updateBrandsInputs(brand, event)" :checked="brand?.id === queryBrand?.id"
+                            @input="(event) => updateBrandsInputs(brand, event)" :checked="brand?.id === brandIdQuery"
                             class="brandsCheckboxes" />
                         <span class='black-checkbox-span'
                             :class="{ 'black-checkbox-span open': opensIncludes('brands') }">
                             <p :class="{ 'black-checkbox-span-name': opensIncludes('brands') }"> {{ brand?.name }}
                             </p>
                         </span>
-
-
                     </label>
                 </p>
                 <p class="open-block" v-if="brandsStore.getAllBrands?.length > 0 && getRemainingBrands">
@@ -100,16 +101,6 @@
 import { AllCatalog, CatalogCheckbox } from '@/types/Catalog'
 import { Brands } from '~/types/Brands';
 import { CategorySys } from '~/types/Category';
-type BoolValues = {
-    value: boolean,
-    id: string;
-    name: string;
-}
-
-interface BoolCatalog {
-    id: string;
-    name: string;
-}
 
 const route = useRoute()
 const productsStore = useProductsSstore()
@@ -119,7 +110,8 @@ const checkboxStates = ref<{ [key: string]: CatalogCheckbox }>({});
 
 const openedBlockFilters = ref<string[]>([]);
 const brandsStore = useBrandsStore();
-const queryBrand = route?.query
+const brandIdQuery = ref('')
+
 const isBrandOpen = ref(false)
 const emit = defineEmits(['applyFilter'])
 const getRemainingBrands = computed(() => {
@@ -218,14 +210,14 @@ const isChecked = (itemId: string, subId: string) => {
 
 
 const updateBrandsInputs = (brand: Brands, event: any) => {
-
+    if (brand?.id === brandIdQuery.value) {
+        route.query.brandId = ''
+    }
+  
     const brandIndex = productsStore.filters.brandId.indexOf(brand?.id);
-
-
     if (event.target.checked === true) {
         if (brandIndex === -1) {
             productsStore.filters.brandId.push(brand?.id);
-
         }
     }
     else {
@@ -233,10 +225,9 @@ const updateBrandsInputs = (brand: Brands, event: any) => {
             productsStore.filters.brandId.splice(brandIndex, 1);
         }
     }
-
     console.log(' productsStore.filters.brandId', productsStore.filters.brandId)
-
-    productsStore.filterProducts()
+    productsStore.filterProducts();
+    window.scrollTo(0, 0)
 };
 
 
@@ -260,6 +251,8 @@ const updateCheckboxState = (itemId: string, subId: string, event: any) => {
     productsStore.setSubDirectories(filteredValues)
 
     productsStore.filterProducts()
+    window.scrollTo(0, 0)
+
 };
 
 
@@ -290,21 +283,27 @@ const getRemainingItemCount = (item: AllCatalog) => {
 }
 
 
-console.log('what is the cyrrecnt category od', catalogStore.getCategory)
 
 onMounted(async () => {
     await catalogStore.fetchAllCatalogs();
+
     await initializeCheckboxStates();
+
     await catalogStore.fetchCategoryById(route?.params?.id as string)
     brandsStore.fetchAllBrands()
-    if (queryBrand && queryBrand?.id) {
+    if (route?.query?.brandId) {
+        brandIdQuery.value = route?.query?.brandId as string
+        console.log('right now is brandid')
         isBrandOpen.value = true
-        productsStore?.filters.brandId.push(queryBrand?.id as string);
-        productsStore.filterProducts()
-
+        productsStore?.filters.brandId.push(brandIdQuery.value);
 
     }
+    if (route?.query?.subCategory) {
+        console.log('right now is subcategoryId')
+        productsStore.filters.categoryId.push(route.query.subCategory as unknown as string);
 
+    }
+    productsStore.filterProducts()
 })
 
 
