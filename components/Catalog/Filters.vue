@@ -9,9 +9,10 @@
                     <span class="black-checkbox-span"
                         :class="{ 'black-checkbox-span open': opensIncludes(subCategory?.id) }">
 
-                        <p :class="{ 'black-checkbox-span-name': opensIncludes(subCategory?.id) }">{{ subCategory?.name
+                        <p :class="{ 'black-checkbox-span-name': opensIncludes(subCategory?.id) }">{{
+                formatNameUpper(subCategory?.name)
 
-                            }}
+            }}
                         </p>
                     </span>
 
@@ -71,7 +72,8 @@
                                 :class="{ 'black-checkbox-span open': opensIncludes(item?.id) }">
 
 
-                                <p :class="{ 'black-checkbox-span-name': opensIncludes(item?.id) }">{{ sub?.name }}
+                                <p :class="{ 'black-checkbox-span-name': opensIncludes(item?.id) }">{{
+                formatNameUpper(sub?.name) }}
                                 </p>
                             </span>
 
@@ -213,21 +215,23 @@ const updateBrandsInputs = (brand: Brands, event: any) => {
     if (brand?.id === brandIdQuery.value) {
         route.query.brandId = ''
     }
-  
+
     const brandIndex = productsStore.filters.brandId.indexOf(brand?.id);
     if (event.target.checked === true) {
         if (brandIndex === -1) {
             productsStore.filters.brandId.push(brand?.id);
-            
+
         }
     }
     else {
         if (brandIndex !== -1) {
             productsStore.filters.brandId.splice(brandIndex, 1);
+
         }
     }
     console.log(' productsStore.filters.brandId', productsStore.filters.brandId)
     productsStore.filterProducts();
+
     window.scrollTo(0, 0)
 };
 
