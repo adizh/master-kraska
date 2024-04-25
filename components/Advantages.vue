@@ -94,7 +94,20 @@ import { advantagesOptions } from '@/assets/js/advantages'
 
         &-item {
             width: 100%;
+            &-text{
+                font-size: 16px;
+                line-height: 24px;
+            }
+            &-subtext{
+                font-size: 14px;
+                line-height: 20px;
+            }
         }
+    }
+
+    .left-item-number {
+        font-size: 48px;
+        line-height: 65px;
     }
 }
 </style>
