@@ -168,7 +168,8 @@ const isMagVisible = ref(false);
 const payStore = usePayStore()
 const isWarningOpen = ref(false)
 const pickUpPay = ref('')
-const orderStore = useOrderStore()
+const orderStore = useOrderStore();
+const { t } = useI18n()
 const closePayModal = () => {
     isWarningOpen.value = true
 }
@@ -196,7 +197,7 @@ const deleteOrder = async () => {
         if (response.status === 200) {
 
 
-            useNotif('success', 'Заказ отменен', 'Успешно')
+            useNotif('success', t('orderCancelled'), t('success'))
             isWarningOpen.value = false;
             isPaymentOpen.value = false;
             return navigateTo('/cart')

@@ -50,7 +50,7 @@
 
             <span>
                 <img src="../assets/icons/icon=mail.svg" alt="email">
-                sales-mk@masterkraska.kg</span>
+                <a href="mailto:sales-mk@masterkraska.kg">sales-mk@masterkraska.kg</a></span>
 
             <span>
                 <img src="../assets/icons/icon=time.svg" alt="time">

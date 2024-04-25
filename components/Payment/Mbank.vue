@@ -27,7 +27,7 @@ const emit = defineEmits(['closeModal'])
 const payStore = usePayStore();
 const cartStore = useCartStore();
 
-
+const {t}=useI18n()
 console.log('cartStore get curre stre ordernumber', cartStore);
 
 //996772140014
@@ -48,7 +48,7 @@ const sendOtp = async () => {
 
 
 
-        useNotif('success', payStore.getMbank.status, 'Успешно')
+        useNotif('success', payStore.getMbank.status, t('success'))
         setTimeout(() => {
             return navigateTo('/cart')
         }, 1000)

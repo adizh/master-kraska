@@ -176,7 +176,8 @@ const changePassword = async () => {
             if (response.status === 200) {
 
 
-                useNotif('success', t('passwordUpdated'), 'Успешно')
+                useNotif('success', t('passwordUpdated'), t('success'))
+
                 setTimeout(() => {
                     window.location.reload()
                 }, 800)

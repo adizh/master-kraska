@@ -47,8 +47,8 @@
     <Dialog v-model:visible="isEditModal" modal header=" " :style="{ width: '400px' }">
 
         <ReviewsEditForm :item="item" />
-        
-        
+
+
     </Dialog>
 
 
@@ -58,7 +58,7 @@
 import { Review } from '~/types/Review';
 
 const rating = ref(4);
-
+const { t } = useI18n()
 const isModal = ref(false);
 const isEditModal = ref(false);
 const router = useRouter()
@@ -82,7 +82,7 @@ const confirmDelete = async () => {
 
 
 
-            useNotif('success', 'Комментарий удален', 'Успешно')
+            useNotif('success', t('commentDeleted'), t('success'))
             isModal.value = false
         }
     } catch (err) {

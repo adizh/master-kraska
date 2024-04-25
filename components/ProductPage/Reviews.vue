@@ -38,7 +38,7 @@ const props = defineProps<{
 
 const route = useRoute()
 const itemReviews = ref<Review[]>([])
-
+const {t}=useI18n()
 const inputs = ref({
 
     text: { value: '', error: '' },
@@ -80,7 +80,7 @@ const createReview = async () => {
 
                     inputs.value.ratingValue.value = 0;
 
-                    useNotif('success', 'Отзыв оставлен!', 'Успешно')
+                    useNotif('success', t('reviewAdded'), t('success'))
                 }
                 console.log('response create review', response)
             } catch (err) {

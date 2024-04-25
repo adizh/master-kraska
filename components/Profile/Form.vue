@@ -118,7 +118,7 @@ onMounted(async () => {
     inputs.value.address.value = store.getUser.address;
     inputs.value.image.value = store.getUser.image;
 });
-
+const { t } = useI18n()
 const { handleValues } = useInputValidation()
 
 const validate = (field: string, type: string) => {
@@ -158,7 +158,7 @@ const editUser = async () => {
             const response = await http.put('/api/v1/User/edit-user', body);
             if (response.status === 200) {
 
-                useNotif('success', 'Успешно редактировано!', 'Успешно')
+                useNotif('success', t('successEdited'), t('success'))
             }
             console.log('response', response)
         } catch (err) {

@@ -26,6 +26,7 @@ const inputs = ref({
     text: { value: props?.item?.ratingText, error: '' },
     ratingValue: { value: props?.item?.rating, error: '' }
 });
+const {t}=useI18n()
 
 const { handleValues } = useInputValidation();
 
@@ -61,7 +62,7 @@ const createReview = async () => {
                 inputs.value.text.value = ''
 
                 inputs.value.ratingValue.value = 0;
-                useNotif('success', 'Отзыв оставлен!', 'Успешно');
+                useNotif('success',t('reviewAdded'), t('success'));
                 
                 
             }

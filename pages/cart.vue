@@ -76,7 +76,7 @@ const authStore = useAuthStore()
 const isConfirmOpen = ref(false)
 
 
-
+const { t } = useI18n()
 
 
 const removeFromCart = (item: ExtendedProduct) => {
@@ -95,7 +95,7 @@ const createOrder = async () => {
     const allOrderItems = [] as Order[]
     for (let item of cartStore.getAllCart) {
         console.log('what is item in cart store create-order', item)
-        
+
         allOrderItems.push({
             customerId: authStore.getUserId ? authStore.getUserId : '',
             productId: item?.id,
@@ -108,7 +108,7 @@ const createOrder = async () => {
         const response = await http.post('/api/v1/Order/create-order', allOrderItems);
         console.log('response create order', response);
         if (response.status === 200) {
-            useNotif('success', 'Заказ оформлен', 'Успешно')
+            useNotif('success', t('orderCreated'), t('success'))
             cartStore.setCurrentOrder(response?.data?.message)
             console.log('response data mesage', response?.data?.message);
             if (response.data.code === 200) {
@@ -121,7 +121,7 @@ const createOrder = async () => {
     catch (err: any) {
         console.log(err, 'some err ');
         if (err?.response?.data?.code === 400) {
-            useNotif('error', 'Вы не можете оформить заказ, если он не оплачен', 'Ошибка')
+
             isConfirmOpen.value = false
         }
     }
@@ -172,6 +172,4 @@ const createOrder = async () => {
         border-radius: 10px;
     }
 }
-
-
 </style>

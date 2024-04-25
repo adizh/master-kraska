@@ -129,7 +129,7 @@
 <script setup lang="ts">
 
 import { Product } from '~/types/Product';
-
+const {t}=useI18n()
 const route = useRoute()
 const id = route.params.id;
 const { data: product } = await useApi(`/api/v1/Product/get-product-by-id/${id}`) as any;
@@ -208,7 +208,7 @@ const submitUpdate = async () => {
         if (response.status === 200) {
 
 
-            useNotif('success', "Обновлено!", 'Успешно')
+            useNotif('success', t('updated'), t('success'))
         }
     } catch (err) {
         console.log(err)

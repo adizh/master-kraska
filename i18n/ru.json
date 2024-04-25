@@ -233,5 +233,12 @@
   "successRegister": "Регистрация прошла успешно",
   "incorrectPassword": "Неправильный пароль",
   "passwordReset": "Пароль сброшен и обновлен!",
-  "success": "Успех"
+
+  "success": "Успешно",
+  "reviewAdded": "Отзыв оставлен!",
+  "successEdited": "Успешно редактировано!",
+  "commentDeleted": "Комментарий удален",
+  "orderCreated": "Заказ оформлен!",
+  "updated": "Обновлено!",
+  "orderCancelled": "Заказ отменен"
 }
