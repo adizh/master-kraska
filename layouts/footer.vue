@@ -46,7 +46,7 @@
 
             <span>
                 <img src="../assets/icons/icon=phone.svg" alt="phone">
-                +996 550 910 148</span>
+                <a href="tel:+996 550 910 148">+996 550 910 148</a></span>
 
             <span>
                 <img src="../assets/icons/icon=mail.svg" alt="email">
