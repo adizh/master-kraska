@@ -38,8 +38,9 @@
             </div>
 
             <div class="maps-address-list" v-if="type === 'about-us'">
-                <AddressItem v-for="item in addressList" :key="item.name" :name="item.name" :phone="item.phone"
-                    :email="item.email" :location="item.location" :time="item.time" />
+                <AddressItem v-for="item in orderStore?.getShops?.slice(0, 2)" :key="item.name" :name="item?.name"
+                    :phone="item?.phoneNumber" :email="item.email" :openHours="item?.openHours"
+                    :address="item?.address" />
             </div>
         </div>
 
@@ -49,7 +50,8 @@
                 <LTileLayer url=" https://tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution="&amp;copy; <a href=&quot;https://www.openstreetmap.org/&quot;>OpenStreetMap</a> contributors"
                     layer-type="base" name="OpenStreetMap" />
-                <LMarker v-for="item in addressList" :key="item?.id" :lat-lng="item?.coordinates">
+                <LMarker v-for="item in computedShops" :key="item?.id" :lat-lng="[+item?.latitude, +item?.longitude]">
+
                     <LIcon ref="icon">
                         <img class="restaurant-icon" src='/static/location-mark-map.png' />
                     </LIcon>
@@ -60,8 +62,8 @@
 
 
         <div class="maps-address-list" v-if="type === 'contacts'">
-            <AddressItem v-for="item in addressList" :key="item.name" :name="item.name" :phone="item.phone"
-                :email="item.email" :location="item.location" :time="item.time" />
+            <AddressItem v-for="item in orderStore?.getShops" :key="item.name" :name="item?.name"
+                :phone="item?.phoneNumber" :email="item?.email" :address="item?.address" :openHours="item?.openHours" />
         </div>
     </div>
 
@@ -70,17 +72,21 @@
 <script setup lang="ts">
 
 import { AddressList } from '@/types/Items'
-
-defineProps<{
+const orderStore = useOrderStore()
+const props = defineProps<{
     addressList: AddressList[];
     type: string
 }>()
 
 const geoJson = ref({})
-const markers = [
-    { id: 1, coordinates: [42.835826, 74.585016], name: "пр. Чынгыз Айтматова, 93/1 лит А" },
-]
+const computedShops = computed(() => {
+    return props?.type === 'contacts' ? orderStore?.getShops : orderStore?.getShops?.slice(0, 2)
+})
 
+onMounted(async () => {
+    await orderStore?.fetchAllShops();
+    console.log('getShops', orderStore?.getShops)
+})
 </script>
 
 <style scoped lang="scss">

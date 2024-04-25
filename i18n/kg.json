@@ -239,5 +239,6 @@
   "commentDeleted": "Комментарий удален",
   "orderCreated": "Заказ оформлен!",
   "updated": "Обновлено!",
-  "orderCancelled": "Заказ отменен"
+  "orderCancelled": "Заказ отменен",
+  "orderSent": "Заказ отправлен!"
 }

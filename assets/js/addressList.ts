@@ -17,6 +17,7 @@ export const addressList = [
     email: "masterkraska@gmail.com",
     id: "3fa85f64-5717-4562-b3fc-2c963f66afa2",
   },
+  
   {
     name: "ТЦ АЮ Гранд Комфорт",
     location: "ул. Чокана Валиханова, 2, бутик №А109",

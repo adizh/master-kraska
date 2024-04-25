@@ -1,11 +1,19 @@
 export type AddressList = {
-  name: string;
-  location: string;
-  phone: string[];
-  time: string;
-  email: string;
   id: string;
-  coordinates: number[];
+  nameRu: string;
+  nameKg: string;
+  name: string;
+  addressRu: string;
+  addressKg: string;
+  address: string;
+  openHours: string;
+  phoneNumber: string;
+  email: string;
+  latitude: string;
+  longitude: string;
+  images: null;
+  isActive: boolean;
+  mainShop: boolean;
 };
 
 export interface InputProperties {

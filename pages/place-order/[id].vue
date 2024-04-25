@@ -38,7 +38,6 @@
             pickupErr.store }}</span>
                     </div>
 
-                    <CartPayMethod @choosePayMethod="choosePayMethod" />
                     <span v-if='pickupErr.payMethod' class="err-input-msg">{{ pickupErr.payMethod }}</span>
                     <div class="delivery-comments mt-3">
                         <h3>{{ $t('comments') }}</h3>
@@ -102,8 +101,9 @@
             </div>
         </template>
         <div class="maps-address-list mt-4">
-            <AddressItem v-for="item   in   addressList  " :key="item.name" :name="item.name" :phone="item.phone"
-                :email="item.email" :location="item.location" :time="item.time" @click="selectAddress(item)" />
+            <AddressItem v-for="item   in  orderStore.getShops  " :key="item.name" :name="item?.name"
+                :phone="item?.phoneNumber" :email="item?.email" :address="item?.address" :openHours="item?.openHours"
+                @click="selectAddress(item)" />
         </div>
     </Dialog>
 
@@ -143,10 +143,11 @@
 definePageMeta({
     layout: false
 })
-import { addressList } from '@/assets/js/addressList';
+
 import { AddressList } from '~/types/Items';
-import { Order, OrderItem } from '@/types/Order'
-import Results from '~/components/Catalog/Results.vue';
+
+
+
 const cartStore = useCartStore()
 const selectedOrderPlacement = ref(1);
 
@@ -223,7 +224,7 @@ const selectAddress = (item: AddressList) => {
     isMagVisible.value = false;
     pickupErr.value.store = ''
 }
-
+const resultPicUp = ref()
 
 
 const submitOrder = async () => {
@@ -243,7 +244,12 @@ const submitOrder = async () => {
                 "deliveryType": 0
             }
 
-            orderStore.sendOrder(body)
+            resultPicUp.value = await orderStore.sendOrder(body, 0);
+
+            if (resultPicUp.value.data.code === 200) {
+                payStore.setExit(true)
+                return navigateTo('/cart')
+            }
         }
         else {
             if (!selectedMarket?.value?.id) {
@@ -277,7 +283,7 @@ const submitOrder = async () => {
                 "comment": orderStore.deliveryForm.comment.value,
                 "deliveryType": 1
             }
-            const result = await orderStore.sendOrder(body);
+            const result = await orderStore.sendOrder(body, 1);
             console.log('result in submitOrder', result);
             if (result?.status === 200) {
                 isPaymentOpen.value = true;
@@ -296,9 +302,9 @@ const submitOrder = async () => {
 onMounted(() => {
     const section = document.querySelector('.footer-section') as HTMLElement;
     section.style.display = 'none';
-    //cartStore.setCurrentOrder(orderById)
     orderStore.fetchOrderById(route.params?.id as string)
     authStore.fetchUser()
+    orderStore?.fetchAllShops()
 })
 
 
@@ -318,6 +324,8 @@ onBeforeRouteLeave((to, from, next) => {
     } else {
         next()
     }
+
+
 
 });
 
@@ -395,6 +403,14 @@ h3 {
     .main-header-h1 {
         font-size: 28px !important;
         line-height: 28px;
+    }
+}
+
+
+@media (max-width:768px) {
+    .buttons-sel {
+        flex-direction: column;
+        align-items: start;
     }
 }
 

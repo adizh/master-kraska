@@ -1,4 +1,5 @@
 import { User } from "@/types/User";
+import { AddressList } from "@/types/Items";
 export const useOrderStore = defineStore("orderStore", {
   state: () => ({
     delForm: {
@@ -10,6 +11,8 @@ export const useOrderStore = defineStore("orderStore", {
       address: { value: "", error: "", type: "string" },
       comment: { value: "", error: "" },
     },
+
+    shops: [] as AddressList[],
   }),
   actions: {
     handleValues(
@@ -36,6 +39,23 @@ export const useOrderStore = defineStore("orderStore", {
       console.log("delForm", this.delForm);
     },
 
+    async fetchAllShops() {
+      const authStore = useAuthStore();
+      try {
+        const response = await http("/api/v1/Order/get-all-shops");
+        if (response.status === 200) {
+          this.shops = response.data.map((shop: AddressList) => {
+            if (authStore.getSelectedLang === "kg") {
+              return { ...shop, name: shop?.nameKg, address: shop?.addressKg };
+            } else {
+              return { ...shop, name: shop?.nameRu, address: shop?.addressRu };
+            }
+          });
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    },
     setInitUser(user: any) {
       this.delForm.name.value = user?.firstName;
       this.delForm.lastName.value = user?.lastName;
@@ -43,10 +63,13 @@ export const useOrderStore = defineStore("orderStore", {
       this.delForm.email.value = user?.email;
       this.delForm.phone.value = user?.phone;
     },
-    async sendOrder(body: any) {
+    async sendOrder(body: any, deliveryType: number) {
       try {
         const response = await http.post("/api/v1/Order/order-delivery", body);
         console.log("send order response", response);
+        if (response.data.code === 200 && deliveryType === 0) {
+          useNotif("success", "Заказ отправлен!", "Успешно");
+        }
         return response;
       } catch (err) {
         console.log(err);
@@ -71,6 +94,9 @@ export const useOrderStore = defineStore("orderStore", {
   getters: {
     deliveryForm(state) {
       return state.delForm;
+    },
+    getShops(state) {
+      return state.shops;
     },
   },
 });

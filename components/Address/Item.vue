@@ -4,18 +4,20 @@
         <div class="bottom-list">
             <p>
                 <img src="../../assets/icons/black/icon=components-location.svg" alt="location">
-                <span>{{ location }}</span>
+                <span>{{ address }}</span>
             </p>
             <p>
-            <div class="bottom-list-phones"> <span class="phone flex flex-row align-items-center gap-1"
-                    v-for="number in phone" :key="number"><img src="../../assets/icons/black/icon=components-phone.svg"
-                        alt="phone">{{ number
-                    }}</span></div>
+            <div class="bottom-list-phones">
+
+                <span class="phone flex flex-row align-items-center gap-1" v-for="number in formattedPhone"
+                    :key="number"><img src="../../assets/icons/black/icon=components-phone.svg" alt="phone">{{ number
+                    }}</span>
+            </div>
             </p>
             <p>
                 <img src="../../assets/icons/black/icon=components-time.svg" alt="time">
                 <span>
-                    {{ time }}
+                    {{ openHours }}
                 </span>
             </p>
             <p>
@@ -29,13 +31,15 @@
 <script setup lang="ts">
 const props = defineProps<{
     name: string
-    location: string;
-    time: string;
+    address: string,
+    openHours: string;
     email: string
     phone: string
 }>()
 
-
+const formattedPhone = computed(() => {
+    return props?.phone?.split('+').filter((item) => item !== '')
+})
 
 </script>
 
@@ -73,6 +77,7 @@ const props = defineProps<{
 }
 
 @media (max-width:480px) {
+
     .maps-address-list-block h3 {
         font-size: 18px !important;
     }
