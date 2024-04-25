@@ -1,7 +1,7 @@
 <template>
     <section>
         <div class="search-place">
-            <div class="flex flex-row gap-4">
+            <div class="flex flex-row gap-4 search">
                 <div class='input-block'>
                     <input type="text" class="main-header-input" v-model="productStore.filters.search"
                         @input="handleSearch" :placeholder="$t('whichProSearch')">
@@ -70,5 +70,21 @@ const handleSearch = (event: any) => {
         border-radius: 8px;
         padding-left: 40px;
     }
+}
+
+@media (max-width: 768px) {
+    .search {
+        flex-direction: column !important;
+        align-items: center;
+
+        .input-block {
+            width: 100%;
+        }
+
+        .btn-block {
+            width: 40%;
+        }
+    }
+
 }
 </style>

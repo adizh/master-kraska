@@ -8,7 +8,7 @@
             <div class="overlay" v-if="isBurgerMenuOpen" @click="closeBurgerMenu"></div>
             <div class="bottom-part" :class="{ 'open-bottom-part': isBurgerMenuOpen }">
                 <li class="catalog-li" @mouseover="toggleCatalog" @mouseleave="closeCatalog">{{
-                    
+
             $t('catalog') }}
                     <img class="arrow" :class="{ 'rotated': isCatalogOpen }"
                         src="../assets/icons/icon=components-closed-arrow.svg" alt="open-arrow">
@@ -331,12 +331,28 @@ provide('closeProfileOpen', closeProfileOpen)
 }
 
 @media(max-width:786px) {
+
     .left {
         width: 25%;
     }
+
+    .top {
+        justify-content: flex-end;
+        gap: 40px
+    }
+
+
 }
 
 @media(max-width:576px) {
+    .phone {
+        display: none !important;
+    }
+
+    .left {
+        width: 55%;
+    }
+
     .bottom-part {
         top: 4.6rem !important;
         position: absolute;
@@ -362,11 +378,13 @@ provide('closeProfileOpen', closeProfileOpen)
 
 @media (min-width:320px) and (max-width:468px) {
     .main-header {
-        gap: 10px
+        gap: 40px;
+        flex-direction: column;
+        align-items: center;
     }
 
     .top-part {
-        justify-content: start;
+        justify-content: space-between;
     }
 
 
