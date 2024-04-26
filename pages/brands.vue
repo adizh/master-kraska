@@ -7,7 +7,7 @@
             <div v-for="item in brandsStore.getAllBrands" :key=item?.id>
 
                 <img :src="item?.logo" alt="brand logo"
-                    @click="navigateTo({ path: `/catalog/${firstCategoryItem?.id}`, query: item })">
+                    @click="navigateTo({ path: `/catalog/${firstCategoryItem?.category?.id}`, query: { brandId: item?.id } })">
 
             </div>
         </div>
@@ -17,9 +17,9 @@
 <script setup lang="ts">
 const brandsStore = useBrandsStore();
 const catalogStore = useCatalogStore()
-onMounted(() => {
-    brandsStore.fetchAllBrands();
-    catalogStore.fetchAllCategories()
+onMounted(async () => {
+    await brandsStore.fetchAllBrands();
+    await catalogStore.fetchAllCategories()
 })
 
 const firstCategoryItem = catalogStore.getAllCategories[0];

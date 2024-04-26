@@ -17,7 +17,6 @@
 
                 <div class="col-12 md:col-12 lg:col-9 right-side" v-else-if="selectedTab === 2">
                     <div class="order-history">
-
                         <OrdersItem />
                     </div>
                 </div>
@@ -332,7 +331,7 @@ li.active {
     }
 
     .item-block {
-        width: 100%;
+        width: 100% !important;
     }
 
     .modal-header,

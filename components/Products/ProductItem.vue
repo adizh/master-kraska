@@ -39,13 +39,15 @@ const emit = defineEmits<{
 const productName = computed(() => {
     return props?.product?.name && props?.product?.name?.split(' ').length > 9 ? props?.product?.name.split(' ').slice(0, 9).join(' ') + '...' : props?.product?.name
 })
+
 const productInfo = computed(() => {
     return props?.product?.shortDescription && props?.product?.shortDescription?.split(' ').length > 13 ? props?.product?.shortDescription.split(' ').slice(0, 13).join(' ') + '...' : props?.product?.shortDescription
 })
 
 onMounted(async () => {
     prodBrand.value = await getBrandId(props?.product?.brandId as string)
-})
+});
+
 </script>
 
 <style scoped lang="scss">
