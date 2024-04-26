@@ -10,7 +10,7 @@
                 </div>
                 <div>
                     <p class="each-block-info-col flex flex-column align-items-start gap-2"><span>
-                            {{ $t('storeMark') }}:
+                            {{ $t('storeMark') }}
                         </span>
 
                         <img :src="productBrand?.logo" alt="brand" class="brand-logo">
@@ -21,7 +21,7 @@
                         <span class="middle-review-number">{{ getProduct?.product?.rating?.toFixed(2) }}</span>
                         <Rating v-model="ratingValue" :cancel="false" :value="ratingValue" disabled />
 
-                        <span class="middle-review-text">{{ $t('reviews') }}</span>
+                        <a class="middle-review-text" href="#product-reviews">{{ $t('reviews') }}</a>
                     </div>
 
                 </div>
@@ -197,6 +197,7 @@ const confirmCreatePay = async () => {
     try {
         const response = await http.post(
             "/api/v1/Order/create-order",
+
             [orderBody]
         );
         if (response.data.code === 200) {
@@ -403,7 +404,7 @@ onMounted(async () => {
 }
 
 .right {
-    width: 25%;
+    width: 35%;
     padding: 20px;
     border: 1px solid $slider-border-color;
     border-radius: 10px;
@@ -454,7 +455,7 @@ onMounted(async () => {
 }
 
 .left {
-    width: 30%;
+    width: 35%;
 
     img {
         width: 100%;
@@ -468,7 +469,7 @@ onMounted(async () => {
         @include footerSpan(28px, 28px);
         color: $main-black;
         font-weight: 700;
-        max-width: 350px;
+        max-width: 80%
     }
 
     &-rating {

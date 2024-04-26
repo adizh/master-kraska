@@ -30,12 +30,12 @@
                     @input="handlePrices">
             </div>
         </div>
-        <div class="brands" :class="{ 'each-filter-block open': opensIncludes('brands') }"
+        <div class="brands" :class="{ 'each-filter-block open': isBrandOpen }"
             v-if="brandsStore.getAllBrands?.length > 0">
             <label for="price" class="filters-help">
                 {{ $t('brands') }}
             </label>
-            <div class="brands-list" @click="setOpenBlock('brands')">
+            <div class="brands-list">
                 <p v-for="(brand, index) in computedBrands" :key="brand?.id" class="each-sub-item">
                     <label class="black-checkbox">
                         <input type="checkbox" :id="`${brand?.id}`" :value="brand.id"
@@ -298,14 +298,13 @@ onMounted(async () => {
     brandsStore.fetchAllBrands()
     if (route?.query?.brandId) {
         brandIdQuery.value = route?.query?.brandId as string
-        console.log('right now is brandid')
         isBrandOpen.value = true
         productsStore?.filters.brandId.push(brandIdQuery.value);
 
     }
     if (route?.query?.subCategory) {
-        console.log('right now is subcategoryId')
         productsStore.filters.categoryId.push(route.query.subCategory as unknown as string);
+
 
     }
     productsStore.filterProducts()

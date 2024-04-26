@@ -1,5 +1,5 @@
 <template>
-    <div class="prod-item-reviews">
+    <div class="prod-item-reviews" id="product-reviews">
         <h5 class='each-section-header'>{{ $t('reviews') }}</h5>
         <span class="no-review" v-if="!itemReviews">{{ $t('noReviews') }}</span>
 
@@ -38,7 +38,7 @@ const props = defineProps<{
 
 const route = useRoute()
 const itemReviews = ref<Review[]>([])
-const {t}=useI18n()
+const { t } = useI18n()
 const inputs = ref({
 
     text: { value: '', error: '' },
@@ -60,7 +60,7 @@ const createReview = async () => {
             if (Object.prototype.hasOwnProperty.call(inputs.value, fieldName)) {
                 const validationType = validationTypes[fieldName];
                 handleValues(inputs.value, fieldName, validationType);
-                
+
             }
         }
 
