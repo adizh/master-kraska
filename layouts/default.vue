@@ -8,26 +8,24 @@
             <div class="overlay" v-if="isBurgerMenuOpen" @click="closeBurgerMenu"></div>
             <div class="bottom-part" :class="{ 'open-bottom-part': isBurgerMenuOpen }">
                 <li class="catalog-li" @mouseover="toggleCatalog" @mouseleave="closeCatalog">{{
-
             $t('catalog') }}
                     <img class="arrow" :class="{ 'rotated': isCatalogOpen }"
                         src="../assets/icons/icon=components-closed-arrow.svg" alt="open-arrow">
                     <Catalog :isCatalogOpen="isCatalogOpen" @closeCatalog="closeCatalog" />
+                </li>
+                <li @click="gotToPage('/koler')">{{ $t('tinting') }}</li>
+                <li @click="gotToPage('/pay-deliver')">{{ $t('payDelivery') }}</li>
+                <li @click="gotToPage('/about-us')">{{ $t('aboutUs') }}
 
                 </li>
-                <li @click="navigateTo('/koler')">{{ $t('tinting') }}</li>
-                <li @click="navigateTo('/pay-deliver')">{{ $t('payDelivery') }}</li>
-                <li>
-                    <NuxtLink to="/about-us">{{ $t('aboutUs') }}</NuxtLink>
-                </li>
-                <li @click="navigateTo('/contacts')">{{ $t('contacts') }}</li>
+                <li @click="gotToPage('/contacts')">{{ $t('contacts') }}</li>
             </div>
             <div class='top-part'>
                 <li class="phone">
-                    <img src="../assets/icons/icon=phone loight.svg" alt="">
+                    <img src="../assets/icons/icon=phone loight.svg" alt="phone">
                     +996 509 910 148
                 </li>
-                <li @click="navigateTo('/cart')" class='cart-li'>
+                <li @click="gotToPage('/cart')" class='cart-li'>
                     <img src="../assets/icons/icon=cart.svg" alt="cart">
                     <span v-if="screenSize === 'large'">{{ $t('cart') }}</span>
                     <span class="cart-li-num">{{ cartStore?.getAllCart?.length }}</span>
@@ -106,8 +104,14 @@ onMounted(() => {
 });
 
 
+const gotToPage = (link: string) => {
+    navigateTo(link)
+    closeBurgerMenu()
+}
+
 onUnmounted(() => {
     window.removeEventListener('resize', updateScreenWidth);
+
 });
 
 
