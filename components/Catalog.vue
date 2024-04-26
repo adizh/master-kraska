@@ -15,6 +15,10 @@
 
                         </svg></span>
                 </li>
+
+
+                <li :style="{ opacity: '0' }"></li>
+                <li :style="{ opacity: '0' }"></li>
             </ul>
 
             <ul class="second-col" v-if="subCategories?.length > 0">
@@ -167,6 +171,11 @@ li {
     overflow-y: scroll;
     padding-bottom: 4rem;
 
+    &::after {
+        content: "";
+        flex-shrink: 0;
+    }
+
 }
 
 .options-list {
@@ -181,6 +190,12 @@ li {
     .catalog-options {
         padding: 20px
     }
+
+    .catalog-options.open {
+        padding-bottom: 5rem !important
+    }
+
+
 }
 
 @media (max-width:576px) {
@@ -200,5 +215,17 @@ li {
         display: none;
     }
 
+    .catalog-options.open {
+        padding-bottom: 22rem !important
+    }
+
+
+
+}
+
+@media (max-width:480px) {
+    .catalog-options.open {
+        padding-bottom: 24rem !important
+    }
 }
 </style>

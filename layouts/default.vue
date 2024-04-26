@@ -13,10 +13,17 @@
                         src="../assets/icons/icon=components-closed-arrow.svg" alt="open-arrow">
                     <Catalog :isCatalogOpen="isCatalogOpen" @closeCatalog="closeCatalog" />
                 </li>
+
+                <li class="catalog-li-small" @mouseover="toggleCatalog">{{
+            $t('catalog') }}
+                    <img class="arrow" :class="{ 'rotated': isCatalogOpen }"
+                        src="../assets/icons/icon=components-closed-arrow.svg" alt="open-arrow">
+                    <Catalog :isCatalogOpen="isCatalogOpen" @closeCatalog="closeCatalog" />
+                </li>
+
                 <li @click="gotToPage('/koler')">{{ $t('tinting') }}</li>
                 <li @click="gotToPage('/pay-deliver')">{{ $t('payDelivery') }}</li>
                 <li @click="gotToPage('/about-us')">{{ $t('aboutUs') }}
-
                 </li>
                 <li @click="gotToPage('/contacts')">{{ $t('contacts') }}</li>
             </div>
@@ -30,18 +37,14 @@
                     <span v-if="screenSize === 'large'">{{ $t('cart') }}</span>
                     <span class="cart-li-num">{{ cartStore?.getAllCart?.length }}</span>
                 </li>
-
-
                 <li @click="toggleProfile"><img src="../assets/icons/icon=user.svg" alt="">
                     <span v-if="screenSize === 'large'">{{ $t('profile') }}</span>
                 </li>
-
                 <li class="burger-menu" v-if="!isBurgerMenuOpen" @click="openBurger">
                     <span></span>
                     <span></span>
                     <span></span>
                 </li>
-
                 <li v-else @click="isBurgerMenuOpen = false">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -88,7 +91,8 @@ const toggleCatalog = () => {
     isCatalogOpen.value = true
 }
 const closeCatalog = () => {
-    isCatalogOpen.value = false
+    isCatalogOpen.value = false;
+    closeBurgerMenu()
 }
 
 const screenWidth = ref(window?.innerWidth);
@@ -153,6 +157,10 @@ provide('closeProfileOpen', closeProfileOpen)
 
 .logo-img {
     width: 100%;
+}
+
+.catalog-li-small {
+    display: none !important
 }
 
 .cart-li {
@@ -349,6 +357,15 @@ provide('closeProfileOpen', closeProfileOpen)
 }
 
 @media(max-width:576px) {
+    .catalog-li-small {
+        display: flex !important;
+        align-items: center;
+    }
+
+    .catalog-li {
+        display: none !important;
+    }
+
     .phone {
         display: none !important;
     }
@@ -373,10 +390,7 @@ provide('closeProfileOpen', closeProfileOpen)
 
     .overlay {
         top: 23rem;
-
     }
-
-
 
 }
 
