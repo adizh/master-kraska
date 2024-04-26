@@ -38,7 +38,7 @@
                             <p>{{ item?.price * item?.quantity }} сом</p>
                         </div>
                         <div class="col-2">
-                            <button class="bg-white-btn">
+                            <button class="bg-white-btn" @click="openReOrder(item)">
                                 {{ $t('orderAgain') }}
                             </button>
                         </div>
@@ -65,6 +65,11 @@
             <button @click="isConfirmOpen = false" class='modal-btns blue'>{{ $t('cancel') }}</button>
         </div>
     </Dialog>
+
+    <Dialog v-model:visible="isPayOpen" modal :style="{ width: '550px', padding: '20px 40px 50px 20px' }" header=" ">
+        <ConfirmPay @cancel="isPayOpen = false" @confirm="confirmOrder" />
+
+    </Dialog>
 </template>
 
 <script setup lang="ts">
@@ -72,36 +77,62 @@
 import { OrderItem, UserOrder } from '~/types/Order';
 import moment from 'moment'
 
-
+const isPayOpen = ref(false)
 const formatDated = (date: string) => {
     return moment((date)).format("D/MM/YY")
 }
-// 11/06/32
+const { t } = useI18n()
 const isConfirmOpen = ref(false)
 const isCatalogOpen = ref('');
 const userOrders = ref<OrderItem[]>([])
 const authStore = useAuthStore()
 
 const openedProducts = ref([] as any[])
+const reOrderItem = ref({} as UserOrder)
 
+const openReOrder = (item: UserOrder) => {
+    isPayOpen.value = true;
+    reOrderItem.value = item
+}
+
+const confirmOrder = async () => {
+
+    const allOrderItems = {
+        customerId: authStore.getUserId ? authStore.getUserId : "",
+        productId: reOrderItem.value?.productId,
+        productName: reOrderItem.value?.productName,
+        price: reOrderItem.value?.price,
+        quantity: reOrderItem.value?.quantity,
+    }
+
+
+    try {
+        const response = await http.post(
+            "/api/v1/Order/create-order",
+            [allOrderItems]
+        );
+
+        console.log('response confirmOrder', response)
+    } catch (err: any) {
+        console.log(err);
+        if (err.response?.data?.code === 400) {
+            useNotif('error', t('errCreatingOrder'), t('error'));
+            isPayOpen.value = false
+        }
+    }
+
+
+}
 
 const toggleCatalog = (id: string) => {
     const prodIndex = openedProducts.value.indexOf(id);
-    console.log('prodIndex', prodIndex);
+
 
     if (prodIndex === -1) {
         openedProducts.value.push(id)
     } else {
         openedProducts.value.splice(prodIndex, 1)
     }
-    console.log('openedProducts', openedProducts);
-    console.log('openedProducts includes id', openedProducts.value.includes(id))
-    // if (isCatalogOpen.value === id) {
-    //     isCatalogOpen.value = ''
-    // } else {
-    //     isCatalogOpen.value = id
-
-    // }
 
 }
 
@@ -110,6 +141,7 @@ const getOrderByUser = async () => {
     try {
         const response = await http(`/api/v1/Order/get-orders-by-user-id/${authStore.getUserId}`);
         if (response.status === 200) {
+            console.log('get order by user', response)
             const filtered = response.data.filter((item: OrderItem) => !item?.isPaid);
             userOrders.value = filtered.map((item: OrderItem) => item).flat()
         }
