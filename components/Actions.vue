@@ -64,8 +64,7 @@ onMounted(async () => {
 
 
 
-console.log('firstCategoryItem', firstCategoryItem)
-console.log('catalogStore.getAllCategories', catalogStore.getAllCategories)
+
 
 </script>
 

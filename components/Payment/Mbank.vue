@@ -28,7 +28,7 @@ const payStore = usePayStore();
 const cartStore = useCartStore();
 
 const {t}=useI18n()
-console.log('cartStore get curre stre ordernumber', cartStore);
+
 
 //996772140014
 const sendCheckPayment = () => {
@@ -41,7 +41,7 @@ const sendCheckPayment = () => {
 }
 
 const sendOtp = async () => {
-    console.log('what is otp', payStore.getMbank.otp.value)
+
     const response = await payStore.confirmMbank();
     console.log('response from the apin setntop', response)
     if (response === 'Платеж в обработке...') {

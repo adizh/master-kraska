@@ -45,13 +45,12 @@ const route = useRoute();
 const emit = defineEmits(['closeModal'])
 const payStore = usePayStore();
 const cartStore = useCartStore();
-console.log('cartStore get curre stre ordernumber', cartStore);
+
 
 
 
 const sendCheckPayment = () => {
-    console.log(' phone: payStore.getMbank.mbankPhone.value,', payStore.getMbank.mbankPhone.value,)
-    console.log('cartStore in mega pay check paument', cartStore.getCurrentOrder)
+  
     payStore.checkPayment({
         paymentType: 'mega',
         phone: payStore.getMega.megaPhone.value,
@@ -61,7 +60,6 @@ const sendCheckPayment = () => {
 }
 
 const sendPayment = async () => {
-    console.log('what is otp', payStore.getMega.otp.value);
     const params = {
         "user": payStore.getMega.user.value,
         "account": payStore.getMega.megaAccount.value,

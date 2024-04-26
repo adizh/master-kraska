@@ -85,7 +85,7 @@ const computedShops = computed(() => {
 
 onMounted(async () => {
     await orderStore?.fetchAllShops();
-    console.log('getShops', orderStore?.getShops)
+
 })
 </script>
 

@@ -1,5 +1,6 @@
 import { User } from "@/types/User";
 import { AddressList } from "@/types/Items";
+import { Order } from "~/types/Order";
 export const useOrderStore = defineStore("orderStore", {
   state: () => ({
     delForm: {
@@ -23,9 +24,6 @@ export const useOrderStore = defineStore("orderStore", {
       this.delForm[fieldName].value = value;
 
       this.delForm[fieldName].error = "";
-
-      console.log("validationType", validationType);
-      console.log("value", value);
       if (validationType === "string") {
         if (value === "" || value == null) {
           this.delForm[fieldName].error = "Это поле обязательно";
@@ -36,7 +34,6 @@ export const useOrderStore = defineStore("orderStore", {
           this.delForm[fieldName].error = "Неправильный формат почты";
         }
       }
-      console.log("delForm", this.delForm);
     },
 
     async fetchAllShops() {
@@ -81,13 +78,47 @@ export const useOrderStore = defineStore("orderStore", {
       try {
         const response = await http.get(`/api/v1/Order/get-order-id/${id}`);
         if (response.status === 200) {
-          //  orderById.value = response.data;
           cartStore.setCurrentOrder(response.data);
-
           console.log("reposne fetch single order", response);
         }
       } catch (err) {
         console.log(err);
+      }
+    },
+
+    async createOrder() {
+      const cartStore = useCartStore();
+      const authStore = useAuthStore();
+      // isConfirmOpen.value = false;
+      const allOrderItems = [] as Order[];
+      for (let item of cartStore.getAllCart) {
+        allOrderItems.push({
+          customerId: authStore.getUserId ? authStore.getUserId : "",
+          productId: item?.id,
+          productName: item?.name,
+          price: item?.initPrice,
+          quantity: item?.count,
+        });
+      }
+      try {
+        const response = await http.post(
+          "/api/v1/Order/create-order",
+          allOrderItems
+        );
+        console.log("response create order", response);
+        if (response.status === 200) {
+          useNotif("success", "Заказ создан", "Успешно");
+          cartStore.setCurrentOrder(response?.data?.message);
+          console.log("response data mesage", response?.data?.message);
+          if (response.data.code === 200) {
+            return navigateTo(`/place-order/${response.data?.message?.id}`);
+          }
+        }
+      } catch (err: any) {
+        console.log(err, "some err ");
+        if (err?.response?.data?.code === 400) {
+          //  isConfirmOpen.value = false;
+        }
       }
     },
   },

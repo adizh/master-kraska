@@ -32,13 +32,11 @@ export const useCartStore = defineStore("cartStore", {
     },
 
     getTotalItemCount(count: number) {
-      console.log("count ingetTotalItemCount", count);
       this.countToBuy = count;
       return this.countToBuy;
     },
 
     increaseCount(item: ExtendedProduct) {
-      console.log(" increaseCount item", item);
       const updatedItem = { ...item };
       updatedItem.count++;
       updatedItem.totalProdSum = updatedItem.count * updatedItem.initPrice;
@@ -55,7 +53,6 @@ export const useCartStore = defineStore("cartStore", {
     },
 
     setCurrentOrder(item: OrderItem) {
-      console.log("item setCurrentOrder", item);
       this.currentOrder = item;
     },
   },

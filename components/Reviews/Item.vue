@@ -73,7 +73,7 @@ rating.value = props?.item?.rating
 
 
 
-console.log('PRODUC REVIEW', props?.item)
+
 const confirmDelete = async () => {
     try {
         const response = await http.delete(`/api/v1/ProductReview/delete-review-by-id/${props?.item?.id}`);

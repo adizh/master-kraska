@@ -13,7 +13,6 @@ export const useCatalogStore = defineStore("catalogStore", {
         const response = await http("/api/v1/Helpers/get-all-catalogs");
         console.log(response, "response get All catalogs");
         if (response.status === 200) {
-          console.log(authStore.getSelectedLang, "authStore.getSelectedLang");
           const filteredCatalogByLang = response.data.map(
             (item: AllCatalog) => {
               let subdirectory = item.subdirectory.map((subItem: any) => {
@@ -76,7 +75,6 @@ export const useCatalogStore = defineStore("catalogStore", {
           });
 
           this.category = filtered;
-          console.log("top category id", this.category);
         }
       } catch (err) {
         console.log(err);
@@ -126,10 +124,7 @@ export const useCatalogStore = defineStore("catalogStore", {
               };
             }
           });
-
           this.allCategories = filtered;
-
-          console.log(" this.allCategories in pinia", this.allCategories);
         }
       } catch (err) {
         console.log(err);

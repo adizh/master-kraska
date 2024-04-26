@@ -33,7 +33,7 @@ watch(() => id, () => {
     productsStore.fetchProductById(id.value as string)
 });
 
-console.log('getProduct ID', getProduct)
+
 
 
 

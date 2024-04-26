@@ -53,7 +53,6 @@ export const useProductsSstore = defineStore("productsStore", {
     },
 
     async fetchProductById(productId: string) {
-      console.log("productId is reviev????", productId);
       const authStore = useAuthStore();
       try {
         const response = await http(
@@ -124,7 +123,6 @@ export const useProductsSstore = defineStore("productsStore", {
             },
           }
         );
-        console.log("respponse addToBookmarks", response);
         if (response.status === 200) {
           useNotif("success", "Успешно обновлено", "Успех");
         }
@@ -141,7 +139,6 @@ export const useProductsSstore = defineStore("productsStore", {
       if (value === null) {
         this.filters.subdirectoryIds = [];
       } else {
-        console.log("value set Sub dirs", value);
         const ids = value.map((item: any) => item?.id);
         this.filters.subdirectoryIds.push(value[0]);
       }
@@ -150,7 +147,6 @@ export const useProductsSstore = defineStore("productsStore", {
       if (value === null) {
         this.filters.subdirectoryIds = [];
       } else {
-        console.log("value set Sub dirs", value);
         const ids = value.map((item: any) => item?.id);
         this.filters.subdirectoryIds = [...ids];
       }

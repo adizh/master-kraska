@@ -177,9 +177,6 @@ const closePayModal = () => {
 const choosePayMethod = (value: string) => {
     pickUpPay.value = value;
 
-
-    console.log('pickUpPay', pickUpPay);
-
 }
 const route = useRoute()
 
@@ -248,7 +245,7 @@ const submitOrder = async () => {
 
             if (resultPicUp.value.data.code === 200) {
                 payStore.setExit(true)
-                return navigateTo('/cart')
+                return navigateTo('/')
             }
         }
         else {
@@ -269,7 +266,7 @@ const submitOrder = async () => {
             }
         }
         const hasError = Object.values(orderStore.deliveryForm).some(input => input.error !== '');
-        console.log('hasError', hasError)
+
         if (!hasError) {
             const body = {
                 orderId: route.params?.id,
@@ -287,7 +284,6 @@ const submitOrder = async () => {
             console.log('result in submitOrder', result);
             if (result?.status === 200) {
                 isPaymentOpen.value = true;
-                console.log('isPaymentOpen', isPaymentOpen)
 
             }
 

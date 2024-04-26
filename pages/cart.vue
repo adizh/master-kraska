@@ -8,9 +8,9 @@
                         <span class="price">{{ cartItem.totalProdSum }} сом</span>
 
                         <button class="prod-count-buttons">
-                            <span @click="store.decreaseCount(cartItem)">-</span>
+                            <span @click.stop="store.decreaseCount(cartItem)">-</span>
                             <span>{{ store.getTotalItemCount(cartItem?.count) }}</span>
-                            <span @click="store.increaseCount(cartItem)">+</span>
+                            <span @click.stop="store.increaseCount(cartItem)">+</span>
                         </button>
                         <img src="../assets/icons/icon=trash.svg" alt="delete" class='delete-icon'
                             @click.stop="removeFromCart(cartItem)">
@@ -31,9 +31,12 @@
                     </div>
                     <input class="basic-input" placeholder="Промокод" disabled />
                     <div class="last">
+
                         <span>{{ $t('inTotal') }}</span>
                         <span>{{ store.totalOfTotalSum }} сом</span>
+
                     </div>
+
                 </div>
 
                 <button class="bg-white-btn" @click="store.saveNewCart">{{ $t('saveChanges') }}</button>
@@ -57,11 +60,8 @@
 
     <Dialog v-model:visible="isConfirmOpen" modal :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
         header=" ">
-        <h5 class="modal-header">{{ $t('confirmOrderText') }}?</h5>
-        <div class='flex flex-row justify-content-end gap-2'>
-            <button @click="createOrder" class='modal-btns'>{{ $t('confirm') }}</button>
-            <button @click="isConfirmOpen = false" class='modal-btns blue'>{{ $t('cancel') }}</button>
-        </div>
+        <ConfirmPay @confirm="createOrder" @cancel="isConfirmOpen = false" />
+
     </Dialog>
 </template>
 
@@ -71,7 +71,7 @@ import { Product, ExtendedProduct } from '~/types/Product';
 import { Order } from '@/types/Order'
 const store = useCartStore();
 const cartStore = useCartStore();
-
+const orderStore = useOrderStore()
 const authStore = useAuthStore()
 const isConfirmOpen = ref(false)
 
@@ -87,46 +87,9 @@ const confirmOrder = () => {
     isConfirmOpen.value = true;
 }
 
-
-
-
-const createOrder = async () => {
-    isConfirmOpen.value = false;
-    const allOrderItems = [] as Order[]
-    for (let item of cartStore.getAllCart) {
-        console.log('what is item in cart store create-order', item)
-
-        allOrderItems.push({
-            customerId: authStore.getUserId ? authStore.getUserId : '',
-            productId: item?.id,
-            productName: item?.name,
-            price: item?.initPrice,
-            quantity: item?.count
-        })
-    }
-    try {
-        const response = await http.post('/api/v1/Order/create-order', allOrderItems);
-        console.log('response create order', response);
-        if (response.status === 200) {
-            useNotif('success', t('orderCreated'), t('success'))
-            cartStore.setCurrentOrder(response?.data?.message)
-            console.log('response data mesage', response?.data?.message);
-            if (response.data.code === 200) {
-                return navigateTo(`/place-order/${response.data?.message?.id}`)
-
-                // isPaymentOpen.value = true;
-            }
-        }
-    }
-    catch (err: any) {
-        console.log(err, 'some err ');
-        if (err?.response?.data?.code === 400) {
-
-            isConfirmOpen.value = false
-        }
-    }
+const createOrder = () => {
+    orderStore.createOrder()
 }
-
 
 
 

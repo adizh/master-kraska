@@ -129,7 +129,7 @@
 <script setup lang="ts">
 
 import { Product } from '~/types/Product';
-const {t}=useI18n()
+const { t } = useI18n()
 const route = useRoute()
 const id = route.params.id;
 const { data: product } = await useApi(`/api/v1/Product/get-product-by-id/${id}`) as any;
@@ -202,7 +202,7 @@ const submitUpdate = async () => {
             "isBeneficial": inputs.value.isBeneficial.value,
             "images": null
         }
-        console.log(body)
+
         const response = await http.put(`/api/v1/Product/update-product/${item?.value?.id}`, body);
         console.log('response', response);
         if (response.status === 200) {
@@ -232,9 +232,6 @@ const editProduct = () => {
 
 onMounted(async () => {
     item.value = product.value.product;
-    console.log('what is produc value in in mounted', product);
-    console.log('what is item in mouned ', item)
-
     inputs.value = {
         name: { value: item.value?.name, error: '', type: 'string' },
         description: { value: item.value?.description, error: '', type: 'string' },
@@ -260,8 +257,6 @@ onMounted(async () => {
     }
 })
 
-console.log('inutes edit admin', inputs);
-console.log('item edit admin', item)
 </script>
 
 <style scoped lang='scss'>

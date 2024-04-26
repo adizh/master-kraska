@@ -105,7 +105,7 @@ const submitLogin = async () => {
             if (err?.response?.data?.code === 404) {
                 inputs.value.email.error = t('userNotFound') || t('error')
             }
-            console.log('wjat is an error', err)
+    
         }
     }
 

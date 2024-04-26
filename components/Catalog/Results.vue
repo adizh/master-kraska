@@ -28,10 +28,7 @@ const changePage = (page: number) => {
     productStore.filters.currentPage = page;
 
 
-    console.log('what ia the page', page)
-    console.log('what ia the  productStore.filters.currentPage ', productStore.filters.currentPage)
     productStore.filterProducts();
-
 
 }
 const props = defineProps<{

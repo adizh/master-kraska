@@ -62,8 +62,6 @@ const productStore = useProductsSstore()
 const productName = defineModel('');
 const handleSearch = (event: any) => {
     productStore.filterProducts(event.target.value)
-    console.log(event)
-
 }
 onMounted(() => {
     productStore.setCategoryId(id as string);

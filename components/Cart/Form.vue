@@ -101,7 +101,7 @@ const handleDeliveryForm = (field: keyof typeof orderStore.delForm, type: string
     orderStore.handleValues(field, type)
 }
 
-console.log('deliverFORM IN FORM ', deliveryForm)
+
 const selectedPayMethod = ref("");
 
 const choosePayMethod = (value: string) => {

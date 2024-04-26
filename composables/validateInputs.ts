@@ -6,12 +6,11 @@ export const useInputValidation = () => {
     fieldName: string,
     validationType: string | any
   ) => {
-    console.log("inputs", inputs);
-    console.log("fieldName", fieldName);
+ 
     const value = inputs[fieldName].value;
 
     inputs[fieldName].value = value;
-    console.log("value inside the composables", value);
+
     inputs[fieldName].error = "";
 
     if (validationType === "string") {

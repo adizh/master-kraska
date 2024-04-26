@@ -41,7 +41,7 @@ onMounted(() => {
     window.addEventListener('resize', handleResize);
 })
 
-console.log('store.getAllProducsts', store.getAllProducsts);
+
 
 const popularItems = computed(() => {
     return store.getAllProducsts.filter((item: Product) => item.isPopular)
@@ -50,7 +50,7 @@ const popularItems = computed(() => {
 onUnmounted(() => {
     window.removeEventListener('resize', handleResize);
 });
-console.log('popularItems', popularItems);
+
 </script>
 
 <style scoped lang='scss'>

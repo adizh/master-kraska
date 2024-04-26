@@ -35,13 +35,13 @@
                     </CartProductItem>
                     <div v-if="cartStore.getAllCart?.length > 0" class="flex justify-content-end flex-row"> <button
                             class="btn-white-bg" @click='cartStore.saveNewCart'>
-                            
+
                             {{ $t('saveChanges') }}</button>
                     </div>
 
                     <div class="cart-main-info-price col-12" v-if="cartStore.getAllCart?.length">
                         <div class="lg:col-6 col-12 md:col-9">
-                            <button class="pink-button">{{ $t('goToRegister') }}</button>
+                            <button class="pink-button" @click="isConfirmOpen = true">{{ $t('goToRegister') }}</button>
                             <div class="cart-main-info-price-block">
                                 <div class="first">
                                     <span>{{ $t('all') }}: {{ cartStore.numberOfProds }} {{ $t('product') }}</span>
@@ -71,6 +71,11 @@
                             </svg>
                         </template>
                     </NoContent>
+                    <Dialog v-model:visible="isConfirmOpen" modal
+                        :style="{ width: '550px', padding: '20px 40px 50px 20px' }" header=" ">
+                        <ConfirmPay @cancel="isConfirmOpen = false" @confirm="createOrder" />
+
+                    </Dialog>
                 </div>
 
 
@@ -122,13 +127,14 @@ import { useI18n } from 'vue-i18n';
 const { t } = useI18n()
 
 const isLogoutOpen = ref(false);
+const isConfirmOpen = ref(false);
 
 const userBookmarks = ref<Product[]>([])
 let selectedTab: Ref<number>;
 const tabsOptions = [t('personalInfo'), t('ordersHistory'), t('cart'), t('myReviews'), t('notificationSettings'), t('boormarksProfile')];
 const store = useAuthStore();
 const productsStore = useProductsSstore();
-
+const orderStore = useOrderStore()
 const cartStore = useCartStore()
 
 const openLogout = () => {
@@ -148,7 +154,9 @@ if (process.client) {
 } else {
     selectedTab = ref(1)
 }
-
+const createOrder = () => {
+    orderStore.createOrder()
+}
 
 const confirmedLogout = () => {
     localStorage.removeItem('userId');
@@ -203,10 +211,10 @@ onMounted(() => {
     store.fetchUser();
     fetchUserBookmarks();
 
-    console.log('store getUserId', store.getUserId)
+
     if (!store.getUserId) {
         navigateTo('/');
-        console.log('should be navigates to home')
+
     }
 
 

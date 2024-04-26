@@ -160,8 +160,7 @@ const firstBlock = computed(() => {
     })
 })
 
-console.log('firstBlock', firstBlock)
-console.log('filteredCatalogs', filteredCatalogs)
+
 
 const secondOptions = [
     'МАТЕРИАЛ РАБОЧЕЙ ПОВЕРХНОСТИ', 'ТИП ОБЪЕКТА', 'РАЗБАВИТЕЛЬ'
@@ -198,7 +197,7 @@ const initializeCheckboxStates = async () => {
 
 
     });
-    console.log('checkboxStates in function', checkboxStates)
+  //  console.log('checkboxStates in function', checkboxStates)
 };
 
 
@@ -240,7 +239,7 @@ const updateCheckboxState = (itemId: string, subId: string, event: any) => {
     }
 
 
-    console.log('checkboxStates', checkboxStates)
+    //console.log('checkboxStates', checkboxStates)
     const valuesArray = Object.values(checkboxStates.value);
 
 
@@ -253,7 +252,7 @@ const updateCheckboxState = (itemId: string, subId: string, event: any) => {
     productsStore.setSubDirectories(filteredValues)
 
 
-    console.log('filteredValues', filteredValues)
+    //console.log('filteredValues', filteredValues)
 
 
 };

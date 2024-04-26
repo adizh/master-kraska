@@ -35,7 +35,7 @@ const emit = defineEmits<{
 
 }>()
 
-console.log('props?.product?.name ', props?.product)
+
 const productName = computed(() => {
     return props?.product?.name && props?.product?.name?.split(' ').length > 9 ? props?.product?.name.split(' ').slice(0, 9).join(' ') + '...' : props?.product?.name
 })

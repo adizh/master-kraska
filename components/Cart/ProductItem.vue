@@ -28,7 +28,7 @@ const productInfoHorizontal = computed(() => {
     return props?.item?.shortDescription && props?.item?.shortDescription?.split(' ').length > 19 ? props?.item?.shortDescription.split(' ').slice(0, 19).join(' ') + '...' : props?.item?.shortDescription
 
 })
-console.log('cart prop imte', props?.item)
+
 </script>
 
 <style scoped>

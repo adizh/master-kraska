@@ -96,6 +96,7 @@
                     </button>
                     <button @click.capture="buyNow">{{ $t('buyNow') }}</button>
                 </div>
+
             </div>
         </div>
     </ClientOnly>
@@ -116,7 +117,11 @@
     <Dialog v-model:visible="isProfileOpen" modal :style="{ width: '450px', padding: '10px 40px 40px 40px' }">
         <AuthModal @closeModal="isProfileOpen = false" />
     </Dialog>
+    <Dialog v-model:visible="isConfirmOpen" modal :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
+        header=" ">
+        <ConfirmPay @cancel="isConfirmOpen = false" @confirm="confirmCreatePay" />
 
+    </Dialog>
 </template>
 
 <script setup lang="ts">
@@ -124,7 +129,7 @@ import Rating from 'primevue/rating';
 import { Product } from '@/types/Product'
 import { Brands } from '~/types/Brands';
 
-
+const isConfirmOpen = ref(false)
 
 const props = defineProps<{
     productId: string
@@ -178,10 +183,36 @@ const increaseCount = () => {
     totalPrice.value = countToBuy.value * selectedProductPrice.value
 }
 
-const buyNow = () => {
-    // navigateTo('/place-order')
-    if (authStore.getUserId) {
 
+const confirmCreatePay = async () => {
+    const orderBody = {
+        price: selectedProductPrice.value * countToBuy.value,
+        quantity: countToBuy.value,
+        productId: getProduct?.value?.product?.id,
+        productName: getProduct?.value?.product?.name,
+        customerId: authStore?.getUserId ? authStore.getUserId : ""
+    }
+
+
+    try {
+        const response = await http.post(
+            "/api/v1/Order/create-order",
+            [orderBody]
+        );
+        if (response.data.code === 200) {
+            return navigateTo(`/place-order/${response.data?.message?.id}`)
+        }
+
+        console.log('response confirmCreatePay', response)
+    } catch (err) {
+        console.log(err)
+    }
+
+}
+const buyNow = () => {
+    if (authStore.getUserId) {
+        console.log('buy now');
+        isConfirmOpen.value = true;
     } else {
 
         isProfileOpen.value = true
@@ -240,32 +271,9 @@ onUnmounted(() => {
     leastSmallAmount.value = 0;
 });
 
-// const leastSmallAmount = computed(() => {
-//     const variants = getProduct.value?.product.variants;
-//     if (!variants || variants?.length === 0 && variants == null) {
-//         return -1;
-//     } else {
-//         let smallestPrice = variants[0]?.price;
-//         let smallestPriceIndex = 0;
-//         for (let i = 1; i < variants?.length; i++) {
-//             const variantPrice = variants[i]?.price;
-//             if (variantPrice < smallestPrice) {
-//                 smallestPrice = variantPrice;
-//                 smallestPriceIndex = i;
-//             }
-//         }
-//         return smallestPriceIndex || 0
-//     }
-
-
-// })
-
-console.log('store.getProduct IN HEADER', productStore?.getProduct);
-console.log('wjat is PROPSID>>>', props?.productId)
 
 
 onMounted(async () => {
-
     productStore.fetchProductById(props?.productId)
     productStore.getBookmarks(getProduct.value?.product?.id);
     isProductBookmarked.value = productStore.getProductBookmarked;

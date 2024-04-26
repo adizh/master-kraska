@@ -90,7 +90,7 @@ const toggleCatalog = (id: string) => {
 }
 
 
-console.log('userOrders', userOrders)
+
 
 const getOrderByUser = async () => {
     try {

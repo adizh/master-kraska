@@ -43,7 +43,7 @@ const createReview = async () => {
         if (Object.prototype.hasOwnProperty.call(inputs.value, fieldName)) {
             const validationType = validationTypes[fieldName];
             handleValues(inputs.value, fieldName, validationType);
-            console.log('inputs.value', inputs.value, fieldName, validationType)
+           
         }
     }
 

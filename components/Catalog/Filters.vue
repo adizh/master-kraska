@@ -229,7 +229,7 @@ const updateBrandsInputs = (brand: Brands, event: any) => {
 
         }
     }
-    console.log(' productsStore.filters.brandId', productsStore.filters.brandId)
+
     productsStore.filterProducts();
 
     window.scrollTo(0, 0)

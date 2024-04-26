@@ -96,7 +96,7 @@ const handleValues = (fieldName: keyof Inputs, validationType: string) => {
             inputs.value[fieldName].error = t('incorrectEmail')
         }
     } else if (validationType === 'number') {
-        console.log('value  nuber', value)
+
         if (value === '') {
             inputs.value[fieldName].error = t('requiredField')
         } else if (!value.startsWith('+996')) {

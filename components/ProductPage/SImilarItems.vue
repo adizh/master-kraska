@@ -25,7 +25,7 @@ const props = defineProps({
 const slicedSimilarItems = computed(() => props.similarItems?.slice(0, 3))
 
 
-console.log('similarItems', props?.similarItems)
+
 </script>
 
 <style scoped lang="scss">
