@@ -1,69 +1,65 @@
 <template>
-    <div >
+    <div v-if="userOrders?.length > 0">
         <div class="item" v-for="order in userOrders" :key="order?.id">
-            <span class="item-date">11/12/24</span>
-            <div class="item-info grid">
+            <span class="item-date">{{ formatDated(order?.createdAt) }}</span>
+            <div class="item-info grid" v-for="item in order?.items" :key="item?.id">
                 <div class="col-6">
                     <span>{{ $t('productCap') }}</span>
-                    <p>{{ formatName(order?.productName) }}</p>
-
+                    <p>{{ formatName(item?.productName) }}</p>
                 </div>
                 <div class="col-2">
                     <span>{{ $t('quantity') }}</span>
-                    <p>{{ order?.quantity }}</p>
+                    <p>{{ item?.quantity }}</p>
                 </div>
                 <div class="col-2">
                     <span>{{ $t('sum') }}</span>
-                    <p>{{ order?.price * order?.quantity }} сом</p>
+                    <p>{{ item?.price * item?.quantity }} сом</p>
                 </div>
-                <div class="col-2 more-info" @click="() => toggleCatalog(order?.id)">
+                <div class="col-2 more-info" @click="() => toggleCatalog(item?.id)">
                     {{ $t('moreInfo') }}
-                    <img class="arrow" :class="{ 'rotated': isCatalogOpen === order?.id }"
+                    <img class="arrow" :class="{ 'rotated': openedProducts.includes(item.id) }"
                         src="../../assets/icons/icon=components-arrow-blue.svg" alt="open-arrow">
                 </div>
-            </div>
+                <div class="expanded-section" v-if="openedProducts.includes(item.id)"
+                    :class="{ 'slide-enter': openedProducts.includes(item.id), 'slide-leave-to': !openedProducts.includes(item.id) }">
+                    <div class="item-info grid">
+                        <div class="col-6 flex flex-row gap-1 align-items-center">
+                            <img src="../../assets/images/test-kraska.png" alt="">
+                            <div class="expanded-section-info"><span>{{ item?.productName }}</span>
+                                <span>{{ $t('diluent') }}: вода</span>
+                                <span>{{ $t('noSmell') }}: да</span>
 
-
-            <div class="expanded-section" v-show="isCatalogOpen"
-                :class="{ 'slide-enter': isCatalogOpen === order?.id, 'slide-leave-to': isCatalogOpen !== order?.id }">
-                <div class="item-info grid">
-                    <div class="col-6 flex flex-row gap-1 align-items-center">
-                        <img src="../../assets/images/test-kraska.png" alt="">
-                        <div class="expanded-section-info"><span>{{ order?.productName }}</span>
-                            <span>{{ $t('diluent') }}: вода</span>
-                            <span>{{ $t('noSmell') }}: да</span>
-
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-2">
-                        <p>{{ order?.quantity }} {{ $t('piece') }}</p>
-                    </div>
-                    <div class="col-2">
-                        <p>{{ order?.price * order?.quantity }} сом</p>
-                    </div>
-                    <div class="col-2">
-                        <button class="bg-white-btn">
-                            {{ $t('orderAgain') }}
-                        </button>
+                        <div class="col-2">
+                            <p>{{ item?.quantity }} {{ $t('piece') }}</p>
+                        </div>
+                        <div class="col-2">
+                            <p>{{ item?.price * item?.quantity }} сом</p>
+                        </div>
+                        <div class="col-2">
+                            <button class="bg-white-btn">
+                                {{ $t('orderAgain') }}
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
 
 
         </div>
+
     </div>
 
-
-    <!-- <NoContent v-else :title="$t('noHistoryOrder')">
+    <NoContent v-else :title="$t('noHistoryOrder')">
         <template #icon>
             <img src="../../assets/icons/black/icon=components -time-notfill.svg" alt="">
         </template>
-    </NoContent> -->
+    </NoContent>
 
     <Dialog v-model:visible="isConfirmOpen" modal :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
         header=" ">
         <h5 class="modal-header">{{ $t('confirmOrderText') }}?</h5>
-
         <div class='flex flex-row justify-content-end gap-2'>
             <button class='modal-btns'>{{ $t('confirm') }}</button>
             <button @click="isConfirmOpen = false" class='modal-btns blue'>{{ $t('cancel') }}</button>
@@ -74,37 +70,55 @@
 <script setup lang="ts">
 
 import { OrderItem, UserOrder } from '~/types/Order';
+import moment from 'moment'
 
+
+const formatDated = (date: string) => {
+    return moment((date)).format("D/MM/YY")
+}
+// 11/06/32
 const isConfirmOpen = ref(false)
 const isCatalogOpen = ref('');
-const userOrders = ref<UserOrder[]>([])
+const userOrders = ref<OrderItem[]>([])
 const authStore = useAuthStore()
 
+const openedProducts = ref([] as any[])
+
+
 const toggleCatalog = (id: string) => {
-    if (isCatalogOpen.value === id) {
-        isCatalogOpen.value = ''
+    const prodIndex = openedProducts.value.indexOf(id);
+    console.log('prodIndex', prodIndex);
+
+    if (prodIndex === -1) {
+        openedProducts.value.push(id)
     } else {
-        isCatalogOpen.value = id
+        openedProducts.value.splice(prodIndex, 1)
     }
+    console.log('openedProducts', openedProducts);
+    console.log('openedProducts includes id', openedProducts.value.includes(id))
+    // if (isCatalogOpen.value === id) {
+    //     isCatalogOpen.value = ''
+    // } else {
+    //     isCatalogOpen.value = id
+
+    // }
 
 }
-
-
 
 
 const getOrderByUser = async () => {
     try {
         const response = await http(`/api/v1/Order/get-orders-by-user-id/${authStore.getUserId}`);
-
         if (response.status === 200) {
-            const filtered = response.data.filter((item: OrderItem) => item?.isPaid);
-            userOrders.value = filtered.map((item: OrderItem) => item?.items).flat()
+            const filtered = response.data.filter((item: OrderItem) => !item?.isPaid);
+            userOrders.value = filtered.map((item: OrderItem) => item).flat()
         }
 
     } catch (err) {
         console.log(err)
     }
 }
+
 
 onMounted(() => {
     authStore.fetchUser()
@@ -199,6 +213,7 @@ onMounted(() => {
 
 
 .expanded-section {
+    width: 100%;
     opacity: 0;
     transition: opacity 0.5s ease;
     display: none;

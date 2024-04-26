@@ -59,10 +59,12 @@ const emit = defineEmits<{
 const goToCatalog = (item: Category) => {
     router.push(`/catalog/${item?.category?.id}`);
     emit('closeCatalog')
+    closeCatalogOptions()
 }
 const goToCatalogSub = (subItem: CategorySys) => {
     router.push({ path: `/catalog/${activeCategory.value?.category?.id}`, query: { subCategory: subItem?.id } })
     emit('closeCatalog')
+    closeCatalogOptions()
 }
 
 const fromtTop = ref('60px')

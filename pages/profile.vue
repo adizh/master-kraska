@@ -14,8 +14,10 @@
                 <div class="col-12 sm:col-12 md:col-9 lg:col-8 right-side" v-if="selectedTab === 1">
                     <ProfileForm />
                 </div>
-                <div class="col-12 md:col-12 lg:col-8 right-side orders" v-else-if="selectedTab === 2">
+
+                <div class="col-12 md:col-12 lg:col-9 right-side" v-else-if="selectedTab === 2">
                     <div class="order-history">
+
                         <OrdersItem />
                     </div>
                 </div>
@@ -78,7 +80,6 @@
                     </Dialog>
                 </div>
 
-
                 <div class="col-12 md:col-12 lg:col-8 right-side " v-else-if="selectedTab === 4">
                     <ProfileReviews></ProfileReviews>
                 </div>
@@ -86,6 +87,7 @@
                 <div class="col-12 md:col-12 lg:col-8 right-side" v-else-if="selectedTab === 5">
                     <ProfileNotifications />
                 </div>
+
                 <div class="col-12 lg:col-8 md:col-12 right-side" v-else-if="selectedTab === 6">
                     <div class="bookmarked-list" v-if="userBookmarks?.length">
                         <ProductsProductItem type="bookmark" v-for="item in userBookmarks" :key="item.id"
@@ -116,8 +118,6 @@
             </div>
         </Dialog>
     </ClientOnly>
-
-
 
 </template>
 

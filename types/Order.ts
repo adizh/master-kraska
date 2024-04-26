@@ -19,7 +19,6 @@ export type UserOrder = {
   price: number;
   productId: string;
   productName: string;
-
   quantity: number;
 };
 export type OrderItem = {
