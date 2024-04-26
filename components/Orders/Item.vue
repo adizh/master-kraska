@@ -2,45 +2,53 @@
     <div v-if="userOrders?.length > 0">
         <div class="item" v-for="order in userOrders" :key="order?.id">
             <span class="item-date">{{ formatDated(order?.createdAt) }}</span>
-            <div class="item-info grid" v-for="item in order?.items" :key="item?.id">
-                <div class="col-6">
-                    <span>{{ $t('productCap') }}</span>
-                    <p>{{ formatName(item?.productName) }}</p>
-                </div>
-                <div class="col-2">
-                    <span>{{ $t('quantity') }}</span>
-                    <p>{{ item?.quantity }}</p>
-                </div>
-                <div class="col-2">
-                    <span>{{ $t('sum') }}</span>
-                    <p>{{ item?.price * item?.quantity }} сом</p>
-                </div>
-                <div class="col-2 more-info" @click="() => toggleCatalog(item?.id)">
-                    {{ $t('moreInfo') }}
-                    <img class="arrow" :class="{ 'rotated': openedProducts.includes(item.id) }"
-                        src="../../assets/icons/icon=components-arrow-blue.svg" alt="open-arrow">
-                </div>
-                <div class="expanded-section" v-if="openedProducts.includes(item.id)"
-                    :class="{ 'slide-enter': openedProducts.includes(item.id), 'slide-leave-to': !openedProducts.includes(item.id) }">
-                    <div class="item-info grid">
-                        <div class="col-6 flex flex-row gap-1 align-items-center">
-                            <img src="../../assets/images/test-kraska.png" alt="">
-                            <div class="expanded-section-info"><span>{{ item?.productName }}</span>
-                                <span>{{ $t('diluent') }}: вода</span>
-                                <span>{{ $t('noSmell') }}: да</span>
+            <div class="item-info grid">
 
+                <div class="header grid col-12">
+                    <div class="lg:col-4 sm:col-5 col-6">
+                        <span>{{ $t('productCap') }}</span>
+                        <p>Описание</p>
+                    </div>
+                    <div class="lg:col-3 sm:col-4 col-4">
+                        <span>{{ $t('quantity') }}</span>
+                        <p>{{ orderCount(order) }}</p>
+                    </div>
+                    <div class="lg:col-3 sm:col-3 col-4">
+                        <span>{{ $t('sum') }}</span>
+                        <p>{{ order?.total }} сом</p>
+                    </div>
+                    <div class="lg:col-2 sm:col-2 col-7 more-info" @click="() => toggleCatalog(order?.id)">
+                        {{ $t('moreInfo') }}
+                        <img class="arrow" :class="{ 'rotated': openedProducts.includes(order.id) }"
+                            src="../../assets/icons/icon=components-arrow-blue.svg" alt="open-arrow">
+                    </div>
+                </div>
+
+                <div class="expanded-container">
+                    <div class="expanded-section" v-for="item in order?.items" :key="item?.id"
+                        v-if="openedProducts.includes(order.id)"
+                        :class="{ 'slide-enter': openedProducts.includes(order.id), 'slide-leave-to': !openedProducts.includes(order.id) }">
+                        <div class="item-info grid">
+                            <div
+                                class="lg:col-6 md:col-12 fcol-12 flex flex-row gap-1 align-items-center expanded-prod-main">
+                                <img src="../../assets/images/test-kraska.png" alt="" class="expanded-img">
+                                <div class="expanded-section-info"><span>{{ item?.productName }}</span>
+                                    <span>{{ $t('diluent') }}: вода</span>
+                                    <span>{{ $t('noSmell') }}: да</span>
+
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-2">
-                            <p>{{ item?.quantity }} {{ $t('piece') }}</p>
-                        </div>
-                        <div class="col-2">
-                            <p>{{ item?.price * item?.quantity }} сом</p>
-                        </div>
-                        <div class="col-2">
-                            <button class="bg-white-btn" @click="openReOrder(item)">
-                                {{ $t('orderAgain') }}
-                            </button>
+                            <div class="col-5  md:col-3 lg:col-2">
+                                <p>{{ item?.quantity }} {{ $t('piece') }}</p>
+                            </div>
+                            <div class="col-12  md:col-3 lg:col-2">
+                                <p>{{ item?.price * item?.quantity }} сом</p>
+                            </div>
+                            <div class="col-12  md:col-5 lg:col-2">
+                                <button class="bg-white-btn" @click="openReOrder(item)">
+                                    {{ $t('orderAgain') }}
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -89,6 +97,10 @@ const authStore = useAuthStore()
 
 const openedProducts = ref([] as any[])
 const reOrderItem = ref({} as UserOrder)
+
+const orderCount = (order: OrderItem) => {
+    return order?.items?.reduce((acc, rec) => acc + rec?.quantity, 0)
+}
 
 const openReOrder = (item: UserOrder) => {
     isPayOpen.value = true;
@@ -160,10 +172,15 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+.header {
+    padding-bottom: 20px;
+}
+
 .more-info {
     @include textFormat(16px, 20px, 500, #33587D);
     @include flex(row, center, center, 2px);
     transition: transform 0.5s ease;
+
 }
 
 .item {
@@ -242,16 +259,18 @@ onMounted(() => {
 
 }
 
-
+.expanded-container {
+    border-top: 1px solid $slider-border-color;
+}
 
 .expanded-section {
     width: 100%;
     opacity: 0;
     transition: opacity 0.5s ease;
     display: none;
+    margin-top: 20px;
     transition: .5s ease all;
-    border-top: 1px solid $slider-border-color;
-    padding-top: 7px;
+    padding-top: 20px;
 
     .prod-img {
         width: 25%;
@@ -274,5 +293,63 @@ onMounted(() => {
     }
 
 
+}
+
+.expanded-img {
+    margin-left: -50px;
+}
+
+
+.expanded-section-info span:first-child {
+    font-size: 22px;
+    line-height: 22px;
+}
+
+@media (max-width:1000px) {
+    .expanded-img {
+        width: 27%;
+    }
+
+    .expanded-section-info span:first-child {
+        font-size: 18px;
+        line-height: 20px;
+    }
+
+    .item-info {
+        align-items: center;
+    }
+}
+
+@media (max-width:768px) {
+
+    .item-info {
+        align-items: center;
+    }
+
+    .expanded-img {
+        margin-left: -55px;
+    }
+}
+
+@media (max-width:540px) {
+
+
+    .expanded-img {
+        margin-left: -35px;
+    }
+}
+
+@media (max-width:480px) {
+    .expanded-prod-main {
+        flex-direction: column !important;
+    }
+
+    .expanded-img {
+        width: 50%;
+    }
+
+    .expanded-section-info span:first-child {
+        font-size: 16px;
+    }
 }
 </style>

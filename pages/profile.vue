@@ -312,6 +312,10 @@ li.active {
         height: 560px;
         max-height: 560px;
     }
+
+    .right-side {
+        padding: 15px
+    }
 }
 
 @media (max-width:665px) {
