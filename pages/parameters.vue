@@ -100,8 +100,8 @@
             <h3>
                 {{ $t('yourSearchResults') }}
             </h3>
-
-            <ProgressSpinner v-if="productsStore.getLoadingState && !productsStore.getFilteredProducts?.length" />
+<div  v-if="productsStore.getLoadingState && !productsStore.getFilteredProducts?.length" class="text-center"> <ProgressSpinner /></div>
+           
             <div class="params-result-prod"
                 v-if="productsStore.getFilteredProducts?.length && !productsStore.getLoadingState">
                 <ProductsProductItem v-for="product in productsStore.getFilteredProducts" :key="product?.id"

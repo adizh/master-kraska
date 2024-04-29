@@ -53,7 +53,7 @@
     </section>
 
 
-    <section v-else>
+    <section v-else  class="text-center">
         <ProgressSpinner />
     </section>
 </template>

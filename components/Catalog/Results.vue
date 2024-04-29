@@ -17,7 +17,7 @@
     <div v-else-if="!productStore.getLoadingState && !productStore?.getFilteredProducts?.length">
         {{ $t('noData') }}
     </div>
-    <div v-else>
+    <div v-else class="text-center">
         <ProgressSpinner />
     </div>
 </template>

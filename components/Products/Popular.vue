@@ -12,7 +12,7 @@
             </Swiper>
         </div>
 
-        <div v-else>
+        <div v-else  class="text-center">
             <ProgressSpinner />
         </div>
 

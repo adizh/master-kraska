@@ -4,7 +4,7 @@
    </ul>
 
 
-   <div v-else-if="loading">
+   <div v-else-if="loading"  class="text-center">
       
       <ProgressSpinner />
    </div>
