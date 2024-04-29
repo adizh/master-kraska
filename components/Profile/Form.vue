@@ -106,7 +106,8 @@ const selectLanguage = (item: LanguageOptions) => {
     isUIDropdownOpen.value = false;
     store.setLang(item?.value);
     setLocale(item?.value);
-    localStorage.setItem('selectedLanguage', item?.value)
+    localStorage.setItem('selectedLanguage', item?.value);
+    window.location.reload()
 }
 
 onMounted(async () => {

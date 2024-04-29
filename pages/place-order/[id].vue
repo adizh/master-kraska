@@ -301,9 +301,13 @@ onMounted(() => {
     orderStore.fetchOrderById(route.params?.id as string)
     authStore.fetchUser()
     orderStore?.fetchAllShops()
+
 })
 
 
+watch(() => authStore.getSelectedLang, () => {
+    orderStore?.fetchAllShops()
+});
 
 onBeforeRouteLeave((to, from, next) => {
     if (!payStore.getExit) {

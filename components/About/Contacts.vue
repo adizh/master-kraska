@@ -72,6 +72,7 @@
 <script setup lang="ts">
 import { AddressList } from '@/types/Items'
 const orderStore = useOrderStore()
+const authStore = useAuthStore()
 const props = defineProps<{
     addressList: AddressList[];
     type: string
@@ -84,9 +85,11 @@ const computedShops = computed(() => {
 
 onMounted(async () => {
     await orderStore?.fetchAllShops();
-    
-
 })
+watch(() => authStore.getSelectedLang, () => {
+    orderStore?.fetchAllShops()
+});
+
 
 
 </script>
