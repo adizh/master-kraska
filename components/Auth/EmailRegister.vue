@@ -145,7 +145,8 @@ const submitRegister = async () => {
             }
             const response = await http.post('/api/v1/User/registration', body);
             if (response.status === 200) {
-                localStorage.setItem('userId', response.data.message.id)
+                localStorage.setItem('userId', response.data.message.id);
+                localStorage.setItem('token', response.data.message.token);
 
                 useNotif('success', t('successRegister'), t('registration'))
                 setTimeout(() => {

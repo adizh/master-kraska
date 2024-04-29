@@ -238,6 +238,7 @@
   "successEdited": "Успешно редактировано!",
   "commentDeleted": "Комментарий удален",
   "orderCreated": "Заказ оформлен!",
+
   "updated": "Обновлено!",
   "orderCancelled": "Заказ отменен",
   "orderSent": "Заказ отправлен!",
@@ -248,5 +249,8 @@
   "richSelection":"Богатый выбор",
   "natureEcology":"Экология о природе",
   "big":"Масштабность",
-  "straightImport":"Прямые поставки"
+  "straightImport":"Прямые поставки",
+  "discountsAndNews":"Акции и Новости",
+  "errOccurred":"Произошла ошибка"
+
 }

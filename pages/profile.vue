@@ -159,6 +159,8 @@ const createOrder = () => {
 
 const confirmedLogout = () => {
     localStorage.removeItem('userId');
+    localStorage.removeItem('token');
+
     localStorage.removeItem('cart');
     window.location.reload()
 }

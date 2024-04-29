@@ -9,6 +9,7 @@ export const useAuthStore = defineStore("authStore", {
       phone: "",
       email: "",
       image: "",
+      isNotificationsAllowed:false
     },
     selectedLanguage: "ru",
   }),
@@ -26,6 +27,7 @@ export const useAuthStore = defineStore("authStore", {
           this.user.phone = response.data.message.phoneNumber;
           this.user.email = response.data.message.email;
           this.user.image = response.data.message.image;
+          this.user.isNotificationsAllowed=response.data.message.isNotificationsAllowed
         } catch (err) {
           console.log(err);
         }
@@ -44,6 +46,7 @@ export const useAuthStore = defineStore("authStore", {
           : "";
       }
     },
+    
     getSelectedLang(state) {
       if (process.client) {
         const localLan = localStorage.getItem("selectedLanguage");
