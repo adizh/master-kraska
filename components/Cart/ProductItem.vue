@@ -1,5 +1,5 @@
 <template>
-    <div class="cart-main-info-prod" @click.stop="router.push(`/product/${item?.id}`)">
+    <div class="cart-main-info-prod">
         <div class="cart-main-info-prod-items">
             <div class="cart-main-info-prod-img">
                 <img :src="item?.images[0]" alt="product">

@@ -10,8 +10,15 @@ export const useCartStore = defineStore("cartStore", {
   }),
   actions: {
     addToCart(prod: ExtendedProduct) {
-      this.cart.push(prod);
-      localStorage.setItem("cart", JSON.stringify(this.cart));
+const prodIndex=this.cart.findIndex((el)=>el?.id===prod?.id)
+
+if(prodIndex===-1){
+  this.cart.push(prod);
+  localStorage.setItem("cart", JSON.stringify(this.cart));
+}else{
+  return;
+}
+     
     },
 
     updateCartItem(updatedItem: ExtendedProduct) {
