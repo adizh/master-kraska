@@ -70,7 +70,6 @@
 </template>
 
 <script setup lang="ts">
-
 import { AddressList } from '@/types/Items'
 const orderStore = useOrderStore()
 const props = defineProps<{
@@ -88,6 +87,8 @@ onMounted(async () => {
     
 
 })
+
+
 </script>
 
 <style scoped lang="scss">
