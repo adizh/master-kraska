@@ -242,5 +242,12 @@
   "orderCancelled": "Заказ отменен",
   "orderSent": "Заказ отправлен!",
   "errCreatingOrder": "Вы не можете оформить заказ, если он не оплачен",
-  "colorCode":"Введите код цвета"
+  "colorCode":"Введите код цвета",
+
+  "bigExperience":"Большой опыт",
+  "modernTech":"В ногу со временем",
+  "richSelection":"Богатый выбор",
+  "natureEcology":"Экология о природе",
+  "big":"Масштабность",
+  "straightImport":"Прямые поставки"
 }

@@ -1,24 +1,24 @@
 export const advantagesOptions = [
-  { number: 1, header: "Прямые поставки ", text: "officialDistr" },
+  { number: 1, header: "straightImport ", text: "officialDistr" },
   {
     number: 2,
-    header: "Большой опыт",
+    header: "bigExperience",
     text: "professionalExperience",
   },
   {
     number: 3,
-    header: "В ногу со временем",
+    header: "modernTech",
     text: "modernTechnics",
   },
-  { number: 4, header: "Масштабность", text: "storesWeb" },
+  { number: 4, header: "big", text: "storesWeb" },
   {
     number: 5,
-    header: "Богатый выбор",
+    header: "richSelection",
     text: "mostWideProducts",
   },
   {
     number: 6,
-    header: " Экология о природе",
+    header: "natureEcology",
     text: "ecoSafeProducts",
   },
 ];

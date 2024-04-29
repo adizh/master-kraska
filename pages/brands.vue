@@ -7,7 +7,7 @@
             <div v-for="item in brandsStore.getAllBrands" :key=item?.id>
 
                 <img :src="item?.logo" alt="brand logo"
-                    @click="navigateTo({ path: `/catalog/${firstCategoryItem?.category?.id}`, query: { brandId: item?.id } })">
+                    @click="router.push({ path: `/catalog/${firstCategoryItem?.category?.id}`, query: { brandId: item?.id } })">
 
             </div>
         </div>
@@ -21,6 +21,7 @@ onMounted(async () => {
     await brandsStore.fetchAllBrands();
     await catalogStore.fetchAllCategories()
 })
+const router=useRouter()
 
 const firstCategoryItem = catalogStore.getAllCategories[0];
 

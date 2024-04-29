@@ -2,33 +2,42 @@
     <div class="search-options" :class="{
         'open': isSearchOpen
     }">
-        <ul class='search-res-header'>
+    <div v-if="productStore?.getLoadingState" class='text-center'>
+        <ProgressSpinner />
+    </div>
+        <ul class='search-res-header' v-else-if="productStore.getFilteredProducts?.length>0 && !productStore?.getLoadingState">
             <li v-for="item in productStore.getFilteredProducts?.slice(0, 3)" :key="item?.id"
                 @click="goToProd(item?.id)">
-                <img src="../assets/images/search-test.png" alt="img-product">
+                <img :src="item?.images[0]" alt="img-product" class="prod-image">
                 <span class="prod-search-name">{{ searchName(item?.name) }}</span>
             </li>
         </ul>
-        <button class="look-all-btn" v-if="productStore.getFilteredProducts?.length">
-            <span>Смотреть все</span>
-            <img src='../assets/icons/icon=components-more.svg' />
+      
 
+
+
+        <p v-else-if="!productStore.getFilteredProducts?.length && !productStore?.getLoadingState">{{ $t('noData') }}</p> 
+        <button class="look-all-btn" v-if="productStore.getFilteredProducts?.length" @click.stop="router.push(`/catalog/${firstCategoryItem?.category?.id}`)">
+            <span>{{ $t('lookAll') }}</span>
+            <img src='../assets/icons/icon=components-more.svg' />
         </button>
     </div>
 </template>
 
 <script setup lang="ts">
+import { Category } from '~/types/Category';
+
 const props = defineProps<{
     isSearchOpen: boolean
 }>()
-
-
+const catalogStore=useCatalogStore()
+const router=useRouter()
 const emit = defineEmits(['closeSearch'])
 const goToProd = (id: string) => {
     navigateTo(`/product/${id}`);
     emit('closeSearch')
 }
-
+const firstCategoryItem=ref({} as Category)
 const productStore = useProductsSstore();
 const searchName = (name: string) => {
     if (name?.length > 10) {
@@ -37,6 +46,13 @@ const searchName = (name: string) => {
         return name
     }
 }
+onMounted(async()=>{
+   await catalogStore.fetchAllCategories()
+   console.log('catalogStore  in seafh opention??',catalogStore.getAllCategories)
+   firstCategoryItem.value = catalogStore?.getAllCategories[0];
+})
+
+
 
 
 </script>
@@ -70,5 +86,8 @@ const searchName = (name: string) => {
 
 li:hover {
     cursor: pointer;
+}
+.prod-image{
+width: 50px;
 }
 </style>
