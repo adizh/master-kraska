@@ -205,11 +205,11 @@
     background-repeat: no-repeat;
     background-size: cover;
     border-radius: 10px;
-    height: 100vh;
+
     background-position: center center;
     width: 100%;
     @include flex(column, center, start);
-    padding-left: 50px;
+    padding: 0 0 50px 50px;
 
     h1 {
         margin: 20.9rem 0 50px 0;
@@ -233,6 +233,7 @@
     .header {
         background-size: auto;
         height: 60vh;
+        padding-right: 40px;
     }
 
     .header h1 {
