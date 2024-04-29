@@ -17,6 +17,13 @@
                         </li>
                     </ul>
 
+                    <!-- <ul  v-else v-for="(page,index) in visiblePages" :key="index">
+                        <li class="each-button-pag" :class="`${currentPage === page ? 'current-page' : ''}`"
+                            @click="changePage(page)">
+                            <a href="#">{{ page }}</a>
+                        </li>
+                    </ul> -->
+
                     <span v-if="ellipseShow" class="ellipse1">...</span>
                     <span v-if="ellipseShow" class="last-page" @click="changePage(totalPages.length)">{{
                         totalPages.length }}</span>
@@ -46,6 +53,9 @@ const props = defineProps<PaginationProps>();
 const currentPage = ref(props.currentActive)
 const buttonsToShow = ref<number>(3);
 
+watch(() => props?.currentActive, () => {
+    currentPage.value = props.currentActive;
+});
 const totalPages = computed(() => {
     let result: number[] = [];
     for (let i = 1; i <= props.total; i++) {

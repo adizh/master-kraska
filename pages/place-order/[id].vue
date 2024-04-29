@@ -54,11 +54,10 @@
 
 
             <div class="cart-main-info-price lg:col-4 md:col-6 sm:col-12 col-12">
-
                 <div class="cart-main-info-price-block">
                     <div class="first">
-                        <span>{{ $t('all') }}: {{ cartStore.numberOfProds }} {{ $t('product') }}</span>
-                        <span>{{ cartStore.totalOfTotalSum }} сом</span>
+                        <span>{{ $t('all') }}: {{ currentOrder?.items?.length }} {{ $t('product') }}</span>
+                        <span>{{ currentOrder?.total}} сом</span>
                     </div>
                     <div class="second">
                         <span>{{ $t('accountPiece') }}</span>
@@ -67,7 +66,7 @@
                     <input class="basic-input" placeholder="Промокод" />
                     <div class="last">
                         <span>{{ $t('inTotal') }}</span>
-                        <span>{{ cartStore.totalOfTotalSum }} сом</span>
+                        <span>{{ currentOrder?.total}} сом</span>
                     </div>
                 </div>
                 <button class="margin-top-20 pink-button" @click="submitOrder">{{ $t('confirmOrder') }}</button>
@@ -75,9 +74,10 @@
         </div>
         <div class="ordered-items margin-top-40  lg:col-8 md:col-12  col-12">
             <h2>{{ $t('productCap') }}</h2>
-            <CartProductItem v-for="item in cartStore.getAllCart" :key="item.id" :item="item">
+            
+            <CartProductItem v-for="order in currentOrder?.items" :key="order?.id" :item="order">
                 <template #count-buttons>
-                    <span class="price">{{ item.totalProdSum }} сом</span>
+                    <span class="price">{{ order?.price }} сом</span>
                 </template>
             </CartProductItem>
         </div>
@@ -145,13 +145,15 @@ definePageMeta({
 })
 
 import { AddressList } from '~/types/Items';
+import { Order, OrderItem } from '~/types/Order';
+
 
 
 
 const cartStore = useCartStore()
 const selectedOrderPlacement = ref(1);
 
-
+const currentOrder=ref({} as OrderItem)
 
 const pickupErr = ref({
     store: '',
@@ -182,11 +184,20 @@ const route = useRoute()
 
 
 
-//const orderById = ref({} as OrderItem)
 
 
-
-
+const getOrderId=async()=>{
+    try{
+const response = await http(`/api/v1/Order/get-order-id/${route?.params?.id}`);
+console.log('response',response);
+if(response.status===200){
+    currentOrder.value=response.data;
+    console.log('currentOrder',currentOrder)
+}
+    }catch(err){
+        console.log(err)
+    }
+}
 
 const deleteOrder = async () => {
     try {
@@ -198,7 +209,7 @@ const deleteOrder = async () => {
             useNotif('success', t('orderCancelled'), t('success'))
             isWarningOpen.value = false;
             isPaymentOpen.value = false;
-            return navigateTo('/cart')
+            return navigateTo('/')
         }
     } catch (err) {
         console.log(err)
@@ -301,6 +312,7 @@ onMounted(() => {
     orderStore.fetchOrderById(route.params?.id as string)
     authStore.fetchUser()
     orderStore?.fetchAllShops()
+    getOrderId()
 
 })
 

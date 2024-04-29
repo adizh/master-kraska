@@ -30,8 +30,8 @@
                         :class="{ 'slide-enter': openedProducts.includes(order.id), 'slide-leave-to': !openedProducts.includes(order.id) }">
                         <div class="item-info grid">
                             <div
-                                class="lg:col-6 md:col-12 fcol-12 flex flex-row gap-1 align-items-center expanded-prod-main">
-                                <img src="../../assets/images/test-kraska.png" alt="" class="expanded-img">
+                                class="lg:col-6 md:col-12 fcol-12 flex flex-row gap-2 align-items-center expanded-prod-main">
+                                <img :src="item?.image" alt="" class="expanded-img">
                                 <div class="expanded-section-info"><span>{{ item?.productName }}</span>
                                     <span>{{ $t('diluent') }}: вода</span>
                                     <span>{{ $t('noSmell') }}: да</span>
@@ -94,7 +94,7 @@ const isConfirmOpen = ref(false)
 const isCatalogOpen = ref('');
 const userOrders = ref<OrderItem[]>([])
 const authStore = useAuthStore()
-
+const router=useRouter()
 const openedProducts = ref([] as any[])
 const reOrderItem = ref({} as UserOrder)
 
@@ -108,9 +108,6 @@ const openReOrder = (item: UserOrder) => {
 }
 
 const confirmOrder = async () => {
-
-
-    console.log('all orders by users')
     const allOrderItems = {
         customerId: authStore.getUserId ? authStore.getUserId : "",
         productId: reOrderItem.value?.productId,
@@ -118,20 +115,25 @@ const confirmOrder = async () => {
         price: reOrderItem.value?.price,
         quantity: reOrderItem.value?.quantity,
     }
+    console.log('reOrderItem',reOrderItem);
+    console.log('allOrderItems',allOrderItems);
 
-    // try {
-    //     const response = await http.post(
-    //         "/api/v1/Order/create-order",
-    //         [allOrderItems]
-    //     );
-    //     console.log('response confirmOrder', response)
-    // } catch (err: any) {
-    //     console.log(err);
-    //     if (err.response?.data?.code === 400) {
-    //         useNotif('error', t('errCreatingOrder'), t('error'));
-    //         isPayOpen.value = false
-    //     }
-    // }
+    try {
+        const response = await http.post(
+            "/api/v1/Order/create-order",
+            [allOrderItems]
+        );
+        console.log('response confirm reorder', response);
+        if(response.data.code===200){
+            router.push(`/place-order/${response.data.message?.id}`)
+        }
+    } catch (err: any) {
+        console.log(err);
+        if (err.response?.data?.code === 400) {
+            useNotif('error', t('errCreatingOrder'), t('error'));
+            isPayOpen.value = false
+        }
+    }
 
 
 }
@@ -154,8 +156,8 @@ const getOrderByUser = async () => {
         const response = await http(`/api/v1/Order/get-orders-by-user-id/${authStore.getUserId}`);
         if (response.status === 200) {
             console.log('get order by user', response)
-            const filtered = response.data.filter((item: OrderItem) => !item?.isPaid);
-            userOrders.value = filtered.map((item: OrderItem) => item).flat()
+           // const filtered = response.data.filter((item: OrderItem) => !item?.isPaid);
+            userOrders.value = response.data
         }
 
     } catch (err) {
@@ -296,7 +298,8 @@ onMounted(() => {
 }
 
 .expanded-img {
-    margin-left: -50px;
+    margin-left: -20px;
+    width:120px
 }
 
 
@@ -306,9 +309,7 @@ onMounted(() => {
 }
 
 @media (max-width:1000px) {
-    .expanded-img {
-        width: 27%;
-    }
+  
 
     .expanded-section-info span:first-child {
         font-size: 18px;

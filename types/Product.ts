@@ -53,4 +53,6 @@ export interface ExtendedProduct extends Product {
   count: number;
   totalProdSum: number;
   initPrice: number;
+  image?:string
+  productName?:string
 }

@@ -20,6 +20,7 @@ export type UserOrder = {
   productId: string;
   productName: string;
   quantity: number;
+  image:string
 };
 export type OrderItem = {
   createdAt: string;

@@ -24,6 +24,7 @@
 
                     <div class="koler-part">
                         <div class="koler-colors">
+
                             <div class="bottom" v-if="activeBrand?.length">
                                 <div v-for="item in activeBrand" :key="item.id" class="bottom-item"
                                     :style="{ background: '#' + item.rgb }" @click="selectColor(item)"
@@ -93,8 +94,8 @@ onMounted(async () => {
 
 
 const handleSearch = () => {
-    const value = tintingSearch?.value;
-    fetchTintingsByBrand(selectedBrand?.value)
+    currentPage.value=1
+    fetchTintingsByBrand(selectedBrand?.value);
 }
 
 

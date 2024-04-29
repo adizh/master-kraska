@@ -2,10 +2,12 @@
     <div class="cart-main-info-prod">
         <div class="cart-main-info-prod-items">
             <div class="cart-main-info-prod-img">
-                <img :src="item?.images[0]" alt="product">
+                <img :src="item?.images[0]" alt="product" v-if="item?.images?.length">
+                <img :src="item?.image" alt="product" v-else-if="item?.image">
             </div>
             <div class="cart-main-info-middle">
-                <h3>{{ item?.name }}</h3>
+                <h3 v-if="item?.name">{{ item?.name }}</h3>
+                <h3 v-else-if="item?.productName">{{ item?.productName }}</h3>
                 <span class="item-block-description">{{ productInfoHorizontal }}</span>
             </div>
         </div>
@@ -51,6 +53,7 @@ const productInfoHorizontal = computed(() => {
 
 @media (max-width:768px) {
     .cart-main-info-prod-img {
+
         width: 80%;
     }
 
