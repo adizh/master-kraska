@@ -13,6 +13,7 @@
 
     </div>
 
+
     <div v-else-if="!productStore.getLoadingState && !productStore?.getFilteredProducts?.length">
         {{ $t('noData') }}
     </div>
@@ -52,5 +53,11 @@ const props = defineProps<{
 
 .horizontal {
     @include flex(column, start, center);
+}
+
+@media (max-width:768px){
+    .results{
+        justify-content: space-evenly;
+    }
 }
 </style>

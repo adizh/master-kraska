@@ -109,6 +109,8 @@ const openReOrder = (item: UserOrder) => {
 
 const confirmOrder = async () => {
 
+
+    console.log('all orders by users')
     const allOrderItems = {
         customerId: authStore.getUserId ? authStore.getUserId : "",
         productId: reOrderItem.value?.productId,
@@ -117,21 +119,19 @@ const confirmOrder = async () => {
         quantity: reOrderItem.value?.quantity,
     }
 
-
-    try {
-        const response = await http.post(
-            "/api/v1/Order/create-order",
-            [allOrderItems]
-        );
-
-        console.log('response confirmOrder', response)
-    } catch (err: any) {
-        console.log(err);
-        if (err.response?.data?.code === 400) {
-            useNotif('error', t('errCreatingOrder'), t('error'));
-            isPayOpen.value = false
-        }
-    }
+    // try {
+    //     const response = await http.post(
+    //         "/api/v1/Order/create-order",
+    //         [allOrderItems]
+    //     );
+    //     console.log('response confirmOrder', response)
+    // } catch (err: any) {
+    //     console.log(err);
+    //     if (err.response?.data?.code === 400) {
+    //         useNotif('error', t('errCreatingOrder'), t('error'));
+    //         isPayOpen.value = false
+    //     }
+    // }
 
 
 }

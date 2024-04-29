@@ -98,7 +98,7 @@ const productName = (name: string) => {
 
 
 .item-block {
-    width: 35%;
+    width: 31%;
     padding: 20px 32px;
     overflow: hidden;
 
@@ -125,8 +125,8 @@ const productName = (name: string) => {
     }
 
     &-info {
-        max-width: $product-item-width;
-        width: $product-item-width;
+        max-width: 100%;
+        width: 100%;
         word-break: break-all !important;
     }
 
@@ -181,10 +181,15 @@ const productName = (name: string) => {
     justify-content: start;
 }
 
+
+
 @media (max-width:1000px) {
     .item-block {
         width: 42%;
+     
     }
+
+
 }
 
 @media (max-width:768px) {
