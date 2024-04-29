@@ -59,7 +59,7 @@
             </div>
         </div>
         <div class="filters-block">
-            <div v-for="item in catalogStore.getAllCatalogs" :key="item?.id" class="each-filter-block"
+            <div v-for="item in filteredCatalog" :key="item?.id" class="each-filter-block"
                 :class="{ 'each-filter-block open': opensIncludes(item.id) }">
                 <h4 class="filters-block-header">{{ item?.name }}</h4>
                 <div class="main-block" v-if="item?.subdirectory?.length">
@@ -184,6 +184,10 @@ const openBrands = () => {
 
 const computedBrands = computed(() => {
     return !isBrandOpen.value ? brandsStore.getAllBrands.slice(0, 5) : brandsStore.getAllBrands
+})
+
+const filteredCatalog=computed(()=>{
+    return catalogStore.getAllCatalogs?.filter((item)=>item?.subdirectory?.length>0)
 })
 
 const initializeCheckboxStates = async () => {

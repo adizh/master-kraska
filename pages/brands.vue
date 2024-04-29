@@ -34,6 +34,7 @@ const firstCategoryItem = catalogStore.getAllCategories[0];
 
     div {
         width: 20%;
+        margin-bottom: 40px;
     }
 
     img {
