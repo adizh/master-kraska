@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="col-9 second-block">
-                    <input type="text" name="search" id="searcg" placeholder="Введите код цвета" class="basic-input"
+                    <input type="text" name="search" id="searcg" :placeholder="$t('colorCode')" class="basic-input"
                         v-model="tintingSearch" @input="handleSearch">
                     <div class="danger-text">
                         {{ $t('kolerWarning') }}

@@ -81,7 +81,7 @@
   "welcomeHeader": "«МАСТЕР КРАСКАГА» КОШ КЕЛДИҢИЗ!",
   "sellers": "Сатуучулар",
   "address": "Дарек",
-  "phoneNumber": "Телефон номуру",
+  "phoneNumber": "Телефон номери",
   "workingHours": "Иштөө убактысы",
   "allOurMarkets": "Биздин бардык дүкөндөр",
   "goToRegister": "Каттоого өтүү",
@@ -241,5 +241,6 @@
   "updated": "Обновлено!",
   "orderCancelled": "Заказ отменен",
   "orderSent": "Заказ отправлен!",
-  "errCreatingOrder": "Вы не можете оформить заказ, если он не оплачен"
+  "errCreatingOrder": "Вы не можете оформить заказ, если он не оплачен",
+  "colorCode":"Введите код цвета"
 }

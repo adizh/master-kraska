@@ -63,7 +63,7 @@
             </div>
             <div class="right">
                 <div class="header">
-                    <span>{{ $t('Цены') }}</span>
+                    <span>{{ $t('prices') }}</span>
                     <UIBookmarks :product="getProduct?.product" />
 
                 </div>
