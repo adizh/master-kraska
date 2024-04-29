@@ -30,6 +30,7 @@ const slicedSimilarItems = computed(() => props.similarItems?.slice(0, 3))
 
 <style scoped lang="scss">
 .similar-prod-item {
+    margin-top: 80px;
     &-list {
         @include flex(row, start, center);
 

@@ -101,6 +101,9 @@ const confirmDelete = async () => {
         display: block;
         background: #56CCF2;
         border-radius: 100%;
+        height: 48px;
+        width:48px;
+        @include flex(row,center,center);
         padding: 12px 14px;
         @include textFormat(24px, 24px, 700, #fff)
     }
