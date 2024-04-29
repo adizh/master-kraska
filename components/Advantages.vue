@@ -27,8 +27,9 @@ import { advantagesOptions } from '@/assets/js/advantages'
 .advan-block {
     background: $advan-bg;
     width: 100%;
+    position: relative;
     color: white;
-    padding: 4.3rem 0 0 2rem;
+    padding:80px 0 80px 2rem;
     border-radius: 20px;
     @include flex(row, space-between, center);
 
@@ -36,7 +37,9 @@ import { advantagesOptions } from '@/assets/js/advantages'
 
 .right {
     width: 35%;
-
+position: absolute;
+bottom:-5px;
+right:0;
     img {
         width: 100%;
     }
@@ -46,7 +49,8 @@ import { advantagesOptions } from '@/assets/js/advantages'
     @include flex(row, space-between, center);
     flex-wrap: wrap;
     width: 70%;
-    margin: 80px 0;
+    margin: 0;
+
 
 
     &-item {
@@ -71,10 +75,13 @@ import { advantagesOptions } from '@/assets/js/advantages'
     }
 }
 
+
+
+
 @media (min-width:320px) and (max-width:768px) {
     .advan-block {
         align-items: end;
-        padding: 20px 20px 18rem 10px;
+        padding: 20px 20px 13rem 10px;
         position: relative;
 
     }
@@ -110,4 +117,18 @@ import { advantagesOptions } from '@/assets/js/advantages'
         line-height: 65px;
     }
 }
+
+
+@media (max-width:768px){
+    .advan-block {
+        padding: 20px 20px 16rem 10px;
+    }  
+}
+
+@media (max-width:480px){
+    .advan-block {
+        padding: 20px 20px 13rem 10px;
+    }  
+}
+
 </style>
