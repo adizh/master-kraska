@@ -5,15 +5,15 @@
             <h3>
                 {{ $t('FIO') }} </h3>
 
-            <div class="flex flex-row gap-5">
+            <div class="flex flex-row gap-5 cart-inputs">
                 <div class='flex flex-column gap-2'>
-                    <input type="text" class="basic-input  w-14rem" :placeholder="$t('FirstName')" required
+                    <input type="text" class="basic-input  lg:w-14rem w-12 md:w-14rem" :placeholder="$t('FirstName')" required
                         v-model="deliveryForm.name.value" @input="handleDeliveryForm('name', 'string')">
                     <span v-if='deliveryForm.name.error' class="err-input-msg">{{ deliveryForm.name.error }}</span>
                 </div>
 
                 <div class='flex flex-column gap-2'>
-                    <input type="text" class="basic-input  w-14rem" :placeholder="$t('LastName')" required
+                    <input type="text" class="basic-input lg:w-14rem w-12 md:w-14rem" :placeholder="$t('LastName')" required
                         v-model="deliveryForm.lastName.value" @input="handleDeliveryForm('lastName', 'string')">
 
                     <span v-if='deliveryForm.lastName.error' class="err-input-msg">{{ deliveryForm.lastName.error
@@ -28,7 +28,7 @@
                 {{ $t('address') }}
             </h3>
             <div class="flex flex-column gap-2">
-                <input type="text" class="basic-input w-30rem" :placeholder="$t('addressPlaceholder')"
+                <input type="text" class="basic-input lg:w-30rem w-12 md:w-30rem" :placeholder="$t('addressPlaceholder')"
                     v-model="deliveryForm.address.value" required @input="handleDeliveryForm('address', 'string')">
                 <span v-if='deliveryForm.address.error' class="err-input-msg">{{ deliveryForm.address.error }}</span>
 
@@ -42,7 +42,7 @@
             </h3>
 
             <div class="flex flex-column gap-2">
-                <input type="text" class="basic-input w-30rem" required v-model="deliveryForm.city.value"
+                <input type="text" class="basic-input lg:w-30rem w-12 md:w-30rem" required v-model="deliveryForm.city.value"
                     @input="handleDeliveryForm('city', 'string')">
                 <span v-if='deliveryForm.city.error' class="err-input-msg">{{ deliveryForm.city.error }}</span>
 
@@ -67,7 +67,7 @@
             </h3>
 
             <div class="flex flex-column gap-2">
-                <input type="email" class="basic-input  w-30rem" required v-model="deliveryForm.email.value"
+                <input type="email" class="basic-input lg:w-30rem w-12 md:w-30rem" required v-model="deliveryForm.email.value"
                     @input="handleDeliveryForm('email', 'email')">
                 <span v-if='deliveryForm.email.error' class="err-input-msg">{{ deliveryForm.email.error }}</span>
             </div>
@@ -137,6 +137,17 @@ onMounted(() => {
     border: 1px solid #dddddd;
     border-radius: 10px;
     margin-bottom: 5px !important;
-    width: 60%;
+    width: 68%;
+}
+
+
+@media (max-width:480px){
+    .cart-form{
+flex-direction: column !important;
+    }
+
+:deep(input#basic.p-inputtext) {
+    width: 100%;
+}
 }
 </style>

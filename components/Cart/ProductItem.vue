@@ -7,7 +7,6 @@
             <div class="cart-main-info-middle">
                 <h3>{{ item?.name }}</h3>
                 <span class="item-block-description">{{ productInfoHorizontal }}</span>
-
             </div>
         </div>
 
@@ -52,7 +51,7 @@ const productInfoHorizontal = computed(() => {
 
 @media (max-width:768px) {
     .cart-main-info-prod-img {
-        width: 90%;
+        width: 80%;
     }
 
     .cart-main-info-prod {

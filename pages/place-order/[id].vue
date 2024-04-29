@@ -5,12 +5,12 @@
             <div class="orders-first lg:col-8 md-col-12 col-12">
                 <h3>{{ $t('waysOfOrder') }}</h3>
                 <div class="buttons-sel">
-                    <button class="gray-buttons-border" @click="selMethod(1)"
+                    <button class="gray-buttons-border pay-btn" @click="selMethod(1)"
                         :class="{ 'selected-btn': method === 1 }">{{ $t('takeFromStore') }}
                         <img src="../../assets/icons/carbon_checkmark-filled (1).svg" alt="carbon"
                             v-show="method === 1">
                     </button>
-                    <button class="gray-buttons-border" @click="selMethod(2)" :class="{ 'selected-btn': method === 2 }">
+                    <button class="gray-buttons-border pay-btn" @click="selMethod(2)" :class="{ 'selected-btn': method === 2 }">
                         {{ $t('delivery') }}
                         <img src="../../assets/icons/carbon_checkmark-filled (1).svg" alt="carbon"
                             v-show="method === 2">
@@ -329,11 +329,14 @@ onBeforeRouteLeave((to, from, next) => {
 </script>
 
 <style scoped lang="scss">
+.pay-btn{
+    width: 35%;
+}
 .orders-first {
     padding: 40px;
     background: $main-white;
     border-radius: 20px;
-    margin-top: 40px;
+    margin-top: 58px;
 
     &-info {
         h5 {
@@ -403,6 +406,8 @@ h3 {
 }
 
 
+
+
 @media (max-width:768px) {
     .buttons-sel {
         flex-direction: column;
@@ -410,9 +415,17 @@ h3 {
     }
 }
 
+@media (max-width:576px){
+    .pay-btn{
+        width:60% !important
+    }
+}
 @media (max-width:480px) {
     .dialog-mag {
         width: 100%;
+    }
+    .pay-btn{
+        width:80% !important
     }
 }
 </style>
