@@ -46,6 +46,7 @@ const formattedPhone = computed(() => {
 <style scoped lang='scss'>
 .bottom-list-phones {
     @include flex(column, center, center, 4px);
+   
 
 }
 
@@ -72,7 +73,21 @@ const formattedPhone = computed(() => {
     margin-top: 20px;
 
     p {
-        @include flex(row, space-between, center);
+        width:23%;
+        @include flex(row, start, center);
+        &:first-child{
+        width: 28%;
+    }
+    &:nth-child(2){
+width: 20%;
+    }
+    &:nth-child(3){
+        width: 28%;
+            }
+    &:nth-child(4){
+        width: 20%;
+            }
+        
     }
 }
 
