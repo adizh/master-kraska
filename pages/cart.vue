@@ -13,7 +13,7 @@
                             <span @click.stop="store.increaseCount(cartItem)">+</span>
                         </button>
                         <img src="../assets/icons/icon=trash.svg" alt="delete" class='delete-icon'
-                            @click.stop="removeFromCart(cartItem)">
+                            @click.stop="confirmDelete(cartItem)">
                     </template>
                 </CartProductItem>
             </div>
@@ -63,9 +63,14 @@
 
     <Dialog v-model:visible="isConfirmOpen" modal :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
         header=" ">
-        <ConfirmPay @confirm="createOrder" @cancel="isConfirmOpen = false" />
-
+        <ConfirmPay @confirm="createOrder" @cancel="isConfirmOpen = false"  :title="$t('confirmOrderText')"/>
     </Dialog>
+
+
+    <Dialog v-model:visible="isDeleteOpen" modal :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
+    header=" ">
+    <ConfirmPay @confirm="removeFromCart" @cancel="isDeleteOpen = false"  :title="$t('deleteCartProdWarning')"/>
+</Dialog>
 </template>
 
 <script setup lang="ts">
@@ -77,13 +82,15 @@ const cartStore = useCartStore();
 const orderStore = useOrderStore()
 const authStore = useAuthStore()
 const isConfirmOpen = ref(false)
+const isDeleteOpen = ref(false)
 
-
+const currentProd=ref({} as ExtendedProduct)
 const { t } = useI18n()
 
 
-const removeFromCart = (item: ExtendedProduct) => {
-    store.removeFromCart(item)
+const removeFromCart = () => {
+    store.removeFromCart(currentProd.value);
+    isDeleteOpen.value=false
 }
 
 const confirmOrder = () => {
@@ -94,7 +101,10 @@ const createOrder = () => {
     orderStore.createOrder()
 }
 
-
+const confirmDelete=(item:ExtendedProduct)=>{
+    isDeleteOpen.value=true
+    currentProd.value=item
+}
 
 
 

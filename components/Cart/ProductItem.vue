@@ -9,6 +9,8 @@
                 <h3 v-if="item?.name">{{ item?.name }}</h3>
                 <h3 v-else-if="item?.productName">{{ item?.productName }}</h3>
                 <span class="item-block-description">{{ productInfoHorizontal }}</span>
+                
+
             </div>
         </div>
 

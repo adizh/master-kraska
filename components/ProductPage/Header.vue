@@ -119,7 +119,7 @@
     </Dialog>
     <Dialog v-model:visible="isConfirmOpen" modal :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
         header=" ">
-        <ConfirmPay @cancel="isConfirmOpen = false" @confirm="confirmCreatePay" />
+        <ConfirmPay @cancel="isConfirmOpen = false" @confirm="confirmCreatePay" :title="$t('confirmOrderText')" />
 
     </Dialog>
 </template>

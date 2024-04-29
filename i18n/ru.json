@@ -251,5 +251,6 @@
   "big":"Масштабность",
   "straightImport":"Прямые поставки",
   "discountsAndNews":"Акции и Новости",
-  "errOccurred":"Произошла ошибка"
+  "errOccurred":"Произошла ошибка",
+  "deleteCartProdWarning": "Вы действительно хотите удалить товар"
 }
