@@ -138,13 +138,13 @@ const prevSlide = () => {
 
 .main-page-header {
 
-
+margin-bottom: 80px;
     padding: 4.5rem 0 4.5rem 50px;
     @include flex(row, space-between, center);
 }
 
 .right {
-    width: 33%;
+    width: 50%;
 
     img {
         width: 100%;
@@ -159,9 +159,9 @@ const prevSlide = () => {
 
 h1 {
     color: $main-pink;
-    line-height: 92px;
+    line-height: 92px !important;
     font-weight: 600;
-    font-size: 74px;
+    font-size: 74px !important;
     margin-bottom: 20px;
 }
 
@@ -170,6 +170,7 @@ h1 {
     font-size: 28px;
     font-weight: 500;
     max-width: 500px;
+    line-height:38px;
 }
 
 

@@ -62,7 +62,7 @@ const handleSearch = (event: any) => {
     }
 
     .btn-block {
-        width: 23%
+        width: 15%
     }
 
     input {

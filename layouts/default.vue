@@ -303,9 +303,13 @@ provide('closeProfileOpen', closeProfileOpen)
 }
 
 
+@media (min-width:1400px){
+    .bottom {
+        gap:6rem;
+    }
+}
 
-
-@media (max-width:1000px) {
+@media (max-width:1100px) {
     .burger-menu {
         display: flex !important
     }
