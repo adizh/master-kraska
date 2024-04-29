@@ -75,9 +75,9 @@
         <div class="ordered-items margin-top-40  lg:col-8 md:col-12  col-12">
             <h2>{{ $t('productCap') }}</h2>
             
-            <CartProductItem v-for="order in currentOrder?.items" :key="order?.id" :item="order">
+            <CartProductItem v-for="order in currentOrder?.items" :key="order?.id" :item="order" orderPlace="orderPlace">
                 <template #count-buttons>
-                    <span class="price">{{ order?.price }} сом</span>
+                    <span class="price">{{ order?.price * order?.quantity }} сом</span>
                 </template>
             </CartProductItem>
         </div>

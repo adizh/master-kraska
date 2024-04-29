@@ -15,23 +15,49 @@
         </div>
 
         <div class="cart-main-info-count">
-            <slot name="count-buttons"></slot>
+           <slot name="count-buttons"></slot>
+            <span class="price" v-if="orderPlace!=='orderPlace'">{{ item?.totalProdSum }} сом</span>
+                        
+
+            <button class="prod-count-buttons" v-if="orderPlace!=='orderPlace'">
+                <span @click.stop="store.decreaseCount(item)">-</span>
+                <span>{{ store.getTotalItemCount(item?.count) }}</span>
+                <span @click.stop="store.increaseCount(item)">+</span>
+            </button>
+            <img src="../../assets/icons/icon=trash.svg" alt="delete" class='delete-icon'
+                @click.stop="confirmDelete(item)" v-if="orderPlace!=='orderPlace'">
 
         </div>
     </div>
+    <Dialog v-model:visible="isDeleteOpen" modal :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
+    header=" ">
+    <ConfirmPay @confirm="removeFromCart" @cancel="isDeleteOpen = false"  :title="$t('deleteCartProdWarning')"/>
+</Dialog>
 </template>
 
 <script setup lang="ts">
 import { ExtendedProduct } from '~/types/Product';
 const router = useRouter()
+const store=useCartStore()
 const props = defineProps<{
-    item: ExtendedProduct
+    item: ExtendedProduct,
+    orderPlace?:string
 }>()
+const isDeleteOpen = ref(false)
+
+const removeFromCart = () => {
+    store.removeFromCart(props?.item);
+    isDeleteOpen.value=false
+}
 const productInfoHorizontal = computed(() => {
     return props?.item?.shortDescription && props?.item?.shortDescription?.split(' ').length > 19 ? props?.item?.shortDescription.split(' ').slice(0, 19).join(' ') + '...' : props?.item?.shortDescription
 
 })
-
+const confirmDelete=(item:ExtendedProduct)=>{
+    isDeleteOpen.value=true
+   // currentProd.value=item
+}
+console.log('orderPlace',props.orderPlace)
 </script>
 
 <style scoped>

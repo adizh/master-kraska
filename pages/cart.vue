@@ -4,17 +4,6 @@
         <div class="cart-main grid" >
             <div class="cart-main-info lg:col-8 md:col-12 sm:col-12">
                 <CartProductItem v-for="cartItem in store.getAllCart" :key="cartItem.id" :item="cartItem">
-                    <template #count-buttons>
-                        <span class="price">{{ cartItem.totalProdSum }} сом</span>
-
-                        <button class="prod-count-buttons">
-                            <span @click.stop="store.decreaseCount(cartItem)">-</span>
-                            <span>{{ store.getTotalItemCount(cartItem?.count) }}</span>
-                            <span @click.stop="store.increaseCount(cartItem)">+</span>
-                        </button>
-                        <img src="../assets/icons/icon=trash.svg" alt="delete" class='delete-icon'
-                            @click.stop="confirmDelete(cartItem)">
-                    </template>
                 </CartProductItem>
             </div>
 
@@ -67,44 +56,27 @@
     </Dialog>
 
 
-    <Dialog v-model:visible="isDeleteOpen" modal :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
-    header=" ">
-    <ConfirmPay @confirm="removeFromCart" @cancel="isDeleteOpen = false"  :title="$t('deleteCartProdWarning')"/>
-</Dialog>
+   
 </template>
 
 <script setup lang="ts">
-
-import { Product, ExtendedProduct } from '~/types/Product';
-import { Order } from '@/types/Order'
 const store = useCartStore();
-const cartStore = useCartStore();
+
 const orderStore = useOrderStore()
-const authStore = useAuthStore()
+
 const isConfirmOpen = ref(false)
-const isDeleteOpen = ref(false)
-
-const currentProd=ref({} as ExtendedProduct)
-const { t } = useI18n()
 
 
-const removeFromCart = () => {
-    store.removeFromCart(currentProd.value);
-    isDeleteOpen.value=false
-}
 
-const confirmOrder = () => {
-    isConfirmOpen.value = true;
-}
+
+
+
 
 const createOrder = () => {
     orderStore.createOrder()
 }
 
-const confirmDelete=(item:ExtendedProduct)=>{
-    isDeleteOpen.value=true
-    currentProd.value=item
-}
+
 
 
 

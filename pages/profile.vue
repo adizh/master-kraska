@@ -24,15 +24,6 @@
                 <div class="col-12 md:col-12 lg:col-8 right-side " v-else-if="selectedTab === 3">
                     <CartProductItem v-if="cartStore.getAllCart?.length" v-for="item in cartStore.getAllCart"
                         :key="item?.id" :item="item">
-                        <template #count-buttons>
-                            <span class="price">{{ item.totalProdSum }} сом</span>
-                            <button class="prod-count-buttons">
-                                <span @click.stop="cartStore.decreaseCount(item)">-</span>
-                                <span>{{ cartStore.getTotalItemCount(item?.count) }}</span>
-                                <span @click.stop="cartStore.increaseCount(item)">+</span>
-                            </button>
-                            <img @click.stop="removeFromCart(item)" src="../assets/icons/icon=trash.svg" alt="">
-                        </template>
                     </CartProductItem>
                     <div v-if="cartStore.getAllCart?.length > 0" class="flex justify-content-end flex-row"> <button
                             class="btn-white-bg" @click='cartStore.saveNewCart'>
@@ -141,9 +132,7 @@ const openLogout = () => {
 }
 
 
-const removeFromCart = (item: ExtendedProduct) => {
-    cartStore.removeFromCart(item)
-}
+
 if (process.client) {
     if (localStorage.getItem('selectedTab') && localStorage.getItem('selectedTab') !== null) {
         selectedTab = ref<number>(parseInt(localStorage.getItem('selectedTab') as string));
