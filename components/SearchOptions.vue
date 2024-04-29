@@ -14,8 +14,6 @@
         </ul>
       
 
-
-
         <p v-else-if="!productStore.getFilteredProducts?.length && !productStore?.getLoadingState">{{ $t('noData') }}</p> 
         <button class="look-all-btn" v-if="productStore.getFilteredProducts?.length" @click.stop="router.push(`/catalog/${firstCategoryItem?.category?.id}`)">
             <span>{{ $t('lookAll') }}</span>

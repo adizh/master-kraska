@@ -13,7 +13,7 @@
 
             </div>
             <SearchOptions :isSearchOpen="isSearchOpen" @closeSearch="isSearchOpen = false" />
-            
+
             <div class="overlay-header-options" v-show="isSearchOpen" :class="{ 'open': isSearchOpen }"></div>
 
         </div>
@@ -31,6 +31,21 @@ const handleSearch = (event: any) => {
     isSearchOpen.value = event.target.value.trim().length > 0;
     productStore.filterProducts()
 }
+
+
+watch(isSearchOpen,(value)=>{
+if(value){
+    disableBodyScroll()
+}else{
+    enableBodyScroll() 
+}
+})
+const disableBodyScroll=()=> {
+      document.body.style.overflow = 'hidden';
+    }
+ const    enableBodyScroll=()=> {
+      document.body.style.overflow = 'auto';
+    }
 </script>
 
 <style scoped lang="scss">
