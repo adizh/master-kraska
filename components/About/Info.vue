@@ -22,11 +22,8 @@
                     <img src='../../assets/icons/icon=components-more.svg' />
                 </button>
             </div>
-            <div class="info-certif-img">
-                <img src="../../assets/images/certif/certificate1.png" />
-                <img src="../../assets/images/certif/certificate2.png" />
-                <img src="../../assets/images/certif/certificate3.png" />
-            </div>
+            <certificates type="page" id="certificate"/>
+         
         </div>
 
 
@@ -49,7 +46,7 @@
 </template>
 
 <script setup lang="ts">
-
+import certificates from '~/pages/certificates.vue';
 
 const brandsStore = useBrandsStore();
 const { t } = useI18n();

@@ -1,7 +1,6 @@
 <template>
     <section>
         <AboutInfo />
-        <div class="main-header-h1">{{ $t('allOurMarkets') }}</div>
         <AboutContacts :address-list="addressList.slice(0, 2)" type="about-us">
             <template #look-all-btn>
                 <button class="look-all-btn" @click="navigateTo('/contacts')">
