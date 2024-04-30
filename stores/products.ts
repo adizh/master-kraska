@@ -261,5 +261,8 @@ export const useProductsSstore = defineStore("productsStore", {
     getLoadingState(state) {
       return state.areFiltersLoading;
     },
+    getPopularProducts(state){
+      return state.allProducts.filter((item)=>item.isPopular)
+    }
   },
 });

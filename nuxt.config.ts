@@ -62,16 +62,16 @@ export default defineNuxtConfig({
     duration: 5000,
   },
 
-  $development: {
-    image: {
-      dir: "assets/images",
-    },
-  },
-  $production: {
-    image: {
-      provider: "ipx",
-    },
-  },
+  // $development: {
+  //   image: {
+  //     dir: "assets/images",
+  //   },
+  // },
+  // $production: {
+  //   image: {
+  //     provider: "ipx",
+  //   },
+  // },
   routeRules: {
     "/": { prerender: true },
   },

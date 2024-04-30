@@ -1,14 +1,15 @@
 <template>
     <div class="popular-products">
         <h5 class='each-section-header'>{{ $t('popularProducts') }}</h5>
-        <div class="products-list" v-if="popularItems?.length > 0">
+        <div class="products-list" v-if="store.getPopularProducts?.length > 0">
             <Swiper :slides-per-view="slidesPerView" :navigation="true" id="mySlider" :modules="[SwiperNavigation]"
                 :style='{ "--swiper-navigation-size": "15px", "padding": "20px 0" }'>
-                <SwiperSlide v-for="product in popularItems" :key="product.id">
-                    <ProductsProductItem :product="product" :style="{width:'100%'} "/>
 
-                </SwiperSlide>
-
+                        <SwiperSlide v-for="product in store.getPopularProducts" :key="product.id">
+                            <ProductsProductItem :product="product" :style="{width:'100%'} "/>
+                        </SwiperSlide>
+                   
+       
             </Swiper>
         </div>
 
@@ -35,17 +36,30 @@ const handleResize = () => {
     }
 };
 const store = useProductsSstore();
-onMounted(() => {
-    store.fetchAllProducts();
+onMounted(async() => {
+  await  store.fetchAllProducts();
     handleResize();
     window.addEventListener('resize', handleResize);
+    console.log('getPopularProducts',store.getPopularProducts)
+ 
 })
 
 
+const { list, containerProps, wrapperProps } = useVirtualList(
+    store.getPopularProducts,
+  {
+    itemWidth: 300,
+  },
+) as any;
 
 const popularItems = computed(() => {
     return store.getAllProducsts.filter((item: Product) => item.isPopular)
 })
+
+
+
+
+console.log('wjat is list',list)
 
 onUnmounted(() => {
     window.removeEventListener('resize', handleResize);

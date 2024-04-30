@@ -37,7 +37,7 @@ const handleResize = () => {
 const store = useProductsSstore();
 onMounted(() => {
     store.fetchAllProducts();
-    handleResize(); // Call onMounted to set initial value
+    handleResize(); 
     window.addEventListener('resize', handleResize);
 })
 

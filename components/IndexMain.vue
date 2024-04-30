@@ -14,7 +14,7 @@
                         {{ $t('searchByParams') }}</button>
                 </div>
                 <div class="right">
-                    <img src="../assets/images/main-page.png" alt="large" class="large-image">
+                    <NuxtImg src="/main-page.png"  class="large-image"/>
                     <img src="../assets/images/vertical-main.png" alt="small" class="small-image">
                 </div>
             </div>
@@ -32,7 +32,7 @@
                 </div>
                 <div class="right">
 
-                    <img src="../assets/images/main-page.png" alt="main">
+                    <NuxtImg src="/main-page.png"/>
                 </div>
             </div>
 
@@ -49,7 +49,7 @@
                 </div>
                 <div class="right">
 
-                    <img src="../assets/images/main-page.png" alt="main">
+                    <NuxtImg src="/main-page.png" />
                 </div>
             </div>
 
@@ -64,8 +64,11 @@
                     <span @click="changeSlide(2)"
                         :class="{ 'active-control': currentIndex === 2, 'next-slide': direction === 'next', 'prev-slide': direction === 'prev' }"></span>
                 </div>
+                
                 <img @click="nextSlide" src="../assets/icons/arrow-left.svg"  alt='arrow-left'/>
+
             </div>
+
         </div>
     </div>
 
