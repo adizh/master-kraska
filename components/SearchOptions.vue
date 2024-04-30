@@ -17,7 +17,7 @@
         <!-- <p v-else-if="!productStore?.getLoadingState && !productStore.getFilteredProducts?.length && prodReceved">{{ $t('noData') }}</p>  -->
         <button class="look-all-btn" v-if="productStore.getFilteredProducts?.length" @click.stop="router.push(`/catalog/${firstCategoryItem?.category?.id}`)">
             <span>{{ $t('lookAll') }}</span>
-            <img src='../assets/icons/icon=components-more.svg' />
+            <img src='../assets/icons/icon=components-more.svg' alt="more" />
         </button>
     </div>
 </template>

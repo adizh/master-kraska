@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: false },
-ssr:false,
+
   vite: {
     css: {
       preprocessorOptions: {
@@ -19,19 +19,19 @@ ssr:false,
   app: {
     head: {
       link: [
-        {
-          rel: "stylesheet",
-          href: "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css",
-        },
-        {
-          rel: "stylesheet",
-          href: "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css",
-        },
+        // {
+        //   rel: "stylesheet",
+        //   href: "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css",
+        // },
+        // {
+        //   rel: "stylesheet",
+        //   href: "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css",
+        // },
       ],
       script: [
-        {
-          src: "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js",
-        },
+        // {
+        //   src: "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js",
+        // },
       ],
     },
   },
@@ -45,7 +45,13 @@ ssr:false,
     "nuxt-snackbar",
     "@nuxtjs/i18n",
     "nuxt3-leaflet",
+    "@nuxtjs/seo"
+
   ],
+  seo:{
+    automaticDefaults:true,
+    splash:true
+  },
   i18n: {
     vueI18n: "./i18n/i18n.config.ts",
   },

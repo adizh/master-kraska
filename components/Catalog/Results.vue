@@ -1,7 +1,7 @@
 <template>
     <div class="items" v-if="productStore?.getFilteredProducts?.length > 0 && !productStore.getLoadingState">
         <div class="results" :class="{ 'horizontal': visibleMethod === 'horizontal' }">
-            <CatalogProductItem v-for="item in productStore.getFilteredProducts" :key="item?.id"
+            <CatalogProductItem v-memo="[productStore.getFilteredProducts]" v-for="item in productStore.getFilteredProducts" :key="item?.id"
                 :visibleMethod="visibleMethod" :product="item" />
 
         </div>

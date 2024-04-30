@@ -102,6 +102,9 @@ width: 20%;
             width: 45% !important
         }
     }
+    .maps-address-list-block h3 {
+        font-size: 24px !important;
+    }
 }
 @media (max-width:576px){
     .bottom-list{
@@ -109,6 +112,9 @@ width: 20%;
         p{
             width: 100% !important
         }
+    }
+    .maps-address-list-block h3 {
+        font-size: 20px !important;
     }
 }
 

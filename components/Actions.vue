@@ -5,7 +5,7 @@
 
             <button class="look-all-btn" @click="navigateTo('/discount')">
                 <span>{{ $t('lookAll') }}</span>
-                <img src='../assets/icons/icon=components-more.svg' />
+                <img src='../assets/icons/icon=components-more.svg'  alt="more"/>
 
             </button>
         </div>
@@ -19,7 +19,7 @@
             <p class="brands-text">{{ $t('brandsInfo') }}</p>
             <button class="look-all-btn" @click="navigateTo('/brands')">
                 <span>{{ $t('lookAll') }}</span>
-                <img src='../assets/icons/icon=components-more.svg' />
+                <img src='../assets/icons/icon=components-more.svg' alt="more" />
             </button>
         </div>
 
@@ -32,7 +32,7 @@
                 <SwiperSlide v-for="item in brandsStore.getAllBrands" :key="item.id">
 
 
-                    <img :src="item?.logo"
+                    <img :src="item?.logo" alt="logo"
                         @click="navigateTo({ path: `/catalog/${firstCategoryItem?.category?.id}`, query: { brandId: item?.id } })" />
                 </SwiperSlide>
             </Swiper>

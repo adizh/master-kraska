@@ -32,7 +32,7 @@
                 </div>
                 <div class="right">
 
-                    <img src="../assets/images/main-page.png" alt="">
+                    <img src="../assets/images/main-page.png" alt="main">
                 </div>
             </div>
 
@@ -49,13 +49,13 @@
                 </div>
                 <div class="right">
 
-                    <img src="../assets/images/main-page.png" alt="">
+                    <img src="../assets/images/main-page.png" alt="main">
                 </div>
             </div>
 
 
             <div class="controls">
-                <img src="../assets/icons/arrow-right.svg" @click="prevSlide" />
+                <img src="../assets/icons/arrow-right.svg" @click="prevSlide"  alt="arrow"/>
                 <div class="controls-circle">
                     <span @click="changeSlide(0)"
                         :class="{ 'active-control': currentIndex === 0, 'next-slide': direction === 'next', 'prev-slide': direction === 'prev' }"></span>
@@ -64,7 +64,7 @@
                     <span @click="changeSlide(2)"
                         :class="{ 'active-control': currentIndex === 2, 'next-slide': direction === 'next', 'prev-slide': direction === 'prev' }"></span>
                 </div>
-                <img @click="nextSlide" src="../assets/icons/arrow-left.svg" />
+                <img @click="nextSlide" src="../assets/icons/arrow-left.svg"  alt='arrow-left'/>
             </div>
         </div>
     </div>
