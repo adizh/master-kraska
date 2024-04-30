@@ -53,7 +53,7 @@
                     </span>
                     <span @click="isBrandOpen = false" v-else> {{ $t('closeBlock') }}
                     </span>
-                    <NuxtImg class="arrow" :class="{ 'rotated': isBrandOpen }" src="icons/arrow-down-blue.svg"
+                    <NuxtImg class="arrow" :class="{ 'rotated': isBrandOpen }" src="/static/icons/arrow-down-blue.svg"
                       />
                 </p>
             </div>
@@ -85,7 +85,7 @@
                     {{ opensIncludes(item.id) ? $t('closeBlock') : $t('more') }} <span v-if="!opensIncludes(item.id)">{{
                 getRemainingItemCount(item) }}</span>
                     <NuxtImg class="arrow" :class="{ 'rotated': opensIncludes(item.id) }"
-                        src="/assets/icons/arrow-down-blue.svg"  />
+                        src="/static/icons/arrow-down-blue.svg"  />
                 </p>
             </div>
         </div>
