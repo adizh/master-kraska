@@ -6,7 +6,7 @@
                 <span class="header-info-name">{{ item?.fullName }}</span>
                 <div class="flex flex-row justify-content-between">
                     <div class='flex flex-row gap-4'>
-                        <Rating :cancel="false" v-model="rating" />
+                        <Rating :cancel="false" v-model="rating" disabled />
                         <button v-if="type === 'profile'" class="look-all-btn"
                             @click="router.push(`/product/${item?.productId}`)"> {{ $t('goToCommnent') }}
                             <img src='../../assets/icons/icon=components-more.svg' />

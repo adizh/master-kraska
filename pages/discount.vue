@@ -1,13 +1,7 @@
 <template>
     <section>
         <div class="main-header-h1">{{ $t('discountPageHeader') }}</div>
-
         <div class="actions-block">
-            <DiscountItem />
-            <DiscountItem />
-            <DiscountItem />
-            <DiscountItem />
-            <DiscountItem />
             <DiscountItem />
         </div>
     </section>

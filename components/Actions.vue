@@ -10,11 +10,7 @@
             </button>
         </div>
         <div class="actions-block">
-
             <DiscountItem />
-            <DiscountItem />
-            <DiscountItem />
-
         </div>
 
 
