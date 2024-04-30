@@ -18,10 +18,10 @@ const payMethod = ref<PaymentTypes>('');
 const orderStore = useOrderStore()
 
 const payOptions: PaymentTypes[] = [
-    'Банковской картой',
     'Наличными',
     'MBank',
-    'MegaPay', 'Элкарт'
+    'MegaPay'
+    // 'Элкарт'
 ]
 const emits = defineEmits<{
     choosePayMethod: [value: string]

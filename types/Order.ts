@@ -19,6 +19,11 @@ export type UserOrder = {
   price: number;
   productId: string;
   productName: string;
+  productNameKg: string;
+  productNameRu: string;
+  productDescriptionRu: string;
+  productDescriptionKg: string;
+  productDescription: string;
   quantity: number;
   image:string
 };

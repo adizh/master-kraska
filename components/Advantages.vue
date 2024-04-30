@@ -7,7 +7,7 @@
                 <div class="left-item" v-for="item in advantagesOptions" :key="item.number">
                     <span class="left-item-number">{{ item.number }}</span>
                     <div>
-                        <div class="left-item-text">{{ item.header }}</div>
+                        <div class="left-item-text">{{ $t(item.header) }}</div>
                         <p class="left-item-subtext">{{ $t(item.text) }}</p>
                     </div>
                 </div>

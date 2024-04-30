@@ -110,8 +110,6 @@
 
     <Dialog v-model:visible="isWarningOpen" modal header=" "
         :style="{ width: '30rem', padding: '20px 40px 50px 20px' }">
-
-
         <div class="warning-modal-exit">
             <h5 class="modal-header2">{{ $t('cancedlOrderWarn') }}?</h5>
             <p class="warning-text-modal">

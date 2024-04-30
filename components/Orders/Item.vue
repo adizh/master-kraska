@@ -7,7 +7,7 @@
                 <div class="header grid col-12">
                     <div class="lg:col-4 sm:col-5 col-6">
                         <span>{{ $t('productCap') }}</span>
-                        <p>Описание</p>
+                        <p>{{ $t('desctiption') }}</p>
                     </div>
                     <div class="lg:col-3 sm:col-4 col-4">
                         <span>{{ $t('quantity') }}</span>
@@ -30,12 +30,9 @@
                         :class="{ 'slide-enter': openedProducts.includes(order.id), 'slide-leave-to': !openedProducts.includes(order.id) }">
                         <div class="item-info grid">
                             <div
-                                class="lg:col-6 md:col-12 fcol-12 flex flex-row gap-2 align-items-center expanded-prod-main">
+                                class="lg:col-6 md:col-12 fcol-12 flex flex-row gap-2 align-items-start expanded-prod-main">
                                 <img :src="item?.image" alt="" class="expanded-img">
                                 <div class="expanded-section-info"><span>{{ item?.productName }}</span>
-                                    <span>{{ $t('diluent') }}: вода</span>
-                                    <span>{{ $t('noSmell') }}: да</span>
-
                                 </div>
                             </div>
                             <div class="col-5  md:col-3 lg:col-2">
@@ -84,6 +81,7 @@
 
 import { OrderItem, UserOrder } from '~/types/Order';
 import moment from 'moment'
+import { User } from '~/types/User';
 
 const isPayOpen = ref(false)
 const formatDated = (date: string) => {
@@ -156,8 +154,17 @@ const getOrderByUser = async () => {
         const response = await http(`/api/v1/Order/get-orders-by-user-id/${authStore.getUserId}`);
         if (response.status === 200) {
             console.log('get order by user', response)
-           // const filtered = response.data.filter((item: OrderItem) => !item?.isPaid);
-            userOrders.value = response.data
+            userOrders.value=response.data.map((order:OrderItem)=>{
+                return {...order,items:order?.items.map((eachItem)=>{
+                  if(authStore.getSelectedLang==='kg'){
+                    return {...eachItem, productName:eachItem?.productNameKg,productDescription:eachItem?.productDescriptionKg}
+                }else{
+                    return {...eachItem, productName:eachItem?.productNameRu,productDescription:eachItem?.productDescriptionRu}
+
+                }
+                })}
+            })
+            console.log('userOrders>>>>',userOrders)
         }
 
     } catch (err) {
@@ -262,6 +269,7 @@ onMounted(() => {
 }
 
 .expanded-container {
+    width: 100%;
     border-top: 1px solid $slider-border-color;
 }
 
@@ -306,6 +314,8 @@ onMounted(() => {
 .expanded-section-info span:first-child {
     font-size: 22px;
     line-height: 22px;
+    color:#222;
+    font-weight: 500;
 }
 
 @media (max-width:1000px) {
