@@ -53,7 +53,7 @@
                     </span>
                     <span @click="isBrandOpen = false" v-else> {{ $t('closeBlock') }}
                     </span>
-                    <NuxtImg class="arrow" :class="{ 'rotated': isBrandOpen }" src="/icons/arrow-down-blue.svg"
+                    <NuxtImg class="arrow" :class="{ 'rotated': isBrandOpen }" src="icons/arrow-down-blue.svg"
                       />
                 </p>
             </div>
