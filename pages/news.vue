@@ -5,9 +5,7 @@
 
         </div>
 
-        <div class="news-list">
-            <NewsItem />
-            <NewsItem />
+        <div class="news-list margin-top-40">
             <NewsItem />
         </div>
 

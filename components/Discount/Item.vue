@@ -1,17 +1,22 @@
 <template>
-    <div class="actions-block-item" v-for="item in discounts" :key="item?.id">
+    <div class="actions-block-item" v-for="item in discounts" :key="item?.id" v-if="!isLoading && discounts?.length">
         <div class="actions-block-item-header">{{ item?.title }}</div>
         <p class="actions-block-item-info">
             {{ item?.description }}
         </p>
     </div>
+
+    <div  v-else-if="isLoading && !discounts?.length"  class="text-center"> <ProgressSpinner/></div>
+    <div v-else>{{ $t('noData') }} </div>
 </template>
 
 <script setup lang="ts">
 import {Discount} from '@/types/Discout'
 const discounts = ref([] as Discount[]);
+const isLoading=ref(false)
 const authStore=useAuthStore()
 const getDiscounts=async()=>{
+    isLoading.value=true
     try{
 const response= await http('/api/v1/Banner/get-all-banners');
 if(response.status===200){
@@ -26,6 +31,8 @@ if(response.status===200){
 }
     }catch(err){
         console.log(err)
+    }finally{
+        isLoading.value=false
     }
 }
 onMounted(()=>{

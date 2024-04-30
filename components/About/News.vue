@@ -15,8 +15,6 @@
 
         <div class="news-list">
             <NewsItem />
-            <NewsItem />
-            <NewsItem />
         </div>
 
     </div>
