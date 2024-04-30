@@ -9,14 +9,14 @@
                 <div class='flex flex-column gap-2'>
                     <input type="text" class="basic-input  lg:w-14rem w-12 md:w-14rem" :placeholder="$t('FirstName')" required
                         v-model="deliveryForm.name.value" @input="handleDeliveryForm('name', 'string')">
-                    <span v-if='deliveryForm.name.error' class="err-input-msg">{{ deliveryForm.name.error }}</span>
+                    <span v-if='deliveryForm.name.error' class="err-input-msg">{{ $t(deliveryForm.name.error) }}</span>
                 </div>
 
                 <div class='flex flex-column gap-2'>
                     <input type="text" class="basic-input lg:w-14rem w-12 md:w-14rem" :placeholder="$t('LastName')" required
                         v-model="deliveryForm.lastName.value" @input="handleDeliveryForm('lastName', 'string')">
 
-                    <span v-if='deliveryForm.lastName.error' class="err-input-msg">{{ deliveryForm.lastName.error
+                    <span v-if='deliveryForm.lastName.error' class="err-input-msg">{{ $t(deliveryForm.lastName.error)
                         }}</span>
                 </div>
 
@@ -30,9 +30,8 @@
             <div class="flex flex-column gap-2">
                 <input type="text" class="basic-input lg:w-30rem w-12 md:w-30rem" :placeholder="$t('addressPlaceholder')"
                     v-model="deliveryForm.address.value" required @input="handleDeliveryForm('address', 'string')">
-                <span v-if='deliveryForm.address.error' class="err-input-msg">{{ deliveryForm.address.error }}</span>
+                <span v-if='deliveryForm.address.error' class="err-input-msg">{{ $t(deliveryForm.address.error )}}</span>
 
-                <!-- <input type="text" class="form-input w-30rem" placeholder="Квартира, апартаменты, жилое помещение"> -->
             </div>
         </div>
 
@@ -44,7 +43,7 @@
             <div class="flex flex-column gap-2">
                 <input type="text" class="basic-input lg:w-30rem w-12 md:w-30rem" required v-model="deliveryForm.city.value"
                     @input="handleDeliveryForm('city', 'string')">
-                <span v-if='deliveryForm.city.error' class="err-input-msg">{{ deliveryForm.city.error }}</span>
+                <span v-if='deliveryForm.city.error' class="err-input-msg">{{ $t(deliveryForm.city.error) }}</span>
 
             </div>
         </div>
@@ -57,7 +56,7 @@
                 <InputMask id="basic" mask="+999 999 99 99 99" placeholder="+996 700 55 55 55"
                     v-model="deliveryForm.phone.value" required
                     @update:modelValue="handleDeliveryForm('phone', 'string')" />
-                <span v-if='deliveryForm.phone.error' class="err-input-msg">{{ deliveryForm.phone.error }}</span>
+                <span v-if='deliveryForm.phone.error' class="err-input-msg">{{ $t(deliveryForm.phone.error) }}</span>
             </div>
         </div>
 
@@ -69,7 +68,7 @@
             <div class="flex flex-column gap-2">
                 <input type="email" class="basic-input lg:w-30rem w-12 md:w-30rem" required v-model="deliveryForm.email.value"
                     @input="handleDeliveryForm('email', 'email')">
-                <span v-if='deliveryForm.email.error' class="err-input-msg">{{ deliveryForm.email.error }}</span>
+                <span v-if='deliveryForm.email.error' class="err-input-msg">{{ $t(deliveryForm.email.error) }}</span>
             </div>
         </div>
 
@@ -78,7 +77,6 @@
             <input type="text" class="basic-input mt-4" :placeholder="$t('comments')"
                 v-model="deliveryForm.comment.value">
         </div>
-        <!-- <CartPayMethod @choosePayMethod="choosePayMethod" /> -->
     </form>
 
 

@@ -18,20 +18,26 @@ export const useOrderStore = defineStore("orderStore", {
   actions: {
     handleValues(
       fieldName: keyof typeof this.delForm,
+
       validationType: string | any
     ) {
       const value = this.delForm[fieldName].value;
       this.delForm[fieldName].value = value;
 
       this.delForm[fieldName].error = "";
+
+if(fieldName==='phone' && !value.startsWith('+996')){
+  this.delForm[fieldName].error = "incorrectPhone";
+}
+
       if (validationType === "string") {
         if (value === "" || value == null) {
-          this.delForm[fieldName].error = "Это поле обязательно";
+          this.delForm[fieldName].error = "requiredField";
         }
       } else if (validationType === "email") {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(value)) {
-          this.delForm[fieldName].error = "Неправильный формат почты";
+          this.delForm[fieldName].error = "incorrectEmail";
         }
       }
     },
