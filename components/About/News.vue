@@ -12,7 +12,6 @@
                 <img src='../../assets/icons/icon=components-more.svg' />
             </button>
         </div>
-
         <div class="news-list">
             <NewsItem />
         </div>

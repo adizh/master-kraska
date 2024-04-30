@@ -105,9 +105,11 @@ ul li {
   @include flex(row, space-between, center);
 }
 
-.phone {
+.phone,.phone a{
   color: $blue-color !important;
 }
+
+
 .main-header-h1 {
   @include footerSpan(36px, 32px);
   color: $main-black !important;

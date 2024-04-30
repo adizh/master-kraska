@@ -10,8 +10,9 @@
             <div class="bottom-list-phones">
 
                 <span class="phone flex flex-row align-items-center gap-1" v-for="number in formattedPhone"
-                    :key="number"><img src="../../assets/icons/black/icon=components-phone.svg" alt="phone">{{ number
-                    }}</span>
+                    :key="number"><img src="../../assets/icons/black/icon=components-phone.svg" alt="phone">
+                    <a :href="`tel:${number}`">{{ number
+                    }}</a></span>
             </div>
             </p>
             <p>

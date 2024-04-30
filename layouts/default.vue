@@ -30,7 +30,7 @@
             <div class='top-part'>
                 <li class="phone">
                     <img src="../assets/icons/icon=phone loight.svg" alt="phone">
-                    +996 509 910 148
+                  <a href="tel:+996 509 910 148">  +996 509 910 148</a>
                 </li>
                 <li @click="gotToPage('/cart')" class='cart-li'>
                     <img src="../assets/icons/icon=cart.svg" alt="cart">
@@ -158,7 +158,12 @@ provide('closeProfileOpen', closeProfileOpen)
 .logo-img {
     width: 100%;
 }
-
+a{
+    color:$main-black;
+    &:hover{
+        color:$main-pink
+    }
+}
 .catalog-li-small {
     display: none !important
 }
