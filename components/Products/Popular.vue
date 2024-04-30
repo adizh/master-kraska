@@ -59,7 +59,7 @@ onUnmounted(() => {
 }
 
 .item-block {
-    width: 100%;
+    width: 100% !important;
 }
 
 .products-list {
