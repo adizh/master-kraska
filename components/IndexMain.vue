@@ -31,7 +31,6 @@
                         {{ $t('searchByParams') }}</button>
                 </div>
                 <div class="right">
-
                     <NuxtImg src="/main-page.png"/>
                 </div>
             </div>

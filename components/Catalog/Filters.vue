@@ -59,6 +59,7 @@
             </div>
         </div>
         <div class="filters-block">
+
             <div v-for="item in filteredCatalog" :key="item?.id" class="each-filter-block"
                 :class="{ 'each-filter-block open': opensIncludes(item.id) }">
                 <h4 class="filters-block-header">{{ item?.name }}</h4>
@@ -90,10 +91,11 @@
                 </p>
             </div>
         </div>
+        <button class="bg-white-btn reset-filters" @click="resetFilters">{{ $t('reset') }}</button>
 
         <div class="apply-filters">
             <button class="pink-button" @click="() => emit('applyFilter')">{{ $t('applyFilter') }}</button>
-            <button class="bg-white-btn" @click="resetFilters">{{ $t('reset') }}</button>
+            <button class="bg-white-btn reset-filters" @click="resetFilters">{{ $t('reset') }}</button>
         </div>
     </div>
 
@@ -339,17 +341,13 @@ watch(() => authStore.getSelectedLang, async (newVal, oldVal) => {
     margin: 7px 0;
 }
 
+.reset-filters{
+    box-shadow: 0px 0px 0px 0.5px #0000000D;
+        box-shadow: 0px 0.5px 2.5px 0px #0000004D; 
+}
+
 .apply-filters {
     display: none;
-
-
-    button:last-child {
-        box-shadow: 0px 0px 0px 0.5px #0000000D;
-        box-shadow: 0px 0.5px 2.5px 0px #0000004D;
-    }
-
-
-
 }
 
 .each-filter-block.open {
