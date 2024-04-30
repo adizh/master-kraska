@@ -45,7 +45,8 @@ export default defineNuxtConfig({
     "nuxt-snackbar",
     "@nuxtjs/i18n",
     "nuxt3-leaflet",
-    "@nuxtjs/seo"
+    "@nuxtjs/seo",
+    "@vueuse/nuxt"
 
   ],
   seo:{
