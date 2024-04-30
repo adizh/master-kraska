@@ -53,8 +53,8 @@
                     </span>
                     <span @click="isBrandOpen = false" v-else> {{ $t('closeBlock') }}
                     </span>
-                    <img class="arrow" :class="{ 'rotated': isBrandOpen }" src="../../assets/icons/arrow-down-blue.svg"
-                        alt="open-arrow">
+                    <NuxtImg class="arrow" :class="{ 'rotated': isBrandOpen }" src="/icons/arrow-down-blue.svg"
+                      />
                 </p>
             </div>
         </div>
@@ -71,8 +71,6 @@
                                 @change="updateCheckboxState(item.id, sub.id, $event)" class="filtersCheckboxes" />
                             <span class="black-checkbox-span"
                                 :class="{ 'black-checkbox-span open': opensIncludes(item?.id) }">
-
-
                                 <p :class="{ 'black-checkbox-span-name': opensIncludes(item?.id) }">{{
                 formatNameUpper(sub?.name) }}
                                 </p>
@@ -86,8 +84,8 @@
                 <p v-if="getRemainingItemCount(item) > 0" class="open-block" @click="setOpenBlock(item?.id)">
                     {{ opensIncludes(item.id) ? $t('closeBlock') : $t('more') }} <span v-if="!opensIncludes(item.id)">{{
                 getRemainingItemCount(item) }}</span>
-                    <img class="arrow" :class="{ 'rotated': opensIncludes(item.id) }"
-                        src="../../assets/icons/arrow-down-blue.svg" alt="open-arrow">
+                    <NuxtImg class="arrow" :class="{ 'rotated': opensIncludes(item.id) }"
+                        src="/assets/icons/arrow-down-blue.svg"  />
                 </p>
             </div>
         </div>

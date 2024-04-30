@@ -81,11 +81,11 @@ export default defineNuxtConfig({
   //     dir: "assets/images",
   //   },
   // },
-  // $production: {
-  //   image: {
-  //     provider: "ipx",
-  //   },
-  // },
+  $production: {
+    image: {
+      provider: "ipx",
+    },
+  },
   routeRules: {
     "/": { prerender: true },
   },
