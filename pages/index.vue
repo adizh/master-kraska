@@ -87,7 +87,7 @@ const disableBodyScroll=()=> {
     }
 
     .btn-block {
-        width: 15%
+        width: 25%
     }
 
     input {
