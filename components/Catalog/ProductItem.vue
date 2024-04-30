@@ -7,7 +7,7 @@
 
         </div>
         <slot name="edit-items"></slot>
-        <img :src="product?.images[0]" alt="product">
+        <NuxtImg :src="product?.images[0]" format="webp"/>
         <span class="item-block-name">{{ productName(product?.name) }}</span>
 
         <span class="item-block-info">{{ productInfo }}</span>
@@ -20,7 +20,7 @@
 
     <div class="item-block horizontal" @click="router.push(`/product/${product?.id}`)" v-else>
         <div class='first-col'>
-            <img :src="product?.images[0]" alt="product">
+            <NuxtImg :src="product?.images[0]" format="webp" />
             <div class="first-sub-col"> <span class="item-block-name">{{ productName(product?.name) }}</span>
                 <span class="item-block-description">{{ productInfoHorizontal }}</span>
 

@@ -1,7 +1,7 @@
 <template>
     <div class="main-header">
         <div class="left" @click="backHome">
-            <img src="../assets/images/logo-master.png" alt="logo" class="logo-img">
+            <NuxtImg src="/logo-master.png" format="webp" class="logo-img" />
         </div>
 
         <ul class="bottom">

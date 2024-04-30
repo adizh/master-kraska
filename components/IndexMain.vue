@@ -14,8 +14,8 @@
                         {{ $t('searchByParams') }}</button>
                 </div>
                 <div class="right">
-                    <NuxtImg src="/main-page.png"  class="large-image"/>
-                    <img src="../assets/images/vertical-main.png" alt="small" class="small-image">
+                    <NuxtImg src="/main-page.png"  class="large-image" format="webp"/>
+                    <NuxtImg src="/vertical-main.png" format="webp" class="small-image"/>
                 </div>
             </div>
 
@@ -31,7 +31,7 @@
                         {{ $t('searchByParams') }}</button>
                 </div>
                 <div class="right">
-                    <NuxtImg src="/main-page.png"/>
+                    <NuxtImg src="/main-page.png" format="webp"/>
                 </div>
             </div>
 
@@ -48,7 +48,7 @@
                 </div>
                 <div class="right">
 
-                    <NuxtImg src="/main-page.png" />
+                    <NuxtImg src="/main-page.png" format="webp" />
                 </div>
             </div>
 

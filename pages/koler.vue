@@ -44,7 +44,7 @@
                         </div>
 
                         <div class="koler-change">
-                            <img src="../assets/images/koler.png" alt="" id="img">
+                            <NuxtImg src="/koler.png" id="img" format="webp"/>
                             <div id="bg" :style="{ background: '#' + selectedColor?.rgb || 'white' }"></div>
                         </div>
                     </div>
