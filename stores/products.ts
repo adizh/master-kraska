@@ -4,6 +4,7 @@ import { Product } from "@/types/Product";
 export const useProductsSstore = defineStore("productsStore", {
   state: () => ({
     allProducts: [] as Product[],
+    specialProducts:[] as Product[],
     filteredProducts: [] as Product[],
     filterProductTotal: {
       totalPages: 0,
@@ -49,6 +50,15 @@ export const useProductsSstore = defineStore("productsStore", {
         }
       } catch (err) {
         console.log(err);
+      }
+    },
+
+
+    async getSpecialProd(){
+      try{
+//const response 
+      }catch(err){
+        console.log(err)
       }
     },
 

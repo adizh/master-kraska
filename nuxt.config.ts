@@ -3,6 +3,10 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
 
   vite: {
+    esbuild: {
+      drop: ['debugger'],
+      pure: ['console.log', 'console.error', 'console.warn', 'console.debug', 'console.trace'],
+    },
     css: {
       preprocessorOptions: {
         scss: {
@@ -14,7 +18,17 @@ export default defineNuxtConfig({
       },
     },
   },
-  build: {},
+
+  // build: {
+  //   terser: {
+  //     // https://github.com/terser/terser#compress-options
+  //     terserOptions: {
+  //       compress: {
+  //         drop_console: true
+  //       }
+  //     }
+  //   }
+  // },
 
   app: {
     head: {

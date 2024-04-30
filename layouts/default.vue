@@ -6,7 +6,7 @@
 
         <ul class="bottom">
             <div class="overlay" v-if="isBurgerMenuOpen" @click="closeBurgerMenu"></div>
-            <div class="bottom-part" :class="{ 'open-bottom-part': isBurgerMenuOpen }">
+            <ul class="bottom-part" :class="{ 'open-bottom-part': isBurgerMenuOpen }">
                 <li class="catalog-li" @mouseover="toggleCatalog" @mouseleave="closeCatalog">{{
             $t('catalog') }}
                     <img class="arrow" :class="{ 'rotated': isCatalogOpen }"
@@ -26,8 +26,8 @@
                 <li @click="gotToPage('/about-us')">{{ $t('aboutUs') }}
                 </li>
                 <li @click="gotToPage('/contacts')">{{ $t('contacts') }}</li>
-            </div>
-            <div class='top-part'>
+            </ul>
+            <ul class='top-part'>
                 <li class="phone">
                     <img src="../assets/icons/icon=phone loight.svg" alt="phone">
                   <a href="tel:+996 509 910 148">  +996 509 910 148</a>
@@ -52,7 +52,7 @@
                             fill="#222222" />
                     </svg>
                 </li>
-            </div>
+            </ul>
         </ul>
 
     </div>
