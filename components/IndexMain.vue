@@ -134,6 +134,7 @@ const prevSlide = () => {
 
 .slider-wrapper .controls-circle span.active-control {
     background: $blue-color
+    
 }
 
 .main-page-header {

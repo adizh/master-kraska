@@ -64,6 +64,12 @@ const disableBodyScroll=()=> {
         border: none;
         background: white;
         width: 100%;
+        transition: 0.3s;
+        &:hover {
+            @extend %blue-bnt-hover;
+            transition: 0.3s;
+            cursor: pointer;
+          }
     }
 
     .input-block {

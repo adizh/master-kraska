@@ -81,6 +81,7 @@ const selectedBrand = ref<Brands>({} as Brands);
 
 
 const selectColor = (item: Tinting) => {
+    
     selectedColor.value = item;
 }
 

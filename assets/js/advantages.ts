@@ -1,5 +1,5 @@
 export const advantagesOptions = [
-  { number: 1, header: "straightImport ", text: "officialDistr" },
+  { number: 1, header: "straightImport", text: "officialDistr" },
   {
     number: 2,
     header: "bigExperience",

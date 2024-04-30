@@ -1,13 +1,13 @@
 <template>
     <div class="contacts margin-top-80">
         <h5 class='each-section-header'>{{ $t('contacts') }}</h5>
-        <h5 class='each-section-header margin-top-40'>ФЛАГМАНСКИЙ МАГАЗИН</h5>
+        <h5 class='each-section-header margin-top-40'>{{ mainShop?.name }}</h5>
 
         <div class="contacts-header ">
             <div class="contacts-header-block">
                 <div><img src="@/assets/icons/black/icon=components-location.svg" alt="location" /></div>
                 <div><span>{{ $t('address') }}</span>
-                    <p>пр.Чынгыза Айтматова, 93/1 лит А, г.Бишкек</p>
+                    <p>{{ mainShop?.address }}</p>
                 </div>
             </div>
 
@@ -16,7 +16,7 @@
                     <img src="@/assets/icons/black/icon=components-phone.svg" alt="phone">
                 </div>
                 <div><span>{{ $t('phoneNumber') }}</span>
-                    <p>+996 550 910 148</p>
+                    <p>{{ mainShop?.phoneNumber }}</p>
                 </div>
             </div>
             <div class="contacts-header-block">
@@ -26,7 +26,8 @@
                 </div>
                 <div>
                     <span>{{ $t('workingHours') }}</span>
-                    <p>Пон - Суб с 9:00 до 18:00</p>
+                    <p v-if="mainShop?.openHours">{{ formatHours(mainShop.openHours) }}</p>
+
                 </div>
             </div>
         </div>
@@ -83,8 +84,15 @@ const computedShops = computed(() => {
     return props?.type === 'contacts' ? orderStore?.getShops : orderStore?.getShops?.slice(0, 2)
 })
 
+
+const mainShop=computed(()=>{
+    return orderStore?.getShops?.find((shop:AddressList)=>{
+        return shop.mainShop
+    })
+})
 onMounted(async () => {
     await orderStore?.fetchAllShops();
+    console.log('getShops',orderStore?.getShops)
 })
 watch(() => authStore.getSelectedLang, () => {
     orderStore?.fetchAllShops()

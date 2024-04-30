@@ -17,7 +17,7 @@
             <p>
                 <img src="../../assets/icons/black/icon=components-time.svg" alt="time">
                 <span>
-                    {{ computedShop2(openHours) }}
+                    {{ formatHours(openHours) }}
                 </span>
             </p>
             <p>
@@ -41,23 +41,8 @@ const formattedPhone = computed(() => {
     return props?.phone?.split('+').filter((item) => item !== '')
 })
 
-const openHoursRegex=/Понедельник|Вторник|Воскресенье|Пятница|Суббота|Среда|Четверг/gi
-const dayAbbreviations = {
-    "Понедельник": "Пн",
-    "Вторник": "Вт",
-    "Воскресенье":"Вс",
-    "Пятница":"Пт",
-    "Суббота":"Сб",
-    "Среда":"Ср",
-    "Четверг":"Чт"
 
-};
 
-const computedShop2 =(hours:string)=>{
-        return  hours.replace(openHoursRegex, (match) => dayAbbreviations[match as keyof typeof dayAbbreviations])
-    
-}
-console.log('get computedShop2',computedShop2)
 
 </script>
 
@@ -97,6 +82,7 @@ console.log('get computedShop2',computedShop2)
         width: 26%;
     }
     &:nth-child(2){
+
 width: 20%;
     }
     &:nth-child(3){
