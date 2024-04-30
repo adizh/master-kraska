@@ -96,6 +96,22 @@ width: 20%;
     }
 }
 
+@media (max-width:992px){
+    .bottom-list{
+        p{
+            width: 45% !important
+        }
+    }
+}
+@media (max-width:576px){
+    .bottom-list{
+        flex-direction: column;
+        p{
+            width: 100% !important
+        }
+    }
+}
+
 @media (max-width:480px) {
 
     .maps-address-list-block h3 {
