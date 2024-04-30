@@ -292,6 +292,7 @@ a{
 .catalog-li {
     display: flex;
     height: 50px;
+    gap:3px !important;
 }
 
 .catalog-li:hover {
@@ -378,6 +379,7 @@ a{
     .catalog-li-small {
         display: flex !important;
         align-items: center;
+        gap:3px !important
     }
 
     .catalog-li {

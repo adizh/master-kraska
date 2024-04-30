@@ -160,13 +160,13 @@ h5 {
 
 @media (max-width:768px) {
     .basic-input {
-        width: 70%;
+        width: 70% !important;
     }
 }
 
 @media (max-width:480px) {
     .basic-input {
-        width: 100%;
+        width: 100% !important;
     }
 }
 </style>
