@@ -107,8 +107,8 @@
                     :product="product" />
             </div>
 
-            <div v-else-if="isProdReceived && !productsStore.getLoadingState && !productsStore.getFilteredProducts?.length">{{
-                $t('noData') }}</div>
+            <!-- <div v-else-if="!productsStore.getLoadingState && !productsStore.getFilteredProducts?.length">{{
+                $t('noData') }}</div> -->
         </div>
     </section>
 </template>
@@ -287,12 +287,6 @@ const filterProductParams = () => {
         isProdReceived.value=true
     }
     }, 500)
-
-
-  
-
-
-
 }
 
 </script>
