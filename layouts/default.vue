@@ -14,7 +14,7 @@
                     <Catalog :isCatalogOpen="isCatalogOpen" @closeCatalog="closeCatalog" />
                 </li>
 
-                <li class="catalog-li-small" @mouseover="toggleCatalog">{{
+                <li class="catalog-li-small" @mouseover="toggleCatalog" @click.stop="clickToggleCatalog">{{
             $t('catalog') }}
                     <img class="arrow" :class="{ 'rotated': isCatalogOpen }"
                         src="../assets/icons/icon=components-closed-arrow.svg" alt="open-arrow">
@@ -90,6 +90,14 @@ const openBurger = () => {
 const toggleCatalog = () => {
     isCatalogOpen.value = true
 }
+const clickToggleCatalog= () => {
+    if(isCatalogOpen.value){
+        isCatalogOpen.value = false
+    }else{
+        isCatalogOpen.value = true
+    }
+
+}
 const closeCatalog = () => {
     isCatalogOpen.value = false;
     closeBurgerMenu()
@@ -106,10 +114,11 @@ const updateScreenWidth = () => {
 onMounted(() => {
     window.addEventListener('resize', updateScreenWidth);
 });
-
+const router=useRouter()
 
 const gotToPage = (link: string) => {
-    navigateTo(link)
+    router.push(link)
+   // navigateTo(link)
     closeBurgerMenu()
 }
 

@@ -20,7 +20,7 @@ export const useProductsSstore = defineStore("productsStore", {
       maxPrice: 0,
       brandId: [] as string[],
       currentPage: 1,
-      pageSize: 10,
+      pageSize: 20,
     },
   }),
   actions: {
