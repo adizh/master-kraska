@@ -211,7 +211,10 @@ export const useProductsSstore = defineStore("productsStore", {
       } catch (err) {
         console.log(err);
       } finally {
-        this.areFiltersLoading = false;
+        setTimeout(()=>{
+          this.areFiltersLoading = false;
+        },1000)
+
       }
     },
     setCategoryId(categoryId: string) {

@@ -1,5 +1,5 @@
 import ru from "./ru.json";
-import kg from "./kg.json";
+import kg from "./kg-2.json";
 
 let lan = "ru";
 if (process.client) {

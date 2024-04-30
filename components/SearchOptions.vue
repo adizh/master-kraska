@@ -2,19 +2,19 @@
     <div class="search-options" :class="{
         'open': isSearchOpen
     }">
-    <div v-if="productStore?.getLoadingState" class='text-center'>
+    <div v-if="productStore?.getLoadingState && !productStore.getFilteredProducts?.length" class='text-center'>
         <ProgressSpinner />
     </div>
-        <ul class='search-res-header' v-else-if="productStore.getFilteredProducts?.length>0 && !productStore?.getLoadingState">
+        <ul class='search-res-header' v-else-if="productStore.getFilteredProducts?.length && !productStore?.getLoadingState">
             <li v-for="item in productStore.getFilteredProducts?.slice(0, 3)" :key="item?.id"
                 @click="goToProd(item?.id)">
                 <img :src="item?.images[0]" alt="img-product" class="prod-image">
-                <span class="prod-search-name">{{ searchName(item?.name) }}</span>
+                <span class="prod-search-name">{{ (item?.name) }}</span>
             </li>
         </ul>
       
 
-        <p v-else-if="!productStore.getFilteredProducts?.length && !productStore?.getLoadingState">{{ $t('noData') }}</p> 
+        <!-- <p v-else-if="!productStore?.getLoadingState && !productStore.getFilteredProducts?.length && prodReceved">{{ $t('noData') }}</p>  -->
         <button class="look-all-btn" v-if="productStore.getFilteredProducts?.length" @click.stop="router.push(`/catalog/${firstCategoryItem?.category?.id}`)">
             <span>{{ $t('lookAll') }}</span>
             <img src='../assets/icons/icon=components-more.svg' />
@@ -28,6 +28,8 @@ import { Category } from '~/types/Category';
 const props = defineProps<{
     isSearchOpen: boolean
 }>()
+
+const prodReceved=ref(false)
 const catalogStore=useCatalogStore()
 const router=useRouter()
 const emit = defineEmits(['closeSearch'])
@@ -48,6 +50,10 @@ onMounted(async()=>{
    await catalogStore.fetchAllCategories()
    console.log('catalogStore  in seafh opention??',catalogStore.getAllCategories)
    firstCategoryItem.value = catalogStore?.getAllCategories[0];
+
+   if(!productStore?.getLoadingState && productStore?.getFilteredProducts){
+    prodReceved.value=true
+   }
 })
 
 

@@ -404,7 +404,7 @@ onMounted(async () => {
 }
 
 .right {
-    width: 35%;
+    width: 30%;
     padding: 20px;
     border: 1px solid $slider-border-color;
     border-radius: 10px;

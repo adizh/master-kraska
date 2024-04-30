@@ -74,6 +74,7 @@
     background: $advan-bg;
     width: 100%;
     padding: 3.3rem 30px 30px 3.1rem;
+   
 }
 
 .callback-btn {

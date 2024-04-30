@@ -100,15 +100,14 @@
             <h3>
                 {{ $t('yourSearchResults') }}
             </h3>
-<div  v-if="productsStore.getLoadingState && !productsStore.getFilteredProducts?.length" class="text-center"> <ProgressSpinner /></div>
-           
+<div  v-if="productsStore.getLoadingState" class="text-center"> <ProgressSpinner /></div>
             <div class="params-result-prod"
-                v-if="productsStore.getFilteredProducts?.length && !productsStore.getLoadingState">
+                v-else-if="productsStore.getFilteredProducts?.length>0 && !productsStore.getLoadingState">
                 <ProductsProductItem v-for="product in productsStore.getFilteredProducts" :key="product?.id"
                     :product="product" />
             </div>
 
-            <div v-else-if="!productsStore.getLoadingState && !productsStore.getFilteredProducts?.length">{{
+            <div v-else-if="isProdReceived && !productsStore.getLoadingState && !productsStore.getFilteredProducts?.length">{{
                 $t('noData') }}</div>
         </div>
     </section>
@@ -123,6 +122,7 @@ const authStore = useAuthStore()
 const minPrice = ref(0)
 const maxPrice = ref(0)
 const typeOfWork = ref('')
+const isProdReceived=ref(false)
 
 const items = [
     {
@@ -275,7 +275,7 @@ const checkboxStates = ref<{ [key: string]: CatalogCheckbox }>({});
 
 
 const filterProductParams = () => {
-
+    isProdReceived.value=false
     if (minPrice?.value >= 0 && maxPrice.value > 0) {
         productsStore.setPrices(minPrice.value, maxPrice.value)
     }
@@ -283,8 +283,13 @@ const filterProductParams = () => {
     showResults.value = true
     setTimeout(() => {
         productsStore.filterProducts();
-
+        if(!productsStore?.getFilteredProducts){
+        isProdReceived.value=true
+    }
     }, 500)
+
+
+  
 
 
 

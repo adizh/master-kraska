@@ -13,7 +13,6 @@
 
             </div>
             <SearchOptions :isSearchOpen="isSearchOpen" @closeSearch="isSearchOpen = false" />
-
             <div class="overlay-header-options" v-show="isSearchOpen" :class="{ 'open': isSearchOpen }"></div>
 
         </div>
@@ -43,9 +42,12 @@ if(value){
 const disableBodyScroll=()=> {
       document.body.style.overflow = 'hidden';
     }
- const    enableBodyScroll=()=> {
+ const   enableBodyScroll=()=> {
       document.body.style.overflow = 'auto';
     }
+ onUnmounted(()=>{
+        document.body.style.overflow = 'auto';
+    })
 </script>
 
 <style scoped lang="scss">
