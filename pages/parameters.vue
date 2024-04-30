@@ -44,8 +44,8 @@
                 <p v-if="getRemainingItemCount(item) > 0" class="open-block" @click="setOpenBlock(item?.id)">
                     {{ opensIncludes(item.id) ? $t('closeBlock') : $t('more') }} <span v-if="!opensIncludes(item.id)">{{
             getRemainingItemCount(item) }}</span>
-                    <img class="arrow" :class="{ 'rotated': opensIncludes(item.id) }"
-                        src="../assets/icons/arrow-down-blue.svg" alt="open-arrow">
+                    <NuxtImg class="arrow" :class="{ 'rotated': opensIncludes(item.id) }"
+                        src="/arrow-down-blue.svg" />
                 </p>
             </div>
 
@@ -75,8 +75,8 @@
                 <p v-if="getRemainingItemCount(item) > 0" class="open-block" @click="setOpenBlock(item?.id)">
                     {{ opensIncludes(item.id) ? $t('closeBlock') : $t('more') }} <span v-if="!opensIncludes(item.id)">{{
             getRemainingItemCount(item) }}</span>
-                    <img class="arrow" :class="{ 'rotated': opensIncludes(item.id) }"
-                        src="../assets/icons/arrow-down-blue.svg" alt="open-arrow">
+                    <NuxtImg class="arrow" :class="{ 'rotated': opensIncludes(item.id) }"
+                        src="/arrow-down-blue.svg" />
                 </p>
             </div>
 
