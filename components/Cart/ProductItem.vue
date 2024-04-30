@@ -8,7 +8,8 @@
             <div class="cart-main-info-middle">
                 <h3 v-if="item?.name">{{ item?.name }}</h3>
                 <h3 v-else-if="item?.productName">{{ item?.productName }}</h3>
-                <span class="item-block-description">{{ productInfoHorizontal }}</span>
+                <span class="item-block-description" v-if="item?.shortDescription"> {{ productInfoHorizontal }}</span>
+                <span class="item-block-description" v-if="item?.productDescription"> {{ productDescrHorizontal }}</span>
                 
 
             </div>
@@ -25,6 +26,7 @@
                 <span @click.stop="store.increaseCount(item)">+</span>
             </button>
             <img src="../../assets/icons/icon=trash.svg" alt="delete" class='delete-icon'
+
                 @click.stop="confirmDelete(item)" v-if="orderPlace!=='orderPlace'">
 
         </div>
@@ -44,7 +46,7 @@ const props = defineProps<{
     orderPlace?:string
 }>()
 const isDeleteOpen = ref(false)
-
+console.log('item in cartProductItem',props.item)
 const removeFromCart = () => {
     store.removeFromCart(props?.item);
     isDeleteOpen.value=false
@@ -53,11 +55,17 @@ const productInfoHorizontal = computed(() => {
     return props?.item?.shortDescription && props?.item?.shortDescription?.split(' ').length > 19 ? props?.item?.shortDescription.split(' ').slice(0, 19).join(' ') + '...' : props?.item?.shortDescription
 
 })
+
+
+const productDescrHorizontal= computed(() => {
+    return props?.item?.productDescription && props?.item?.productDescription?.split(' ').length > 19 ? props?.item?.productDescription.split(' ').slice(0, 19).join(' ') + '...' : props?.item?.productDescription
+
+})
 const confirmDelete=(item:ExtendedProduct)=>{
     isDeleteOpen.value=true
-   // currentProd.value=item
 }
 console.log('orderPlace',props.orderPlace)
+
 </script>
 
 <style scoped>

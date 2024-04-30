@@ -77,7 +77,7 @@
             
             <CartProductItem v-for="order in currentOrder?.items" :key="order?.id" :item="order" orderPlace="orderPlace">
                 <template #count-buttons>
-                    <span class="price">{{ order?.price * order?.quantity }} сом</span>
+                    <span class="price text-center">{{ order?.price * order?.quantity }} сом</span>
                 </template>
             </CartProductItem>
         </div>
@@ -117,13 +117,9 @@
             </p>
             <div class='flex flex-row justify-content-end gap-2 buttons'>
                 <button class="modal-btns danger" @click="deleteOrder">{{ $t('logout') }}</button>
-
                 <button class='modal-btns' @click="isWarningOpen = false">{{ $t('cancel') }}</button>
-
             </div>
-
         </div>
-
     </Dialog>
 
 
@@ -143,7 +139,8 @@ definePageMeta({
 })
 
 import { AddressList } from '~/types/Items';
-import { Order, OrderItem } from '~/types/Order';
+import { Order, OrderItem, UserOrder } from '~/types/Order';
+import { User } from '~/types/User';
 
 
 
@@ -189,8 +186,22 @@ const getOrderId=async()=>{
 const response = await http(`/api/v1/Order/get-order-id/${route?.params?.id}`);
 console.log('response',response);
 if(response.status===200){
-    currentOrder.value=response.data;
-    console.log('currentOrder',currentOrder)
+
+    currentOrder.value={...response.data, items:response.data?.items?.map((item:UserOrder)=>{
+             if(authStore.getSelectedLang==='kg'){
+                    return {...item, productName:item?.productNameKg,productDescription:item?.productDescriptionKg.replace(
+                  /<(\/?(p|br|h[1-5]|strong|img|a|div|span)( [^>]*)?)\/?>/g,
+                  ""
+                )
+            }
+                }else{
+                    return {...item, productName:item?.productNameRu,productDescription:item?.productDescriptionRu.replace(
+                  /<(\/?(p|br|h[1-5]|strong|img|a|div|span)( [^>]*)?)\/?>/g,
+                  ""
+                )}
+
+                }
+    })}
 }
     }catch(err){
         console.log(err)

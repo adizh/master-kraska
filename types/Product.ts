@@ -55,4 +55,5 @@ export interface ExtendedProduct extends Product {
   initPrice: number;
   image?:string
   productName?:string
+  productDescription?:string
 }

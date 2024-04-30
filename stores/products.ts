@@ -69,7 +69,7 @@ export const useProductsSstore = defineStore("productsStore", {
                 name: response.data?.product?.nameKg,
                 shortDescription: response.data?.product?.shortDescriptionKg,
                 description: response.data?.product?.descriptionKg.replace(
-                  /<(\/?(p|br|h[1-5]|strong|img|a)( [^>]*)?)\/?>/g,
+                  /<(\/?(p|br|h[1-5]|strong|img|a|div|span)( [^>]*)?)\/?>/g,
                   ""
                 ),
               },
@@ -89,7 +89,7 @@ export const useProductsSstore = defineStore("productsStore", {
                 name: response.data?.product?.nameKg,
                 shortDescription: response.data?.product?.shortDescriptionRu,
                 description: response.data?.product?.descriptionRu.replace(
-                  /<(\/?(p|br|h[1-5]|strong|img|a)( [^>]*)?)\/?>/g,
+                  /<(\/?(p|br|h[1-5]|strong|img|a|div|span)( [^>]*)?)\/?>/g,
                   ""
                 ),
               },

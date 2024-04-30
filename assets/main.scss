@@ -211,7 +211,7 @@ h2 {
 }
 
 .cart-main-info-prod {
-  @include flex(row, space-between, center);
+  @include flex(row, space-between, start);
   @extend %border-bottoms;
   padding: 50px 0 20px 0;
 

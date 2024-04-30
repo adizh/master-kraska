@@ -158,6 +158,7 @@ const getOrderByUser = async () => {
                 return {...order,items:order?.items.map((eachItem)=>{
                   if(authStore.getSelectedLang==='kg'){
                     return {...eachItem, productName:eachItem?.productNameKg,productDescription:eachItem?.productDescriptionKg}
+                    
                 }else{
                     return {...eachItem, productName:eachItem?.productNameRu,productDescription:eachItem?.productDescriptionRu}
 
