@@ -3,7 +3,9 @@
         <div class="main-header-h1">{{ $t('cart') }}</div>
         <div class="cart-main grid" >
             <div class="cart-main-info lg:col-8 md:col-12 sm:col-12">
-                <CartProductItem v-for="cartItem in store.getAllCart" :key="cartItem.id" :item="cartItem">
+                <CartProductItem v-for="cartItem in store.getAllCart" :key="cartItem.id" :item="cartItem" @removeFromCart="removeFromCart"
+                @increaseCount="increaseCount" @decreaseCount="decreaseCount" @confirmDelete="confirmDelete"
+                >
                 </CartProductItem>
             </div>
 
@@ -20,18 +22,13 @@
                     </div>
                     <input class="basic-input" placeholder="Промокод" disabled />
                     <div class="last">
-
                         <span>{{ $t('inTotal') }}</span>
                         <span>{{ store.totalOfTotalSum }} сом</span>
-
                     </div>
-
                 </div>
-
                 <button class="bg-white-btn" @click="store.saveNewCart">{{ $t('saveChanges') }}</button>
             </div>
         </div>
-
 
         <ProductsPopular />
 
@@ -56,20 +53,40 @@
     </Dialog>
 
 
+    <Dialog v-model:visible="isDeleteOpen" modal :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
+    header=" ">
+    <ConfirmPay @confirm="removeFromCart" @cancel="isDeleteOpen = false"  :title="$t('deleteCartProdWarning')"/>
+</Dialog>
+
+
    
 </template>
 
 <script setup lang="ts">
+import { ExtendedProduct } from '~/types/Product';
+
 const store = useCartStore();
 
 const orderStore = useOrderStore()
-
+const currentProd=ref({} as ExtendedProduct)
 const isConfirmOpen = ref(false)
+const isDeleteOpen=ref(false)
+const confirmDelete=(prop:ExtendedProduct)=>{
+    isDeleteOpen.value=true;
+    currentProd.value=prop
+}
 
+const removeFromCart =()=>{
+    store.removeFromCart(currentProd.value)
+    isDeleteOpen.value=false
+}
+const increaseCount=(item:ExtendedProduct)=>{
+    store.increaseCount(item)
+}
 
-
-
-
+const decreaseCount=(item:ExtendedProduct)=>{
+    store.decreaseCount(item)
+}
 
 
 const createOrder = () => {

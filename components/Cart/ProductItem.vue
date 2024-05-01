@@ -8,8 +8,10 @@
             <div class="cart-main-info-middle">
                 <h3 v-if="item?.name">{{ item?.name }}</h3>
                 <h3 v-else-if="item?.productName">{{ item?.productName }}</h3>
+
                 <span class="item-block-description" v-if="item?.shortDescription"> {{ productInfoHorizontal }}</span>
                 <span class="item-block-description" v-if="item?.productDescription"> {{ productDescrHorizontal }}</span>
+
                 
 
             </div>
@@ -18,37 +20,41 @@
         <div class="cart-main-info-count">
            <slot name="count-buttons"></slot>
             <span class="price" v-if="orderPlace!=='orderPlace'">{{ item?.totalProdSum }} сом</span>
-                        
-
             <button class="prod-count-buttons" v-if="orderPlace!=='orderPlace'">
-                <span @click.stop="store.decreaseCount(item)">-</span>
+                <span @click.stop="()=>$emit('decreaseCount',item)">-</span>
                 <span>{{ store.getTotalItemCount(item?.count) }}</span>
-                <span @click.stop="store.increaseCount(item)">+</span>
+                <span @click.stop="()=>$emit('increaseCount',item)">+</span>
             </button>
             <img src="../../assets/icons/icon=trash.svg" alt="delete" class='delete-icon'
-
-                @click.stop="confirmDelete(item)" v-if="orderPlace!=='orderPlace'">
+                @click="confirmDelete" v-if="orderPlace!=='orderPlace'">
 
         </div>
     </div>
-    <Dialog v-model:visible="isDeleteOpen" modal :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
+    <!-- <Dialog v-if="selectedProd?.id===item?.id" v-model:visible="isDeleteOpen" modal :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
     header=" ">
     <ConfirmPay @confirm="removeFromCart" @cancel="isDeleteOpen = false"  :title="$t('deleteCartProdWarning')"/>
-</Dialog>
+</Dialog> -->
 </template>
 
 <script setup lang="ts">
 import { ExtendedProduct } from '~/types/Product';
 const router = useRouter()
 const store=useCartStore()
+const selectedProd=ref({} as ExtendedProduct)
 const props = defineProps<{
     item: ExtendedProduct,
     orderPlace?:string
 }>()
+const emit = defineEmits<{
+  removeFromCart: [value: ExtendedProduct]
+  increaseCount: [value: ExtendedProduct]
+  decreaseCount: [value: ExtendedProduct] 
+  confirmDelete: [value:ExtendedProduct] 
+}>()
 const isDeleteOpen = ref(false)
 console.log('item in cartProductItem',props.item)
 const removeFromCart = () => {
-    store.removeFromCart(props?.item);
+    emit('removeFromCart',props?.item)
     isDeleteOpen.value=false
 }
 const productInfoHorizontal = computed(() => {
@@ -61,8 +67,11 @@ const productDescrHorizontal= computed(() => {
     return props?.item?.productDescription && props?.item?.productDescription?.split(' ').length > 19 ? props?.item?.productDescription.split(' ').slice(0, 19).join(' ') + '...' : props?.item?.productDescription
 
 })
-const confirmDelete=(item:ExtendedProduct)=>{
-    isDeleteOpen.value=true
+const confirmDelete=()=>{
+    isDeleteOpen.value=true;
+    console.log('confirmDelete',isDeleteOpen)
+    selectedProd.value=props?.item;
+    emit('confirmDelete',props?.item)
 }
 console.log('orderPlace',props.orderPlace)
 
