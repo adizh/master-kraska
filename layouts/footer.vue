@@ -5,7 +5,7 @@
 
                
                 <img src="/white-logo.png" format="webp" class="white-logo" />
-                <button class="callback-btn">{{ $t('callBack') }}</button>
+                <a class="callback-btn" href="tel:+996 550 910 148">{{ $t('callBack') }}</a>
             </div>
             <div class="second">
                 <span><a href="/news">{{ $t('news') }}
@@ -59,7 +59,7 @@
         </div>
         <div class="bottom">
 
-            <span>Мастер Краска 2012г</span>
+            <span>Мастер Краска 2024г</span>
             <span>{{ $t('privacyPolicy') }}</span>
         </div>
     </section>

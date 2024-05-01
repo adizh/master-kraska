@@ -98,6 +98,8 @@ const clickToggleCatalog= () => {
     }
 
 }
+
+
 const closeCatalog = () => {
     isCatalogOpen.value = false;
     closeBurgerMenu()
@@ -113,6 +115,9 @@ const updateScreenWidth = () => {
 
 onMounted(() => {
     window.addEventListener('resize', updateScreenWidth);
+    window.addEventListener('scroll', (event)=>{
+       // syncScroll()
+    });
 });
 const router=useRouter()
 

@@ -113,7 +113,7 @@
   "noSmell": "Без запаха",
   "piece": "штук",
   "orderAgain": " Заказать снова",
-  "noHistoryOrder": "История заказов пусто",
+  "noHistoryOrder": "Нет заказов",
   "noCommentsLeft": "Вы не оставляли коментарии",
   "goToCommnent": "Перейти к коментарию",
   "deleteCommentWarning": "Вы действительно хотите удалить коментарий",
@@ -233,6 +233,7 @@
   "successRegister": "Регистрация прошла успешно",
   "incorrectPassword": "Неправильный пароль",
   "passwordReset": "Пароль сброшен и обновлен!",
+  
   "success": "Успешно",
   "reviewAdded": "Отзыв оставлен!",
   "successEdited": "Успешно редактировано!",

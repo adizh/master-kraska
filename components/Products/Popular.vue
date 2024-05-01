@@ -4,12 +4,9 @@
         <div class="products-list" v-if="store.getPopularProducts?.length > 0">
             <Swiper :slides-per-view="slidesPerView" :navigation="true" id="mySlider" :modules="[SwiperNavigation]"
                 :style='{ "--swiper-navigation-size": "15px", "padding": "20px 0" }'>
-
                         <SwiperSlide v-for="product in store.getPopularProducts" :key="product.id">
                             <ProductsProductItem :product="product" :style="{width:'100%'} "/>
                         </SwiperSlide>
-                   
-       
             </Swiper>
         </div>
 
@@ -21,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { Product } from '~/types/Product';
+
 const slidesPerView = ref(4)
 
 const handleResize = () => {
@@ -37,32 +34,16 @@ const handleResize = () => {
 };
 const store = useProductsSstore();
 onMounted(async() => {
-  await  store.fetchAllProducts();
     handleResize();
     window.addEventListener('resize', handleResize);
-    console.log('getPopularProducts',store.getPopularProducts)
- 
+    await store.fetchSpecialProd('popular');
+    console.log('specialProducts',store.getSpecialProducts)
 })
 
-
-const { list, containerProps, wrapperProps } = useVirtualList(
-    store.getPopularProducts,
-  {
-    itemWidth: 300,
-  },
-) as any;
-
-const popularItems = computed(() => {
-    return store.getAllProducsts.filter((item: Product) => item.isPopular)
-})
-
-
-
-
-console.log('wjat is list',list)
 
 onUnmounted(() => {
     window.removeEventListener('resize', handleResize);
+  
 });
 
 </script>

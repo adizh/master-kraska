@@ -2,8 +2,8 @@
     <div class="backdrop" :class="{ 'show': isCatalogOpen }"></div>
     <div class="catalog-options" :class="{ 'open': isCatalogOpen }" @mouseleave="closeCatalogOptions" >
         <h5 class='each-section-header'>{{ $t('productsCatalog') }}</h5>
-        <div class="options-list">
-            <ul class="first-col">
+        <div class="options-list" >
+            <ul class="first-col" ref="listContainer" @scroll="handleScroll">
                 <li v-for="item in getAllCategories" :key="item?.category?.id" @mouseover="selectCategory(item, $event)"
                     :class="{ 'active': activeCategory.category?.id === item?.category?.id }"
                     @click.stop="goToCatalog(item)">
@@ -12,8 +12,6 @@
                             xmlns="http://www.w3.org/2000/svg">
                             <path d="M14.0913 11.5L9 6.44422L10.4544 5L17 11.5L10.4544 18L9 16.5558L14.0913 11.5Z"
                                 fill="#DDDDDD" />
-                                
-
                         </svg></span>
                 </li>
 
@@ -22,7 +20,7 @@
                 <li :style="{ opacity: '0' }"></li>
             </ul>
 
-            <ul class="second-col" v-if="subCategories?.length > 0">
+            <ul class="second-col" v-if="subCategories?.length > 0 && subCategories[0]?.subcategories">
 
                 <li v-for="subItem in subCategories[0]?.subcategories" :key="subItem?.id"
                     @click.stop="goToCatalogSub(subItem)">
@@ -30,9 +28,11 @@
                 </li>
             </ul>
 
-            <div class="second-col" v-else>
+            <div class="second-col" v-else-if="!subCategories?.length"  ref="secondCol">
                 {{ $t("noData") }}
             </div>
+
+            <div class="close-catalog" @click="$emit('closeCatalog')">X</div>
         </div>
     </div>
 
@@ -56,6 +56,7 @@ const props = defineProps<{
     isCatalogOpen: boolean;
 }>();
 
+
 const emit = defineEmits<{
     closeCatalog: [],
 
@@ -71,14 +72,13 @@ const goToCatalogSub = (subItem: CategorySys) => {
     closeCatalogOptions()
 }
 
-const fromtTop = ref('60px')
+const fromtTop = ref('0')
 
 
 const selectCategory = (item: Category, event: any) => {
-    const rect = event.target.getBoundingClientRect();
-    fromtTop.value = (Math.floor(rect.top) - 70).toString()
     activeCategory.value = item;
     getSubs();
+handleScroll(event)
 
 }
 
@@ -93,6 +93,37 @@ const closeCatalogOptions = () => {
     emit('closeCatalog');
 };
 
+    const listContainer = ref<HTMLUListElement | null>(null);
+
+const handleScroll = (event:any) => {
+
+    let currectItemTop:any;
+   
+
+  if (listContainer.value ){
+    const listItems = listContainer.value.getElementsByTagName('li');
+    Array.from(listItems).forEach((item, index) => {
+        const itemPosition = item.offsetTop - (listContainer.value ? listContainer.value.offsetTop : 0);
+     // console.log(`Item ${item.textContent} position from top: ${itemPosition}px`);
+// if(event.target.textContent===item.textContent){
+//     currectItemTop=itemPosition
+// }
+
+      const firstVisibleItem = Array.from(listItems).find(item => {
+        return item.getBoundingClientRect().top >= 50
+    });
+    if(firstVisibleItem?.textContent===item.textContent){
+        currectItemTop=itemPosition
+    }
+
+    if (firstVisibleItem && currectItemTop) {
+      const secondCol=document.querySelector('.second-col') as HTMLElement;
+    secondCol.style.top=currectItemTop+'px'
+    }
+    });
+
+  }
+}
 
 onMounted(async () => {
     await catalogStore.fetchAllCategories();
@@ -100,10 +131,21 @@ onMounted(async () => {
         activeCategory.value = getAllCategories?.value[0]
         getSubs()
     }
+    window.addEventListener('scroll', (event)=>{
+        handleScroll(event)
+    });
 })
+onUnmounted(()=>{
+    window.removeEventListener('scroll', (event)=>{
+        handleScroll(event)
+    });
 
+})
 watch(() => authStore.getSelectedLang, () => {
     catalogStore.fetchAllCategories();
+    window.addEventListener('scroll', (event)=>{
+       
+    });
 });
 
 </script>
@@ -113,9 +155,17 @@ watch(() => authStore.getSelectedLang, () => {
     font-size: 30px;
 }
 
+.close-catalog{
+    position: absolute;
+    right:8rem;
+    color:$main-black
+}
+
 .second-col {
     padding-left: 40px;
-
+    position: absolute;
+   width: 400px;
+   right:19rem
 }
 
 .first-col {
@@ -185,6 +235,7 @@ li {
 }
 
 .options-list {
+    position: relative;
     @include flex(row, start, start);
 }
 

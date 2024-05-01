@@ -12,6 +12,7 @@
 
         <span class="item-block-info">{{ productInfo }}</span>
         <button class="item-block-buy">{{ product?.price }} сом</button>
+        
     </div>
 
 

@@ -13,21 +13,93 @@
         <span class="item-block-description">{{ productInfo }} </span>
 
 
-        <button class="pink-button">{{ product?.price }} сом</button>
-
+        <button class="pink-button prod-price">{{ product?.price }} сом</button>
+<div class="item-add">
+   <div>
+    <button class="pink-button" @click.stop="addCart">
+        {{ isProductExistsInCart ? $t('addToCart') : $t('addedToCart') }}
+    </button>
+   </div>
+   <div class="item-add-btns">
+    <button @click.stop="removeCount">-</button>
+    <span>{{ countToBuy }}</span>
+        <button @click.stop="increaseCount">+</button>
+   </div>
+</div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { Product } from '@/types/Product'
+import { ExtendedProduct, Product } from '@/types/Product'
 const props = defineProps<{
     type?: string,
     product?: Product,
 
 }>()
+const {t}=useI18n()
+const cartStore=useCartStore()
 const prodBrand = ref('')
+const countToBuy=ref(1)
+const isProductExistsInCart = computed(() => {
+    const index = cartStore.getAllCart?.findIndex((item) => item?.id === props?.product?.id);
+    return index !== -1 ? false : true
+})
 
 
+const removeCount =()=>{
+    if(countToBuy.value>1){
+        countToBuy.value=countToBuy.value-1
+        if(props?.product?.price){
+            totalPrice.value=countToBuy.value * props?.product?.price
+        }
+
+        if(isProductExistsInCart.value){
+      
+    }else{
+        if(props.product?.price){
+            const updatedItem = { ...props?.product, count: countToBuy.value, totalProdSum: totalPrice.value, initPrice: +props?.product?.price }
+    if(updatedItem){
+        cartStore.updateCartItem(updatedItem)
+    }
+        }
+    }
+
+        
+    }
+
+    useNotif('success',t('successEdited'),t('success'))
+}
+const totalPrice=ref()
+if(props?.product?.price){
+    totalPrice.value=countToBuy.value * props?.product?.price
+}
+
+
+const increaseCount =()=>{
+    countToBuy.value=countToBuy.value+1;
+        if(props?.product?.price){
+            totalPrice.value=countToBuy.value * props?.product?.price
+        }
+    if(isProductExistsInCart.value){
+      
+    }else{
+        if(props.product?.price){
+            const updatedItem = { ...props?.product, count: countToBuy.value, totalProdSum: totalPrice.value, initPrice: +props?.product?.price }
+    if(updatedItem){
+        cartStore.updateCartItem(updatedItem)
+    }
+        }
+    }
+    useNotif('success',t('successEdited'),t('success'))
+}
+const addCart=()=>{
+if(props.product?.price){
+    const prodItem = { ...props?.product, count: countToBuy.value, totalProdSum: totalPrice.value, initPrice: props?.product?.price }
+   if(props?.product){
+cartStore.addToCart(prodItem)
+   }
+}
+}
 
 const router = useRouter()
 const emit = defineEmits<{
@@ -44,6 +116,14 @@ const productInfo = computed(() => {
     return props?.product?.shortDescription && props?.product?.shortDescription?.split(' ').length > 13 ? props?.product?.shortDescription.split(' ').slice(0, 13).join(' ') + '...' : props?.product?.shortDescription
 })
 
+const prodCart=computed(()=>{
+    return cartStore?.getAllCart?.find((item:ExtendedProduct)=>item?.id===props?.product?.id)
+})
+
+console.log('cartStore',cartStore.getAllCart)
+if(prodCart.value && prodCart.value!==null){
+    countToBuy.value=prodCart?.value?.count
+}
 onMounted(async () => {
     prodBrand.value = await getBrandId(props?.product?.brandId as string)
 });
@@ -51,19 +131,42 @@ onMounted(async () => {
 </script>
 
 <style scoped lang="scss">
+.item-add{
+    display: none  !important;
+    @include flex(column,center,center)
+  }
 .item-block {
     transition: .3s ease all;
     border-radius: 10px;
     @include flex(column, space-between, center);
+    &:hover{
+        .item-add{
+            display: flex  !important
+        }
+        .prod-price{
+            display: none
+        }
+    }
 
 }
-
+.item-add-btns{
+@include flex(row,start,center,20px);
+color:$main-black;
+button{
+    background: none;
+    outline: none;
+    border:none;
+    font-size: 20px;
+    line-height: 32px;
+    
+}
+}
 .item-block {
     width: 28%;
     padding: 20px 32px;
     overflow: hidden;
-    max-height: 510px;
-    height: 510px;
+    max-height: 540px;
+    height: 540px;
 
 
     img {

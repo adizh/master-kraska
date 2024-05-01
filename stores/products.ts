@@ -6,6 +6,8 @@ export const useProductsSstore = defineStore("productsStore", {
     allProducts: [] as Product[],
     specialProducts:[] as Product[],
     filteredProducts: [] as Product[],
+    popularProds:[] as Product[],
+    beneficialProds:[] as Product[],
     filterProductTotal: {
       totalPages: 0,
       totalItems: 0,
@@ -54,9 +56,38 @@ export const useProductsSstore = defineStore("productsStore", {
     },
 
 
-    async getSpecialProd(){
+    async fetchSpecialProd(type:string){
+      const authStore=useAuthStore()
       try{
-//const response 
+const response =await http(`/api/v1/Product/get-popular-products?type=${type}`);
+if(response.status===200){
+  if(type==='popular'){
+    this.popularProds=response.data?.popular?.map((popItem:Product)=>{
+      if(authStore.getSelectedLang==='kg'){
+        return {...popItem,name:popItem?.nameKg,shortDescription:popItem?.shortDescriptionKg}
+      }else{
+        return {...popItem,name:popItem?.nameRu,shortDescription:popItem?.shortDescriptionRu}
+      }
+    })
+  }else if(type==='featured'){
+    this.specialProducts=response.data?.featured?.map((popItem:Product)=>{
+      if(authStore.getSelectedLang==='kg'){
+        return {...popItem,name:popItem?.nameKg,shortDescription:popItem?.shortDescriptionKg}
+      }else{
+        return {...popItem,name:popItem?.nameRu,shortDescription:popItem?.shortDescriptionRu}
+      }
+    })
+  }else{
+    this.beneficialProds=response.data?.beneficial?.map((popItem:Product)=>{
+      if(authStore.getSelectedLang==='kg'){
+        return {...popItem,name:popItem?.nameKg,shortDescription:popItem?.shortDescriptionKg}
+      }else{
+        return {...popItem,name:popItem?.nameRu,shortDescription:popItem?.shortDescriptionRu}
+      }
+    })
+  }
+ 
+}
       }catch(err){
         console.log(err)
       }
@@ -272,7 +303,15 @@ export const useProductsSstore = defineStore("productsStore", {
       return state.areFiltersLoading;
     },
     getPopularProducts(state){
-      return state.allProducts.filter((item)=>item.isPopular)
-    }
+      return state.popularProds
+    },
+    getSpecialProducts(state){
+      return state.specialProducts
+    },
+    getBenefProducts(state){
+      return state.beneficialProds
+    },
+
+    
   },
 });

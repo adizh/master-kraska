@@ -1,14 +1,12 @@
 <template>
     <div class="popular-products">
         <h5 class='each-section-header'>{{ $t('recommendeProducts') }}</h5>
-        <div class="products-list" v-if="popularItems?.length > 0">
+        <div class="products-list" v-if="store.getBenefProducts?.length > 0">
             <Swiper :slides-per-view="slidesPerView" :navigation="true" id="mySlider" :modules="[SwiperNavigation]"
                 :style='{ "--swiper-navigation-size": "15px", "padding": "20px 0" }'>
-                <SwiperSlide v-for="product in popularItems" :key="product.id">
-                    <ProductsProductItem :product="product" />
-
-                </SwiperSlide>
-
+                        <SwiperSlide v-for="product in store.getBenefProducts" :key="product.id">
+                            <ProductsProductItem :product="product" :style="{width:'100%'} "/>
+                        </SwiperSlide>
             </Swiper>
         </div>
 
@@ -20,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { Product } from '~/types/Product';
+
 const slidesPerView = ref(4)
 
 const handleResize = () => {
@@ -35,20 +33,16 @@ const handleResize = () => {
     }
 };
 const store = useProductsSstore();
-onMounted(() => {
-    store.fetchAllProducts();
-    handleResize(); // Call onMounted to set initial value
+onMounted(async() => {
+    handleResize();
     window.addEventListener('resize', handleResize);
+    await store.fetchSpecialProd('featured');
 })
 
-
-
-const popularItems = computed(() => {
-    return store.getAllProducsts.filter((item: Product) => item.isFeatured)
-})
 
 onUnmounted(() => {
     window.removeEventListener('resize', handleResize);
+  
 });
 
 </script>
@@ -59,7 +53,7 @@ onUnmounted(() => {
 }
 
 .item-block {
-    width: 100%;
+    width: 100% !important;
 }
 
 .products-list {

@@ -108,7 +108,6 @@
         <div class="count-overlay">
             <span class="header">{{ $t('count') }}</span>
             <p class='count-overlay-info'>{{ $t('productCountInfo') }}</p>
-            <button>{{ $t('toCart') }}</button>
         </div>
     </OverlayPanel>
 

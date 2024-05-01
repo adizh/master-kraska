@@ -23,9 +23,11 @@ if(prodIndex===-1){
 
     updateCartItem(updatedItem: ExtendedProduct) {
       const index = this.cart.findIndex((item) => item.id === updatedItem.id);
-      if (index > -1) {
-        this.cart.splice(index, 1, updatedItem);
+      if(index!==-1){
+        this.cart.splice(index,1,updatedItem)
+        localStorage.setItem("cart", JSON.stringify(this.cart));
       }
+     
     },
     decreaseCount(item: ExtendedProduct) {
       if (item.count > 1) {
