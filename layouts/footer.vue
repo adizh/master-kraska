@@ -4,7 +4,7 @@
             <div class="first">
 
                
-                <NuxtImg src="/white-logo.png" format="webp" class="white-logo" />
+                <img src="/white-logo.png" format="webp" class="white-logo" />
                 <button class="callback-btn">{{ $t('callBack') }}</button>
             </div>
             <div class="second">

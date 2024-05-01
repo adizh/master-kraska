@@ -13,7 +13,7 @@
                 </div>
             </div>
             <div class="right">
-                <NuxtImg src="/advantage-img 1.png" format="webp" />
+                <img src="/advantage-img 1.png" format="webp" />
             </div>
         </div>
     </div>
