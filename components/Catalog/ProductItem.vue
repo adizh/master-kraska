@@ -11,11 +11,20 @@
         <span class="item-block-name">{{ productName(product?.name) }}</span>
 
         <span class="item-block-info">{{ productInfo }}</span>
-        <button class="item-block-buy">{{ product?.price }} сом</button>
-        
+        <button class="item-block-buy prod-price">{{ product?.price }} сом</button>
+        <div class="item-add">
+            <div>
+             <button class="pink-button" @click.stop="addCart">
+                 {{ isProductExistsInCart ? $t('addToCart') : $t('addedToCart') }}
+             </button>
+            </div>
+            <div class="item-add-btns">
+             <button @click.stop="removeCount">-</button>
+             <span>{{ countToBuy }}</span>
+                 <button @click.stop="increaseCount">+</button>
+            </div>
+         </div>
     </div>
-
-
 
 
 
@@ -40,7 +49,7 @@
 </template>
 
 <script setup lang="ts">
-import { Product } from '@/types/Product'
+import { ExtendedProduct, Product } from '@/types/Product'
 const props = defineProps<{
     type?: string,
     product: Product,
@@ -49,6 +58,9 @@ const props = defineProps<{
 
 }>()
 const router = useRouter()
+const countToBuy=ref(1)
+const {t}=useI18n()
+const cartStore=useCartStore()
 const productInfo = computed(() => {
     return props?.product?.shortDescription && props?.product?.shortDescription?.split(' ').length > 13 ? props?.product?.shortDescription.split(' ').slice(0, 13).join(' ') + '...' : props?.product?.shortDescription
 })
@@ -58,6 +70,10 @@ const productInfoHorizontal = computed(() => {
 })
 const prodBrand = ref('')
 
+const isProductExistsInCart = computed(() => {
+    const index = cartStore.getAllCart?.findIndex((item) => item?.id === props?.product?.id);
+    return index !== -1 ? false : true
+})
 
 
 const emit = defineEmits<{
@@ -71,8 +87,68 @@ onMounted(async () => {
     }
 })
 
+const prodCart=computed(()=>{
+    return cartStore?.getAllCart?.find((item:ExtendedProduct)=>item?.id===props?.product?.id)
+})
 
 
+if(prodCart.value && prodCart.value!==null){
+    countToBuy.value=prodCart?.value?.count
+}
+const removeCount =()=>{
+    if(countToBuy.value>1){
+        countToBuy.value=countToBuy.value-1
+        if(props?.product?.price){
+            totalPrice.value=countToBuy.value * props?.product?.price
+        }
+
+        if(isProductExistsInCart.value){
+      
+    }else{
+        if(props.product?.price){
+            const updatedItem = { ...props?.product, count: countToBuy.value, totalProdSum: totalPrice.value, initPrice: +props?.product?.price }
+    if(updatedItem){
+        cartStore.updateCartItem(updatedItem)
+    }
+        }
+    }
+
+        
+    }
+
+    useNotif('success',t('successEdited'),t('success'))
+}
+const totalPrice=ref()
+if(props?.product?.price){
+    totalPrice.value=countToBuy.value * props?.product?.price
+}
+
+
+const increaseCount =()=>{
+    countToBuy.value=countToBuy.value+1;
+        if(props?.product?.price){
+            totalPrice.value=countToBuy.value * props?.product?.price
+        }
+    if(isProductExistsInCart.value){
+      
+    }else{
+        if(props.product?.price){
+            const updatedItem = { ...props?.product, count: countToBuy.value, totalProdSum: totalPrice.value, initPrice: +props?.product?.price }
+    if(updatedItem){
+        cartStore.updateCartItem(updatedItem)
+    }
+        }
+    }
+    useNotif('success',t('successEdited'),t('success'))
+}
+const addCart=()=>{
+if(props.product?.price){
+    const prodItem = { ...props?.product, count: countToBuy.value, totalProdSum: totalPrice.value, initPrice: props?.product?.price }
+   if(props?.product){
+cartStore.addToCart(prodItem)
+   }
+}
+}
 const productName = (name: string) => {
     return name && name?.split(' ').length > 5 ? name?.split(' ').slice(0, 5).join(' ') + '...' : name
 }
@@ -87,7 +163,10 @@ const productName = (name: string) => {
 
 
 }
-
+.item-add{
+    display: none  !important;
+    @include flex(column,center,center)
+  }
 .item-block-info {
     @include textFormat(14px, 20px, 600, $main-dark-grey);
     max-width: 95%;
@@ -97,12 +176,30 @@ const productName = (name: string) => {
 
 }
 
-
+.item-add-btns{
+    @include flex(row,start,center,20px);
+    color:$main-black;
+    button{
+        background: none;
+        outline: none;
+        border:none;
+        font-size: 20px;
+        line-height: 32px;
+        
+    }
+    }
 .item-block {
     width: 31%;
     padding: 20px 32px;
     overflow: hidden;
-
+    &:hover{
+        .item-add{
+            display: flex  !important
+        }
+        .prod-price{
+            display: none
+        }
+    }
 
     img {
         width: 180px;

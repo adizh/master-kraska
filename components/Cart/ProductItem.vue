@@ -30,10 +30,7 @@
 
         </div>
     </div>
-    <!-- <Dialog v-if="selectedProd?.id===item?.id" v-model:visible="isDeleteOpen" modal :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
-    header=" ">
-    <ConfirmPay @confirm="removeFromCart" @cancel="isDeleteOpen = false"  :title="$t('deleteCartProdWarning')"/>
-</Dialog> -->
+
 </template>
 
 <script setup lang="ts">

@@ -13,6 +13,7 @@
         <span class="item-block-description">{{ productInfo }} </span>
 
 
+
         <button class="pink-button prod-price">{{ product?.price }} сом</button>
 <div class="item-add">
    <div>
@@ -101,6 +102,8 @@ cartStore.addToCart(prodItem)
 }
 }
 
+
+
 const router = useRouter()
 const emit = defineEmits<{
     addItemToBookmarks: [string]
@@ -120,7 +123,7 @@ const prodCart=computed(()=>{
     return cartStore?.getAllCart?.find((item:ExtendedProduct)=>item?.id===props?.product?.id)
 })
 
-console.log('cartStore',cartStore.getAllCart)
+
 if(prodCart.value && prodCart.value!==null){
     countToBuy.value=prodCart?.value?.count
 }
