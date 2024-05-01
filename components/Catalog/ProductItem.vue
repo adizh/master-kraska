@@ -12,7 +12,7 @@
 
         <span class="item-block-info">{{ productInfo }}</span>
         <button class="item-block-buy prod-price">{{ product?.price }} сом</button>
-        <div class="item-add">
+        <div class="item-add" v-if="visibleMethod === 'vertical'">
             <div>
              <button class="pink-button" @click.stop="addCart">
                  {{ isProductExistsInCart ? $t('addToCart') : $t('addedToCart') }}
@@ -33,8 +33,6 @@
             <img :src="product?.images[0]" format="webp" />
             <div class="first-sub-col"> <span class="item-block-name">{{ productName(product?.name) }}</span>
                 <span class="item-block-description">{{ productInfoHorizontal }}</span>
-
-
             </div>
         </div>
 
@@ -42,9 +40,6 @@
             <button class="item-block-buy">{{ product?.price }} сом</button>
             <UIBookmarks :product="product" />
         </div>
-
-
-
     </div>
 </template>
 
@@ -54,7 +49,6 @@ const props = defineProps<{
     type?: string,
     product: Product,
     visibleMethod: string
-
 
 }>()
 const router = useRouter()
@@ -68,6 +62,11 @@ const productInfoHorizontal = computed(() => {
     return props?.product?.shortDescription && props?.product?.shortDescription?.split(' ').length > 13 ? props?.product?.shortDescription.split(' ').slice(0, 13).join(' ') + '...' : props?.product?.shortDescription
 
 })
+
+watch(() => props?.visibleMethod, () => {
+    console.log('props?.visibleMethod',props?.visibleMethod)
+});
+console.log('props?.visibleMethod',props?.visibleMethod)
 const prodBrand = ref('')
 
 const isProductExistsInCart = computed(() => {
@@ -109,6 +108,7 @@ const removeCount =()=>{
             const updatedItem = { ...props?.product, count: countToBuy.value, totalProdSum: totalPrice.value, initPrice: +props?.product?.price }
     if(updatedItem){
         cartStore.updateCartItem(updatedItem)
+        useNotif('success',t('successEdited'),t('success'))
     }
         }
     }
@@ -116,7 +116,7 @@ const removeCount =()=>{
         
     }
 
-    useNotif('success',t('successEdited'),t('success'))
+  
 }
 const totalPrice=ref()
 if(props?.product?.price){
@@ -163,15 +163,37 @@ const productName = (name: string) => {
 
 
 }
+@keyframes slideFromBottomToTop {
+    0% {
+      transform: translateY(100%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+
+  @keyframes slideFromTopToBottom {
+    from {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
 .item-add{
-    display: none  !important;
-    @include flex(column,center,center)
+    opacity: 0;
+    visibility: hidden;
+     animation: slideFromTopToBottom 0.5s
+    
   }
 .item-block-info {
     @include textFormat(14px, 20px, 600, $main-dark-grey);
     max-width: 95%;
     width: 100%;
-    margin: 15px 0 2.6rem 0;
+    margin: 15px 0;
     height: 83px;
 
 }
@@ -194,7 +216,10 @@ const productName = (name: string) => {
     overflow: hidden;
     &:hover{
         .item-add{
-            display: flex  !important
+            animation: slideFromBottomToTop 0.5s ease-out forwards;
+            @include flex(column,center,center);
+            opacity: 1;
+            visibility: visible;
         }
         .prod-price{
             display: none
@@ -246,8 +271,8 @@ const productName = (name: string) => {
     transition: .3s ease all;
 }
 
-.item-block.horizontal {
-    width: 100%;
+.horizontal .item-block {
+    width: 100% !important;
     @include flex(row, space-between, start);
 
     .first-col {

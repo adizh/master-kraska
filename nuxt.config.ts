@@ -19,20 +19,13 @@ export default defineNuxtConfig({
     },
   },
 
-  // build: {
-  //   terser: {
-  //     // https://github.com/terser/terser#compress-options
-  //     terserOptions: {
-  //       compress: {
-  //         drop_console: true
-  //       }
-  //     }
-  //   }
-  // },
 
   app: {
     head: {
       link: [
+        {rel:'icon',
+      href:'/favicon.cio'
+      }
         // {
         //   rel: "stylesheet",
         //   href: "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css",

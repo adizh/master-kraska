@@ -61,6 +61,7 @@ const removeCount =()=>{
             const updatedItem = { ...props?.product, count: countToBuy.value, totalProdSum: totalPrice.value, initPrice: +props?.product?.price }
     if(updatedItem){
         cartStore.updateCartItem(updatedItem)
+        useNotif('success',t('successEdited'),t('success'))
     }
         }
     }
@@ -68,7 +69,7 @@ const removeCount =()=>{
         
     }
 
-    useNotif('success',t('successEdited'),t('success'))
+    
 }
 const totalPrice=ref()
 if(props?.product?.price){
@@ -135,19 +136,50 @@ onMounted(async () => {
 
 <style scoped lang="scss">
 .item-add{
-    display: none  !important;
-    @include flex(column,center,center)
+   opacity: 0;
+   visibility: hidden;
+    animation: slideFromTopToBottom 0.5s
   }
+
+
+  @keyframes slideFromBottomToTop {
+    0% {
+      transform: translateY(100%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+
+  @keyframes slideFromTopToBottom {
+    from {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+.prod-price{
+   
+}
 .item-block {
     transition: .3s ease all;
     border-radius: 10px;
     @include flex(column, space-between, center);
     &:hover{
         .item-add{
-            display: flex  !important
+            animation: slideFromBottomToTop 0.5s ease-out forwards;
+            @include flex(column,center,center);
+            opacity: 1;
+            visibility: visible;
         }
         .prod-price{
             display: none
+            
         }
     }
 
