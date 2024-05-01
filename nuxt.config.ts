@@ -23,10 +23,21 @@ export default defineNuxtConfig({
   app: {
     head: {
       link: [
+            
         {rel:'icon',
+        type: 'image/x-icon',
+        hid: 'icon',
       href:'/favicon.ico',
-      type: 'image/x-icon'
-      }
+      sizes:'16x16'
+
+      },
+          
+    //   {rel:'apple-touch-icon',
+    //   type: 'image/x-icon',
+    // href:'/favicon.png',
+    // sizes:'16x16'
+
+    // }
         // {
         //   rel: "stylesheet",
         //   href: "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css",
