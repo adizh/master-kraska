@@ -26,6 +26,7 @@
                         <span>{{ store.totalOfTotalSum }} сом</span>
                     </div>
                 </div>
+                
                 <button class="bg-white-btn" @click="store.saveNewCart">{{ $t('saveChanges') }}</button>
             </div>
         </div>

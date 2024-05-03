@@ -6,6 +6,7 @@
         </div>
         <slot name="edit-items"></slot>
         <img :src="product?.images[0]" alt="product">
+        
 
 
 

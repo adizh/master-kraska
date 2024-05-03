@@ -87,11 +87,14 @@
 
                 <div class="count">
                     <span class="each-block-info-col">{{ $t('sum') }}</span>
+
                     {{
                     selectedProductPrice * countToBuy }} сом
+
                 </div>
 
                 <div class="buy-btns"> <button @click="addToCart">
+
                         {{ isProductExistsInCart ? $t('addToCart') : $t('addedToCart') }}
                     </button>
                     <button @click.capture="buyNow">{{ $t('buyNow') }}</button>
@@ -125,7 +128,7 @@
 
 <script setup lang="ts">
 import Rating from 'primevue/rating';
-import { Product } from '@/types/Product'
+import { Product,ExtendedProduct } from '@/types/Product'
 import { Brands } from '~/types/Brands';
 
 const isConfirmOpen = ref(false)
@@ -218,10 +221,13 @@ const buyNow = () => {
         isProfileOpen.value = true
     }
 }
+
 const addToCart = () => {
     if (authStore.getUserId) {
+
         const prodItem = { ...getProduct.value?.product, count: countToBuy.value, totalProdSum: totalPrice.value, initPrice: selectedProductPrice.value }
         store.addToCart(prodItem)
+
     }
 
     else {
@@ -267,6 +273,15 @@ const calcLeastAmoint = async () => {
         leastSmallAmount.value = smallestPriceIndex || 0
     }
 }
+
+const prodCart=computed(()=>{
+    return store?.getAllCart?.find((item:ExtendedProduct)=>item?.id===getProduct?.value?.product?.id)
+})
+
+console.log('prodCart',prodCart)
+if(prodCart.value && prodCart.value!==null){
+    countToBuy.value=prodCart?.value?.count
+}
 onUnmounted(() => {
     leastSmallAmount.value = 0;
 });
@@ -281,7 +296,6 @@ onMounted(async () => {
     if (getProduct && getProduct?.value?.product?.brandId) {
         productBrand.value = await getBrandId(getProduct?.value?.product?.brandId);
     }
-
     if (getProduct.value?.product?.variants && leastSmallAmount?.value) {
         selectedProductPrice.value = getProduct.value?.product?.variants[leastSmallAmount.value]?.price;
         volumeBtn.value = getProduct.value?.product?.variants[leastSmallAmount.value]?.size;

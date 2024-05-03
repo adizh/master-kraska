@@ -44,6 +44,7 @@ if(prodIndex===-1){
 
     getTotalItemCount(count: number) {
       this.countToBuy = count;
+      
       return count
     },
 

@@ -85,8 +85,11 @@ const confirmDelete=()=>{
     }
 
     .cart-main-info-prod h3 {
+
         font-size: 18px;
+        
         line-height: 20px;
+
     }
 }
 
