@@ -42,12 +42,15 @@ onMounted(()=>{
 </script>
 
 <style scoped lang="scss">
+
 .actions-block {
     &-item {
         background: $main-white;
         padding: 20px 10px 25px 10px;
         border-radius: 10px;
         text-align: center;
+        width: 30%;
+        height:178px;
 
         &-header {
             font-size: 20px;

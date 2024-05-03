@@ -11,7 +11,7 @@ input:focus {
   outline: none;
 }
 .actions-block {
-  @include flex(row, space-between, start);
+  @include flex(row,start, start);
 }
 a {
   text-decoration: none;
@@ -443,6 +443,16 @@ h2 {
     cursor: pointer;
   }
 }
+
+
+.news-list{
+  @include flex(row,start,center)
+}
+
+
+
+
+// responsive start
 @media (min-width: 768px) and (max-width: 992px) {
   .item-block {
     width: 50%;

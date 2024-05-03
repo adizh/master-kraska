@@ -5,13 +5,11 @@
         </div>
         <div class="info">
             <h2 class='each-section-header'>{{ item?.name }}</h2>
-            <p>
-              {{ item?.description }}
-            </p>
+            <span class="date">
+              {{ formatDate(item?.createdDate) }}
+            </span>
             <br>
-            <p>
-                {{ item?.text }}
-              </p>
+         
         </div>
     </div>
 <div  v-else-if="isLoading && !news?.length"  class="text-center">    <ProgressSpinner/></div>
@@ -22,6 +20,7 @@
 </template>
 
 <script setup lang="ts">
+import moment from 'moment';
 import {News} from '@/types/News'
 const news=ref([] as News[])
 const authStore=useAuthStore()
@@ -47,6 +46,9 @@ news.value=response.data?.map((news:News)=>{
     }
 }
 
+const formatDate = (date: string) => {
+    return moment((date)).format("YYYY-MM-DD")
+}
 onMounted(()=>{
     getNews()
 })
@@ -55,11 +57,12 @@ onMounted(()=>{
 
 <style scoped lang="scss">
 .news-list-block {
-    @include flex(row, start, start, 40px);
+    @include flex(column, start, start, 40px);
     margin-bottom: 40px;
+    width: 35%;
 
     .image {
-        width: 380px;
+        width: 280px;
         border-radius: 10px;
         img{
             width: 100%;
@@ -67,11 +70,24 @@ onMounted(()=>{
         }
     }
 
+   
     .info {
         width: 70%;
 
+        span.date{
+
+            color: #666666;
+      
+              font-size: 20px;
+              line-height: 32px;
+              font-weight: 400;
+      
+          }
         h2 {
-            margin: 0 0 40px 0 !important
+            margin: 0 0 40px 0 !important;
+            font-size: 24px  !important;
+            line-height: 24px;
+           word-wrap: break-word;
         }
 
         p {
