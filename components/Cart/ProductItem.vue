@@ -20,10 +20,11 @@
         <div class="cart-main-info-count">
            <slot name="count-buttons"></slot>
             <span class="price" v-if="orderPlace!=='orderPlace'">{{ item?.totalProdSum }} сом</span>
+
             <button class="prod-count-buttons" v-if="orderPlace!=='orderPlace'">
-                <span @click.stop="()=>$emit('decreaseCount',item)">-</span>
+                <span @click="$emit('decreaseCount',item)">-</span>
                 <span>{{ store.getTotalItemCount(item?.count) }}</span>
-                <span @click.stop="()=>$emit('increaseCount',item)">+</span>
+                <span @click="$emit('increaseCount',item)">+</span>
             </button>
             <img src="../../assets/icons/icon=trash.svg" alt="delete" class='delete-icon'
                 @click="confirmDelete" v-if="orderPlace!=='orderPlace'">
@@ -48,12 +49,9 @@ const emit = defineEmits<{
   decreaseCount: [value: ExtendedProduct] 
   confirmDelete: [value:ExtendedProduct] 
 }>()
-const isDeleteOpen = ref(false)
-console.log('item in cartProductItem',props.item)
-const removeFromCart = () => {
-    emit('removeFromCart',props?.item)
-    isDeleteOpen.value=false
-}
+
+
+
 const productInfoHorizontal = computed(() => {
     return props?.item?.shortDescription && props?.item?.shortDescription?.split(' ').length > 19 ? props?.item?.shortDescription.split(' ').slice(0, 19).join(' ') + '...' : props?.item?.shortDescription
 
@@ -65,12 +63,13 @@ const productDescrHorizontal= computed(() => {
 
 })
 const confirmDelete=()=>{
-    isDeleteOpen.value=true;
-    console.log('confirmDelete',isDeleteOpen)
-    selectedProd.value=props?.item;
-    emit('confirmDelete',props?.item)
+   // selectedProd.value=props?.item;
+    if(props?.item){
+        emit('confirmDelete',props?.item)
+    }
+
 }
-console.log('orderPlace',props.orderPlace)
+
 
 </script>
 

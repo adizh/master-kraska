@@ -135,15 +135,7 @@ onMounted(async () => {
 </script>
 
 <style scoped lang="scss">
-.item-add{
-   opacity: 0;
-   visibility: hidden;
-    animation: slideFromTopToBottom 0.5s;
-    display: none;
-  }
-
-
-  @keyframes slideFromBottomToTop {
+@keyframes slideFromBottomToTop {
     0% {
       transform: translateY(100%);
     }
@@ -163,6 +155,15 @@ onMounted(async () => {
       opacity: 1;
     }
   }
+.item-add{
+   opacity: 0;
+   visibility: hidden;
+    animation: slideFromTopToBottom 0.5s;
+    display: none;
+  }
+
+
+
   
 .prod-price{
    

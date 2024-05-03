@@ -1,5 +1,6 @@
 import http from "@/composables/http";
 import { Product, ExtendedProduct } from "@/types/Product";
+import Item from "~/components/Address/Item.vue";
 import { Order, OrderItem } from "~/types/Order";
 
 export const useCartStore = defineStore("cartStore", {
@@ -30,19 +31,20 @@ if(prodIndex===-1){
      
     },
     decreaseCount(item: ExtendedProduct) {
+
       if (item.count > 1) {
         const updatedItem = { ...item };
-
         updatedItem.count--;
-
         updatedItem.totalProdSum = updatedItem.count * updatedItem.initPrice;
+
+        console.log('decreaseCount updatedItem',updatedItem)
         this.updateCartItem(updatedItem);
       }
     },
 
     getTotalItemCount(count: number) {
       this.countToBuy = count;
-      return this.countToBuy;
+      return count
     },
 
     increaseCount(item: ExtendedProduct) {

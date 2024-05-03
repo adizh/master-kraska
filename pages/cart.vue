@@ -77,7 +77,11 @@ const confirmDelete=(prop:ExtendedProduct)=>{
 }
 
 const removeFromCart =()=>{
-    store.removeFromCart(currentProd.value)
+    if(currentProd?.value){
+        store.removeFromCart(currentProd.value)
+    }
+ 
+
     isDeleteOpen.value=false
 }
 const increaseCount=(item:ExtendedProduct)=>{
@@ -91,6 +95,7 @@ const decreaseCount=(item:ExtendedProduct)=>{
 
 const createOrder = () => {
     orderStore.createOrder()
+
 }
 
 onMounted(()=>{
