@@ -457,6 +457,10 @@ h2 {
   .item-block {
     width: 50%;
   }
+  .news-list{
+    align-items: start;
+    gap:50px
+  }
 }
 
 .modal-btns {
@@ -526,7 +530,13 @@ h2 {
   word-break: break-all;
 }
 
+@media (max-width:768px){
+  .news-list{
+    flex-direction: column;
+  }
+}
 @media (max-width: 576px) {
+ 
   .cart-main-info-prod {
     flex-direction: column !important;
     align-items: center;

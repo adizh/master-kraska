@@ -1,5 +1,5 @@
 <template>
-    <div class="news-list-block" v-for="item in news" :key="item?.id" v-if="!isLoading && news?.length">  
+    <div class="news-list-block" v-for="item in news" :key="item?.id" v-if="!isLoading && news?.length" @click="router.push(`/news/${item?.id}`)">  
         <div class="image">
             <img :src="item?.image" :alt="item?.name">
         </div>
@@ -23,6 +23,7 @@
 import moment from 'moment';
 import {News} from '@/types/News'
 const news=ref([] as News[])
+const router=useRouter()
 const authStore=useAuthStore()
 const isLoading=ref(false)
 const getNews=async()=>{
@@ -75,9 +76,7 @@ onMounted(()=>{
         width: 70%;
 
         span.date{
-
             color: #666666;
-      
               font-size: 20px;
               line-height: 32px;
               font-weight: 400;
@@ -101,9 +100,11 @@ onMounted(()=>{
     .news-list-block {
         flex-direction: column;
         align-items: center;
+        justify-content: center;
+        width: 60%;
 
         .image {
-            width: 60%;
+            width: 70%;
         }
 
         .info {
@@ -118,11 +119,14 @@ onMounted(()=>{
 }
 
 @media (max-width:480px) {
+    .news-list-block{
+        width: 100%;
+    }
     .news-list-block .info h2 {
         font-size: 20px !important;
     }
    .image{
-    width: 100% !important;
+    width: 80% !important;
    }
 }
 </style>
