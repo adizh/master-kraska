@@ -189,10 +189,16 @@ onMounted(async () => {
             opacity: 1;
             visibility: visible;
         }
+        .item-add-btns{
+            opacity: 1;
+            visibility: visible;
+    }
     }
 
 }
 .item-add-btns{
+    opacity: 0;
+    visibility: hidden;
 @include flex(row,start,center,20px);
 color:$main-black;
 button{
