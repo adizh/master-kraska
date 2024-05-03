@@ -1,5 +1,5 @@
 <template>
-    <div class="item-block" @click="router.push(`/product/${product?.id}`)" v-if="visibleMethod === 'vertical'">
+    <div class="item-block" @click="router.push(`/product/${product?.id}`)" v-if="visibleMethod === 'vertical'" @mousemove="itemHover" @mouseleave="itemHoverLeave">
         <div v-if="type === 'bookmark'" class="bookmark-icon-heart"
             @click.stop="emit('addItemToBookmarks', product?.id as string)">
 
@@ -11,8 +11,13 @@
         <span class="item-block-name">{{ productName(product?.name) }}</span>
 
         <span class="item-block-info">{{ productInfo }}</span>
-        <button class="item-block-buy prod-price">{{ product?.price }} сом</button>
-        <div class="item-add" v-if="visibleMethod === 'vertical'">
+        <button class="pink-button prod-price" @click.stop="addCart">{{ !isItemHovered ? product?.price +'сом': isItemHovered && isProductExistsInCart ? $t('toCart') : $t('addedToCart')  }}</button>
+        <div class="item-add-btns">
+            <button @click.stop="removeCount">-</button>
+            <span>{{ countToBuy }}</span>
+                <button @click.stop="increaseCount">+</button>
+           </div>
+        <!-- <div class="item-add" v-if="visibleMethod === 'vertical'">
             <div>
              <button class="pink-button" @click.stop="addCart">
                  {{ isProductExistsInCart ? $t('addToCart') : $t('addedToCart') }}
@@ -23,7 +28,7 @@
              <span>{{ countToBuy }}</span>
                  <button @click.stop="increaseCount">+</button>
             </div>
-         </div>
+         </div> -->
     </div>
 
 
@@ -149,6 +154,17 @@ cartStore.addToCart(prodItem)
    }
 }
 }
+const isItemHovered=ref(false)
+
+const itemHover=()=>{
+
+    console.log('itemHover')
+    isItemHovered.value=true
+}
+const itemHoverLeave=()=>{
+    console.log('itemHoverLeave')
+    isItemHovered.value=false
+}
 const productName = (name: string) => {
     return name && name?.split(' ').length > 5 ? name?.split(' ').slice(0, 5).join(' ') + '...' : name
 }
@@ -200,6 +216,8 @@ const productName = (name: string) => {
 }
 
 .item-add-btns{
+    opacity: 0;
+    visibility: hidden;;
     @include flex(row,start,center,20px);
     color:$main-black;
     button{
@@ -222,9 +240,10 @@ const productName = (name: string) => {
             opacity: 1;
             visibility: visible;
         }
-        .prod-price{
-            display: none
-        }
+     .item-add-btns{
+        opacity: 1;
+        visibility: visible;
+     }
     }
 
     img {
