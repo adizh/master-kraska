@@ -1,22 +1,21 @@
 <template>
-    <div class="item-block" @click="router.push(`/product/${product?.id}`)">
+    <div class="item-block" @click="router.push(`/product/${product?.id}`)" @mouseover="itemHover" @mouseleave="itemHoverLeave">
         <div v-if="type === 'bookmark'" class="bookmark-icon-heart "
             @click.stop="emit('addItemToBookmarks', product?.id as string)">
             <img src="../../assets/icons/icon=heart fill.svg" alt="heart icon">
         </div>
         <slot name="edit-items"></slot>
         <img :src="product?.images[0]" alt="product">
-
-
-
-
         <span class="item-block-name">{{ productName }}</span>
         <span class="item-block-description">{{ productInfo }} </span>
+        <button class="pink-button prod-price" @click.stop="addCart">{{ !isItemHovered ? product?.price +'сом': isItemHovered && isProductExistsInCart ? $t('toCart') : $t('addedToCart')  }}</button>
+        <div class="item-add-btns">
+            <button @click.stop="removeCount">-</button>
+            <span>{{ countToBuy }}</span>
+                <button @click.stop="increaseCount">+</button>
+           </div>
 
-
-
-        <button class="pink-button prod-price">{{ product?.price }} сом</button>
-<div class="item-add">
+<!-- <div class="item-add">
    <div>
     <button class="pink-button" @click.stop="addCart">
         {{ isProductExistsInCart ? $t('addToCart') : $t('addedToCart') }}
@@ -27,7 +26,7 @@
     <span>{{ countToBuy }}</span>
         <button @click.stop="increaseCount">+</button>
    </div>
-</div>
+</div> -->
     </div>
 </template>
 
@@ -46,8 +45,17 @@ const isProductExistsInCart = computed(() => {
     const index = cartStore.getAllCart?.findIndex((item) => item?.id === props?.product?.id);
     return index !== -1 ? false : true
 })
+const isItemHovered=ref(false)
 
+const itemHover=()=>{
 
+    console.log('itemHover')
+    isItemHovered.value=true
+}
+const itemHoverLeave=()=>{
+    console.log('itemHoverLeave')
+    isItemHovered.value=false
+}
 
 const totalPrice=ref()
 if(props?.product?.price){
@@ -62,6 +70,7 @@ const removeCount =()=>{
         }
 
         if(isProductExistsInCart.value){
+        
       
     }else{
         if(props.product?.price){
@@ -97,7 +106,8 @@ const increaseCount =()=>{
    
 }
 const addCart=()=>{
-if(props.product?.price){
+    
+if(props.product?.price && isItemHovered.value){
     const prodItem = { ...props?.product, count: countToBuy.value, totalProdSum: totalPrice.value, initPrice: props?.product?.price }
    if(props?.product){
 cartStore.addToCart(prodItem)
@@ -160,30 +170,24 @@ onMounted(async () => {
 .item-add{
    opacity: 0;
    visibility: hidden;
-    animation: slideFromTopToBottom 0.5s;
     display: none;
+    transition: .5s;
   }
 
 
 
   
-.prod-price{
-   
-}
+
+
 .item-block {
-    transition: .3s ease all;
+    transition: .5s ease all;
     border-radius: 10px;
     @include flex(column, space-between, center);
     &:hover{
         .item-add{
-            animation: slideFromBottomToTop 0.5s ease-out forwards;
             @include flex(column,center,center);
             opacity: 1;
             visibility: visible;
-        }
-        .prod-price{
-            display: none
-            
         }
     }
 
@@ -204,8 +208,8 @@ button{
     width: 28%;
     padding: 20px 32px;
     overflow: hidden;
-    max-height: 540px;
-    height: 540px;
+    max-height: 560px;
+    height: 560px;
 
 
     img {
