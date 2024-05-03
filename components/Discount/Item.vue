@@ -63,4 +63,20 @@ onMounted(()=>{
         }
     }
 }
+
+@media (max-width:768px){
+    .actions-block-item{
+        width:40%
+    }
+}
+@media (max-width:576px){
+    .actions-block-item{
+        width:45%
+    }
+}
+@media (max-width:510px){
+    .actions-block-item{
+        width:100%
+    }
+}
 </style>
