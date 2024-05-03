@@ -186,7 +186,8 @@ const productName = (name: string) => {
 .item-add{
     opacity: 0;
     visibility: hidden;
-     animation: slideFromTopToBottom 0.5s
+     animation: slideFromTopToBottom 0.5s;
+     display: none
     
   }
 .item-block-info {

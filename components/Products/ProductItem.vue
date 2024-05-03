@@ -138,7 +138,8 @@ onMounted(async () => {
 .item-add{
    opacity: 0;
    visibility: hidden;
-    animation: slideFromTopToBottom 0.5s
+    animation: slideFromTopToBottom 0.5s;
+    display: none;
   }
 
 

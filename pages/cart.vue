@@ -93,6 +93,9 @@ const createOrder = () => {
     orderStore.createOrder()
 }
 
+onMounted(()=>{
+    window.scrollTo(0,0)
+})
 
 
 
