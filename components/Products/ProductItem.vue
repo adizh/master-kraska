@@ -6,7 +6,7 @@
         </div>
         <slot name="edit-items"></slot>
         <img :src="product?.images[0]" alt="product">
-        
+
 
 
 
@@ -48,6 +48,12 @@ const isProductExistsInCart = computed(() => {
 })
 
 
+
+const totalPrice=ref()
+if(props?.product?.price){
+    totalPrice.value=countToBuy.value * props?.product?.price
+}
+
 const removeCount =()=>{
     if(countToBuy.value>1){
         countToBuy.value=countToBuy.value-1
@@ -72,12 +78,6 @@ const removeCount =()=>{
 
     
 }
-const totalPrice=ref()
-if(props?.product?.price){
-    totalPrice.value=countToBuy.value * props?.product?.price
-}
-
-
 const increaseCount =()=>{
     countToBuy.value=countToBuy.value+1;
         if(props?.product?.price){
@@ -90,10 +90,11 @@ const increaseCount =()=>{
             const updatedItem = { ...props?.product, count: countToBuy.value, totalProdSum: totalPrice.value, initPrice: +props?.product?.price }
     if(updatedItem){
         cartStore.updateCartItem(updatedItem)
+        useNotif('success',t('successEdited'),t('success'))
     }
         }
     }
-    useNotif('success',t('successEdited'),t('success'))
+   
 }
 const addCart=()=>{
 if(props.product?.price){

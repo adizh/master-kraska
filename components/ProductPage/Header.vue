@@ -152,7 +152,7 @@ const isProductBookmarked = ref(false)
 const isProfileOpen = ref(false)
 const { getProduct } = storeToRefs(productStore)
 const sumHeight = computed(() => length.value * width.value);
-
+const {t}=useI18n()
 const toggle = (event: any) => {
     countOverlay.value.toggle(event);
 }
@@ -168,11 +168,59 @@ const selectVolumeSize = (value: string, index: number) => {
         selectedProductPrice.value = getProduct.value?.product?.variants[index].price
     }
 }
-const decreaseCount = () => {
-    if (countToBuy.value > 1) {
-        countToBuy.value--;
-        totalPrice.value = countToBuy.value * selectedProductPrice.value
+// const decreaseCount = () => {
+//     if (countToBuy.value > 1) {
+//         countToBuy.value--;
+//         totalPrice.value = countToBuy.value * selectedProductPrice.value
+//     }
+// }
+// const increaseCount = () => {
+//     countToBuy.value++;
+//     totalPrice.value = countToBuy.value * selectedProductPrice.value
+// }
+const decreaseCount =()=>{
+    if(countToBuy.value>1){
+        countToBuy.value=countToBuy.value-1
+        if(getProduct.value?.product?.price){
+            totalPrice.value=countToBuy.value * getProduct.value?.product?.price
+        }
+
+        if(isProductExistsInCart.value){
+      
+    }else{
+        if(getProduct.value?.product?.price){
+            const updatedItem = { ...getProduct?.value?.product, count: countToBuy.value, totalProdSum: totalPrice.value, initPrice: +getProduct.value?.product?.price }
+    if(updatedItem){
+        console.log('updatedItem',updatedItem)
+        store.updateCartItem(updatedItem)
+        useNotif('success',t('successEdited'),t('success'))
     }
+        }
+    }
+
+        
+    }
+
+    
+}
+const increaseCount =()=>{
+    countToBuy.value=countToBuy.value+1;
+        if(getProduct.value?.product?.price){
+            totalPrice.value=countToBuy.value * getProduct.value?.product?.price
+        }
+    if(isProductExistsInCart.value){
+      
+    }else{
+        if(getProduct.value?.product?.price){
+            const updatedItem = { ...getProduct?.value?.product, count: countToBuy.value, totalProdSum: totalPrice.value, initPrice: +getProduct.value?.product?.price }
+    if(updatedItem){
+        console.log('updatedItem',updatedItem)
+        store.updateCartItem(updatedItem)
+        useNotif('success',t('successEdited'),t('success'))
+    }
+        }
+    }
+   
 }
 
 const toggleBoomark = (id: string) => {
@@ -180,10 +228,6 @@ const toggleBoomark = (id: string) => {
     productStore.addToBookmarks(id)
 }
 
-const increaseCount = () => {
-    countToBuy.value++;
-    totalPrice.value = countToBuy.value * selectedProductPrice.value
-}
 
 
 const confirmCreatePay = async () => {
@@ -224,18 +268,12 @@ const buyNow = () => {
 
 const addToCart = () => {
     if (authStore.getUserId) {
-
         const prodItem = { ...getProduct.value?.product, count: countToBuy.value, totalProdSum: totalPrice.value, initPrice: selectedProductPrice.value }
         store.addToCart(prodItem)
-
     }
-
     else {
-
-
         isProfileOpen.value = true
     }
-
 }
 
 
