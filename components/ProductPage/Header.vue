@@ -162,7 +162,7 @@ ratingValue.value = getProduct.value?.product?.rating
 
 
 const selectVolumeSize = (value: string, index: number) => {
-    calcLeastAmoint()
+   // calcLeastAmoint()
     volumeBtn.value = value;
     if (getProduct.value?.product?.variants) {
         selectedProductPrice.value = getProduct.value?.product?.variants[index].price
@@ -294,8 +294,8 @@ const isProductExistsInCart = computed(() => {
 })
 
 const leastSmallAmount = ref(0)
-const calcLeastAmoint = async () => {
-    const variants = await getProduct.value?.product.variants;
+const calcLeastAmoint =  () => {
+    const variants =  getProduct.value?.product.variants;
     if (!variants || variants?.length === 0 && variants == null) {
         return -1;
     } else {
@@ -316,7 +316,9 @@ const prodCart=computed(()=>{
     return store?.getAllCart?.find((item:ExtendedProduct)=>item?.id===getProduct?.value?.product?.id)
 })
 
-console.log('prodCart',prodCart)
+
+
+
 if(prodCart.value && prodCart.value!==null){
     countToBuy.value=prodCart?.value?.count
 }
@@ -330,18 +332,21 @@ onMounted(async () => {
     productStore.fetchProductById(props?.productId)
     productStore.getBookmarks(getProduct.value?.product?.id);
     isProductBookmarked.value = productStore.getProductBookmarked;
-    calcLeastAmoint()
+
     if (getProduct && getProduct?.value?.product?.brandId) {
         productBrand.value = await getBrandId(getProduct?.value?.product?.brandId);
     }
-    if (getProduct.value?.product?.variants && leastSmallAmount?.value) {
-        selectedProductPrice.value = getProduct.value?.product?.variants[leastSmallAmount.value]?.price;
-        volumeBtn.value = getProduct.value?.product?.variants[leastSmallAmount.value]?.size;
-    } else {
-        selectedProductPrice.value = getProduct.value?.product?.price
-    }
-
-    totalPrice.value = countToBuy.value * selectedProductPrice.value
+    selectedProductPrice.value = getProduct.value?.product?.price
+    // if (getProduct.value?.product?.variants) {
+    //     selectedProductPrice.value = getProduct.value?.product?.variants[leastSmallAmount.value]?.price;
+    //     volumeBtn.value = getProduct.value?.product?.variants[leastSmallAmount.value]?.size;
+    // } else {
+    //     selectedProductPrice.value = getProduct.value?.product?.price
+    // }
+   // calcLeastAmoint()
+    totalPrice.value = countToBuy.value * selectedProductPrice.value;
+    console.log('leastSmallAmount',leastSmallAmount)
+    console.log('getProduct in the HEAder',getProduct)
 })
 
 </script>
@@ -455,9 +460,10 @@ onMounted(async () => {
 }
 
 .right {
-    width: 30%;
+    width: 45%;
     padding: 20px;
     border: 1px solid $slider-border-color;
+
     border-radius: 10px;
     @include flex(column, start, space-between, 25px);
 
@@ -506,7 +512,7 @@ onMounted(async () => {
 }
 
 .left {
-    width: 35%;
+    width: 30%;
 
     img {
         width: 100%;
@@ -514,6 +520,7 @@ onMounted(async () => {
 }
 
 .middle {
+    width: 65%;
     @include flex(column, start, space-between, 22px);
 
     &-header {

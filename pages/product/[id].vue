@@ -14,13 +14,17 @@
 </template>
 
 <script setup lang="ts">
+
 const route = useRoute();
 
+const id = route.params.id as string;
 
-const id = route.params.id as string
-const productsStore = useProductsSstore()
+const productsStore = useProductsSstore();
+
 const { getProduct } = storeToRefs(productsStore);
-const isLoading = ref(false)
+
+const isLoading = ref(false);
+
 onMounted(async () => {
     isLoading.value = true
     await productsStore.fetchProductById(id as string);
@@ -32,7 +36,7 @@ onMounted(async () => {
 console.log('getProduct',getProduct)
 
 watch(() => id, () => {
-    productsStore.fetchProductById(id.value as string)
+    productsStore.fetchProductById(id as string)
 });
 
 
