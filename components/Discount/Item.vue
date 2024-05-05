@@ -8,7 +8,7 @@
         </p>
     </div>
 
-    <div  v-else-if="isLoading && !discounts?.length"  class="text-center"> <ProgressSpinner/></div>
+    <!-- <div  v-else-if="isLoading && !discounts?.length"  class="text-center"> <ProgressSpinner/></div> -->
     <div v-else>{{ $t('noData') }} </div>
 </template>
 
