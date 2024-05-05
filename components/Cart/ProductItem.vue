@@ -13,7 +13,6 @@
                 <span class="item-block-description" v-if="item?.productDescription"> {{ productDescrHorizontal }}</span>
 
                 
-
             </div>
         </div>
 
@@ -81,7 +80,9 @@ const confirmDelete=()=>{
 
 @media (max-width:1000px) {
     .cart-main-info-prod-img {
-        width: 50%;
+        width: 200px;
+        display: flex;
+        justify-content: center;
     }
 
     .cart-main-info-prod h3 {
@@ -98,7 +99,7 @@ const confirmDelete=()=>{
 @media (max-width:768px) {
     .cart-main-info-prod-img {
 
-        width: 80%;
+        width: 280px;
     }
 
     .cart-main-info-prod {

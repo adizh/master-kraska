@@ -232,10 +232,9 @@ h2 {
   }
 }
 .cart-main-info-prod-img {
-  width: 50%;
 
   img {
-    width: 100%;
+    width:180px;
   }
 }
 
@@ -533,12 +532,14 @@ h2 {
   .news-list{
     flex-direction: column;
   }
+  .cart-main-info-prod {
+    flex-direction: column !important;
+    align-items: center;
+}
 }
 @media (max-width: 576px) {
  
   .cart-main-info-prod {
-    flex-direction: column !important;
-    align-items: center;
 
     &-items {
       flex-direction: column !important;

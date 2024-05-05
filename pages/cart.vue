@@ -10,7 +10,7 @@
             </div>
 
             <div class="cart-main-info-price lg:col-4 md:col-6 sm:col-12 col-12">
-                <button class="pink-button" @click='isConfirmOpen = true'>{{ $t('goToRegister') }}</button>
+                <button class="pink-button margin-bottom-20 margin-top-40" @click='isConfirmOpen = true'>{{ $t('goToRegister') }}</button>
                 <div class="cart-main-info-price-block">
                     <div class="first">
                         <span>{{ $t('all') }}: {{ store.numberOfProds }}  {{ $t('product') }}</span>
