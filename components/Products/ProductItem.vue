@@ -6,8 +6,11 @@
         </div>
         <slot name="edit-items"></slot>
         <img :src="product?.images[0]" alt="product">
+
         <span class="item-block-name">{{ productName }}</span>
+
         <span class="item-block-description">{{ productInfo }} </span>
+
         <button class="pink-button prod-price" @click.stop="addCart">{{ !isItemHovered ? product?.price +'сом': isItemHovered && isProductExistsInCart ? $t('toCart') : $t('addedToCart')  }}</button>
         <div class="item-add-btns">
             <button @click.stop="removeCount">-</button>
@@ -112,8 +115,11 @@ const emit = defineEmits<{
 }>()
 
 
+// const productName = computed(() => {
+//     return props?.product?.name && props?.product?.name?.split(' ').length > 9 ? props?.product?.name.split(' ').slice(0, 9).join(' ') + '...' : props?.product?.name
+// })
 const productName = computed(() => {
-    return props?.product?.name && props?.product?.name?.split(' ').length > 9 ? props?.product?.name.split(' ').slice(0, 9).join(' ') + '...' : props?.product?.name
+    return props?.product?.name && props?.product?.name?.split(' ').length > 13 ? props?.product?.name.split(' ').slice(0, 13).join(' ') + '...' : props?.product?.name
 })
 
 const productInfo = computed(() => {

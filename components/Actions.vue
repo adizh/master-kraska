@@ -117,13 +117,14 @@ onMounted(async () => {
         width: 100% !important;
     }
 }
-
+@media (max-width:768px){
+    .actions-block {
+       flex-direction: column;
+       align-items: center;
+    } 
+}
 
 @media (min-width:320px) and (max-width:768px) {
-    .actions-block {
-        flex-wrap: wrap;
-    }
-
     .brands-text {
         max-width: 100%;
     }

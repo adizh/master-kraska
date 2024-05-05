@@ -1,6 +1,6 @@
 <template>
     <div class="actions-block-item" v-for="item in discounts" :key="item?.id" v-if="!isLoading && discounts?.length"
-     :class="{'width-30':!isLoading && discounts?.length}">
+    >
      <img :src="item?.image" alt="discount">
         <div class="actions-block-item-header" > {{ item?.title }}</div>
         <p class="actions-block-item-info">
@@ -69,12 +69,12 @@ onMounted(()=>{
 
 @media (max-width:768px){
     .actions-block-item{
-        width:40%
+        width:60%
     }
 }
 @media (max-width:576px){
     .actions-block-item{
-        width:45%
+        width:75%
     }
 }
 @media (max-width:510px){
