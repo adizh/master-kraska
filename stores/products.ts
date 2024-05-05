@@ -127,7 +127,7 @@ if(response.status===200){
               ...response.data,
               product: {
                 ...response.data.product,
-                name: response.data?.product?.nameKg,
+                name: response.data?.product?.nameRu,
                 shortDescription: response.data?.product?.shortDescriptionRu,
                 description: response.data?.product?.descriptionRu.replace(
                   /<(\/?(p|br|h[1-5]|strong|img|a|div|span)( [^>]*)?)\/?>/g,

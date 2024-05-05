@@ -1,6 +1,7 @@
 <template>
     <div class="actions-block-item" v-for="item in discounts" :key="item?.id" v-if="!isLoading && discounts?.length"
-    :style="{background:`url(${item?.image})`}">
+     :class="{'width-30':!isLoading && discounts?.length}">
+     <img :src="item?.image" alt="discount">
         <div class="actions-block-item-header" > {{ item?.title }}</div>
         <p class="actions-block-item-info">
             {{ item?.description }}
@@ -43,17 +44,18 @@ onMounted(()=>{
 </script>
 
 <style scoped lang="scss">
-
+.width-30{
+    width: 30%  !important;
+}
 .actions-block {
     &-item {
         padding: 20px 10px 25px 10px;
         border-radius: 10px;
         text-align: center;
-        width: 30%;
-        height:376px;
-        background-size: cover !important;
-        background-repeat: no-repeat;
-    
+   width: 30%;
+    img{
+        width: 100%;
+    }
         &-header {
             font-size: 20px;
             font-weight: 600;

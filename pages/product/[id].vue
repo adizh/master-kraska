@@ -1,6 +1,7 @@
 <template>
     <section v-if="getProduct && getProduct != undefined && Object.entries(getProduct)?.length > 0 && !isLoading">
         <ProductPageHeader :productId="id" />
+
         <ProductPageInfo :item="getProduct?.product" />
     
         <ProductPageSImilarItems :similarItems="getProduct?.similarProducts" />
@@ -16,18 +17,19 @@
 const route = useRoute();
 
 
-const id = ref(route.params.id)
+const id = route.params.id as string
 const productsStore = useProductsSstore()
 const { getProduct } = storeToRefs(productsStore);
 const isLoading = ref(false)
 onMounted(async () => {
     isLoading.value = true
-    await productsStore.fetchProductById(id.value as string);
+    await productsStore.fetchProductById(id as string);
     setTimeout(() => {
         isLoading.value = false
     }, 1000)
 })
 
+console.log('getProduct',getProduct)
 
 watch(() => id, () => {
     productsStore.fetchProductById(id.value as string)

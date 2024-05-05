@@ -253,7 +253,6 @@ const productName = (name: string) => {
 
     &-name {
         max-width: $product-item-width;
-        text-align: center !important;
         font-size: 18px;
         font-weight: 600;
         color: $main-black;

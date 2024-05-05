@@ -21,10 +21,11 @@
 
 <style scoped lang="scss">
 .koler {
+    margin-top: 77px;
     background-image: url('/static/sofa.png');
     background-repeat: no-repeat;
     background-size: contain;
-    height: 100vh;
+    height: 80vh;
     background-position: center center;
     width: 100%;
     @include flex(column, center, start);

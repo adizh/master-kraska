@@ -19,39 +19,37 @@
                 </div>
             </div>
 
-            <div class="main-page-header animate__animated" v-else-if="currentIndex === 1" :class="{
+            <div class="main-page-header animate__animated"  v-else-if="currentIndex === 1" :class="{
                 'animate__slideInRight': currentIndex === 1 && direction === 'next',
                 'animate__slideInLeft': currentIndex === 1 && direction === 'prev'
-            }">
+            }" >
                 <div class="left">
-                    <h1>Мастер Краска 1</h1>
-                    <div class="sub-header">{{ $t('officialRepres') }}
+                    <h1>{{ discountsFirst?.title }}</h1>
+                    <div class="sub-header">{{ discountsFirst?.description}}
                     </div>
-                    <button class="pink-button">
+                    <button class="pink-button" @click="navigateTo('/parameters')">
                         {{ $t('searchByParams') }}</button>
                 </div>
                 <div class="right">
-                    <img src="/main-page.png" format="webp"/>
+                    <img :src="discountsFirst?.image" format="webp"/>
                 </div>
             </div>
 
-            <div class="main-page-header animate__animated" v-else-if="currentIndex === 2" :class="{
+            <div class="main-page-header animate__animated"  v-else-if="currentIndex === 2" :class="{
                 'animate__slideInRight': currentIndex === 2 && direction === 'next',
                 'animate__slideInLeft': currentIndex === 2 && direction === 'prev'
-            }">
+            }" >
                 <div class="left">
-                    <h1>Мастер Краска 2</h1>
-                    <div class="sub-header">{{ $t('officialRepres') }}
+                    <h1>{{ discountsSecond?.title }}</h1>
+                    <div class="sub-header">{{ discountsSecond?.description}}
                     </div>
-                    <button class="pink-button">
+                    <button class="pink-button" @click="navigateTo('/parameters')">
                         {{ $t('searchByParams') }}</button>
                 </div>
                 <div class="right">
-
-                    <img src="/main-page.png" format="webp" />
+                    <img :src="discountsSecond?.image" format="webp"/>
                 </div>
             </div>
-
 
             <div class="controls">
                 <img src="../assets/icons/arrow-right.svg" @click="prevSlide"  alt="arrow"/>
@@ -63,11 +61,8 @@
                     <span @click="changeSlide(2)"
                         :class="{ 'active-control': currentIndex === 2, 'next-slide': direction === 'next', 'prev-slide': direction === 'prev' }"></span>
                 </div>
-                
                 <img @click="nextSlide" src="../assets/icons/arrow-left.svg"  alt='arrow-left'/>
-
             </div>
-
         </div>
     </div>
 
@@ -76,6 +71,41 @@
 </template>
 
 <script lang="ts" setup>
+
+import {Discount} from '@/types/Discout'
+const discounts = ref([] as Discount[]);
+const discountsFirst = ref({} as Discount);
+const discountsSecond = ref({} as Discount);
+
+const isLoading=ref(false)
+const authStore=useAuthStore()
+
+const getDiscounts=async()=>{
+    isLoading.value=true
+    try{
+const response= await http('/api/v1/Banner/get-all-banners');
+if(response.status===200){
+    console.log('response data in discount',response)
+    discounts.value=response.data.map((item:Discount)=>{
+        if(authStore?.getSelectedLang==='kg'){
+            return {...item, title:item?.titleKg,buttonText:item?.buttonTextKg,description:item?.descriptionKg}
+        }else{
+            return {...item, title:item?.titleRu,buttonText:item?.buttonTextRu,description:item?.descriptionRu}
+        }
+
+    })
+    discountsFirst.value=discounts.value[0]
+    discountsSecond.value=discounts.value[1]
+}
+    }catch(err){
+        console.log(err)
+    }finally{
+        isLoading.value=false
+    }
+}
+onMounted(()=>{
+    getDiscounts()
+})
 import 'animate.css';
 const currentIndex = ref(0)
 const direction = ref('');

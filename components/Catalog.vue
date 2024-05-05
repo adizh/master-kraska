@@ -96,11 +96,8 @@ const closeCatalogOptions = () => {
     const listContainer = ref<HTMLUListElement | null>(null);
 
 const handleScroll = (event:any) => {
-
     let currectItemTop:any;
-   
-
-  if (listContainer.value ){
+    if (listContainer.value ){
     const listItems = listContainer.value.getElementsByTagName('li');
     Array.from(listItems).forEach((item, index) => {
         const itemPosition = item.offsetTop - (listContainer.value ? listContainer.value.offsetTop : 0);
@@ -108,10 +105,10 @@ const handleScroll = (event:any) => {
 // if(event.target.textContent===item.textContent){
 //     currectItemTop=itemPosition
 // }
-
       const firstVisibleItem = Array.from(listItems).find(item => {
         return item.getBoundingClientRect().top >= 50
     });
+
     if(firstVisibleItem?.textContent===item.textContent){
         currectItemTop=itemPosition
     }
@@ -190,10 +187,12 @@ ul li {
     z-index: 9;
     display: none;
     pointer-events: none;
+    transition: 17s ease;
 }
 
 .backdrop.show {
     display: block;
+    transition: 17s ease;
 }
 
 

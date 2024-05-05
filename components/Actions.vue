@@ -1,5 +1,5 @@
 <template>
-    <div class="each-section">
+    <div>
         <div class="sub-header-section">
             <h5 class='each-section-header'>{{ $t('discounts') }}</h5>
 

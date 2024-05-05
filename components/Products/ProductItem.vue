@@ -15,18 +15,6 @@
                 <button @click.stop="increaseCount">+</button>
            </div>
 
-<!-- <div class="item-add">
-   <div>
-    <button class="pink-button" @click.stop="addCart">
-        {{ isProductExistsInCart ? $t('addToCart') : $t('addedToCart') }}
-    </button>
-   </div>
-   <div class="item-add-btns">
-    <button @click.stop="removeCount">-</button>
-    <span>{{ countToBuy }}</span>
-        <button @click.stop="increaseCount">+</button>
-   </div>
-</div> -->
     </div>
 </template>
 
@@ -174,11 +162,6 @@ onMounted(async () => {
     transition: .5s;
   }
 
-
-
-  
-
-
 .item-block {
     transition: .5s ease all;
     border-radius: 10px;
@@ -231,13 +214,9 @@ button{
         width: 100%;
         display: block;
         text-align: left;
-        margin-bottom: 15px;
         word-break: break-all;
         max-height: 60px;
         height: 100%;
-
-
-
         line-height: 20px;
 
     }
@@ -245,11 +224,9 @@ button{
     &-info {
         max-width: $product-item-width;
         width: $product-item-width;
-
     }
 
     &-buy {
-
         width: $product-item-width
     }
 }

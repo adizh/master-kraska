@@ -88,7 +88,10 @@ const openBurger = () => {
 }
 
 const toggleCatalog = () => {
-    isCatalogOpen.value = true
+
+        isCatalogOpen.value = true;
+
+   
 }
 const clickToggleCatalog= () => {
     if(isCatalogOpen.value){

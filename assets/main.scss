@@ -359,7 +359,7 @@ h2 {
 .pink-button {
   @extend %button-shared;
   display: block;
-  margin-top: 2.6rem;
+  margin-top: 20px;
   font-size: 20px;
   transition: 0.3s;
   &:hover {
@@ -525,7 +525,6 @@ h2 {
   @include textFormat(14px, 20px, 600, $main-dark-grey);
   max-width: 95%;
   width: 100%;
-  margin-top: 10px;
   height: 83px;
   word-break: break-all;
 }

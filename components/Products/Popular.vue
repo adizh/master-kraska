@@ -72,4 +72,12 @@ onUnmounted(() => {
     width: 36px;
     height: 36px
 }
+:deep(.swiper-button-prev){
+    margin-left: -10px;
+}
+
+:deep(.swiper-button-next){
+    margin-right: -10px;
+}
+
 </style>

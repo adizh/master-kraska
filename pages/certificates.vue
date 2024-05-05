@@ -38,7 +38,7 @@ onMounted(()=>{
 
 <style scoped lang="scss">
 .info-certif-img{
-    @include flex(row,space-between,center);
+    @include flex(row,start,center,25px);
     flex-wrap: wrap;
     img{
         width: 18%;

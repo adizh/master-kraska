@@ -9,9 +9,7 @@
                 </div>
                 <div class="btn-block">
                     <button>Найти</button>
-                    
                 </div>
-
             </div>
             <SearchOptions :isSearchOpen="isSearchOpen" @closeSearch="isSearchOpen = false" />
             <div class="overlay-header-options" v-show="isSearchOpen" :class="{ 'open': isSearchOpen }"></div>
