@@ -1,6 +1,6 @@
 <template>
     <div class="backdrop" :class="{ 'show': isCatalogOpen }"></div>
-    <div class="catalog-options open" :class="{ 'open': isCatalogOpen }" @mouseleave="closeCatalogOptions" >
+    <div class="catalog-options" :class="{ 'open': isCatalogOpen }" @mouseleave="closeCatalogOptions" >
         <h5 class='each-section-header'>{{ $t('productsCatalog') }}</h5>
         <div class="options-list" >
             <ul class="first-col" ref="listContainer" @scroll="handleScroll">
@@ -115,7 +115,7 @@ const handleScroll = (event:any) => {
 
     if (firstVisibleItem && currectItemTop) {
       const secondCol=document.querySelector('.second-col') as HTMLElement;
-    secondCol.style.top=currectItemTop+'px'
+    secondCol.style.marginTop=currectItemTop+'px'
     }
     });
 
@@ -160,9 +160,9 @@ watch(() => authStore.getSelectedLang, () => {
 
 .second-col {
     padding-left: 40px;
-    position: absolute;
+
    width: 400px;
-   right:19rem
+
 }
 
 .first-col {

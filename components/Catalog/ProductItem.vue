@@ -258,10 +258,11 @@ const productName = (name: string) => {
         color: $main-black;
         width: 100%;
         display: block;
-        text-align: left;
+        text-align: left
         height: 60px;
         line-height: 20px;
         margin-top: 10px;
+        overflow-x: hidden;
 
 
     }
