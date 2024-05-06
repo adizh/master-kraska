@@ -22,36 +22,17 @@ ssr:false,
 
   app: {
     head: {
-      link: [
-            
+      
+      link: [    
         {rel:'icon',
         type: 'image/x-icon',
         hid: 'icon',
       href:'/favicon.ico',
       sizes:'16x16'
-
       },
-          
-    //   {rel:'apple-touch-icon',
-    //   type: 'image/x-icon',
-    // href:'/favicon.png',
-    // sizes:'16x16'
+      ],
 
-    // }
-        // {
-        //   rel: "stylesheet",
-        //   href: "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css",
-        // },
-        // {
-        //   rel: "stylesheet",
-        //   href: "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css",
-        // },
-      ],
-      script: [
-        // {
-        //   src: "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js",
-        // },
-      ],
+      
     },
   },
 
