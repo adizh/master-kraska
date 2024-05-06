@@ -19,37 +19,66 @@
                 </div>
             </div>
 
-            <div class="main-page-header animate__animated"  v-else-if="currentIndex === 1" :class="{
+            <div class="animate__animated"  v-else-if="currentIndex === 1" :class="{
                 'animate__slideInRight': currentIndex === 1 && direction === 'next',
                 'animate__slideInLeft': currentIndex === 1 && direction === 'prev'
             }" >
-                <div class="left">
-                    <h1></h1>
-                    <div class="sub-header">
-                    </div>
-                    <button class="pink-button" @click="navigateTo('/parameters')">
-                        {{ $t('searchByParams') }}</button>
-                </div>
-                <div class="right">
+                <div class="banner-block">
                     <img src='../assets/images/1180x520.png' format="webp"/>
                 </div>
             </div>
 
-            <div class="main-page-header animate__animated"  v-else-if="currentIndex === 2" :class="{
+            <div class="animate__animated"  v-else-if="currentIndex === 2" :class="{
                 'animate__slideInRight': currentIndex === 2 && direction === 'next',
                 'animate__slideInLeft': currentIndex === 2 && direction === 'prev'
             }" >
-                <div class="left">
-                    <h1></h1>
-                    <div class="sub-header">
-                    </div>
-                    <button class="pink-button" @click="navigateTo('/parameters')">
-                        {{ $t('searchByParams') }}</button>
-                </div>
-                <div class="right">
+                
+                <div class="banner-block">
                     <img src="../assets/images/image001.png" format="webp"/>
                 </div>
             </div>
+            <div class="animate__animated"  v-else-if="currentIndex === 3" :class="{
+                'animate__slideInRight': currentIndex === 3 && direction === 'next',
+                'animate__slideInLeft': currentIndex === 3 && direction === 'prev'
+            }" >
+                
+                <div class="banner-block">
+                    <img src="../assets/images/Oikos_Banner_Kraska_1180x520.gif" format="webp"/>
+                </div>
+            </div>
+
+            <div class="animate__animated"  v-else-if="currentIndex === 4" :class="{
+                'animate__slideInRight': currentIndex === 4 && direction === 'next',
+                'animate__slideInLeft': currentIndex === 4 && direction === 'prev'
+            }" >
+                
+                <div class="banner-block">
+                    <img src="../assets/images/Oikos_Banner_Kraska_1180x520_Encanto.jpg" format="webp"/>
+                </div>
+            </div>
+
+            <div class="animate__animated"  v-else-if="currentIndex === 5" :class="{
+                'animate__slideInRight': currentIndex ===5 && direction === 'next',
+                'animate__slideInLeft': currentIndex === 5 && direction === 'prev'
+            }" >
+                
+                <div class="banner-block">
+                    <img src="../assets/images/Oikos_Banner_Kraska_1180x520_MultidecorSkin.jpg" format="webp"/>
+                </div>
+            </div>
+
+
+            <div class="animate__animated"  v-else-if="currentIndex === 6" :class="{
+                'animate__slideInRight': currentIndex === 6 && direction === 'next',
+                'animate__slideInLeft': currentIndex === 6 && direction === 'prev'
+            }" >
+                
+                <div class="banner-block">
+                    <img src="../assets/images/Oikos_Banner_Kraska_1180x520_Ottocento.jpg" format="webp"/>
+                </div>
+            </div>
+
+          
 
             <div class="controls">
                 <img src="../assets/icons/arrow-right.svg" @click="prevSlide"  alt="arrow"/>
@@ -68,8 +97,7 @@
                         :class="{ 'active-control': currentIndex === 5, 'next-slide': direction === 'next', 'prev-slide': direction === 'prev' }"></span>
                         <span @click="changeSlide(6)"
                         :class="{ 'active-control': currentIndex === 6, 'next-slide': direction === 'next', 'prev-slide': direction === 'prev' }"></span>
-                        <span @click="changeSlide(7)"
-                        :class="{ 'active-control': currentIndex === 7, 'next-slide': direction === 'next', 'prev-slide': direction === 'prev' }"></span>
+                       
              
              
                     </div>
@@ -122,9 +150,11 @@ import 'animate.css';
 const currentIndex = ref(0)
 const direction = ref('');
 const nextSlide = () => {
-    if (currentIndex.value < 2) {
+
+    if (currentIndex.value < 6) {
         currentIndex.value++
         direction.value = 'next';
+        console.log('is it sliding???')
     }
 }
 
@@ -143,6 +173,11 @@ const prevSlide = () => {
 
 
 <style scoped lang="scss">
+.banner-block{
+    img{
+        width: 100%;
+    }
+}
 .slider-wrapper {
     background: $main-white;
     border-radius: 10px;
