@@ -91,8 +91,9 @@ const submitLogin = async () => {
             )
             if (response.status === 200) {
                 emit('closeLoginModal');
-                localStorage.setItem('userId', response.data.message.id);
-                localStorage.setItem('token', response.data.message.token);
+                console.log('login the user',response.data)
+                localStorage.setItem('userId', response.data.userId);
+                localStorage.setItem('token', response.data.token);
                 setTimeout(() => {
                     window.location.reload()
                 }, 500)

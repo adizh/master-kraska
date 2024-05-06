@@ -267,13 +267,8 @@ const buyNow = () => {
 }
 
 const addToCart = () => {
-    if (authStore.getUserId) {
-        const prodItem = { ...getProduct.value?.product, count: countToBuy.value, totalProdSum: totalPrice.value, initPrice: selectedProductPrice.value }
-        store.addToCart(prodItem)
-    }
-    else {
-        isProfileOpen.value = true
-    }
+    const prodItem = { ...getProduct.value?.product, count: countToBuy.value, totalProdSum: totalPrice.value, initPrice: selectedProductPrice.value }
+       store.addToCart(prodItem)
 }
 
 
@@ -294,29 +289,11 @@ const isProductExistsInCart = computed(() => {
 })
 
 const leastSmallAmount = ref(0)
-const calcLeastAmoint =  () => {
-    const variants =  getProduct.value?.product.variants;
-    if (!variants || variants?.length === 0 && variants == null) {
-        return -1;
-    } else {
-        let smallestPrice = variants[0]?.price;
-        let smallestPriceIndex = 0;
-        for (let i = 1; i < variants?.length; i++) {
-            const variantPrice = variants[i]?.price;
-            if (variantPrice < smallestPrice) {
-                smallestPrice = variantPrice;
-                smallestPriceIndex = i;
-            }
-        }
-        leastSmallAmount.value = smallestPriceIndex || 0
-    }
-}
+
 
 const prodCart=computed(()=>{
     return store?.getAllCart?.find((item:ExtendedProduct)=>item?.id===getProduct?.value?.product?.id)
 })
-
-
 
 
 if(prodCart.value && prodCart.value!==null){
@@ -337,16 +314,8 @@ onMounted(async () => {
         productBrand.value = await getBrandId(getProduct?.value?.product?.brandId);
     }
     selectedProductPrice.value = getProduct.value?.product?.price
-    // if (getProduct.value?.product?.variants) {
-    //     selectedProductPrice.value = getProduct.value?.product?.variants[leastSmallAmount.value]?.price;
-    //     volumeBtn.value = getProduct.value?.product?.variants[leastSmallAmount.value]?.size;
-    // } else {
-    //     selectedProductPrice.value = getProduct.value?.product?.price
-    // }
-   // calcLeastAmoint()
     totalPrice.value = countToBuy.value * selectedProductPrice.value;
-    console.log('leastSmallAmount',leastSmallAmount)
-    console.log('getProduct in the HEAder',getProduct)
+  
 })
 
 </script>
