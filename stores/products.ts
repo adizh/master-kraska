@@ -110,7 +110,7 @@ if(response.status===200){
                 name: response.data?.product?.nameKg,
                 shortDescription: response.data?.product?.shortDescriptionKg,
                 description: response.data?.product?.descriptionKg.replace(
-                  /<(\/?(p|br|h[1-5]|strong|img|a|div|span)( [^>]*)?)\/?>/g,
+                  /<(\/?(p|br|h[1-5]|strong|img|a|div|span|li|ul|ol)( [^>]*)?)\/?>/g,
                   ""
                 ),
               },
@@ -130,7 +130,7 @@ if(response.status===200){
                 name: response.data?.product?.nameRu,
                 shortDescription: response.data?.product?.shortDescriptionRu,
                 description: response.data?.product?.descriptionRu.replace(
-                  /<(\/?(p|br|h[1-5]|strong|img|a|div|span)( [^>]*)?)\/?>/g,
+                  /<(\/?(p|br|h[1-5]|strong|img|a|div|span|li|ul|ol)( [^>]*)?)\/?>/g,
                   ""
                 ),
               },

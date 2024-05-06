@@ -190,13 +190,13 @@ if(response.status===200){
     currentOrder.value={...response.data, items:response.data?.items?.map((item:UserOrder)=>{
              if(authStore.getSelectedLang==='kg'){
                     return {...item, productName:item?.productNameKg,productDescription:item?.productDescriptionKg.replace(
-                  /<(\/?(p|br|h[1-5]|strong|img|a|div|span)( [^>]*)?)\/?>/g,
+                  /<(\/?(p|br|h[1-5]|strong|img|a|div|span|li|ul|ol)( [^>]*)?)\/?>/g,
                   ""
                 )
             }
                 }else{
                     return {...item, productName:item?.productNameRu,productDescription:item?.productDescriptionRu.replace(
-                  /<(\/?(p|br|h[1-5]|strong|img|a|div|span)( [^>]*)?)\/?>/g,
+                  /<(\/?(p|br|h[1-5]|strong|img|a|div|span|li|ul|ol)( [^>]*)?)\/?>/g,
                   ""
                 )}
 

@@ -262,9 +262,6 @@ const productName = (name: string) => {
         height: 60px;
         line-height: 20px;
         margin-top: 10px;
-        overflow-x: hidden;
-
-
     }
 
     &-info {

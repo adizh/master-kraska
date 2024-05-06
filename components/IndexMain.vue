@@ -20,8 +20,8 @@
             </div>
 
             <div class="animate__animated"  v-else-if="currentIndex === 1" :class="{
-                'animate__slideInRight': currentIndex === 1 && direction === 'next',
-                'animate__slideInLeft': currentIndex === 1 && direction === 'prev'
+                'animate__fadeInRight': currentIndex === 1 && direction === 'next',
+                'animate__fadeInLeft': currentIndex === 1 && direction === 'prev'
             }" >
                 <div class="banner-block">
                     <img src='../assets/images/1180x520.png' format="webp"/>
@@ -154,7 +154,6 @@ const nextSlide = () => {
     if (currentIndex.value < 6) {
         currentIndex.value++
         direction.value = 'next';
-        console.log('is it sliding???')
     }
 }
 
