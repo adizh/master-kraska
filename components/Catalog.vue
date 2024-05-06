@@ -1,6 +1,6 @@
 <template>
     <div class="backdrop" :class="{ 'show': isCatalogOpen }"></div>
-    <div class="catalog-options" :class="{ 'open': isCatalogOpen }" @mouseleave="closeCatalogOptions" >
+    <div class="catalog-options open" :class="{ 'open': isCatalogOpen }" @mouseleave="closeCatalogOptions" >
         <h5 class='each-section-header'>{{ $t('productsCatalog') }}</h5>
         <div class="options-list" >
             <ul class="first-col" ref="listContainer" @scroll="handleScroll">
