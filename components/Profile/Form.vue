@@ -118,6 +118,8 @@ onMounted(async () => {
     inputs.value.phone.value = store.getUser.phone;
     inputs.value.address.value = store.getUser.address;
     inputs.value.image.value = store.getUser.image;
+
+    console.log('getUser',store.getUser)
 });
 const { t } = useI18n()
 const { handleValues } = useInputValidation()

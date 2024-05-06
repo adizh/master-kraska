@@ -21,13 +21,13 @@ export const useAuthStore = defineStore("authStore", {
             `/api/v1/User/get-user-by-id/${this.getUserId}`
           );
           console.log("response fetchUser", response);
-          this.user.firstName = response.data.message.firstName;
-          this.user.lastName = response.data.message.lastName;
-          this.user.address = response.data.message.address;
-          this.user.phone = response.data.message.phoneNumber;
-          this.user.email = response.data.message.email;
-          this.user.image = response.data.message.image;
-          this.user.isNotificationsAllowed=response.data.message.isNotificationsAllowed
+          this.user.firstName = response.data.firstName;
+          this.user.lastName = response.data.lastName;
+          this.user.address = response.data.address;
+          this.user.phone = response.data.phoneNumber;
+          this.user.email = response.data.email;
+          this.user.image = response.data.image;
+          this.user.isNotificationsAllowed=response.data.isNotificationsAllowed
         } catch (err) {
           console.log(err);
         }
