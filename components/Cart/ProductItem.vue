@@ -80,6 +80,7 @@ const confirmDelete=()=>{
 
 @media (max-width:1000px) {
     .cart-main-info-prod-img {
+        
         width: 200px;
         display: flex;
         justify-content: center;

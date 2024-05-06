@@ -13,6 +13,7 @@
 
                 <div class="col-12 sm:col-12 md:col-9 lg:col-8 right-side" v-if="selectedTab === 1">
                     <ProfileForm />
+
                 </div>
 
                 <div class="col-12 md:col-12 lg:col-9 right-side" v-else-if="selectedTab === 2">
@@ -23,7 +24,8 @@
 
                 <div class="col-12 md:col-12 lg:col-8 right-side " v-else-if="selectedTab === 3">
                     <CartProductItem v-if="cartStore.getAllCart?.length" v-for="item in cartStore.getAllCart"
-                        :key="item?.id" :item="item">
+                        :key="item?.id" :item="item"   @removeFromCart="removeFromCart"
+                        @increaseCount="increaseCount" @decreaseCount="decreaseCount" @confirmDelete="confirmDelete">
                     </CartProductItem>
                     <div v-if="cartStore.getAllCart?.length > 0" class="flex justify-content-end flex-row"> <button
                             class="btn-white-bg" @click='cartStore.saveNewCart'>
@@ -36,7 +38,8 @@
                             <button class="pink-button" @click="isConfirmOpen = true">{{ $t('goToRegister') }}</button>
                             <div class="cart-main-info-price-block">
                                 <div class="first">
-                                    <span>{{ $t('all') }}: {{ cartStore.numberOfProds }} {{ $t('product') }}</span>
+                                    <span>{{ $t('all') }}: {{totalOfProdTotals}} 
+                                        {{ $t('product') }}</span>
                                     <span>{{ cartStore.totalOfTotalSum }} сом</span>
                                 </div>
                                 <div class="second">
@@ -108,6 +111,10 @@
             </div>
         </Dialog>
     </ClientOnly>
+    <Dialog v-model:visible="isDeleteOpen" modal :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
+    header=" ">
+    <ConfirmPay @confirm="removeFromCart" @cancel="isDeleteOpen = false"  :title="$t('deleteCartProdWarning')"/>
+</Dialog>
 
 </template>
 
@@ -126,7 +133,8 @@ const store = useAuthStore();
 const productsStore = useProductsSstore();
 const orderStore = useOrderStore()
 const cartStore = useCartStore()
-
+const currentProd=ref({} as ExtendedProduct);
+const isDeleteOpen=ref(false);
 const openLogout = () => {
     isLogoutOpen.value = true
 }
@@ -191,7 +199,27 @@ const addItemToBookmarks = (objectId: string) => {
     productsStore.addToBookmarks(objectId)
 }
 
+const confirmDelete=(prop:ExtendedProduct)=>{
+    isDeleteOpen.value=true;
+    currentProd.value=prop
+}
 
+const removeFromCart =()=>{
+    if(currentProd?.value){
+        cartStore.removeFromCart(currentProd.value)
+    }
+   isDeleteOpen.value=false
+}
+const increaseCount=(item:ExtendedProduct)=>{
+    cartStore.increaseCount(item)
+}
+
+const decreaseCount=(item:ExtendedProduct)=>{
+    cartStore.decreaseCount(item)
+}
+const totalOfProdTotals=computed(()=>{
+    return cartStore.getAllCart.reduce((acc,rec)=> acc + rec?.count,0)
+})
 onUnmounted(() => {
     localStorage.removeItem('selectedTab')
 
