@@ -24,14 +24,14 @@
                 'animate__slideInLeft': currentIndex === 1 && direction === 'prev'
             }" >
                 <div class="left">
-                    <h1>{{ discountsFirst?.title }}</h1>
-                    <div class="sub-header">{{ discountsFirst?.description}}
+                    <h1></h1>
+                    <div class="sub-header">
                     </div>
                     <button class="pink-button" @click="navigateTo('/parameters')">
                         {{ $t('searchByParams') }}</button>
                 </div>
                 <div class="right">
-                    <img :src="discountsFirst?.image" format="webp"/>
+                    <img src='../assets/images/1180x520.png' format="webp"/>
                 </div>
             </div>
 
@@ -40,14 +40,14 @@
                 'animate__slideInLeft': currentIndex === 2 && direction === 'prev'
             }" >
                 <div class="left">
-                    <h1>{{ discountsSecond?.title }}</h1>
-                    <div class="sub-header">{{ discountsSecond?.description}}
+                    <h1></h1>
+                    <div class="sub-header">
                     </div>
                     <button class="pink-button" @click="navigateTo('/parameters')">
                         {{ $t('searchByParams') }}</button>
                 </div>
                 <div class="right">
-                    <img :src="discountsSecond?.image" format="webp"/>
+                    <img src="../assets/images/image001.png" format="webp"/>
                 </div>
             </div>
 
@@ -60,7 +60,19 @@
                         :class="{ 'active-control': currentIndex === 1, 'next-slide': direction === 'next', 'prev-slide': direction === 'prev' }"></span>
                     <span @click="changeSlide(2)"
                         :class="{ 'active-control': currentIndex === 2, 'next-slide': direction === 'next', 'prev-slide': direction === 'prev' }"></span>
-                </div>
+                        <span @click="changeSlide(3)"
+                        :class="{ 'active-control': currentIndex === 3, 'next-slide': direction === 'next', 'prev-slide': direction === 'prev' }"></span>
+                        <span @click="changeSlide(4)"
+                        :class="{ 'active-control': currentIndex === 4, 'next-slide': direction === 'next', 'prev-slide': direction === 'prev' }"></span>
+                        <span @click="changeSlide(5)"
+                        :class="{ 'active-control': currentIndex === 5, 'next-slide': direction === 'next', 'prev-slide': direction === 'prev' }"></span>
+                        <span @click="changeSlide(6)"
+                        :class="{ 'active-control': currentIndex === 6, 'next-slide': direction === 'next', 'prev-slide': direction === 'prev' }"></span>
+                        <span @click="changeSlide(7)"
+                        :class="{ 'active-control': currentIndex === 7, 'next-slide': direction === 'next', 'prev-slide': direction === 'prev' }"></span>
+             
+             
+                    </div>
                 <img @click="nextSlide" src="../assets/icons/arrow-left.svg"  alt='arrow-left'/>
             </div>
         </div>

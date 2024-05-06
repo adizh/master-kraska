@@ -14,9 +14,9 @@
 
 <script setup lang="ts">
 import 'primevue/resources/themes/aura-light-green/theme.css';
-// definePageMeta({
-//   title: 'МастерКраска'
-// })
+definePageMeta({
+  title: 'Master Kraska'
+})
 </script>
 
 

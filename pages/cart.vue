@@ -13,7 +13,7 @@
                 <button class="pink-button margin-bottom-20 margin-top-40" @click='isConfirmOpen = true'>{{ $t('goToRegister') }}</button>
                 <div class="cart-main-info-price-block">
                     <div class="first">
-                        <span>{{ $t('all') }}: {{ store.numberOfProds }}  {{ $t('product') }}</span>
+                        <span>{{ $t('all') }}: {{ totalOfProdTotals }}  {{ $t('product') }}</span>
                         <span>{{ store.totalOfTotalSum }} сом</span>
                     </div>
                     <div class="second">
@@ -65,13 +65,14 @@
 
 <script setup lang="ts">
 import { ExtendedProduct } from '~/types/Product';
-
 const store = useCartStore();
+const orderStore = useOrderStore();
+const currentProd=ref({} as ExtendedProduct);
+const isConfirmOpen = ref(false);
+const isDeleteOpen=ref(false);
 
-const orderStore = useOrderStore()
-const currentProd=ref({} as ExtendedProduct)
-const isConfirmOpen = ref(false)
-const isDeleteOpen=ref(false)
+console.log('cart store',store.getAllCart)
+
 const confirmDelete=(prop:ExtendedProduct)=>{
     isDeleteOpen.value=true;
     currentProd.value=prop
@@ -81,8 +82,6 @@ const removeFromCart =()=>{
     if(currentProd?.value){
         store.removeFromCart(currentProd.value)
     }
- 
-
     isDeleteOpen.value=false
 }
 const increaseCount=(item:ExtendedProduct)=>{
@@ -96,8 +95,10 @@ const decreaseCount=(item:ExtendedProduct)=>{
 
 const createOrder = () => {
     orderStore.createOrder()
-
 }
+const totalOfProdTotals=computed(()=>{
+    return store.getAllCart.reduce((acc,rec)=> acc + rec?.count,0)
+})
 
 onMounted(()=>{
     window.scrollTo(0,0)
