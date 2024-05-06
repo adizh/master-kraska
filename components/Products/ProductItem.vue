@@ -220,7 +220,7 @@ button{
         width: 100%;
         display: block;
         text-align: left;
-        word-break: break-all;
+        word-wrap:break-word;
         max-height: 60px;
         height: 100%;
         line-height: 20px;

@@ -11,7 +11,7 @@
             </div>
 
             <div class="cart-main-info-price lg:col-4 md:col-6 sm:col-12 col-12">
-                <button class="pink-button margin-bottom-20 margin-top-40" @click='isConfirmOpen = true'>{{ $t('goToRegister') }}</button>
+                <button class="pink-button margin-bottom-20 margin-top-40" @click='goToRegister'>{{ $t('goToRegister') }}</button>
                 <div class="cart-main-info-price-block">
                     <div class="first">
                         <span>{{ $t('all') }}: {{ totalOfProdTotals }}  {{ $t('product') }}</span>
@@ -60,7 +60,14 @@
     <ConfirmPay @confirm="removeFromCart" @cancel="isDeleteOpen = false"  :title="$t('deleteCartProdWarning')"/>
 </Dialog>
 
+<Dialog v-model:visible="isProfileOpen" modal :style="{ width: '450px', padding: '10px 40px 40px 40px' }">
+    <AuthModal @closeModal="isProfileOpen = false" />
+</Dialog>
+<Dialog v-model:visible="isConfirmOpen" modal :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
+    header=" ">
+    <ConfirmPay @cancel="isConfirmOpen = false" @confirm="createOrder" :title="$t('confirmOrderText')" />
 
+</Dialog>
    
 </template>
 
@@ -68,15 +75,28 @@
 import { ExtendedProduct } from '~/types/Product';
 const store = useCartStore();
 const orderStore = useOrderStore();
+const authStore=useAuthStore()
 const currentProd=ref({} as ExtendedProduct);
 const isConfirmOpen = ref(false);
 const isDeleteOpen=ref(false);
+const isProfileOpen=ref(false);
 
 console.log('cart store',store.getAllCart)
 
 const confirmDelete=(prop:ExtendedProduct)=>{
     isDeleteOpen.value=true;
     currentProd.value=prop
+}
+
+const goToRegister=()=>{
+    if(authStore.getUserId){
+        isConfirmOpen.value = true;
+    }else{
+        isProfileOpen.value=true
+    }
+
+
+   // authStore.getUserId
 }
 
 const removeFromCart =()=>{
@@ -111,6 +131,7 @@ onMounted(()=>{
 </script>
 
 <style scoped lang="scss">
+@import '../assets/tabs.scss';
 .cart-main {
 
     &-info-middle {

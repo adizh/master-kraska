@@ -469,17 +469,11 @@ onMounted(async () => {
 
     .header {
         @include flex(row, space-between, center);
-
         span {
             font-weight: 700 !important;
             @include footerSpan(24px, 24px);
             color: $main-black;
         }
-
-
-
-
-
     }
 
     .numbers {
@@ -520,7 +514,7 @@ onMounted(async () => {
 }
 
 .middle {
-    width: 65%;
+    width: 80%;
     @include flex(column, start, space-between, 22px);
 
     &-header {

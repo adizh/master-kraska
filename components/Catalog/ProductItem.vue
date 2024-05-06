@@ -267,7 +267,7 @@ const productName = (name: string) => {
     &-info {
         max-width: 100%;
         width: 100%;
-        word-break: break-all !important;
+        word-wrap:break-word !important;
     }
 
     &-buy {
