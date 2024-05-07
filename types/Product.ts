@@ -1,3 +1,4 @@
+import { Category } from "./Category";
 import { Review } from "./Review";
 
 export type Product = {
@@ -5,7 +6,6 @@ export type Product = {
   name: string;
   nameKg: string;
   nameRu: string;
-
   description: string;
   descriptionKg: string;
   descriptionRu: string;
@@ -15,11 +15,11 @@ export type Product = {
   categoryId: string;
   subcategoryId: string;
   brandId: string;
-  expenditure: string;
-  packing: string;
+
+
   brandName: string;
-  surfacePreparations: string;
-  numberOfLayers: number;
+
+
   rating: number;
   isPopular: boolean;
   isFeatured: boolean;
@@ -36,6 +36,7 @@ export type Product = {
   images: string[];
   reviews: Review[];
   price: number;
+  categories:Category[],
   helpersMain: {
     id: string;
     name: string;
@@ -44,6 +45,8 @@ export type Product = {
     products: [];
     category: null;
   }[];
+  size:string,
+  colorType:number,
   products: [];
   category: null;
   variants?: { id: string; size: string; price: number }[];

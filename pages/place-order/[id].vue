@@ -195,7 +195,7 @@ if(response.status===200){
                 )
             }
                 }else{
-                    return {...item, productName:item?.productNameRu,productDescription:item?.productDescriptionRu.replace(
+                    return {...item, productName:item?.productNameRu,productDescription:item?.productDescriptionRu?.replace(
                   /<(\/?(p|br|h[1-5]|strong|img|a|div|span|li|ul|ol)( [^>]*)?)\/?>/g,
                   ""
                 )}

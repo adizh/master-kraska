@@ -1,6 +1,5 @@
 <template>
     <section>
-
         <AdminProducts />
     </section>
 </template>

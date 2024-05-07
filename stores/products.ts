@@ -54,8 +54,6 @@ export const useProductsSstore = defineStore("productsStore", {
         console.log(err);
       }
     },
-
-
     async fetchSpecialProd(type:string){
       const authStore=useAuthStore()
       try{
@@ -129,7 +127,7 @@ if(response.status===200){
                 ...response.data.product,
                 name: response.data?.product?.nameRu,
                 shortDescription: response.data?.product?.shortDescriptionRu,
-                description: response.data?.product?.descriptionRu.replace(
+                description: response.data?.product?.descriptionRu?.replace(
                   /<(\/?(p|br|h[1-5]|strong|img|a|div|span|li|ul|ol)( [^>]*)?)\/?>/g,
                   ""
                 ),
@@ -262,7 +260,6 @@ if(response.status===200){
       this.filters.categoryId.push(categoryId);
       this.filterProducts();
     },
-
     async getBookmarks(productId: string) {
       const authStore = useAuthStore();
 
@@ -282,6 +279,7 @@ if(response.status===200){
         console.log(err);
       }
     },
+
   },
   getters: {
     getAllProducsts(state) {
