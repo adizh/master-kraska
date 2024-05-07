@@ -1,10 +1,6 @@
 <template>
-
     <section>
-
-
     <form class="grid" @submit.prevent="editProduct">
-
         <div class="col-4 each-field">
             <label for="name">Имя (на русском)</label>
             <input class='form-input col-12' type="text" id="name" v-model="inputs.nameRu.value"
@@ -18,6 +14,7 @@
                 @input="validate('nameKg', 'string')">
             <span v-if="inputs.nameKg.error" class="err-input-msg">{{ inputs.nameKg.error }}</span>
         </div>
+
         <div class="col-4 each-field">
             <label for="description">descriptionRu</label>
             <input class='form-input col-12' type="text" id="description" v-model="inputs.descriptionRu.value"
@@ -53,7 +50,10 @@
 
         <div class="col-4 each-field">
             <label for="categoryId">Категории</label>
-            <input v-for="(categoryId,index) in inputs.categories" :key="index" class='form-input col-12' type="text"  id="categoryId" >
+            <div v-for="(categoryId,index) in categories" :key="categoryId?.id">
+                <label :for="categoryId?.name">{{categoryId?.nameRu}}</label>
+                <input class='form-input col-12' type="text"  :id="categoryId?.name"  v-model="categoryValues[categoryId?.id]">
+            </div>
             <!-- <span v-if="inputs.categoryId.error" class="err-input-msg">{{ inputs.categoryId.error }}</span> -->
         </div>
 
@@ -102,11 +102,22 @@
             <!-- <span v-if="inputs.color.error" class="err-input-msg">{{ inputs.isPopular.error }}</span> -->
         </div>
 
-        <button type="submit">Сохранить изменения</button>\
-        
+        <button type="submit">Сохранить изменения</button>
     </form>
 
-    <button type="button" class='pink-button' >+Добавить картинку</button>
+    <button type="button" class='pink-button'  @click="isVariantOpen=true">+Добавить объемы</button>
+
+
+    <UIModal :showModal="isVariantOpen" @closeModal="isVariantOpen=false" title="Добавить объем">
+ <form @submit.prevent="addVariant" class="flex flex-column align-items-start mt-3 gap-2"> 
+    <input type="text" placeholder="Размер"  required v-model="newVariants.size" class="basic-input"/> 
+    <input type="number" placeholder="Цена"   required v-model="newVariants.price" class="basic-input"/>
+    <input type="number" placeholder="Код"   required v-model="newVariants.code" class="basic-input"/>
+    <button type="submit">Добавить</button>
+ </form>
+    
+    </UIModal>
+
 </section>
 </template>
 
@@ -118,21 +129,48 @@ const { t } = useI18n();
 const route = useRoute();
 const id = route.params.id;
 //const { data: product } = await useApi(`/api/v1/Product/get-product-by-id/${id}`) as any;
-
+const isVariantOpen=ref(false)
 const item = ref({} as Product)
 
 const productsStore=useProductsSstore()
-
+const newVariants=ref({
+    size:"",
+    price:'',
+    code:''
+})
 interface InputField {
     value: string | number | undefined | string[] | boolean | CategorySys[] | any[]
     error: string;
-    type?: string;
+    type?: string | any;
 }
 
 interface Inputs {
     [key: string]: InputField;
 }
 
+
+const addVariant =async()=>{
+
+    try{
+        const body=[
+            {
+                price:newVariants.value.price,
+                code:newVariants.value.code,
+                size:newVariants.value.size,
+            }
+        ]
+        const response = await http.put(`/api/v1/Product/add-variants/${id}`,body);
+        console.log('response add variant',response)
+
+    }catch(err){
+        console.log(err)
+    }finally{
+        isVariantOpen.value=false
+    }
+
+}
+const categories=ref([] as any[])
+const categoryValues = reactive({} as any);
 
 const inputs = ref<Inputs>({
     nameRu: { value: item.value?.nameRu, error: '', type: 'string' },
@@ -142,7 +180,6 @@ const inputs = ref<Inputs>({
     shortDescriptionRu: { value: item.value?.shortDescriptionRu, error: '', type: 'string' },
     shortDescriptionKg: { value: item.value?.shortDescriptionKg, error: '', type: 'string' },
     price: { value: item?.value?.price, error: '', type: 'number' },
-    categories: { value: item?.value?.categories, error: '' },
     subcategoryId: { value: item?.value?.subcategoryId, error: '' },
     brandId: { value: item?.value?.brandId, error: '' },
    size: { value: item?.value?.size, error: '', type: 'string' },
@@ -164,6 +201,10 @@ const validate = (field: string, type: string) => {
 
 
 const submitUpdate = async () => {
+    console.log('categoryValues',categoryValues)
+
+    const prodCategories=Object.values(categoryValues)
+    console.log('prodCategories',prodCategories)
     try {
         const body = {
             "nameKg": inputs.value.nameKg.value,
@@ -173,7 +214,7 @@ const submitUpdate = async () => {
             "shortDescriptionRu": inputs.value.shortDescriptionRu.value,
             "shortDescriptionKg": inputs.value.shortDescriptionKg.value,
             "price": inputs.value.price.value,
-            "categories": inputs.value.categories.value || null,
+            "categoryIds":prodCategories|| null,
             "subcategoryId": inputs.value.subcategoryId.value || null,
             "brandId": inputs.value.brandId.value || null,
                      "size": inputs.value.size.value,
@@ -195,10 +236,9 @@ const submitUpdate = async () => {
         console.log(err)
     }
 }
+
 const editProduct = () => {
-
     for (const fieldName in inputs.value) {
-
         if (Object.prototype.hasOwnProperty.call(inputs.value, fieldName)) {
             const fieldType = inputs.value[fieldName].type;
             handleValues(inputs.value, fieldName, fieldType);
@@ -218,8 +258,11 @@ onMounted(async () => {
 
     console.log(item,'item')
     console.log('productsStore get Prouct',productsStore.getProduct)
-
+    categories.value=item?.value?.categories
     
+    item?.value?.categories.map((category:any) => {
+        categoryValues[category.id] = category.id;
+      });
     inputs.value = {
         nameRu: { value: item.value?.nameRu, error: '', type: 'string' },
         nameKg: { value: item.value?.nameKg, error: '', type: 'string' },
@@ -228,7 +271,7 @@ onMounted(async () => {
         shortDescriptionRu: { value: item.value?.shortDescriptionRu, error: '', type: 'string' },
         shortDescriptionKg: { value: item.value?.shortDescriptionKg, error: '', type: 'string' },
         price: { value: item?.value?.price, error: '', type: 'number' },
-        categories: { value: item?.value?.categories, error: '' },
+     //   categories: { value: item?.value?.categories, error: '' },
         subcategoryId: { value: item?.value?.subcategoryId, error: '' },
         brandId: { value: item?.value?.brandId, error: '' },
         size: { value: item?.value?.size, error: '', type: 'string' },
@@ -239,7 +282,7 @@ onMounted(async () => {
         images: {
             value: item?.value?.images, error: '',
 
-        },
+        }
     }
     console.log('inputs',inputs)
 })
