@@ -1,4 +1,5 @@
 <template>
+    <div>
     <section v-if="store.getAllCart?.length">
         <div class="main-header-h1">{{ $t('cart') }}</div>
         <div class="cart-main grid" >
@@ -68,7 +69,7 @@
     <ConfirmPay @cancel="isConfirmOpen = false" @confirm="createOrder" :title="$t('confirmOrderText')" />
 
 </Dialog>
-   
+</div>
 </template>
 
 <script setup lang="ts">
