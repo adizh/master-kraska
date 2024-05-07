@@ -3,5 +3,5 @@ export type Variant={
     price:number,
     size:string,
     id?:string,
-    image:String
+    image:string
 }

@@ -88,6 +88,10 @@
             <label for="size">Объемы</label>
          <div class="all-variant">
             <div v-for="variant in variants" class="variant" :key="variant?.id">
+                <img :src="varSizes[variant?.size]?.image" alt="variant" @click="openFileInput(variant?.size)" style="cursor: pointer;" />
+                <input ref="fileInput" type="file" id="fileInput" style="display: none;" @change="(event)=>handleNewVarImage(event) "/>
+ 
+              
                 <label :for="variant?.size">Размер</label>
                 <input class='form-input col-12' type="text" :id="variant?.size"  v-model="varSizes[variant?.size].size"
                >
@@ -155,7 +159,7 @@ const newVariants=ref({
     size:"",
     price:'',
     code:'',
-    image:null
+    image:''
 })
 
 
@@ -164,6 +168,10 @@ const handleFileChange = (event:any) => {
     newVariants.value.image = event.target.files[0];
     };
 
+
+    const varImage=(image:string)=>{
+        return image
+    }
   
 const variants =ref([] as Variant[])
 
@@ -185,6 +193,39 @@ const convertToBase64 = (file:any) => {
         reader.onerror = (error) => reject(error);
       });
     };
+
+
+const newVarImage=ref(null)
+const variantImage=ref('')
+const handleNewVarImage = async(event:any )=> {
+
+    newVarImage.value = event.target.files[0];
+
+    //console.log('newVarImage',newVarImage)
+
+    const base64StringNewImage = await convertToBase64(newVarImage.value);
+   // console.log('base64StringNewImage',base64StringNewImage);
+    variantImage.value=base64StringNewImage as unknown as string;
+
+
+
+    varSizes[currVarSize.value].image = base64StringNewImage  as unknown as string;
+    
+
+    console.log('variants',variants)
+    console.log('varSizes',varSizes)
+
+   // varImage(variantImage.value)
+
+    };
+const currVarSize=ref('')
+    const openFileInput = (varSize:string) => {
+      const fileInput = document.getElementById('fileInput') as HTMLElement;
+      fileInput.click();
+      currVarSize.value=varSize
+    };
+
+    
 const addVariant =async()=>{
         if (!newVariants.value.image) {
         alert('Please select a file');
@@ -251,6 +292,7 @@ const prodVariantes=Object.values(varSizes).map((obj:any) => {
     let { id, ...rest } = obj;
     return rest;
 });
+
 console.log('prodVariantes',prodVariantes)
     try {
         const body = {
@@ -353,6 +395,9 @@ button {
 
 .variant{
     border:1px solid $slider-border-color;
+    img{
+        width: 100%;
+    }
 }
 .all-variant{
     @include flex(row,start,start);
