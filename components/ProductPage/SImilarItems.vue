@@ -2,13 +2,9 @@
     <div class="similar-prod-item">
         <h5 class='each-section-header'>{{ $t('alsoBuy') }}</h5>
         <div class="similar-prod-item-list" v-if="similarItems?.length">
-
             <ProductsProductItem v-for="(item, index) in similarItems.slice(0, 3)" :key="index" :product="item" />
-
         </div>
-
         <div v-else>{{ $t('noData') }}</div>
-
     </div>
 </template>
 
@@ -35,11 +31,6 @@ const slicedSimilarItems = computed(() => props.similarItems?.slice(0, 3))
         @include flex(row, start, center);
 
     }
-
-    .item-block {
-        width: 24%;
-    }
-
 }
 
 

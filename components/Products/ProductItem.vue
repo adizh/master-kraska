@@ -221,6 +221,7 @@ button{
         max-height: 60px;
         height: 100%;
         line-height: 20px;
+        margin-bottom: 10px;
 
     }
 

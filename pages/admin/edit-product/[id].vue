@@ -198,24 +198,12 @@ const convertToBase64 = (file:any) => {
 const newVarImage=ref(null)
 const variantImage=ref('')
 const handleNewVarImage = async(event:any )=> {
-
     newVarImage.value = event.target.files[0];
-
-    //console.log('newVarImage',newVarImage)
-
     const base64StringNewImage = await convertToBase64(newVarImage.value);
-   // console.log('base64StringNewImage',base64StringNewImage);
     variantImage.value=base64StringNewImage as unknown as string;
-
-
-
     varSizes[currVarSize.value].image = base64StringNewImage  as unknown as string;
-    
-
     console.log('variants',variants)
     console.log('varSizes',varSizes)
-
-   // varImage(variantImage.value)
 
     };
 const currVarSize=ref('')
@@ -288,10 +276,13 @@ const validate = (field: string, type: string) => {
 const submitUpdate = async () => {
     console.log('varSizes',varSizes)
     const prodCategories=Object.values(categoryValues)
-const prodVariantes=Object.values(varSizes).map((obj:any) => {
-    let { id, ...rest } = obj;
-    return rest;
-});
+const prodVariantes=Object.values(varSizes).map((item:any)=>{
+if(item?.image.startsWith('http')){
+    return {...item,image:null}
+}else{
+    return item
+}
+})
 
 console.log('prodVariantes',prodVariantes)
     try {
