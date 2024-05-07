@@ -1,6 +1,7 @@
 <template>
+    <section>
     <ClientOnly>
-        <section>
+      
             <h1>{{ $t('profile') }}</h1>
             <div class="profile-main grid">
                 <ul class="sidebar col-12 sm:col-12 lg:col-3">
@@ -94,7 +95,7 @@
                     </NoContent>
                 </div>
             </div>
-        </section>
+     
 
         <Dialog v-model:visible="isLogoutOpen" modal header=" " :style="{ padding: '20px 40px 50px 20px' }">
             <template #header>
@@ -110,12 +111,16 @@
                 <button @click='confirmedLogout'>{{ $t('logout') }}</button>
             </div>
         </Dialog>
-    </ClientOnly>
+   
     <Dialog v-model:visible="isDeleteOpen" modal :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
     header=" ">
     <ConfirmPay @confirm="removeFromCart" @cancel="isDeleteOpen = false"  :title="$t('deleteCartProdWarning')"/>
+
+
 </Dialog>
 
+</ClientOnly>
+</section>
 </template>
 
 <script setup lang="ts">
@@ -222,13 +227,11 @@ const totalOfProdTotals=computed(()=>{
 })
 onUnmounted(() => {
     localStorage.removeItem('selectedTab')
-
 });
 
 onMounted(() => {
     store.fetchUser();
     fetchUserBookmarks();
-
 
     if (!store.getUserId) {
         navigateTo('/');
@@ -236,6 +239,9 @@ onMounted(() => {
     }
 
 
+})
+onBeforeRouteLeave(()=>{
+    localStorage.removeItem('selectedTab')
 })
 </script>
 
