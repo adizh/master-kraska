@@ -8,7 +8,7 @@
         </div>
         <slot name="edit-items"></slot>
         <img :src="product?.images[0]" format="webp"/>
-        <span class="item-block-name">{{ productName(product?.name) }}</span>
+        <span class="item-block-name">{{ product?.name }}</span>
 
         <span class="item-block-info">{{ productInfo }}</span>
         <button class="pink-button prod-price" @click.stop="addCart">{{ !isItemHovered ? product?.price +'сом': isItemHovered && isProductExistsInCart ? $t('toCart') : $t('addedToCart')  }}</button>
@@ -175,7 +175,7 @@ const productName = (name: string) => {
 .item-block {
     transition: .3s ease all;
     border-radius: 10px;
-    @include flex(column, space-between, center);
+    @include flex(column, start, center);
 
 
 }
@@ -253,12 +253,11 @@ const productName = (name: string) => {
 
     &-name {
         max-width: $product-item-width;
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 600;
         color: $main-black;
         width: 100%;
         display: block;
-        text-align: left;
         height: 60px;
         line-height: 20px;
         margin-top: 10px;

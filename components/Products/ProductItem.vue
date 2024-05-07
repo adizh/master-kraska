@@ -7,7 +7,7 @@
         <slot name="edit-items"></slot>
         <img :src="product?.images[0]" alt="product">
 
-        <span class="item-block-name">{{ productName }}</span>
+        <span class="item-block-name">{{product?.name }}</span>
 
         <span class="item-block-description">{{ productInfo }} </span>
 
@@ -171,7 +171,7 @@ onMounted(async () => {
 .item-block {
     transition: .5s ease all;
     border-radius: 10px;
-    @include flex(column, space-between, center);
+    @include flex(column,start, center);
     &:hover{
         .item-add{
             @include flex(column,center,center);
@@ -203,8 +203,7 @@ button{
     width: 28%;
     padding: 20px 32px;
     overflow: hidden;
-    max-height: 560px;
-    height: 560px;
+    height: 450px;
 
 
     img {
@@ -213,13 +212,11 @@ button{
     }
 
     &-name {
-        text-align: center;
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 600;
         color: $main-black;
         width: 100%;
         display: block;
-        text-align: left;
         word-wrap:break-word;
         max-height: 60px;
         height: 100%;
