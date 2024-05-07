@@ -1,9 +1,20 @@
 @font-face {
   font-family: 'Avenir Next';
-  font-weight: inherit;
-  src: url(../assets/avenir-next/AvenirNextCyr-Regular.woff), url(../assets/avenir-next/AvenirNextCyr-Demi.woff), url(../assets/avenir-next/AvenirNextCyr-Medium.woff), url(../assets/avenir-next/AvenirNextCyr-Bold.woff);
+  font-weight: normal;
+  src: url(../assets/avenir-next/AvenirNextCyr-Regular.woff);
 }
 
+@font-face {
+  font-family: 'Avenir Next Medium';
+  font-weight: normal;
+  src: url(../assets/avenir-next/AvenirNextCyr-Medium.woff);
+}
+
+@font-face {
+  font-family: 'Avenir Next Bold';
+  font-weight: normal;
+  src: url(../assets/avenir-next/AvenirNextCyr-Demi.woff);
+}
 * {
   margin: 0;
   box-sizing: border-box;
@@ -164,6 +175,7 @@ h1 {
   font-size: 32px !important;
   line-height: 36px !important;
   color: $main-black;
+  font-family: 'Avenir Next Bold';
 }
 
 h3 {
