@@ -248,7 +248,6 @@ h1 {
     color: $main-black;
     font-size: 28px;
     font-weight: 500;
-    font-family: 'Avenir Next Medium';
     max-width: 500px;
     line-height:38px;
 }

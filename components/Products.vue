@@ -35,7 +35,9 @@
         color: $main-blue;
         line-height: 92px;
         font-size: 58px;
+        font-family: 'Avenir Next Bold';
     }
+
 
     &-text {
         color: white;

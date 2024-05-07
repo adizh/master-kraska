@@ -85,6 +85,7 @@
     font-weight: 600;
     font-size: 17px;
     display: block;
+    font-family: 'Avenir Next Medium';
     margin-top: 30px
 }
 

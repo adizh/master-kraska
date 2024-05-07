@@ -172,6 +172,7 @@ onMounted(async () => {
     transition: .5s ease all;
     border-radius: 10px;
     @include flex(column,start, center);
+
     &:hover{
         .item-add{
             @include flex(column,center,center);
@@ -204,7 +205,7 @@ button{
     padding: 20px 32px;
     overflow: hidden;
     height: 450px;
-
+  
 
     img {
         width: 120px;
@@ -215,6 +216,8 @@ button{
         font-size: 16px;
         font-weight: 600;
         color: $main-black;
+        -webkit-font-smoothing: antialiased; 
+    -moz-osx-font-smoothing: grayscale;
         width: 100%;
         display: block;
         word-wrap:break-word;
@@ -228,10 +231,15 @@ button{
     &-info {
         max-width: $product-item-width;
         width: $product-item-width;
+        -webkit-font-smoothing: antialiased; 
+        -moz-osx-font-smoothing: grayscale;
     }
 
     &-buy {
-        width: $product-item-width
+        width: $product-item-width; 
+         -webkit-font-smoothing: antialiased; 
+        -moz-osx-font-smoothing: grayscale;
+        
     }
 }
 

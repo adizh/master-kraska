@@ -15,6 +15,11 @@
   font-weight: normal;
   src: url(../assets/avenir-next/AvenirNextCyr-Demi.woff);
 }
+@font-face {
+  font-family: 'Avenir Next Heavy';
+  font-weight: normal;
+  src: url(../assets/avenir-next/AvenirNextCyr-Heavy.woff);
+}
 * {
   margin: 0;
   box-sizing: border-box;
@@ -59,6 +64,8 @@ ul li {
     line-height: 28px;
     font-weight: 700;
     margin: 20px 0;
+
+     font-family:'Avenir Next Bold';
   }
 }
 
@@ -444,6 +451,7 @@ h2 {
 .bg-white-btn {
   padding: 16px 18px;
   border-radius: 8px;
+  font-family: 'Avenir Next Medium';
   color: $main-blue;
   outline: none;
   border: none;

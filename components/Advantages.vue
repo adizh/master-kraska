@@ -66,6 +66,7 @@ right:0;
         &-text {
             font-size: 24px;
             font-weight: 700;
+       font-family: 'Avenir Next Bold';
         }
 
         &-subtext {

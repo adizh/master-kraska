@@ -30,8 +30,6 @@
                 disableOnInteraction: true,
             }">
                 <SwiperSlide v-for="item in brandsStore.getAllBrands" :key="item.id">
-
-
                     <img :src="item?.logo" alt="logo"
                         @click="navigateTo({ path: `/catalog/${firstCategoryItem?.category?.id}`, query: { brandId: item?.id } })" />
                 </SwiperSlide>

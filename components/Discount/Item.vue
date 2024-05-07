@@ -59,6 +59,7 @@ onMounted(()=>{
         &-header {
             font-size: 20px;
             font-weight: 600;
+            font-family: 'Avenir Next Medium';
         }
 
         &-info {

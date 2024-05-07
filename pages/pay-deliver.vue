@@ -154,11 +154,14 @@
     margin-bottom: 20px;
     max-width: 680px;
 }
-
+.delivery-info{
+}
 .delivery-info-header {
     @include textFormat(20px, 20px, 600, $main-black);
     margin-bottom: 20px;
     display: block;
+    font-family: 'Avenir Next Medium';
+
 }
 
 
@@ -180,7 +183,9 @@
         @include textFormat(16px, 20px, 500, $blue-color)
     }
 }
-
+.payInfo{
+    font-family: 'Avenir Next Bold';
+}
 .delivery {
     &-info {
         margin-top: 40px;
