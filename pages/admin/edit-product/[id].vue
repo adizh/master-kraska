@@ -2,46 +2,46 @@
     <section>
     <form class="grid" @submit.prevent="editProduct">
         <div class="col-4 each-field">
-            <label for="name">Имя (на русском)</label>
+            <label for="name">Имя</label>
             <input class='form-input col-12' type="text" id="name" v-model="inputs.nameRu.value"
                 @input="validate('nameRu', 'string')">
             <span v-if="inputs.nameRu.error" class="err-input-msg">{{ inputs.nameRu.error }}</span>
         </div>
 
         <div class="col-4 each-field">
-            <label for="name">Имя (на кыргызском)</label>
+            <label for="name">Имя (кырг)</label>
             <input class='form-input col-12' type="text" id="name" v-model="inputs.nameKg.value"
                 @input="validate('nameKg', 'string')">
             <span v-if="inputs.nameKg.error" class="err-input-msg">{{ inputs.nameKg.error }}</span>
         </div>
 
         <div class="col-4 each-field">
-            <label for="description">descriptionRu</label>
+            <label for="description">Описание</label>
             <input class='form-input col-12' type="text" id="description" v-model="inputs.descriptionRu.value"
                 @input="validate('descriptionRu', 'string')">
             <span v-if="inputs.descriptionRu.error" class="err-input-msg">{{ inputs.descriptionRu.error }}</span>
         </div>
         <div class="col-4 each-field">
-            <label for="description">descriptionKg</label>
+            <label for="description">Описание (кырг)</label>
             <input class='form-input col-12' type="text" id="descriptionKg" v-model="inputs.descriptionKg.value"
                 @input="validate('descriptionKg', 'string')">
             <span v-if="inputs.descriptionKg.error" class="err-input-msg">{{ inputs.descriptionKg.error }}</span>
         </div>
         <div class="col-4 each-field">
-            <label for="description">short description ru</label>
+            <label for="description">Короткое описание</label>
             <input class='form-input col-12' type="text" id="shortDescriptionRu" v-model="inputs.shortDescriptionRu.value"
                 @input="validate('shortDescriptionRu', 'string')">
             <span v-if="inputs.shortDescriptionRu.error" class="err-input-msg">{{ inputs.shortDescriptionRu.error }}</span>
         </div>
         <div class="col-4 each-field">
-            <label for="description">short description kg</label>
+            <label for="description">Короткое описание (кырг)</label>
             <input class='form-input col-12' type="text" id="shortDescriptionKg" v-model="inputs.shortDescriptionKg.value"
                 @input="validate('shortDescriptionRu', 'string')">
             <span v-if="inputs.shortDescriptionKg.error" class="err-input-msg">{{ inputs.shortDescriptionKg.error }}</span>
         </div>
 
         <div class="col-4 each-field">
-            <label for="price">price</label>
+            <label for="price">Цена</label>
             <input class='form-input col-12' type="number" id="price" v-model="inputs.price.value"
                 @input="validate('price', 'number')"
                 >
@@ -58,46 +58,65 @@
         </div>
 
         <div class="col-4 each-field">
-            <label for="subcategoryId">subcategoryId</label>
+            <label for="subcategoryId">Подкатегории</label>
             <input class='form-input col-12' type="text" id="subcategoryId" v-model="inputs.subcategoryId.value">
             <span v-if="inputs.subcategoryId.error" class="err-input-msg">{{ inputs.subcategoryId.error }}</span>
         </div>
 
         <div class="col-4 each-field">
-            <label for="brandId">brandId</label>
+            <label for="brandId">Бренд</label>
             <input class='form-input col-12' type="text" id="brandId" v-model="inputs.brandId.value">
             <span v-if="inputs.brandId.error" class="err-input-msg">{{ inputs.brandId.error }}</span>
         </div>
 
 
         <div class="col-4 each-field">
-            <label for="size">size</label>
+            <label for="size">Размер</label>
             <input class='form-input col-12' type="text" id="size" v-model="inputs.size.value"
                 @input="validate('size', 'string')">
             <span v-if="inputs.size.error" class="err-input-msg">{{ inputs.size.error }}</span>
         </div>
 
         <div class="col-4 each-field">
-            <label for="size">color</label>
+            <label for="size">Цвет</label>
             <input class='form-input col-12' type="text" id="color" v-model="inputs.color.value"
                 @input="validate('color', 'string')">
             <span v-if="inputs.color.error" class="err-input-msg">{{ inputs.color.error }}</span>
         </div>
 
+        <div class="col-12 each-field">
+            <label for="size">Объемы</label>
+         <div class="all-variant">
+            <div v-for="variant in variants" class="variant" :key="variant?.id">
+                <label :for="variant?.size">Размер</label>
+                <input class='form-input col-12' type="text" :id="variant?.size"  v-model="varSizes[variant?.size].size"
+               >
+                <label :for="variant?.size">Код</label>
+                <input class='form-input col-12' type="number" :id="variant?.size" v-model="varSizes[variant?.size].code"
+                >
+    
+                <label :for="variant?.size">Цена</label>
+                <input class='form-input col-12' type="number" :id="variant?.size"  v-model="varSizes[variant?.size].price"
+               >
+              </div>
+         </div>
+            <span v-if="inputs.color.error" class="err-input-msg">{{ inputs.color.error }}</span>
+        </div>
+
         <div class="col-4 each-field">
-            <label for="size">isPopular</label>
+            <label for="size">Популярный</label>
             <input class='form-input col-12' type="checkbox" id="color" v-model="inputs.isPopular.value">
             <!-- <span v-if="inputs.color.error" class="err-input-msg">{{ inputs.isPopular.error }}</span> -->
         </div>
 
         <div class="col-4 each-field">
-            <label for="isFeatured">isFeatured</label>
+            <label for="isFeatured">Рекомендуемый</label>
             <input class='form-input col-12' type="checkbox" id="isFeatured" v-model="inputs.isFeatured.value">
             <!-- <span v-if="inputs.color.error" class="err-input-msg">{{ inputs.isPopular.error }}</span> -->
         </div>
 
         <div class="col-4 each-field">
-            <label for="isBeneficial">isBeneficial</label>
+            <label for="isBeneficial">Выгодный</label>
             <input class='form-input col-12' type="checkbox" id="isBeneficial" v-model="inputs.isBeneficial.value">
             <!-- <span v-if="inputs.color.error" class="err-input-msg">{{ inputs.isPopular.error }}</span> -->
         </div>
@@ -107,7 +126,6 @@
 
     <button type="button" class='pink-button'  @click="isVariantOpen=true">+Добавить объемы</button>
 
-
     <UIModal :showModal="isVariantOpen" @closeModal="isVariantOpen=false" title="Добавить объем">
  <form @submit.prevent="addVariant" class="flex flex-column align-items-start mt-3 gap-2"> 
     <input type="text" placeholder="Размер"  required v-model="newVariants.size" class="basic-input"/> 
@@ -115,9 +133,7 @@
     <input type="number" placeholder="Код"   required v-model="newVariants.code" class="basic-input"/>
     <button type="submit">Добавить</button>
  </form>
-    
     </UIModal>
-
 </section>
 </template>
 
@@ -125,6 +141,7 @@
 
 import { Category,CategorySys } from '~/types/Category';
 import { Product } from '~/types/Product';
+import { Variant } from '~/types/Variant';
 const { t } = useI18n();
 const route = useRoute();
 const id = route.params.id;
@@ -138,6 +155,9 @@ const newVariants=ref({
     price:'',
     code:''
 })
+
+const variants =ref([] as Variant[])
+
 interface InputField {
     value: string | number | undefined | string[] | boolean | CategorySys[] | any[]
     error: string;
@@ -148,9 +168,7 @@ interface Inputs {
     [key: string]: InputField;
 }
 
-
 const addVariant =async()=>{
-
     try{
         const body=[
             {
@@ -167,10 +185,11 @@ const addVariant =async()=>{
     }finally{
         isVariantOpen.value=false
     }
-
 }
+
 const categories=ref([] as any[])
 const categoryValues = reactive({} as any);
+const varSizes = reactive({} as any);
 
 const inputs = ref<Inputs>({
     nameRu: { value: item.value?.nameRu, error: '', type: 'string' },
@@ -182,8 +201,8 @@ const inputs = ref<Inputs>({
     price: { value: item?.value?.price, error: '', type: 'number' },
     subcategoryId: { value: item?.value?.subcategoryId, error: '' },
     brandId: { value: item?.value?.brandId, error: '' },
-   size: { value: item?.value?.size, error: '', type: 'string' },
-   color: { value: item?.value?.colorType, error: '', type: 'number' },
+    size: { value: item?.value?.size, error: '', type: 'string' },
+    color: { value: item?.value?.colorType, error: '', type: 'number' },
     isPopular: { value: item?.value?.isPopular, error: '' },
     isFeatured: { value: item?.value?.isFeatured, error: '' },
     isBeneficial: { value: item?.value?.isBeneficial, error: '' },
@@ -199,12 +218,14 @@ const validate = (field: string, type: string) => {
 }
 
 
-
 const submitUpdate = async () => {
-    console.log('categoryValues',categoryValues)
-
+    console.log('varSizes',varSizes)
     const prodCategories=Object.values(categoryValues)
-    console.log('prodCategories',prodCategories)
+const prodVariantes=Object.values(varSizes).map((obj:any) => {
+    let { id, ...rest } = obj;
+    return rest;
+});
+console.log('prodVariantes',prodVariantes)
     try {
         const body = {
             "nameKg": inputs.value.nameKg.value,
@@ -222,7 +243,8 @@ const submitUpdate = async () => {
             "isPopular": inputs.value.isPopular.value,
             "isFeatured": inputs.value.isFeatured.value,
             "isBeneficial": inputs.value.isBeneficial.value,
-            "images": null
+            "images": null,
+            variants:prodVariantes || null
         }
 
         const response = await http.put(`/api/v1/Product/update-product/${id}`, body);
@@ -254,6 +276,9 @@ const editProduct = () => {
 onMounted(async () => {
    await productsStore.fetchProductById(id as string)
     item.value = productsStore?.getProduct?.product
+    if(item?.value?.variants){
+        variants.value=item.value.variants
+    }
 
 
     console.log(item,'item')
@@ -263,6 +288,11 @@ onMounted(async () => {
     item?.value?.categories.map((category:any) => {
         categoryValues[category.id] = category.id;
       });
+
+      item?.value?.variants?.map((variant:Variant)=>{
+        varSizes[variant?.size]={...variant};
+      })
+      console.log('varSizes on mounted',varSizes)
     inputs.value = {
         nameRu: { value: item.value?.nameRu, error: '', type: 'string' },
         nameKg: { value: item.value?.nameKg, error: '', type: 'string' },
@@ -293,5 +323,16 @@ onMounted(async () => {
 button {
     margin-top: 20px;
     @extend %button-shared;
+}
+
+.variant{
+    border:1px solid $slider-border-color;
+}
+.all-variant{
+    @include flex(row,start,start);
+    flex-wrap: wrap;
+    div{
+        width: 20%;
+    }
 }
 </style>

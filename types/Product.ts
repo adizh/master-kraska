@@ -1,5 +1,6 @@
 import { Category } from "./Category";
 import { Review } from "./Review";
+import { Variant } from "./Variant";
 
 export type Product = {
   id: string;
@@ -49,7 +50,7 @@ export type Product = {
   colorType:number,
   products: [];
   category: null;
-  variants?: { id: string; size: string; price: number }[];
+  variants?:Variant[];
 };
 
 export interface ExtendedProduct extends Product {

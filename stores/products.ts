@@ -309,7 +309,5 @@ if(response.status===200){
     getBenefProducts(state){
       return state.beneficialProds
     },
-
-    
   },
 });

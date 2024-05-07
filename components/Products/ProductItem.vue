@@ -208,8 +208,8 @@ button{
 
 
     img {
-        width: 180px;
-        height: 180px;
+        width: 120px;
+        height: 120px;
     }
 
     &-name {

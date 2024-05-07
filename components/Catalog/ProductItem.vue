@@ -247,8 +247,8 @@ const productName = (name: string) => {
     }
 
     img {
-        width: 180px;
-        height: 180px;
+        width: 120px;
+        height: 120px;
     }
 
     &-name {
@@ -343,8 +343,8 @@ const productName = (name: string) => {
         }
 
         img {
-            width: 140px;
-            height: 140px
+            width: 120px;
+            height: 120px
         }
     }
 
