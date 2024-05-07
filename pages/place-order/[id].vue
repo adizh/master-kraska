@@ -82,7 +82,7 @@
             </CartProductItem>
         </div>
 
-    </section>
+   
 
 
 
@@ -130,7 +130,7 @@
         <PaymentElcart v-else-if="pickUpPay === 'Элкарт'" />
     </UIModal>
 
-
+</section>
 </template>
 
 <script setup lang="ts">

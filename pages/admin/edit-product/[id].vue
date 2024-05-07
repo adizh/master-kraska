@@ -1,4 +1,8 @@
 <template>
+
+    <section>
+
+
     <form class="grid" @submit.prevent="editProduct">
 
         <div class="col-4 each-field">
@@ -103,7 +107,7 @@
     </form>
 
     <button type="button" class='pink-button' >+Добавить картинку</button>
-
+</section>
 </template>
 
 <script setup lang="ts">

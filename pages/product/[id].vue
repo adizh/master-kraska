@@ -1,4 +1,6 @@
 <template>
+    <section>
+
     <section v-if="getProduct && getProduct != undefined && Object.entries(getProduct)?.length > 0 && !isLoading">
         <ProductPageHeader :productId="id" />
 
@@ -11,6 +13,7 @@
     <section v-else class='flex flex-row justify-content-center'>
         <ProgressSpinner />
     </section>
+</section>
 </template>
 
 <script setup lang="ts">

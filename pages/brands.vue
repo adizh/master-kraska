@@ -1,8 +1,6 @@
 <template>
     <section>
         <div class="main-header-h1">{{ $t('brands') }}</div>
-
-
         <div class="brands-list">
             <div v-for="item in brandsStore.getAllBrands" :key=item?.id>
 
