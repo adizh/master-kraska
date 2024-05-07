@@ -131,6 +131,7 @@
     <input type="text" placeholder="Размер"  required v-model="newVariants.size" class="basic-input"/> 
     <input type="number" placeholder="Цена"   required v-model="newVariants.price" class="basic-input"/>
     <input type="number" placeholder="Код"   required v-model="newVariants.code" class="basic-input"/>
+    <input type="file" @change="handleFileChange" />
     <button type="submit">Добавить</button>
  </form>
     </UIModal>
@@ -153,9 +154,17 @@ const productsStore=useProductsSstore()
 const newVariants=ref({
     size:"",
     price:'',
-    code:''
+    code:'',
+    image:null
 })
 
+
+
+const handleFileChange = (event:any) => {
+    newVariants.value.image = event.target.files[0];
+    };
+
+  
 const variants =ref([] as Variant[])
 
 interface InputField {
@@ -168,13 +177,30 @@ interface Inputs {
     [key: string]: InputField;
 }
 
+const convertToBase64 = (file:any) => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+      });
+    };
 const addVariant =async()=>{
-    try{
+        if (!newVariants.value.image) {
+        alert('Please select a file');
+        return;
+      }
+
+      try{
+        const base64String = await convertToBase64(newVariants.value.image);
+        // Now you can send the base64String to your API
+        console.log('Base64 string:', base64String);
         const body=[
             {
                 price:newVariants.value.price,
                 code:newVariants.value.code,
                 size:newVariants.value.size,
+                image:base64String
             }
         ]
         const response = await http.put(`/api/v1/Product/add-variants/${id}`,body);
