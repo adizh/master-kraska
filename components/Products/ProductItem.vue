@@ -249,7 +249,7 @@ button{
 
 .item-block:hover {
     cursor: pointer;
-    box-shadow: 0px 6px 30px 0px rgba(0, 0, 0, 0.12);
+    box-shadow: 0px 6px 18px 0px #0000001F;
     transition: .3s ease all;
 }
 </style>

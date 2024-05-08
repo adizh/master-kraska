@@ -17,18 +17,7 @@
             <span>{{ countToBuy }}</span>
                 <button @click.stop="increaseCount">+</button>
            </div>
-        <!-- <div class="item-add" v-if="visibleMethod === 'vertical'">
-            <div>
-             <button class="pink-button" @click.stop="addCart">
-                 {{ isProductExistsInCart ? $t('addToCart') : $t('addedToCart') }}
-             </button>
-            </div>
-            <div class="item-add-btns">
-             <button @click.stop="removeCount">-</button>
-             <span>{{ countToBuy }}</span>
-                 <button @click.stop="increaseCount">+</button>
-            </div>
-         </div> -->
+     
     </div>
 
 
@@ -41,6 +30,11 @@
             </div>
         </div>
 
+        <div class="item-add-btns">
+            <button @click.stop="removeCount">-</button>
+            <span>{{ countToBuy }}</span>
+                <button @click.stop="increaseCount">+</button>
+           </div>
         <div class="last-col">
             <button class="item-block-buy">{{ product?.price }} сом</button>
             <UIBookmarks :product="product" />

@@ -292,7 +292,7 @@ const submitUpdate = async () => {
     console.log('varSizes',varSizes)
     const prodCategories=Object.values(categoryValues)
 const prodVariantes=Object.values(varSizes).map((item:any)=>{
-if(item?.image.startsWith('http')){
+if(item?.image && item?.image?.startsWith('http')){
     return {...item,image:null}
 }else{
     return item
