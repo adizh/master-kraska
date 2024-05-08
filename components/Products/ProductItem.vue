@@ -6,8 +6,11 @@
         </div>
         <slot name="edit-items"></slot>
 
-        <!-- <UIBookmarks :product="product" /> -->
-        <img :src="product?.images[0]" alt="product">
+        
+            <img src="../../assets/icons/icon=heart.svg" alt="heart" v-if="!isProductBookmarked" @click.stop="toggleBoomark" class="bookmark-item"/>
+            <img src="../../assets/icons/icon=heart fill.svg" alt="heart icon" v-else @click.stop="toggleBoomark" class="bookmark-item">
+     
+        <img :src="product?.images[0]" alt="product" class="prod-img">
 
         <span class="item-block-name">{{product?.name }}</span>
 
@@ -36,6 +39,7 @@ const props = defineProps<{
 }>()
 const {t}=useI18n()
 const cartStore=useCartStore()
+const productsStore=useProductsSstore()
 const prodBrand = ref('')
 const countToBuy=ref(1)
 const isProductExistsInCart = computed(() => {
@@ -83,6 +87,10 @@ const removeCount =()=>{
 
     
 }
+const toggleBoomark = () => {
+    isProductBookmarked.value = !isProductBookmarked.value;
+    productsStore.addToBookmarks(props?.product?.id)
+}
 const increaseCount =()=>{
     countToBuy.value=countToBuy.value+1;
         if(props?.product?.price){
@@ -119,7 +127,7 @@ const emit = defineEmits<{
 
 }>()
 
-
+const isProductBookmarked=ref(false)
 
 const prodCart=computed(()=>{
     return cartStore?.getAllCart?.find((item:ExtendedProduct)=>item?.id===props?.product?.id)
@@ -131,6 +139,9 @@ if(prodCart.value && prodCart.value!==null){
 }
 onMounted(async () => {
     prodBrand.value = await getBrandId(props?.product?.brandId as string)
+    await productsStore.getBookmarks(props?.product?.id);
+
+    isProductBookmarked.value=productsStore?.getProductBookmarked
 });
 
 </script>
@@ -163,12 +174,29 @@ onMounted(async () => {
     transition: .5s;
   }
 
+  .bookmark-item{
+    width: 20px;
+    height:20px;
+    position: absolute;
+    right:10px;
+    top:10px;
+    opacity: 0;
+    visibility: hidden;
+  }
+
+
+
 .item-block {
     transition: .5s ease all;
     border-radius: 10px;
     @include flex(column,start, start);
+    position:relative;
 
     &:hover{
+        .bookmark-item{
+            opacity: 1;
+            visibility: visible;
+        }
         .item-add{
             @include flex(column,center,center);
             opacity: 1;
@@ -204,7 +232,7 @@ button{
     height: 480px;
   
 
-    img {
+    .prod-img {
         width: 120px;
         height: 120px;
     }

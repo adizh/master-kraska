@@ -5,7 +5,7 @@
             <Swiper :slides-per-view="slidesPerView" :navigation="true" id="mySlider" :modules="[SwiperNavigation]"
                 :style='{ "--swiper-navigation-size": "15px", "padding": "20px 0" }'>
                         <SwiperSlide v-for="product in store.getSpecialProducts" :key="product.id">
-                            <ProductsProductItem :product="product" :style="{width:'100%'} " type="bookmark"/>
+                            <ProductsProductItem :product="product" :style="{width:'100%'}" />
                         </SwiperSlide>
                    
        
