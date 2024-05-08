@@ -22,7 +22,7 @@
 
 
 
-    <div class="item-block horizontal" @click="router.push(`/product/${product?.id}`)" v-else>
+    <div class="item-block horizontal" @click="router.push(`/product/${product?.id}`)" v-else  @mousemove="itemHover" @mouseleave="itemHoverLeave">
         <div class='first-col'>
             <img :src="product?.images[0]" format="webp" />
             <div class="first-sub-col"> <span class="item-block-name">{{ productName(product?.name) }}</span>
@@ -30,13 +30,15 @@
             </div>
         </div>
 
+       
         <div class="item-add-btns">
             <button @click.stop="removeCount">-</button>
             <span>{{ countToBuy }}</span>
                 <button @click.stop="increaseCount">+</button>
            </div>
         <div class="last-col">
-            <button class="item-block-buy">{{ product?.price }} сом</button>
+           
+            <button class="item-block-buy" @click.stop="addCart">{{ !isItemHovered ? product?.price +'сом': isItemHovered && isProductExistsInCart ? $t('toCart') : $t('addedToCart')  }}</button>
             <UIBookmarks :product="product" />
         </div>
     </div>
@@ -135,10 +137,11 @@ const increaseCount =()=>{
             const updatedItem = { ...props?.product, count: countToBuy.value, totalProdSum: totalPrice.value, initPrice: +props?.product?.price }
     if(updatedItem){
         cartStore.updateCartItem(updatedItem)
+        useNotif('success',t('successEdited'),t('success'))
     }
         }
     }
-    useNotif('success',t('successEdited'),t('success'))
+
 }
 const addCart=()=>{
 if(props.product?.price){
