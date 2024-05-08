@@ -51,6 +51,8 @@ export type Product = {
   products: [];
   category: null;
   variants?:Variant[];
+  dryingTime:string;
+  consumption:string
 };
 
 export interface ExtendedProduct extends Product {

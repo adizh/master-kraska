@@ -84,6 +84,19 @@
             <span v-if="inputs.color.error" class="err-input-msg">{{ inputs.color.error }}</span>
         </div>
 
+        <div class="col-4 each-field">
+            <label for="size">Высыхание</label>
+            <input class='form-input col-12' type="text" id="color" v-model="inputs.dryingTime.value"
+                @input="validate('dryingTime', 'string')">
+            <span v-if="inputs.dryingTime.error" class="err-input-msg">{{ inputs?.dryingTime?.error }}</span>
+        </div>
+        <div class="col-4 each-field">
+            <label for="size">Расход</label>
+            <input class='form-input col-12' type="text" id="color" v-model="inputs.consumption.value"
+                @input="validate('consumption', 'string')">
+            <span v-if="inputs.consumption.error" class="err-input-msg">{{ inputs.consumption.error }}</span>
+        </div>
+
         <div class="col-12 each-field">
             <label for="size">Объемы</label>
          <div class="all-variant">
@@ -258,6 +271,8 @@ const inputs = ref<Inputs>({
     brandId: { value: item?.value?.brandId, error: '' },
     size: { value: item?.value?.size, error: '', type: 'string' },
     color: { value: item?.value?.colorType, error: '', type: 'number' },
+    consumption: { value: item?.value?.consumption, error: '', type: 'string' },
+    dryingTime: { value: item?.value?.dryingTime, error: '', type: 'string' },
     isPopular: { value: item?.value?.isPopular, error: '' },
     isFeatured: { value: item?.value?.isFeatured, error: '' },
     isBeneficial: { value: item?.value?.isBeneficial, error: '' },
@@ -302,6 +317,8 @@ console.log('prodVariantes',prodVariantes)
             "isPopular": inputs.value.isPopular.value,
             "isFeatured": inputs.value.isFeatured.value,
             "isBeneficial": inputs.value.isBeneficial.value,
+            "consumption": inputs.value.consumption.value,
+            "dryingTime": inputs?.value?.dryingTime?.value,
             "images": null,
             variants:prodVariantes || null
         }
@@ -365,6 +382,8 @@ onMounted(async () => {
         brandId: { value: item?.value?.brandId, error: '' },
         size: { value: item?.value?.size, error: '', type: 'string' },
        color: { value: item?.value?.colorType, error: '', type: 'string' },
+       dryingTime: { value: item?.value?.dryingTime, error: '', type: 'string' },
+       consumption: { value: item?.value?.consumption, error: '', type: 'string' },
         isPopular: { value: item?.value?.isPopular, error: '' },
         isFeatured: { value: item?.value?.isFeatured, error: '' },
         isBeneficial: { value: item?.value?.isBeneficial, error: '' },
