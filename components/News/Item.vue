@@ -4,7 +4,7 @@
             <img :src="item?.image" :alt="item?.name">
         </div>
         <div class="info">
-            <h2 class='each-section-header'>{{ item?.name }}</h2>
+            <div class='news-header'>{{ item?.name }}</div>
             <span class="date">
               {{ formatDate(item?.createdDate) }}
             </span>
@@ -58,7 +58,7 @@ onMounted(()=>{
 
 <style scoped lang="scss">
 .news-list-block {
-    @include flex(column, start, start, 40px);
+    @include flex(column, start, start, 20px);
     margin-bottom: 40px;
     width: 35%;
 

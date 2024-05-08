@@ -113,6 +113,7 @@ watch(() => authStore.getSelectedLang, () => {
         width: 30%;
         @include flex(row, start, start);
 
+
         div {
             &:first-child {
                 background: $main-white;
@@ -134,6 +135,7 @@ watch(() => authStore.getSelectedLang, () => {
             color: $main-black !important;
             font-weight: 700;
 
+            font-family: 'Avenir Next Medium';
         }
     }
 }

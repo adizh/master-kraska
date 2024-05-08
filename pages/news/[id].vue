@@ -11,12 +11,12 @@
 
 
            <div class="active-section">
-            <div class="active-news" v-for="item in activeNews" :key="item?.id">
+            <div class="active-news" v-for="item in activeNews" :key="item?.id" @click="navigateTo(`/news/${item?.id}`)">
                 <div class="image">
                     <img :src="item?.image" :alt="item?.name">
                 </div>
                 <div class="info">
-                    <h2 class='each-section-header'>{{ item?.name }}</h2>
+                    <div class='news-header'>{{ item?.name }}</div>
                     <span class="date">
                       {{ formatDate(item?.createdDate) }}
                     </span>
@@ -87,7 +87,8 @@ h1{
     margin-bottom: 60px;
 }
 .active-section{
-    @include flex(row,start,center)
+    @include flex(row,start,center);
+    margin-left: -60px;
 }
 .text{
     font-size: 20px;
@@ -97,6 +98,7 @@ h1{
 }
 .active-news{
     width: 30%;
+    @include flex(column,start,center,20px)
 }
 
 .description{
@@ -140,6 +142,28 @@ h1{
     p {
         @include footerSpan(24px, 16px);
         color: $main-black !important;
+    }
+}
+
+
+@media (max-width:1100px){
+    .active-section{
+        margin-left: 0;
+    }
+    .active-news{
+        width: 45%;
+    }
+}
+@media (max-width:768px){
+    .active-section{
+        flex-direction: column;
+    }
+    .active-news{
+        align-items: center;
+        width: 100%;
+    }
+    .info{
+        text-align: center;
     }
 }
 </style>

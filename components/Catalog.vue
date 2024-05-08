@@ -160,9 +160,6 @@ watch(() => authStore.getSelectedLang, () => {
 
 .second-col {
     padding-left: 40px;
-
-   width: 400px;
-
 }
 
 .first-col {

@@ -55,8 +55,12 @@ const formattedPhone = computed(() => {
 }
 
 .maps-address-list {
+h3{
+    font-family: 'Avenir Next Medium';
+    -webkit-font-smoothing: antialiased; 
+    -moz-osx-font-smoothing: grayscale;
 
-
+}
     &-block {
         border: 1px solid $slider-border-color;
         border-radius: 10px;
