@@ -5,11 +5,17 @@
             <img src="../../assets/icons/icon=heart fill.svg" alt="heart icon">
         </div>
         <slot name="edit-items"></slot>
+
+        <!-- <UIBookmarks :product="product" /> -->
         <img :src="product?.images[0]" alt="product">
 
         <span class="item-block-name">{{product?.name }}</span>
 
-        <span class="item-block-description">{{ productInfo }} </span>
+   <div class="product-infomation">
+    <span>{{ $t('consumption') }}: {{ product?.consumption }}</span>
+    <span>{{ $t('dryingTime') }}: {{ product?.dryingTime }}</span>
+    <span>{{ $t('volume') }}: {{ product?.size }}</span>
+   </div>
 
         <button class="pink-button prod-price" @click.stop="addCart">{{ !isItemHovered ? product?.price +'сом': isItemHovered && isProductExistsInCart ? $t('toCart') : $t('addedToCart')  }}</button>
         <div class="item-add-btns">
@@ -25,7 +31,7 @@
 import { ExtendedProduct, Product } from '@/types/Product'
 const props = defineProps<{
     type?: string,
-    product?: Product,
+    product: Product,
 
 }>()
 const {t}=useI18n()
@@ -115,16 +121,6 @@ const emit = defineEmits<{
 }>()
 
 
-// const productName = computed(() => {
-//     return props?.product?.name && props?.product?.name?.split(' ').length > 9 ? props?.product?.name.split(' ').slice(0, 9).join(' ') + '...' : props?.product?.name
-// })
-const productName = computed(() => {
-    return props?.product?.name && props?.product?.name?.split(' ').length > 13 ? props?.product?.name.split(' ').slice(0, 13).join(' ') + '...' : props?.product?.name
-})
-
-const productInfo = computed(() => {
-    return props?.product?.shortDescription && props?.product?.shortDescription?.split(' ').length > 13 ? props?.product?.shortDescription.split(' ').slice(0, 13).join(' ') + '...' : props?.product?.shortDescription
-})
 
 const prodCart=computed(()=>{
     return cartStore?.getAllCart?.find((item:ExtendedProduct)=>item?.id===props?.product?.id)
@@ -171,7 +167,7 @@ onMounted(async () => {
 .item-block {
     transition: .5s ease all;
     border-radius: 10px;
-    @include flex(column,start, center);
+    @include flex(column,start, start);
 
     &:hover{
         .item-add{
@@ -189,7 +185,8 @@ onMounted(async () => {
 .item-add-btns{
     opacity: 0;
     visibility: hidden;
-@include flex(row,start,center,20px);
+@include flex(row,center,center,20px);
+width: 100%;
 color:$main-black;
 button{
     background: none;
@@ -197,6 +194,7 @@ button{
     border:none;
     font-size: 20px;
     line-height: 32px;
+
     
 }
 }
@@ -204,7 +202,7 @@ button{
     width: 28%;
     padding: 20px 32px;
     overflow: hidden;
-    height: 450px;
+    height: 480px;
   
 
     img {
@@ -239,9 +237,11 @@ button{
         width: $product-item-width; 
          -webkit-font-smoothing: antialiased; 
         -moz-osx-font-smoothing: grayscale;
+       
         
     }
 }
+
 
 .each-block-info-col {
     @include flex(row, space-between, center);

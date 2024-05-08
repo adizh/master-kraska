@@ -9,8 +9,12 @@
                 <h3 v-if="item?.name">{{ item?.name }}</h3>
                 <h3 v-else-if="item?.productName">{{ item?.productName }}</h3>
 
-                <span class="item-block-description" v-if="item?.shortDescription"> {{ productInfoHorizontal }}</span>
-                <span class="item-block-description" v-if="item?.productDescription"> {{ productDescrHorizontal }}</span>
+
+                <div class="product-infomation">
+                    <span>{{ $t('consumption') }}: {{ item?.consumption }}</span>
+                    <span>{{ $t('dryingTime') }}: {{ item?.dryingTime }}</span>
+                    <span>{{ $t('volume') }}: {{ item?.size }}</span>
+                   </div>
 
                 
             </div>
@@ -51,18 +55,11 @@ const emit = defineEmits<{
 
 
 
-const productInfoHorizontal = computed(() => {
-    return props?.item?.shortDescription && props?.item?.shortDescription?.split(' ').length > 19 ? props?.item?.shortDescription.split(' ').slice(0, 19).join(' ') + '...' : props?.item?.shortDescription
-
-})
 
 
-const productDescrHorizontal= computed(() => {
-    return props?.item?.productDescription && props?.item?.productDescription?.split(' ').length > 19 ? props?.item?.productDescription.split(' ').slice(0, 19).join(' ') + '...' : props?.item?.productDescription
 
-})
+
 const confirmDelete=()=>{
-   // selectedProd.value=props?.item;
     if(props?.item){
         emit('confirmDelete',props?.item)
     }

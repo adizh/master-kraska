@@ -342,7 +342,16 @@ h2 {
     color: #eb5757 !important;
   }
 }
-
+.product-infomation{
+  @include flex(column,start,start);
+  span{
+    @include textFormat(14px,20px,400,#666666)
+  }
+}
+.prod-price{
+  @include flex(row,center,center);
+  width: 100%;
+}
 .news-header{
   @include textFormat(24px,24px,none,$main-black);
   -webkit-font-smoothing: antialiased; 

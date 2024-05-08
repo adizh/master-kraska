@@ -10,7 +10,11 @@
         <img :src="product?.images[0]" format="webp"/>
         <span class="item-block-name">{{ product?.name }}</span>
 
-        <span class="item-block-info">{{ productInfo }}</span>
+        <div class="product-infomation">
+            <span>{{ $t('consumption') }}: {{ product?.consumption }}</span>
+            <span>{{ $t('dryingTime') }}: {{ product?.dryingTime }}</span>
+            <span>{{ $t('volume') }}: {{ product?.size }}</span>
+           </div>
         <button class="pink-button prod-price" @click.stop="addCart">{{ !isItemHovered ? product?.price +'сом': isItemHovered && isProductExistsInCart ? $t('toCart') : $t('addedToCart')  }}</button>
         <div class="item-add-btns">
             <button @click.stop="removeCount">-</button>
@@ -25,8 +29,12 @@
     <div class="item-block horizontal" @click="router.push(`/product/${product?.id}`)" v-else  @mousemove="itemHover" @mouseleave="itemHoverLeave">
         <div class='first-col'>
             <img :src="product?.images[0]" format="webp" />
-            <div class="first-sub-col"> <span class="item-block-name">{{ productName(product?.name) }}</span>
-                <span class="item-block-description">{{ productInfoHorizontal }}</span>
+            <div class="first-sub-col"> <span class="item-block-name">{{ product?.name }}</span>
+                <div class="product-infomation">
+                    <span>{{ $t('consumption') }}: {{ product?.consumption }}</span>
+                    <span>{{ $t('dryingTime') }}: {{ product?.dryingTime }}</span>
+                    <span>{{ $t('volume') }}: {{ product?.size }}</span>
+                   </div>
             </div>
         </div>
 
@@ -56,13 +64,8 @@ const router = useRouter()
 const countToBuy=ref(1)
 const {t}=useI18n()
 const cartStore=useCartStore()
-const productInfo = computed(() => {
-    return props?.product?.shortDescription && props?.product?.shortDescription?.split(' ').length > 13 ? props?.product?.shortDescription.split(' ').slice(0, 13).join(' ') + '...' : props?.product?.shortDescription
-})
-const productInfoHorizontal = computed(() => {
-    return props?.product?.shortDescription && props?.product?.shortDescription?.split(' ').length > 13 ? props?.product?.shortDescription.split(' ').slice(0, 13).join(' ') + '...' : props?.product?.shortDescription
 
-})
+
 
 watch(() => props?.visibleMethod, () => {
     console.log('props?.visibleMethod',props?.visibleMethod)
@@ -172,9 +175,7 @@ const productName = (name: string) => {
 .item-block {
     transition: .3s ease all;
     border-radius: 10px;
-    @include flex(column, start, center);
-
-
+    @include flex(column, start, start);
 }
 @keyframes slideFromBottomToTop {
     0% {
@@ -185,8 +186,7 @@ const productName = (name: string) => {
     }
   }
 
-
-  @keyframes slideFromTopToBottom {
+@keyframes slideFromTopToBottom {
     from {
       transform: translateY(-100%);
       opacity: 0;
@@ -196,27 +196,30 @@ const productName = (name: string) => {
       opacity: 1;
     }
   }
+
 .item-add{
     opacity: 0;
     visibility: hidden;
      animation: slideFromTopToBottom 0.5s;
-     display: none
-    
-  }
+     display: none;
+}
 .item-block-info {
     @include textFormat(14px, 20px, 600, $main-dark-grey);
     max-width: 95%;
     width: 100%;
     margin: 15px 0;
     height: 83px;
-
 }
-
+.horizontal .item-add-btns{
+    width: 20%;
+}
 .item-add-btns{
     opacity: 0;
     visibility: hidden;;
-    @include flex(row,start,center,20px);
+    @include flex(row,center,center,20px);
     color:$main-black;
+    width: 100%;
+
     button{
         background: none;
         outline: none;
