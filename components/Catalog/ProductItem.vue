@@ -162,7 +162,6 @@ const itemHover=()=>{
     isItemHovered.value=true
 }
 const itemHoverLeave=()=>{
-    console.log('itemHoverLeave')
     isItemHovered.value=false
 }
 const productName = (name: string) => {

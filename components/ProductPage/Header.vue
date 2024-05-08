@@ -2,7 +2,7 @@
     <ClientOnly>
         <div class="item-page-header">
             <div class="left">
-                <img :src="getProduct?.product?.images[0]" alt="product">
+                <img :src="productImage" alt="product">
             </div>
             <div class="middle">
                 <div class="middle-header">
@@ -12,7 +12,6 @@
                     <p class="each-block-info-col flex flex-column align-items-start gap-2"><span>
                             {{ $t('storeMark') }}
                         </span>
-
                         <img :src="productBrand?.logo" alt="brand" class="brand-logo">
                     </p>
                 </div>
@@ -22,19 +21,23 @@
                         <Rating v-model="ratingValue" :cancel="false" :value="ratingValue" disabled />
 
                         <a class="middle-review-text" href="#product-reviews">{{ $t('reviews') }}</a>
+
                     </div>
 
                 </div>
+
                 <div class="middle-volume">
                     <span class="each-block-info-col">{{ $t('volume') }}</span>
 
                     <div class="middle-volume-buttons" v-if="getProduct?.product?.variants">
                         <button v-for="(btn, index) in getProduct?.product?.variants" :key="btn?.id"
-                            :class="{ 'active-btn': volumeBtn === btn?.size }"
-                            @click='selectVolumeSize(btn?.size, index)'>
+                            :class="{ 'active-btn': volumeBtn === btn?.size }" class="volume-btn"
+                            @click='selectVolumeSize(btn, index)'>
                             {{ btn?.size }}
-                        </button>
 
+                          
+                        </button>
+                        <!-- <span  v-if="volumeBtn === '10'" class="remove-volume" @click="()=>removeVolume()">X</span> -->
                     </div>
                 </div>
 
@@ -65,7 +68,6 @@
                 <div class="header">
                     <span>{{ $t('prices') }}</span>
                     <UIBookmarks :product="getProduct?.product" />
-
                 </div>
 
                 <div class="numbers">
@@ -87,14 +89,10 @@
 
                 <div class="count">
                     <span class="each-block-info-col">{{ $t('sum') }}</span>
-
-                    {{
-                    selectedProductPrice * countToBuy }} сом
-
+                    {{ selectedProductPrice * countToBuy }} сом
                 </div>
 
                 <div class="buy-btns"> <button @click="addToCart">
-
                         {{ isProductExistsInCart ? $t('addToCart') : $t('addedToCart') }}
                     </button>
                     <button @click.capture="buyNow">{{ $t('buyNow') }}</button>
@@ -105,17 +103,12 @@
     </ClientOnly>
 
 
-
-
     <OverlayPanel ref="countOverlay" class="countOverlay">
         <div class="count-overlay">
             <span class="header">{{ $t('count') }}</span>
             <p class='count-overlay-info'>{{ $t('productCountInfo') }}</p>
         </div>
     </OverlayPanel>
-
-
-
     <Dialog v-model:visible="isProfileOpen" modal :style="{ width: '450px', padding: '10px 40px 40px 40px' }">
         <AuthModal @closeModal="isProfileOpen = false" />
     </Dialog>
@@ -156,28 +149,28 @@ const {t}=useI18n()
 const toggle = (event: any) => {
     countOverlay.value.toggle(event);
 }
-
-
+const productImage =ref('')
+productImage.value=getProduct.value.product?.images[0]
 ratingValue.value = getProduct.value?.product?.rating
 
 
-const selectVolumeSize = (value: string, index: number) => {
-   // calcLeastAmoint()
-    volumeBtn.value = value;
+const selectVolumeSize = (value: any, index: number) => {
+    if(volumeBtn.value===value?.size){
+        removeVolume()
+    }else{
+        volumeBtn.value = value?.size
     if (getProduct.value?.product?.variants) {
+        if(value?.image){
+            productImage.value=value?.image;
+        }else{
+            productImage.value=getProduct?.value?.product?.images[0]
+        }
         selectedProductPrice.value = getProduct.value?.product?.variants[index].price
     }
+    }
+ 
 }
-// const decreaseCount = () => {
-//     if (countToBuy.value > 1) {
-//         countToBuy.value--;
-//         totalPrice.value = countToBuy.value * selectedProductPrice.value
-//     }
-// }
-// const increaseCount = () => {
-//     countToBuy.value++;
-//     totalPrice.value = countToBuy.value * selectedProductPrice.value
-// }
+
 const decreaseCount =()=>{
     if(countToBuy.value>1){
         countToBuy.value=countToBuy.value-1
@@ -221,11 +214,6 @@ const increaseCount =()=>{
         }
     }
    
-}
-
-const toggleBoomark = (id: string) => {
-    isProductBookmarked.value = !isProductBookmarked.value;
-    productStore.addToBookmarks(id)
 }
 
 
@@ -272,8 +260,6 @@ const addToCart = () => {
 }
 
 
-
-
 const { data: getBookmarkItem } = useApi('/api/v1/Bookmark/get-bookmarks', {
     method: 'get',
     query: {
@@ -298,6 +284,14 @@ const prodCart=computed(()=>{
 
 if(prodCart.value && prodCart.value!==null){
     countToBuy.value=prodCart?.value?.count
+}
+
+
+
+const removeVolume =()=>{
+    selectedProductPrice.value=getProduct.value?.product?.price ;
+    volumeBtn.value=''
+    productImage.value=getProduct?.value?.product?.images[0]
 }
 onUnmounted(() => {
     leastSmallAmount.value = 0;
@@ -330,7 +324,15 @@ onMounted(async () => {
     @include textFormat(16px, 24px, 400, #000);
     margin-top: 40px
 }
-
+.volume-btn{
+    position:relative
+}
+.remove-volume{
+    position:absolute;
+    top:-8px;
+    right:0;
+    color:black 
+}
 .brand-logo {
     width: 120px;
 }
