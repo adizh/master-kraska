@@ -7,13 +7,6 @@
                 v-model="payStore.getMega.megaPhone.value" @input="payStore.clearErrorMega('megaPhone')" />
             <span v-if='payStore.getMega.megaPhone.error' class="err-input-msg">{{ payStore.getMega.megaPhone.error
                 }}</span>
-
-            <label for="account">{{ $t('account') }}</label>
-
-            <input type="text" :placeholder="$t('account')" id="account" v-model="payStore.getMega.megaAccount.value"
-                class="basic-input">
-            <span v-if='payStore.getMega.megaAccount.error' class="err-input-msg">{{ payStore.getMega.megaAccount.error
-                }}</span>
         </div>
         <div class="btn"> <button class="bg-white-btn" type="submit">{{ $t('submitData') }}</button></div>
     </form>

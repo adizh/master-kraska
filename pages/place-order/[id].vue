@@ -127,7 +127,7 @@
         <CartPayMethod @choosePayMethod="choosePayMethod" />
         <PaymentMbank v-if="pickUpPay === 'MBank'" @closeModal="isPaymentOpen = false" />
         <PaymentMegaPay v-else-if="pickUpPay === 'MegaPay'" />
-        <PaymentElcart v-else-if="pickUpPay === 'Элкарт'" />
+        <!-- <PaymentElcart v-else-if="pickUpPay === 'Элкарт'" /> -->
     </UIModal>
 
 </section>
@@ -156,7 +156,7 @@ const pickupErr = ref({
 })
 const authStore = useAuthStore()
 const method = ref(1);
-const selectedMarket = ref({ name: t('chooseStore') } as AddressList);
+const selectedMarket = ref({ name: t('selectStore') } as AddressList);
 const comment = ref('');
 
 const isMbnankOpen = ref(false);
@@ -172,12 +172,46 @@ const closePayModal = () => {
     isWarningOpen.value = true
 }
 const choosePayMethod = (value: string) => {
+    console.log('value',value)
     pickUpPay.value = value;
+
+    if(value===t('cash')){
+        sendOrderCash()
+    }
 
 }
 const route = useRoute()
 
-
+const sendOrderCash=async()=>{
+    try{
+        const body = {
+                
+                orderId: route.params?.id,
+                "shopId": '',
+                "name": orderStore.deliveryForm.name.value,
+                "lastName": orderStore.deliveryForm.lastName.value,
+                "address": orderStore.deliveryForm.address.value,
+                "city": orderStore.deliveryForm.city.value,
+                "phone": orderStore.deliveryForm.phone.value,
+                "email": orderStore.deliveryForm.email.value,
+                "comment": orderStore.deliveryForm.comment.value,
+                "deliveryType": 1
+            }
+            const result = await orderStore.sendOrder(body, 1);
+            console.log('send order deliver in cash',result)
+            if(result?.data?.code===200){
+                useNotif('success',t('orderSent'),t('success'));
+                payStore.setExit(true)
+                localStorage.removeItem('cart')
+        return navigateTo('/')
+            }
+    }catch(err){
+        console.log(err)
+    }finally{
+        isPaymentOpen.value=false;
+      
+    }
+}
 
 
 
@@ -265,12 +299,13 @@ const submitOrder = async () => {
 
             if (resultPicUp.value.data.code === 200) {
                 payStore.setExit(true)
+                localStorage.removeItem('cart')
                 return navigateTo('/')
             }
         }
         else {
             if (!selectedMarket?.value?.id) {
-                pickupErr.value.store = t('chooseStore')
+                pickupErr.value.store = t('selectStore')
             }
         }
     } else {
@@ -289,14 +324,23 @@ const submitOrder = async () => {
 
         if (!hasError) {
             const body = {
+
                 orderId: route.params?.id,
+
                 "shopId": '',
+
                 "name": orderStore.deliveryForm.name.value,
+
                 "lastName": orderStore.deliveryForm.lastName.value,
+
                 "address": orderStore.deliveryForm.address.value,
+
                 "city": orderStore.deliveryForm.city.value,
+
                 "phone": orderStore.deliveryForm.phone.value,
+
                 "email": orderStore.deliveryForm.email.value,
+
                 "comment": orderStore.deliveryForm.comment.value,
                 "deliveryType": 1
             }

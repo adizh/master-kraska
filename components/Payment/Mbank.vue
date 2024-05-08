@@ -58,7 +58,8 @@ const sendOtp = async () => {
 
     if (payStore.getMbank.statusCode === '201') {
         emit('closeModal');
-        payStore.setExit(true)
+        payStore.setExit(true);
+        localStorage.removeItem('cart')
 
     }
 }

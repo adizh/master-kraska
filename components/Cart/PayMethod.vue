@@ -8,7 +8,10 @@
                 <img src="../../assets/icons/carbon_checkmark-filled (1).svg" alt="carbon"
                     v-show="payMethod === payOption">
             </button>
+
+          
         </div>
+        <button class="pink-button" @click="emits('choosePayMethod', payMethod)">{{ $t('confirmPay') }}</button>
     </div>
 </template>
 
@@ -30,7 +33,6 @@ const emits = defineEmits<{
 
 const selPayMethod = (type: string) => {
     payMethod.value = type;
-    emits('choosePayMethod', type);
 }
 
 </script>
