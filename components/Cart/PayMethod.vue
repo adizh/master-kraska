@@ -14,11 +14,11 @@
 
 <script setup lang="ts">
 import { PaymentTypes } from '@/types/Items'
-const payMethod = ref<PaymentTypes>('');
+const payMethod = ref<string>('');
 const orderStore = useOrderStore()
-
-const payOptions: PaymentTypes[] = [
-    'Наличными',
+const {t}=useI18n()
+const payOptions: string[] = [
+    t('cash'),
     'MBank',
     'MegaPay'
     // 'Элкарт'
@@ -28,7 +28,7 @@ const emits = defineEmits<{
 }>()
 
 
-const selPayMethod = (type: PaymentTypes) => {
+const selPayMethod = (type: string) => {
     payMethod.value = type;
     emits('choosePayMethod', type);
 }

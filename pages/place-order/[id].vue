@@ -142,7 +142,7 @@ import { AddressList } from '~/types/Items';
 import { Order, OrderItem, UserOrder } from '~/types/Order';
 import { User } from '~/types/User';
 
-
+const { t } = useI18n()
 
 
 const cartStore = useCartStore()
@@ -156,7 +156,7 @@ const pickupErr = ref({
 })
 const authStore = useAuthStore()
 const method = ref(1);
-const selectedMarket = ref({ name: 'Выберите магазин' } as AddressList);
+const selectedMarket = ref({ name: t('chooseStore') } as AddressList);
 const comment = ref('');
 
 const isMbnankOpen = ref(false);
@@ -167,7 +167,7 @@ const payStore = usePayStore()
 const isWarningOpen = ref(false)
 const pickUpPay = ref('')
 const orderStore = useOrderStore();
-const { t } = useI18n()
+
 const closePayModal = () => {
     isWarningOpen.value = true
 }
@@ -270,7 +270,7 @@ const submitOrder = async () => {
         }
         else {
             if (!selectedMarket?.value?.id) {
-                pickupErr.value.store = 'Выберите магазин'
+                pickupErr.value.store = t('chooseStore')
             }
         }
     } else {
