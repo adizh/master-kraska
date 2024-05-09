@@ -4,11 +4,10 @@ import axios, { AxiosInstance, AxiosError } from "axios";
 let url = "https://mc.mydatacoin.io";
 
 const http: AxiosInstance = axios.create({
-  baseURL: url
+  baseURL: url,
 });
 
 http.interceptors.request.use((config) => {
-
   config.params = { ...config.params };
   return config;
 });
@@ -27,7 +26,7 @@ http.interceptors.response.use(
       console.error("Error:", error.message);
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 export default http;

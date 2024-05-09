@@ -31,7 +31,7 @@ export const useCatalogStore = defineStore("catalogStore", {
               }
 
               return { ...item, subdirectory, name: itemName };
-            }
+            },
           );
           this.allCatalogs = filteredCatalogByLang;
         }
@@ -44,7 +44,7 @@ export const useCatalogStore = defineStore("catalogStore", {
       const authStore = useAuthStore();
       try {
         const response = await http(
-          `/api/v1/Category/get-top-category-by-id?id=${categoryId}`
+          `/api/v1/Category/get-top-category-by-id?id=${categoryId}`,
         );
         if (response.status === 200) {
           console.log("respons get top category byif", response);
@@ -57,7 +57,7 @@ export const useCatalogStore = defineStore("catalogStore", {
                   (subItem: CategorySys) => ({
                     ...subItem,
                     name: subItem?.nameKg,
-                  })
+                  }),
                 ),
               };
             } else {
@@ -68,7 +68,7 @@ export const useCatalogStore = defineStore("catalogStore", {
                   (subItem: CategorySys) => ({
                     ...subItem,
                     name: subItem?.nameRu,
-                  })
+                  }),
                 ),
               };
             }
@@ -96,7 +96,7 @@ export const useCatalogStore = defineStore("catalogStore", {
     async fetchSubCatalogs(catalogId: string) {
       try {
         const response = await http(
-          `/api/v1/Helpers/get-all-subdirectories-by-directoryId?id=${catalogId}`
+          `/api/v1/Helpers/get-all-subdirectories-by-directoryId?id=${catalogId}`,
         );
         console.log("response fetchSubCatalogs", response);
         //return response.data;

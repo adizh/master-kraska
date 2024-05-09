@@ -1,11 +1,17 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: false },
-  ssr:false,
+  ssr: false,
   vite: {
     esbuild: {
-      drop: ['debugger'],
-      pure: ['console.log', 'console.error', 'console.warn', 'console.debug', 'console.trace'],
+      drop: ["debugger"],
+      pure: [
+        "console.log",
+        "console.error",
+        "console.warn",
+        "console.debug",
+        "console.trace",
+      ],
     },
     css: {
       preprocessorOptions: {
@@ -19,20 +25,18 @@ export default defineNuxtConfig({
     },
   },
 
-
   app: {
-    pageTransition: { name: 'page', mode: 'out-in' },
+    pageTransition: { name: "page", mode: "out-in" },
     head: {
-      link: [    
-        {rel:'icon',
-        type: 'image/x-icon',
-        hid: 'icon',
-      href:'/favicon.ico',
-      sizes:'16x16'
-      },
+      link: [
+        {
+          rel: "icon",
+          type: "image/x-icon",
+          hid: "icon",
+          href: "/favicon.ico",
+          sizes: "16x16",
+        },
       ],
-
-
     },
   },
 
@@ -46,12 +50,11 @@ export default defineNuxtConfig({
     "@nuxtjs/i18n",
     "nuxt3-leaflet",
     "@nuxtjs/seo",
-    "@vueuse/nuxt"
-
+    "@vueuse/nuxt",
   ],
-  seo:{
-    automaticDefaults:true,
-    splash:true
+  seo: {
+    automaticDefaults: true,
+    splash: true,
   },
   i18n: {
     vueI18n: "./i18n/i18n.config.ts",

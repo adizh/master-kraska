@@ -2,40 +2,33 @@
   <NuxtLoadingIndicator color="#b30753" :throttle="0" />
   <NuxtLayout></NuxtLayout>
   <section class="main-section-site">
-    <NuxtPage/>
+    <NuxtPage />
     <NuxtSnackbar />
   </section>
 
   <NuxtLayout name="footer"></NuxtLayout>
-
-
 </template>
 
-
 <script setup lang="ts">
-import 'primevue/resources/themes/aura-light-green/theme.css';
+import "primevue/resources/themes/aura-light-green/theme.css";
 useHead({
-  title: 'Master Kraska',
-  meta: [
-    { name: 'Master Kraska' }
-  ]
-})
+  title: "Master Kraska",
+  meta: [{ name: "Master Kraska" }],
+});
 
-const nuxtApp = useNuxtApp()
-const loading = ref(false)
-nuxtApp.hook('page:start', () => {
-  loading.value = true
-})
-nuxtApp.hook('page:finish', () => {
-  loading.value = false
-})
-
+const nuxtApp = useNuxtApp();
+const loading = ref(false);
+nuxtApp.hook("page:start", () => {
+  loading.value = true;
+});
+nuxtApp.hook("page:finish", () => {
+  loading.value = false;
+});
 </script>
-
 
 <style lang="scss">
 @import url(./assets/main.scss);
-@import 'primeflex/primeflex.scss';
+@import "primeflex/primeflex.scss";
 
 .page-enter-active,
 .page-leave-active {
@@ -48,9 +41,9 @@ nuxtApp.hook('page:finish', () => {
   filter: blur(1rem);
 }
 
-@media(min-width:1400px) {
+@media (min-width: 1400px) {
   .main-section-site {
-    padding: 3rem 10rem
+    padding: 3rem 10rem;
   }
 }
 </style>

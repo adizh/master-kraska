@@ -1,0 +1,30 @@
+//npm install --save-dev eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin -how to install typed one
+//"@typescript-eslint/parser"
+{
+  "plugins": ["@typescript-eslint", "prettier"],
+
+  "settings": {
+    "files": ["**/*auth.ts"]
+  },
+  "extends": [
+    "prettier",
+    "@nuxtjs/eslint-config-typescript",
+    "plugin:eslint-plugin-vue/essential",
+    "plugin:eslint-plugin-vue/recommended"
+    // "eslint:recommended",
+    // "plugin:@typescript-eslint/eslint-recommended",
+    // "plugin:@typescript-eslint/recommended"
+  ],
+  "rules": {
+    //"prettier/prettier": ["error"],
+    "no-console": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "comma-dangle": "error",
+    "indent": "error",
+    "semi": "off",
+    "no-alert": "error"
+    //  "vue/multi-word-component-names": "off"
+    //  "prettier/prettier": ["error", { "singleQuote": true }]
+  }
+  //"ignorePatterns": ["**/*.vue"]
+}

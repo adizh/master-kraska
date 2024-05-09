@@ -1,7 +1,7 @@
-export type Variant={
-    code:number,
-    price:number,
-    size:string,
-    id?:string,
-    image:string
-}
+export type Variant = {
+  code: number;
+  price: number;
+  size: string;
+  id?: string;
+  image: string;
+};

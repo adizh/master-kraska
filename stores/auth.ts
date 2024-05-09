@@ -9,7 +9,7 @@ export const useAuthStore = defineStore("authStore", {
       phone: "",
       email: "",
       image: "",
-      isNotificationsAllowed:false
+      isNotificationsAllowed: false,
     },
     selectedLanguage: "ru",
   }),
@@ -18,7 +18,7 @@ export const useAuthStore = defineStore("authStore", {
       if (this.getUserId) {
         try {
           const response = await http(
-            `/api/v1/User/get-user-by-id/${this.getUserId}`
+            `/api/v1/User/get-user-by-id/${this.getUserId}`,
           );
           console.log("response fetchUser", response);
           this.user.firstName = response.data.firstName;
@@ -27,7 +27,8 @@ export const useAuthStore = defineStore("authStore", {
           this.user.phone = response.data.phoneNumber;
           this.user.email = response.data.email;
           this.user.image = response.data.image;
-          this.user.isNotificationsAllowed=response.data.isNotificationsAllowed
+          this.user.isNotificationsAllowed =
+            response.data.isNotificationsAllowed;
         } catch (err) {
           console.log(err);
         }
@@ -46,7 +47,7 @@ export const useAuthStore = defineStore("authStore", {
           : "";
       }
     },
-    
+
     getSelectedLang(state) {
       if (process.client) {
         const localLan = localStorage.getItem("selectedLanguage");

@@ -40,7 +40,7 @@ export const usePayStore = defineStore("payStore", {
 
       try {
         const response = await http(
-          `/api/v1/Payment/get-status-payment?payId=${this.mbank?.payId}&paymentType=mbank`
+          `/api/v1/Payment/get-status-payment?payId=${this.mbank?.payId}&paymentType=mbank`,
         );
         console.log("response check payment statys", response);
         if (response.data.code === "201" && response.data.data === "AWAIT") {
@@ -55,14 +55,14 @@ export const usePayStore = defineStore("payStore", {
     async checkPaymentStatusMega(payId: string) {
       try {
         const response = await http(
-          `/api/v1/Payment/get-status-payment?payId=${payId}&paymentType=mega`
+          `/api/v1/Payment/get-status-payment?payId=${payId}&paymentType=mega`,
         );
         console.log("response check payment statys MEGA", response);
         if (response.data.code === "201" && response.data.data === "AWAIT") {
           // this.mbank.statusCode = "201";
           // return (this.mbank.status = "Платеж в обработке...");
-        }else if(response.data.code==='1'){
-          useNotif('error','Произошла ошибка','Ошибка')
+        } else if (response.data.code === "1") {
+          useNotif("error", "Произошла ошибка", "Ошибка");
         }
       } catch (err) {
         console.log(err);
@@ -71,7 +71,7 @@ export const usePayStore = defineStore("payStore", {
     async confirmMbank() {
       try {
         const response = await http.post(
-          `/api/v1/Payment/confirm-payment-mbank?quid=${this.initMbankRes.quid}&otp=${this.mbank.otp.value}`
+          `/api/v1/Payment/confirm-payment-mbank?quid=${this.initMbankRes.quid}&otp=${this.mbank.otp.value}`,
         );
         console.log("response confirm mbank payment", response);
         if (response.data.code === "120") {
@@ -96,7 +96,7 @@ export const usePayStore = defineStore("payStore", {
         };
         const response = await http.post(
           `/api/v1/Payment/initiate-payment-mbank?orderNumber=${orderNumber}`,
-          body
+          body,
         );
         console.log("response initpayment", response);
         if (response?.data?.code == 110) {
@@ -113,7 +113,7 @@ export const usePayStore = defineStore("payStore", {
       try {
         const response = await http.post(
           `/api/v1/Payment/initiate-payment-megapay?orderNumber=${orderNumber}`,
-          params
+          params,
         );
         if (response.data.code === "152") {
           this.megapay.otp.error = "Неправильный пин-код";
@@ -148,7 +148,7 @@ export const usePayStore = defineStore("payStore", {
     async checkPayment(
       params: any,
       orderNumber: string,
-      type: "mbank" | "megapay"
+      type: "mbank" | "megapay",
     ) {
       console.log("checkpayment orderNumber", orderNumber);
       try {
@@ -156,7 +156,7 @@ export const usePayStore = defineStore("payStore", {
           `/api/v1/Payment/check-payment-mega-mbank`,
           {
             params,
-          }
+          },
         );
         console.log("check payment response", response);
         if (type === "mbank") {

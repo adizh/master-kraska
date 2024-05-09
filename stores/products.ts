@@ -4,10 +4,10 @@ import { Product } from "@/types/Product";
 export const useProductsSstore = defineStore("productsStore", {
   state: () => ({
     allProducts: [] as Product[],
-    specialProducts:[] as Product[],
+    specialProducts: [] as Product[],
     filteredProducts: [] as Product[],
-    popularProds:[] as Product[],
-    beneficialProds:[] as Product[],
+    popularProds: [] as Product[],
+    beneficialProds: [] as Product[],
     filterProductTotal: {
       totalPages: 0,
       totalItems: 0,
@@ -54,40 +54,71 @@ export const useProductsSstore = defineStore("productsStore", {
         console.log(err);
       }
     },
-    async fetchSpecialProd(type:string){
-      const authStore=useAuthStore()
-      try{
-const response =await http(`/api/v1/Product/get-popular-products?type=${type}`);
-if(response.status===200){
-  if(type==='popular'){
-    this.popularProds=response.data?.popular?.map((popItem:Product)=>{
-      if(authStore.getSelectedLang==='kg'){
-        return {...popItem,name:popItem?.nameKg,shortDescription:popItem?.shortDescriptionKg}
-      }else{
-        return {...popItem,name:popItem?.nameRu,shortDescription:popItem?.shortDescriptionRu}
-      }
-    })
-  }else if(type==='featured'){
-    this.specialProducts=response.data?.featured?.map((popItem:Product)=>{
-      if(authStore.getSelectedLang==='kg'){
-        return {...popItem,name:popItem?.nameKg,shortDescription:popItem?.shortDescriptionKg}
-      }else{
-        return {...popItem,name:popItem?.nameRu,shortDescription:popItem?.shortDescriptionRu}
-      }
-    })
-  }else{
-    this.beneficialProds=response.data?.beneficial?.map((popItem:Product)=>{
-      if(authStore.getSelectedLang==='kg'){
-        return {...popItem,name:popItem?.nameKg,shortDescription:popItem?.shortDescriptionKg}
-      }else{
-        return {...popItem,name:popItem?.nameRu,shortDescription:popItem?.shortDescriptionRu}
-      }
-    })
-  }
- 
-}
-      }catch(err){
-        console.log(err)
+    async fetchSpecialProd(type: string) {
+      const authStore = useAuthStore();
+      try {
+        const response = await http(
+          `/api/v1/Product/get-popular-products?type=${type}`,
+        );
+        if (response.status === 200) {
+          if (type === "popular") {
+            this.popularProds = response.data?.popular?.map(
+              (popItem: Product) => {
+                if (authStore.getSelectedLang === "kg") {
+                  return {
+                    ...popItem,
+                    name: popItem?.nameKg,
+                    shortDescription: popItem?.shortDescriptionKg,
+                  };
+                } else {
+                  return {
+                    ...popItem,
+                    name: popItem?.nameRu,
+                    shortDescription: popItem?.shortDescriptionRu,
+                  };
+                }
+              },
+            );
+          } else if (type === "featured") {
+            this.specialProducts = response.data?.featured?.map(
+              (popItem: Product) => {
+                if (authStore.getSelectedLang === "kg") {
+                  return {
+                    ...popItem,
+                    name: popItem?.nameKg,
+                    shortDescription: popItem?.shortDescriptionKg,
+                  };
+                } else {
+                  return {
+                    ...popItem,
+                    name: popItem?.nameRu,
+                    shortDescription: popItem?.shortDescriptionRu,
+                  };
+                }
+              },
+            );
+          } else {
+            this.beneficialProds = response.data?.beneficial?.map(
+              (popItem: Product) => {
+                if (authStore.getSelectedLang === "kg") {
+                  return {
+                    ...popItem,
+                    name: popItem?.nameKg,
+                    shortDescription: popItem?.shortDescriptionKg,
+                  };
+                } else {
+                  return {
+                    ...popItem,
+                    name: popItem?.nameRu,
+                    shortDescription: popItem?.shortDescriptionRu,
+                  };
+                }
+              },
+            );
+          }
+        }
+      } catch (err) {
+        console.log(err);
       }
     },
 
@@ -95,7 +126,7 @@ if(response.status===200){
       const authStore = useAuthStore();
       try {
         const response = await http(
-          `/api/v1/Product/get-product-by-id/${productId}`
+          `/api/v1/Product/get-product-by-id/${productId}`,
         );
         if (response.status === 200) {
           let filtered = [];
@@ -109,7 +140,7 @@ if(response.status===200){
                 shortDescription: response.data?.product?.shortDescriptionKg,
                 description: response.data?.product?.descriptionKg.replace(
                   /<(\/?(p|br|h[1-5]|strong|img|a|div|span|li|ul|ol)( [^>]*)?)\/?>/g,
-                  ""
+                  "",
                 ),
               },
               similarProducts: response.data.similarProducts?.map(
@@ -117,7 +148,7 @@ if(response.status===200){
                   ...similar,
                   shortDescription: similar.shortDescriptionKg,
                   name: similar?.nameKg,
-                })
+                }),
               ),
             };
           } else {
@@ -129,7 +160,7 @@ if(response.status===200){
                 shortDescription: response.data?.product?.shortDescriptionRu,
                 description: response.data?.product?.descriptionRu?.replace(
                   /<(\/?(p|br|h[1-5]|strong|img|a|div|span|li|ul|ol)( [^>]*)?)\/?>/g,
-                  ""
+                  "",
                 ),
               },
               similarProducts: response.data.similarProducts?.map(
@@ -137,7 +168,7 @@ if(response.status===200){
                   ...similar,
                   shortDescription: similar.shortDescriptionRu,
                   name: similar?.nameRu,
-                })
+                }),
               ),
             };
           }
@@ -160,7 +191,7 @@ if(response.status===200){
               userId: authStore.getUserId,
               objectId: objectId,
             },
-          }
+          },
         );
         if (response.status === 200) {
           useNotif("success", "Успешно обновлено", "Успех");
@@ -223,7 +254,7 @@ if(response.status===200){
       try {
         const response = await http.get(
           "/api/v1/Product/get-all-products-pagination",
-          { params: query }
+          { params: query },
         );
         console.log("response filterProducts", response);
         if (response.status === 200) {
@@ -250,10 +281,9 @@ if(response.status===200){
       } catch (err) {
         console.log(err);
       } finally {
-        setTimeout(()=>{
+        setTimeout(() => {
           this.areFiltersLoading = false;
-        },1000)
-
+        }, 1000);
       }
     },
     setCategoryId(categoryId: string) {
@@ -279,7 +309,6 @@ if(response.status===200){
         console.log(err);
       }
     },
-
   },
   getters: {
     getAllProducsts(state) {
@@ -300,14 +329,14 @@ if(response.status===200){
     getLoadingState(state) {
       return state.areFiltersLoading;
     },
-    getPopularProducts(state){
-      return state.popularProds
+    getPopularProducts(state) {
+      return state.popularProds;
     },
-    getSpecialProducts(state){
-      return state.specialProducts
+    getSpecialProducts(state) {
+      return state.specialProducts;
     },
-    getBenefProducts(state){
-      return state.beneficialProds
+    getBenefProducts(state) {
+      return state.beneficialProds;
     },
   },
 });

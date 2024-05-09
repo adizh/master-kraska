@@ -7,7 +7,12 @@
     "dev": "nuxt dev -p 3000",
     "generate": "nuxt generate",
     "preview": "nuxt preview -p 3200",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "prettier": "npx prettier  --check .",
+    "prettier:fix": "npx prettier --write .",
+    "format": "npm run prettier:fix && npm run lint:fix"
   },
   "dependencies": {
     "@pinia/nuxt": "^0.5.1",
@@ -29,15 +34,19 @@
   "devDependencies": {
     "@nuxt/image": "^1.4.0",
     "@nuxt/types": "^2.17.3",
+    "@nuxtjs/eslint-config-typescript": "^12.1.0",
     "@nuxtjs/i18n": "npm:@nuxtjs/i18n-edge",
     "@nuxtjs/seo": "^2.0.0-rc.10",
     "@types/axios": "^0.14.0",
     "@vue-leaflet/vue-leaflet": "^0.10.1",
     "@vueuse/core": "^10.9.0",
     "@vueuse/nuxt": "^10.9.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "eslint-plugin-vue": "^9.25.0",
     "leaflet": "^1.9.4",
     "nuxt-primevue": "^0.3.1",
     "nuxt3-leaflet": "^1.0.12",
-    "sass": "^1.71.1"
+    "sass": "^1.71.1",
+    "typescript-eslint": "^7.8.0"
   }
 }

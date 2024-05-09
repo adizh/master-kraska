@@ -19,16 +19,16 @@ export const useOrderStore = defineStore("orderStore", {
     handleValues(
       fieldName: keyof typeof this.delForm,
 
-      validationType: string | any
+      validationType: string | any,
     ) {
       const value = this.delForm[fieldName].value;
       this.delForm[fieldName].value = value;
 
       this.delForm[fieldName].error = "";
 
-if(fieldName==='phone' && !value.startsWith('+996')){
-  this.delForm[fieldName].error = "incorrectPhone";
-}
+      if (fieldName === "phone" && !value.startsWith("+996")) {
+        this.delForm[fieldName].error = "incorrectPhone";
+      }
 
       if (validationType === "string") {
         if (value === "" || value == null) {
@@ -109,7 +109,7 @@ if(fieldName==='phone' && !value.startsWith('+996')){
       try {
         const response = await http.post(
           "/api/v1/Order/create-order",
-          allOrderItems
+          allOrderItems,
         );
         console.log("response create order", response);
         if (response.status === 200) {

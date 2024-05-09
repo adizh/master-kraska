@@ -14,11 +14,11 @@ export type Seller = {
   sellerInfo: string;
 };
 
-export type Certificate={
-  "id":string
-  "descriptionRu": string
-  "descriptionKg": string
-  "preview":string
-  "image": string
-  "isActive": boolean
-}
+export type Certificate = {
+  id: string;
+  descriptionRu: string;
+  descriptionKg: string;
+  preview: string;
+  image: string;
+  isActive: boolean;
+};

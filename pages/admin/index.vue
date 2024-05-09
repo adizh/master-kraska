@@ -1,11 +1,9 @@
 <template>
-    <section>
-        <AdminProducts />
-    </section>
+  <section>
+    <AdminProducts />
+  </section>
 </template>
 
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <style scoped></style>

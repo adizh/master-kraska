@@ -11,41 +11,38 @@ export const useCartStore = defineStore("cartStore", {
   }),
   actions: {
     addToCart(prod: ExtendedProduct) {
-const prodIndex=this.cart.findIndex((el)=>el?.id===prod?.id)
+      const prodIndex = this.cart.findIndex((el) => el?.id === prod?.id);
 
-if(prodIndex===-1){
-  this.cart.push(prod);
-  localStorage.setItem("cart", JSON.stringify(this.cart));
-}else{
-  return;
-}
-     
+      if (prodIndex === -1) {
+        this.cart.push(prod);
+        localStorage.setItem("cart", JSON.stringify(this.cart));
+      } else {
+        return;
+      }
     },
 
     updateCartItem(updatedItem: ExtendedProduct) {
       const index = this.cart.findIndex((item) => item.id === updatedItem.id);
-      if(index!==-1){
-        this.cart.splice(index,1,updatedItem)
+      if (index !== -1) {
+        this.cart.splice(index, 1, updatedItem);
         localStorage.setItem("cart", JSON.stringify(this.cart));
       }
-     
     },
     decreaseCount(item: ExtendedProduct) {
-
       if (item.count > 1) {
         const updatedItem = { ...item };
         updatedItem.count--;
         updatedItem.totalProdSum = updatedItem.count * updatedItem.initPrice;
 
-        console.log('decreaseCount updatedItem',updatedItem)
+        console.log("decreaseCount updatedItem", updatedItem);
         this.updateCartItem(updatedItem);
       }
     },
 
     getTotalItemCount(count: number) {
       this.countToBuy = count;
-      
-      return count
+
+      return count;
     },
 
     increaseCount(item: ExtendedProduct) {
@@ -89,7 +86,7 @@ if(prodIndex===-1){
     totalOfTotalSum(state) {
       return state.cart.reduce(
         (acc: number, item: ExtendedProduct) => acc + item.totalProdSum,
-        0
+        0,
       );
     },
   },

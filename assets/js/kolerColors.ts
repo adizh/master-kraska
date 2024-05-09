@@ -1,3 +1,1 @@
-export const kolerColors=[
-    
-]
+export const kolerColors = [];

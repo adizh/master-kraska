@@ -25,7 +25,7 @@ export type UserOrder = {
   productDescriptionKg: string;
   productDescription: string;
   quantity: number;
-  image:string
+  image: string;
 };
 export type OrderItem = {
   createdAt: string;

@@ -1,30 +1,27 @@
-
 :deep(ul.p-tabview-nav) {
-    @include flex(row, space-around, center !important)
+  @include flex(row, space-around, center !important);
 }
 
-
-
 :deep(.p-tabview .p-tabview-ink-bar) {
-    background-color: $main-pink;
-    height: 3px;
-    color: $main-black;
+  background-color: $main-pink;
+  height: 3px;
+  color: $main-black;
 }
 
 :deep(.p-tabview .p-tabview-nav) {
-    padding-bottom: 15px !important;
+  padding-bottom: 15px !important;
 }
 
 :deep(.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link) {
-    color: $main-black;
+  color: $main-black;
 }
 
 :deep(.p-tabview .p-tabview-nav li .p-tabview-nav-link) {
-    border: none;
+  border: none;
 
-    @include textFormat(16px, 16px, 500, $main-dark-grey)
+  @include textFormat(16px, 16px, 500, $main-dark-grey);
 }
 
 :deep(.p-tabview .p-tabview-panels) {
-    color: $main-black
+  color: $main-black;
 }

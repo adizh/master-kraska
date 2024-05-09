@@ -17,9 +17,7 @@ export type Product = {
   subcategoryId: string;
   brandId: string;
 
-
   brandName: string;
-
 
   rating: number;
   isPopular: boolean;
@@ -37,7 +35,7 @@ export type Product = {
   images: string[];
   reviews: Review[];
   price: number;
-  categories:Category[],
+  categories: Category[];
   helpersMain: {
     id: string;
     name: string;
@@ -46,20 +44,20 @@ export type Product = {
     products: [];
     category: null;
   }[];
-  size:string,
-  colorType:number,
+  size: string;
+  colorType: number;
   products: [];
   category: null;
-  variants?:Variant[];
-  dryingTime:string;
-  consumption:string
+  variants?: Variant[];
+  dryingTime: string;
+  consumption: string;
 };
 
 export interface ExtendedProduct extends Product {
   count: number;
   totalProdSum: number;
   initPrice: number;
-  image?:string
-  productName?:string
-  productDescription?:string
+  image?: string;
+  productName?: string;
+  productDescription?: string;
 }

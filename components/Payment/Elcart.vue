@@ -1,14 +1,14 @@
 <template>
-    <div class="margin-top-20">
-        <h3>Элкарт</h3>
-    </div>
+  <div class="margin-top-20">
+    <h3>Элкарт</h3>
+  </div>
 </template>
 
 <script setup lang="ts">
-const payStore = usePayStore()
+const payStore = usePayStore();
 onMounted(() => {
-    payStore.initPaymentElcart()
-})
+  payStore.initPaymentElcart();
+});
 </script>
 
 <style scoped></style>
