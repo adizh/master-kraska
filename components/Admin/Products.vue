@@ -38,4 +38,33 @@ onMounted(() => {
     @include flex(row, center, center, 20px);
     flex-wrap: wrap;
 }
+
+
+@media (max-width:1100px){
+    .item-block{
+width: 33%;
+    }
+}
+
+@media (max-width:800px){
+    .item-block{
+width: 45%;
+    }
+}
+
+@media (max-width:620px){
+    .item-block{
+width: 65%;
+    }
+}
+@media (max-width:480px){
+    .item-block{
+width: 85%;
+    }
+}
+@media (max-width:360px){
+    .item-block{
+width: 100%;
+    }
+}
 </style>

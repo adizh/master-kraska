@@ -1,46 +1,46 @@
 <template>
     <section>
     <form class="grid" @submit.prevent="editProduct">
-        <div class="col-4 each-field">
+        <div class="lg:col-4 md:col-6 col-12 each-field">
             <label for="name">Имя</label>
             <input class='form-input col-12' type="text" id="name" v-model="inputs.nameRu.value"
                 @input="validate('nameRu', 'string')">
             <span v-if="inputs.nameRu.error" class="err-input-msg">{{ inputs.nameRu.error }}</span>
         </div>
 
-        <div class="col-4 each-field">
+        <div class="lg:col-4 md:col-6 col-12 each-field">
             <label for="name">Имя (кырг)</label>
             <input class='form-input col-12' type="text" id="name" v-model="inputs.nameKg.value"
                 @input="validate('nameKg', 'string')">
             <span v-if="inputs.nameKg.error" class="err-input-msg">{{ inputs.nameKg.error }}</span>
         </div>
 
-        <div class="col-4 each-field">
+        <div class="lg:col-4 md:col-6 col-12 each-field">
             <label for="description">Описание</label>
             <input class='form-input col-12' type="text" id="description" v-model="inputs.descriptionRu.value"
                 @input="validate('descriptionRu', 'string')">
             <span v-if="inputs.descriptionRu.error" class="err-input-msg">{{ inputs.descriptionRu.error }}</span>
         </div>
-        <div class="col-4 each-field">
+        <div class="lg:col-4 md:col-6 col-12 each-field">
             <label for="description">Описание (кырг)</label>
             <input class='form-input col-12' type="text" id="descriptionKg" v-model="inputs.descriptionKg.value"
                 @input="validate('descriptionKg', 'string')">
             <span v-if="inputs.descriptionKg.error" class="err-input-msg">{{ inputs.descriptionKg.error }}</span>
         </div>
-        <div class="col-4 each-field">
+        <div class="lg:col-4 md:col-6 col-12 each-field">
             <label for="description">Короткое описание</label>
             <input class='form-input col-12' type="text" id="shortDescriptionRu" v-model="inputs.shortDescriptionRu.value"
                 @input="validate('shortDescriptionRu', 'string')">
             <span v-if="inputs.shortDescriptionRu.error" class="err-input-msg">{{ inputs.shortDescriptionRu.error }}</span>
         </div>
-        <div class="col-4 each-field">
+        <div class="lg:col-4 md:col-6 col-12 each-field">
             <label for="description">Короткое описание (кырг)</label>
             <input class='form-input col-12' type="text" id="shortDescriptionKg" v-model="inputs.shortDescriptionKg.value"
                 @input="validate('shortDescriptionRu', 'string')">
             <span v-if="inputs.shortDescriptionKg.error" class="err-input-msg">{{ inputs.shortDescriptionKg.error }}</span>
         </div>
 
-        <div class="col-4 each-field">
+        <div class="lg:col-4 md:col-6 col-12 each-field">
             <label for="price">Цена</label>
             <input class='form-input col-12' type="number" id="price" v-model="inputs.price.value"
                 @input="validate('price', 'number')"
@@ -48,7 +48,7 @@
             <span v-if="inputs.price.error" class="err-input-msg">{{ inputs.price.error }}</span>
         </div>
 
-        <div class="col-4 each-field">
+        <div class="lg:col-4 md:col-6 col-12 each-field">
             <label for="categoryId">Категории</label>
             <div v-for="(categoryId,index) in categories" :key="categoryId?.id">
                 <label :for="categoryId?.name">{{categoryId?.nameRu}}</label>
@@ -57,40 +57,40 @@
             <!-- <span v-if="inputs.categoryId.error" class="err-input-msg">{{ inputs.categoryId.error }}</span> -->
         </div>
 
-        <div class="col-4 each-field">
+        <div class="lg:col-4 md:col-6 col-12 each-field">
             <label for="subcategoryId">Подкатегории</label>
             <input class='form-input col-12' type="text" id="subcategoryId" v-model="inputs.subcategoryId.value">
             <span v-if="inputs.subcategoryId.error" class="err-input-msg">{{ inputs.subcategoryId.error }}</span>
         </div>
 
-        <div class="col-4 each-field">
+        <div class="lg:col-4 md:col-6 col-12 each-field">
             <label for="brandId">Бренд</label>
             <input class='form-input col-12' type="text" id="brandId" v-model="inputs.brandId.value">
             <span v-if="inputs.brandId.error" class="err-input-msg">{{ inputs.brandId.error }}</span>
         </div>
 
 
-        <div class="col-4 each-field">
+        <div class="lg:col-4 md:col-6 col-12 each-field">
             <label for="size">Размер</label>
             <input class='form-input col-12' type="text" id="size" v-model="inputs.size.value"
                 @input="validate('size', 'string')">
             <span v-if="inputs.size.error" class="err-input-msg">{{ inputs.size.error }}</span>
         </div>
 
-        <div class="col-4 each-field">
+        <div class="lg:col-4 md:col-6 col-12 each-field">
             <label for="size">Цвет</label>
             <input class='form-input col-12' type="text" id="color" v-model="inputs.color.value"
                 @input="validate('color', 'string')">
             <span v-if="inputs.color.error" class="err-input-msg">{{ inputs.color.error }}</span>
         </div>
 
-        <div class="col-4 each-field">
+        <div class="lg:col-4 md:col-6 col-12 each-field">
             <label for="size">Высыхание</label>
             <input class='form-input col-12' type="text" id="color" v-model="inputs.dryingTime.value"
                 @input="validate('dryingTime', 'string')">
             <span v-if="inputs.dryingTime.error" class="err-input-msg">{{ inputs?.dryingTime?.error }}</span>
         </div>
-        <div class="col-4 each-field">
+        <div class="lg:col-4 md:col-6 col-12 each-field">
             <label for="size">Расход</label>
             <input class='form-input col-12' type="text" id="color" v-model="inputs.consumption.value"
                 @input="validate('consumption', 'string')">
@@ -120,19 +120,19 @@
             <span v-if="inputs.color.error" class="err-input-msg">{{ inputs.color.error }}</span>
         </div>
 
-        <div class="col-4 each-field">
+        <div class="lg:col-4 md:col-6 col-12 each-field">
             <label for="size">Популярный</label>
             <input class='form-input col-12' type="checkbox" id="color" v-model="inputs.isPopular.value">
             <!-- <span v-if="inputs.color.error" class="err-input-msg">{{ inputs.isPopular.error }}</span> -->
         </div>
 
-        <div class="col-4 each-field">
+        <div class="lg:col-4 md:col-6 col-12 each-field">
             <label for="isFeatured">Рекомендуемый</label>
             <input class='form-input col-12' type="checkbox" id="isFeatured" v-model="inputs.isFeatured.value">
             <!-- <span v-if="inputs.color.error" class="err-input-msg">{{ inputs.isPopular.error }}</span> -->
         </div>
 
-        <div class="col-4 each-field">
+        <div class="lg:col-4 md:col-6 col-12 each-field">
             <label for="isBeneficial">Выгодный</label>
             <input class='form-input col-12' type="checkbox" id="isBeneficial" v-model="inputs.isBeneficial.value">
             <!-- <span v-if="inputs.color.error" class="err-input-msg">{{ inputs.isPopular.error }}</span> -->
@@ -404,7 +404,7 @@ button {
 }
 
 .variant{
-    border:1px solid $slider-border-color;
+    border:1px solid $main-pink;
     img{
         width: 100%;
     }
@@ -414,6 +414,22 @@ button {
     flex-wrap: wrap;
     div{
         width: 20%;
+    }
+}
+
+@media (max-width:768px){
+    .all-variant{
+        div{
+            width: 45%;
+        }
+    }
+}
+@media (max-width:576px){
+    .all-variant{
+        flex-direction: column;
+        div{
+            width: 100%;
+        }
     }
 }
 </style>
