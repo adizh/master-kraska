@@ -23,7 +23,7 @@
     "indent": "error",
     "semi": "off",
     "no-alert": "off",
-     "vue/multi-word-component-names": "off"
+    "vue/multi-word-component-names": "off"
     //  "prettier/prettier": ["error", { "singleQuote": true }]
   }
   //"ignorePatterns": ["**/*.vue"]

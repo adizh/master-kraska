@@ -47,17 +47,13 @@
               @decrease-count="decreaseCount"
               @confirm-delete="confirmDelete"
             />
-            <div
-              class="flex justify-content-end flex-row"
-            >
+            <div class="flex justify-content-end flex-row">
               <button class="btn-white-bg" @click="cartStore.saveNewCart">
                 {{ $t("saveChanges") }}
               </button>
             </div>
 
-            <div
-              class="cart-main-info-price col-12"
-            >
+            <div class="cart-main-info-price col-12">
               <div class="lg:col-6 col-12 md:col-9">
                 <button class="pink-button" @click="isConfirmOpen = true">
                   {{ $t("goToRegister") }}

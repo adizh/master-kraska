@@ -2,8 +2,8 @@
   <div>
     <transition name="modal-fade" mode="in-out">
       <div
-        class="modal-container"
         v-if="showModal"
+        class="modal-container"
         :style="modalContainerStyle"
       >
         <div class="modal-content" :style="modalStyle">
@@ -11,7 +11,7 @@
 
           <a href="#">{{ title }}</a>
 
-          <slot></slot>
+          <slot />
         </div>
       </div>
     </transition>

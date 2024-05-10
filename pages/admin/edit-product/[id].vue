@@ -137,7 +137,9 @@
       </div>
 
       <div class="lg:col-4 md:col-6 col-12 each-field">
-        <label for="size">Размер</label>
+        <label for="size" class="flex flex-row justify-content-between">
+          <span> Размер </span>
+        </label>
         <input
           id="size"
           v-model="inputs.size.value"
@@ -178,7 +180,12 @@
         }}</span>
       </div>
       <div class="lg:col-4 md:col-6 col-12 each-field">
-        <label for="size">Расход</label>
+
+          <label for="size" class="flex flex-row justify-content-between">
+            <span> Расход </span>
+            <span class="cursor" @click="isDeleteOpen = true">X</span>
+          </label>
+
         <input
           id="color"
           v-model="inputs.consumption.value"
@@ -316,6 +323,19 @@
         </button>
       </form>
     </UIModal>
+
+    <Dialog
+      :visible="isDeleteOpen"
+      modal
+      :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
+      header=" "
+    >
+      <ConfirmPay
+        title="Вы действительно хотите удалить расход?"
+        @cancel="isDeleteOpen = false"
+        @confirm="confirmDelete"
+      />
+    </Dialog>
   </section>
 </template>
 
@@ -326,11 +346,10 @@ import { Variant } from '~/types/Variant';
 const { t } = useI18n();
 const route = useRoute();
 const id = route.params.id;
-// const { data: product } = await useApi(`/api/v1/Product/get-product-by-id/${id}`) as any;
 const isVariantOpen = ref(false);
 const item = ref({} as Product);
-
 const productsStore = useProductsSstore();
+const isDeleteOpen = ref(false);
 const newVariants = ref({
   size: '',
   price: '',
@@ -377,8 +396,6 @@ const handleNewVarImage = async (event: any) => {
   const base64StringNewImage = await convertToBase64(newVarImage.value);
   variantImage.value = base64StringNewImage as unknown as string;
   varSizes[currVarSize.value].image = base64StringNewImage as unknown as string;
-  console.log('variants', variants);
-  console.log('varSizes', varSizes);
 };
 const currVarSize = ref('');
 const openFileInput = (varSize: string) => {
@@ -387,15 +404,17 @@ const openFileInput = (varSize: string) => {
   currVarSize.value = varSize;
 };
 
+const confirmDelete = () => {
+  inputs.value.consumption.value = null as unknown as string;
+  submitUpdate();
+  isDeleteOpen.value = false;
+};
 const addVariant = async () => {
   if (!newVariants.value.image) {
     return;
   }
-
   try {
     const base64String = await convertToBase64(newVariants.value.image);
-    // Now you can send the base64String to your API
-    console.log('Base64 string:', base64String);
     const body = [
       {
         price: newVariants.value.price,
@@ -536,7 +555,7 @@ onMounted(async () => {
 
   item?.value?.categories.map((category: any) => {
     categoryValues[category.id] = category.id;
-    return categoryValues
+    return categoryValues;
   });
 
   item?.value?.variants?.map((variant: Variant) => {

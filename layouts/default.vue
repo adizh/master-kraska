@@ -5,11 +5,7 @@
     </div>
 
     <ul class="bottom">
-      <div
-        v-if="isBurgerMenuOpen"
-        class="overlay"
-        @click="closeBurgerMenu"
-      />
+      <div v-if="isBurgerMenuOpen" class="overlay" @click="closeBurgerMenu" />
       <ul class="bottom-part" :class="{ 'open-bottom-part': isBurgerMenuOpen }">
         <li
           class="catalog-li"

@@ -67,7 +67,7 @@
           <span class="each-block-info-col">
             {{ $t("consumption") }}
           </span>
-          <p>1л=7-12КВ.М. 9л=63.00-108.00КВ.М.</p>
+          <p>{{ getProduct?.product?.consumption }}</p>
         </div>
         <div>
           <span class="each-block-info-col">{{ $t("parameters") }} </span>
@@ -125,14 +125,14 @@
     </div>
   </OverlayPanel>
   <Dialog
-    v-model:visible="isProfileOpen"
+    :visible="isProfileOpen"
     modal
     :style="{ width: '450px', padding: '10px 40px 40px 40px' }"
   >
     <AuthModal @closeModal="isProfileOpen = false" />
   </Dialog>
   <Dialog
-    v-model:visible="isConfirmOpen"
+    :visible="isConfirmOpen"
     modal
     :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
     header=" "
@@ -147,7 +147,7 @@
 
 <script setup lang="ts">
 import Rating from "primevue/rating";
-import { Product, ExtendedProduct } from "@/types/Product";
+import { ExtendedProduct } from "@/types/Product";
 import { Brands } from "~/types/Brands";
 
 const isConfirmOpen = ref(false);
@@ -170,8 +170,11 @@ const width = ref(0);
 const isProductBookmarked = ref(false);
 const isProfileOpen = ref(false);
 const { getProduct } = storeToRefs(productStore);
+
 const sumHeight = computed(() => length.value * width.value);
+
 const { t } = useI18n();
+
 const toggle = (event: any) => {
   countOverlay.value.toggle(event);
 };

@@ -92,7 +92,6 @@
         <div v-if="item?.subdirectory?.length" class="all-inputs">
           <p
             v-for="(sub, index) in getSlicedSubdirectories(item)"
-
             :key="index"
             class="each-sub-item"
           >
@@ -180,10 +179,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  AllCatalog,
-  CatalogCheckbox
-} from '~/types/Catalog';
+import { AllCatalog, CatalogCheckbox } from '~/types/Catalog';
 const showResults = ref(false);
 const catalogStore = useCatalogStore();
 const productsStore = useProductsSstore();
@@ -272,7 +268,7 @@ const initializeCheckboxStates = () => {
         name: sub?.name
       }))
     };
-    return checkboxStates
+    return checkboxStates;
   });
 
   //  console.log('checkboxStates in function', checkboxStates)

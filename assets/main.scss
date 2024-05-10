@@ -325,6 +325,9 @@ h2 {
 .modal-header {
   @include textFormat(20px, 20px, 600, #000);
 }
+.cursor:hover {
+  cursor: pointer;
+}
 
 .modal-btns {
   @include flex(row, flex-end, center, 20px);

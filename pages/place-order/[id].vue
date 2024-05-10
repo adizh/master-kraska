@@ -124,12 +124,8 @@
           {{ $t("Выбрать магазин") }}
         </h5>
       </template>
-      <template
-        #closeicon
-      >
-        <div
-          class="mt-3 close-icon"
-        >
+      <template #closeicon>
+        <div class="mt-3 close-icon">
           <svg
             width="24"
             height="24"
@@ -371,14 +367,14 @@ const submitOrder = async () => {
   } else {
     for (const fieldName in orderStore.delForm) {
       const field =
-          orderStore.delForm[fieldName as keyof typeof orderStore.delForm];
+        orderStore.delForm[fieldName as keyof typeof orderStore.delForm];
 
       if ('type' in field) {
         const validationType = field.type;
         orderStore.handleValues(
-            fieldName as keyof typeof orderStore.delForm,
-            validationType
-        )
+          fieldName as keyof typeof orderStore.delForm,
+          validationType
+        );
       }
     }
     const hasError = Object.values(orderStore.deliveryForm).some(
@@ -453,9 +449,9 @@ onBeforeRouteLeave((_, __, next) => {
 .pay-btn {
   width: 35%;
 }
-.close-icon{
+.close-icon {
   background: transparent;
-   color: none
+  color: none;
 }
 .orders-first {
   padding: 40px;
