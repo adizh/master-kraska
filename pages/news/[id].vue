@@ -2,29 +2,37 @@
   <div class="single-news-section">
     <div class="single-news">
       <h1>{{ singleNew?.name }}</h1>
-      <img :src="singleNew?.image" :alt="singleNew?.text" />
-      <div class="text">{{ singleNew?.description }}</div>
-      <div class="description">{{ singleNew?.text }}</div>
+      <img :src="singleNew?.image" :alt="singleNew?.text">
+      <div class="text">
+        {{ singleNew?.description }}
+      </div>
+      <div class="description">
+        {{ singleNew?.text }}
+      </div>
     </div>
 
-    <h2 class="other-title margin-bottom-40">{{ $t("otherNews") }}</h2>
+    <h2 class="other-title margin-bottom-40">
+      {{ $t("otherNews") }}
+    </h2>
 
     <div class="active-section">
       <div
-        class="active-news"
         v-for="item in activeNews"
         :key="item?.id"
+        class="active-news"
         @click="navigateTo(`/news/${item?.id}`)"
       >
         <div class="image">
-          <img :src="item?.image" :alt="item?.name" />
+          <img :src="item?.image" :alt="item?.name">
         </div>
         <div class="info">
-          <div class="news-header">{{ item?.name }}</div>
+          <div class="news-header">
+            {{ item?.name }}
+          </div>
           <span class="date">
             {{ formatDate(item?.createdDate) }}
           </span>
-          <br />
+          <br>
         </div>
       </div>
     </div>
@@ -32,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import { News } from "@/types/News";
+import { News } from '@/types/News';
 const route = useRoute();
 const singleNew = ref({} as News);
 const activeNews = ref([] as News[]);
@@ -43,19 +51,19 @@ const fetchNew = async () => {
     const response = await http(`/api/v1/News/get-news/${route?.params?.id}`);
 
     if (response.status === 200) {
-      if (authStore?.getSelectedLang === "kg") {
+      if (authStore?.getSelectedLang === 'kg') {
         singleNew.value = {
           ...response.data,
           name: response.data?.nameKg,
           text: response.data?.textKg,
-          description: response.data?.descriptionKg,
+          description: response.data?.descriptionKg
         };
       } else {
         singleNew.value = {
           ...response.data,
           name: response.data?.nameRu,
           text: response.data?.textRu,
-          description: response.data?.descriptionRu,
+          description: response.data?.descriptionRu
         };
       }
     }
@@ -66,26 +74,26 @@ const fetchNew = async () => {
 
 const fetchActiveNews = async () => {
   try {
-    const response = await http("/api/v1/News/get-active-news");
+    const response = await http('/api/v1/News/get-active-news');
     if (response.status === 200) {
       activeNews.value = response.data?.map((news: News) => {
-        if (authStore.getSelectedLang === "kg") {
+        if (authStore.getSelectedLang === 'kg') {
           return {
             ...news,
             name: news?.nameKg,
             description: news?.descriptionKg,
-            text: news?.textKg,
+            text: news?.textKg
           };
         } else {
           return {
             ...news,
             name: news?.nameRu,
             description: news?.descriptionRu,
-            text: news?.textRu,
+            text: news?.textRu
           };
         }
       });
-      console.log("response acfive", response);
+      console.log('response acfive', response);
     }
   } catch (err) {
     console.log(err);

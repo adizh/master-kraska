@@ -4,7 +4,7 @@ export const validatePassword = (value: string) => {
 
 export const validateRepeatPassword = (
   password: string,
-  newPassword: string,
+  newPassword: string
 ) => {
   if (newPassword?.length > 0) {
     return password === newPassword;

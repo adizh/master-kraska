@@ -1,5 +1,3 @@
-import { Product } from "./Product";
-
 export type Order = {
   customerId: string;
   productId: string;

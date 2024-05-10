@@ -1,10 +1,10 @@
 // http.js
-import axios, { AxiosInstance, AxiosError } from "axios";
+import axios, { AxiosInstance, AxiosError } from 'axios';
 
-let url = "https://mc.mydatacoin.io";
+const url = 'https://mc.mydatacoin.io';
 
 const http: AxiosInstance = axios.create({
-  baseURL: url,
+  baseURL: url
 });
 
 http.interceptors.request.use((config) => {
@@ -18,15 +18,15 @@ http.interceptors.response.use(
   },
   (error: AxiosError) => {
     if (error.response) {
-      console.error("Response Error:", error.response.data);
-      console.error("Response Status:", error.response.status);
+      console.error('Response Error:', error.response.data);
+      console.error('Response Status:', error.response.status);
     } else if (error.request) {
-      console.error("Request Error:", error.request);
+      console.error('Request Error:', error.request);
     } else {
-      console.error("Error:", error.message);
+      console.error('Error:', error.message);
     }
     return Promise.reject(error);
-  },
+  }
 );
 
 export default http;

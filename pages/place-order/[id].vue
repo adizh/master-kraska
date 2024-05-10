@@ -1,33 +1,35 @@
 <template>
   <section>
-    <div class="main-header-h1">{{ $t("orderRegister") }}</div>
+    <div class="main-header-h1">
+      {{ $t("orderRegister") }}
+    </div>
     <div class="orders grid">
       <div class="orders-first lg:col-8 md-col-12 col-12">
         <h3>{{ $t("waysOfOrder") }}</h3>
         <div class="buttons-sel">
           <button
             class="gray-buttons-border pay-btn"
-            @click="selMethod(1)"
             :class="{ 'selected-btn': method === 1 }"
+            @click="selMethod(1)"
           >
             {{ $t("takeFromStore") }}
             <img
+              v-show="method === 1"
               src="../../assets/icons/carbon_checkmark-filled (1).svg"
               alt="carbon"
-              v-show="method === 1"
-            />
+            >
           </button>
           <button
             class="gray-buttons-border pay-btn"
-            @click="selMethod(2)"
             :class="{ 'selected-btn': method === 2 }"
+            @click="selMethod(2)"
           >
             {{ $t("delivery") }}
             <img
+              v-show="method === 2"
               src="../../assets/icons/carbon_checkmark-filled (1).svg"
               alt="carbon"
-              v-show="method === 2"
-            />
+            >
           </button>
         </div>
         <div class="order-first-info">
@@ -61,11 +63,11 @@
           <div class="delivery-comments mt-3">
             <h3>{{ $t("comments") }}</h3>
             <input
+              v-model="orderStore.delForm.comment.value"
               type="text"
               class="basic-input"
               :placeholder="$t('comments')"
-              v-model="orderStore.delForm.comment.value"
-            />
+            >
           </div>
         </div>
 
@@ -77,17 +79,15 @@
       <div class="cart-main-info-price lg:col-4 md:col-6 sm:col-12 col-12">
         <div class="cart-main-info-price-block">
           <div class="first">
-            <span
-              >{{ $t("all") }}: {{ currentOrder?.items?.length }}
-              {{ $t("product") }}</span
-            >
+            <span>{{ $t("all") }}: {{ currentOrder?.items?.length }}
+              {{ $t("product") }}</span>
             <span>{{ currentOrder?.total }} сом</span>
           </div>
           <div class="second">
             <span>{{ $t("accountPiece") }}</span>
             <span>0%</span>
           </div>
-          <input class="basic-input" placeholder="Промокод" />
+          <input class="basic-input" placeholder="Промокод">
           <div class="last">
             <span>{{ $t("inTotal") }}</span>
             <span>{{ currentOrder?.total }} сом</span>
@@ -105,30 +105,31 @@
         v-for="order in currentOrder?.items"
         :key="order?.id"
         :item="order"
-        orderPlace="orderPlace"
+        order-place="orderPlace"
       >
         <template #count-buttons>
-          <span class="price text-center"
-            >{{ order?.price * order?.quantity }} сом</span
-          >
+          <span class="price text-center">{{ order?.price * order?.quantity }} сом</span>
         </template>
       </CartProductItem>
     </div>
 
     <Dialog
-      v-model:visible="isMagVisible"
+      :visible="isMagVisible"
       modal
       :style="{ padding: '10px 20px' }"
       class="dialog-mag"
     >
       <template #header>
-        <h5 class="m-3">{{ $t("Выбрать магазин") }}</h5>
+        <h5 class="m-3">
+          {{ $t("Выбрать магазин") }}
+        </h5>
       </template>
       <template
         #closeicon
-        :style="{ background: 'transparent', color: 'none' }"
       >
-        <div class="mt-3">
+        <div
+          class="mt-3 close-icon"
+        >
           <svg
             width="24"
             height="24"
@@ -151,20 +152,22 @@
           :phone="item?.phoneNumber"
           :email="item?.email"
           :address="item?.address"
-          :openHours="item?.openHours"
+          :open-hours="item?.openHours"
           @click="selectAddress(item)"
         />
       </div>
     </Dialog>
 
     <Dialog
-      v-model:visible="isWarningOpen"
+      :visible="isWarningOpen"
       modal
       header=" "
       :style="{ width: '30rem', padding: '20px 40px 50px 20px' }"
     >
       <div class="warning-modal-exit">
-        <h5 class="modal-header2">{{ $t("cancedlOrderWarn") }}?</h5>
+        <h5 class="modal-header2">
+          {{ $t("cancedlOrderWarn") }}?
+        </h5>
         <p class="warning-text-modal">
           {{ $t("cancelOrderTextWarn") }}
         </p>
@@ -179,11 +182,11 @@
       </div>
     </Dialog>
 
-    <UIModal :showModal="isPaymentOpen" @closeModal="closePayModal">
-      <CartPayMethod @choosePayMethod="choosePayMethod" />
+    <UIModal :show-modal="isPaymentOpen" @close-modal="closePayModal">
+      <CartPayMethod @choose-pay-method="choosePayMethod" />
       <PaymentMbank
         v-if="pickUpPay === 'MBank'"
-        @closeModal="isPaymentOpen = false"
+        @close-modal="isPaymentOpen = false"
       />
       <PaymentMegaPay v-else-if="pickUpPay === 'MegaPay'" />
       <!-- <PaymentElcart v-else-if="pickUpPay === 'Элкарт'" /> -->
@@ -192,13 +195,12 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({
-  layout: false,
-});
+import { AddressList } from '~/types/Items';
+import { OrderItem, UserOrder } from '~/types/Order';
 
-import { AddressList } from "~/types/Items";
-import { Order, OrderItem, UserOrder } from "~/types/Order";
-import { User } from "~/types/User";
+definePageMeta({
+  layout: false
+});
 
 const { t } = useI18n();
 
@@ -209,31 +211,30 @@ const selectedOrderPlacement = ref(1);
 const currentOrder = ref({} as OrderItem);
 
 const pickupErr = ref({
-  store: "",
-  payMethod: "",
+  store: '',
+  payMethod: ''
 });
 const authStore = useAuthStore();
 const method = ref(1);
-const selectedMarket = ref({ name: t("selectStore") } as AddressList);
-const comment = ref("");
+const selectedMarket = ref({ name: t('selectStore') } as AddressList);
 
-const isMbnankOpen = ref(false);
+// const isMbnankOpen = ref(false);
 const isPaymentOpen = ref(false);
 
 const isMagVisible = ref(false);
 const payStore = usePayStore();
 const isWarningOpen = ref(false);
-const pickUpPay = ref("");
+const pickUpPay = ref('');
 const orderStore = useOrderStore();
 
 const closePayModal = () => {
   isWarningOpen.value = true;
 };
 const choosePayMethod = (value: string) => {
-  console.log("value", value);
+  console.log('value', value);
   pickUpPay.value = value;
 
-  if (value === t("cash")) {
+  if (value === t('cash')) {
     sendOrderCash();
   }
 };
@@ -243,7 +244,7 @@ const sendOrderCash = async () => {
   try {
     const body = {
       orderId: route.params?.id,
-      shopId: "",
+      shopId: '',
       name: orderStore.deliveryForm.name.value,
       lastName: orderStore.deliveryForm.lastName.value,
       address: orderStore.deliveryForm.address.value,
@@ -251,15 +252,15 @@ const sendOrderCash = async () => {
       phone: orderStore.deliveryForm.phone.value,
       email: orderStore.deliveryForm.email.value,
       comment: orderStore.deliveryForm.comment.value,
-      deliveryType: 1,
+      deliveryType: 1
     };
     const result = await orderStore.sendOrder(body, 1);
-    console.log("send order deliver in cash", result);
+    console.log('send order deliver in cash', result);
     if (result?.data?.code === 200) {
-      useNotif("success", t("orderSent"), t("success"));
+      useNotif('success', t('orderSent'), t('success'));
       payStore.setExit(true);
-      localStorage.removeItem("cart");
-      return navigateTo("/");
+      localStorage.removeItem('cart');
+      return navigateTo('/');
     }
   } catch (err) {
     console.log(err);
@@ -271,21 +272,21 @@ const sendOrderCash = async () => {
 const getOrderId = async () => {
   try {
     const response = await http(
-      `/api/v1/Order/get-order-id/${route?.params?.id}`,
+      `/api/v1/Order/get-order-id/${route?.params?.id}`
     );
-    console.log("response", response);
+    console.log('response', response);
     if (response.status === 200) {
       currentOrder.value = {
         ...response.data,
         items: response.data?.items?.map((item: UserOrder) => {
-          if (authStore.getSelectedLang === "kg") {
+          if (authStore.getSelectedLang === 'kg') {
             return {
               ...item,
               productName: item?.productNameKg,
               productDescription: item?.productDescriptionKg.replace(
                 /<(\/?(p|br|h[1-5]|strong|img|a|div|span|li|ul|ol)( [^>]*)?)\/?>/g,
-                "",
-              ),
+                ''
+              )
             };
           } else {
             return {
@@ -293,15 +294,15 @@ const getOrderId = async () => {
               productName: item?.productNameRu,
               productDescription: item?.productDescriptionRu?.replace(
                 /<(\/?(p|br|h[1-5]|strong|img|a|div|span|li|ul|ol)( [^>]*)?)\/?>/g,
-                "",
-              ),
+                ''
+              )
             };
           }
-        }),
+        })
       };
     }
 
-    console.log("currentOrder", currentOrder);
+    console.log('currentOrder', currentOrder);
   } catch (err) {
     console.log(err);
   }
@@ -310,14 +311,14 @@ const getOrderId = async () => {
 const deleteOrder = async () => {
   try {
     const response = await http.delete(
-      `/api/v1/Order/delete-order?orderNumber=${cartStore.getCurrentOrder?.orderNumber}`,
+      `/api/v1/Order/delete-order?orderNumber=${cartStore.getCurrentOrder?.orderNumber}`
     );
-    console.log("delete order response", response);
+    console.log('delete order response', response);
     if (response.status === 200) {
-      useNotif("success", t("orderCancelled"), t("success"));
+      useNotif('success', t('orderCancelled'), t('success'));
       isWarningOpen.value = false;
       isPaymentOpen.value = false;
-      return navigateTo("/");
+      return navigateTo('/');
     }
   } catch (err) {
     console.log(err);
@@ -336,7 +337,7 @@ const selMethod = (type: number) => {
 const selectAddress = (item: AddressList) => {
   selectedMarket.value = item;
   isMagVisible.value = false;
-  pickupErr.value.store = "";
+  pickupErr.value.store = '';
 };
 const resultPicUp = ref();
 
@@ -350,49 +351,45 @@ const submitOrder = async () => {
         name: authStore.getUser?.firstName,
         lastName: authStore.getUser?.lastName,
         address: authStore.getUser?.address,
-        city: "",
+        city: '',
         phone: authStore?.getUser?.phone,
         email: authStore.getUser?.email,
         comment: orderStore.delForm.comment?.value,
-        deliveryType: 0,
+        deliveryType: 0
       };
 
       resultPicUp.value = await orderStore.sendOrder(body, 0);
 
       if (resultPicUp.value.data.code === 200) {
         payStore.setExit(true);
-        localStorage.removeItem("cart");
-        return navigateTo("/");
+        localStorage.removeItem('cart');
+        return navigateTo('/');
       }
-    } else {
-      if (!selectedMarket?.value?.id) {
-        pickupErr.value.store = t("selectStore");
-      }
+    } else if (!selectedMarket?.value?.id) {
+      pickupErr.value.store = t('selectStore');
     }
   } else {
     for (const fieldName in orderStore.delForm) {
-      if (orderStore.delForm.hasOwnProperty(fieldName)) {
-        const field =
+      const field =
           orderStore.delForm[fieldName as keyof typeof orderStore.delForm];
 
-        if ("type" in field) {
-          const validationType = field.type;
-          orderStore.handleValues(
+      if ('type' in field) {
+        const validationType = field.type;
+        orderStore.handleValues(
             fieldName as keyof typeof orderStore.delForm,
-            validationType,
-          );
-        }
+            validationType
+        )
       }
     }
     const hasError = Object.values(orderStore.deliveryForm).some(
-      (input) => input.error !== "",
+      input => input.error !== ''
     );
 
     if (!hasError) {
       const body = {
         orderId: route.params?.id,
 
-        shopId: "",
+        shopId: '',
 
         name: orderStore.deliveryForm.name.value,
 
@@ -407,10 +404,10 @@ const submitOrder = async () => {
         email: orderStore.deliveryForm.email.value,
 
         comment: orderStore.deliveryForm.comment.value,
-        deliveryType: 1,
+        deliveryType: 1
       };
       const result = await orderStore.sendOrder(body, 1);
-      console.log("result in submitOrder", result);
+      console.log('result in submitOrder', result);
       if (result?.status === 200) {
         isPaymentOpen.value = true;
       }
@@ -419,8 +416,8 @@ const submitOrder = async () => {
 };
 
 onMounted(() => {
-  const section = document.querySelector(".footer-section") as HTMLElement;
-  section.style.display = "none";
+  const section = document.querySelector('.footer-section') as HTMLElement;
+  section.style.display = 'none';
   orderStore.fetchOrderById(route.params?.id as string);
   authStore.fetchUser();
   orderStore?.fetchAllShops();
@@ -431,13 +428,13 @@ watch(
   () => authStore.getSelectedLang,
   () => {
     orderStore?.fetchAllShops();
-  },
+  }
 );
 
-onBeforeRouteLeave((to, from, next) => {
+onBeforeRouteLeave((_, __, next) => {
   if (!payStore.getExit) {
     const answer = window.confirm(
-      "Вы уверены, что хотите выйти? Заказ будет отменен в случае выхода",
+      'Вы уверены, что хотите выйти? Заказ будет отменен в случае выхода'
     );
     if (answer) {
       deleteOrder();
@@ -455,6 +452,10 @@ onBeforeRouteLeave((to, from, next) => {
 <style scoped lang="scss">
 .pay-btn {
   width: 35%;
+}
+.close-icon{
+  background: transparent;
+   color: none
 }
 .orders-first {
   padding: 40px;

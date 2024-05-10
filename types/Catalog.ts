@@ -3,16 +3,6 @@ export type CatalogItem = {
   name: string;
   subcategories: [];
 };
-
-export type AllCatalog = {
-  id: string;
-  nameRu: string;
-  nameKg: string;
-  subdirectory: SubCatalog[];
-  isActive: boolean;
-  name: string;
-};
-
 export type SubCatalog = {
   id: string;
   name: string;
@@ -21,6 +11,14 @@ export type SubCatalog = {
   products: null;
   nameRu: string;
   nameKg: string;
+};
+export type AllCatalog = {
+  id: string;
+  nameRu: string;
+  nameKg: string;
+  subdirectory: SubCatalog[];
+  isActive: boolean;
+  name: string;
 };
 
 export type CatalogCheckbox = {

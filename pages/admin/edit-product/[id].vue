@@ -4,12 +4,12 @@
       <div class="lg:col-4 md:col-6 col-12 each-field">
         <label for="name">Имя</label>
         <input
-          class="form-input col-12"
-          type="text"
           id="name"
           v-model="inputs.nameRu.value"
+          class="form-input col-12"
+          type="text"
           @input="validate('nameRu', 'string')"
-        />
+        >
         <span v-if="inputs.nameRu.error" class="err-input-msg">{{
           inputs.nameRu.error
         }}</span>
@@ -18,12 +18,12 @@
       <div class="lg:col-4 md:col-6 col-12 each-field">
         <label for="name">Имя (кырг)</label>
         <input
-          class="form-input col-12"
-          type="text"
           id="name"
           v-model="inputs.nameKg.value"
+          class="form-input col-12"
+          type="text"
           @input="validate('nameKg', 'string')"
-        />
+        >
         <span v-if="inputs.nameKg.error" class="err-input-msg">{{
           inputs.nameKg.error
         }}</span>
@@ -32,12 +32,12 @@
       <div class="lg:col-4 md:col-6 col-12 each-field">
         <label for="description">Описание</label>
         <input
-          class="form-input col-12"
-          type="text"
           id="description"
           v-model="inputs.descriptionRu.value"
+          class="form-input col-12"
+          type="text"
           @input="validate('descriptionRu', 'string')"
-        />
+        >
         <span v-if="inputs.descriptionRu.error" class="err-input-msg">{{
           inputs.descriptionRu.error
         }}</span>
@@ -45,12 +45,12 @@
       <div class="lg:col-4 md:col-6 col-12 each-field">
         <label for="description">Описание (кырг)</label>
         <input
-          class="form-input col-12"
-          type="text"
           id="descriptionKg"
           v-model="inputs.descriptionKg.value"
+          class="form-input col-12"
+          type="text"
           @input="validate('descriptionKg', 'string')"
-        />
+        >
         <span v-if="inputs.descriptionKg.error" class="err-input-msg">{{
           inputs.descriptionKg.error
         }}</span>
@@ -58,12 +58,12 @@
       <div class="lg:col-4 md:col-6 col-12 each-field">
         <label for="description">Короткое описание</label>
         <input
-          class="form-input col-12"
-          type="text"
           id="shortDescriptionRu"
           v-model="inputs.shortDescriptionRu.value"
+          class="form-input col-12"
+          type="text"
           @input="validate('shortDescriptionRu', 'string')"
-        />
+        >
         <span v-if="inputs.shortDescriptionRu.error" class="err-input-msg">{{
           inputs.shortDescriptionRu.error
         }}</span>
@@ -71,12 +71,12 @@
       <div class="lg:col-4 md:col-6 col-12 each-field">
         <label for="description">Короткое описание (кырг)</label>
         <input
-          class="form-input col-12"
-          type="text"
           id="shortDescriptionKg"
           v-model="inputs.shortDescriptionKg.value"
+          class="form-input col-12"
+          type="text"
           @input="validate('shortDescriptionRu', 'string')"
-        />
+        >
         <span v-if="inputs.shortDescriptionKg.error" class="err-input-msg">{{
           inputs.shortDescriptionKg.error
         }}</span>
@@ -85,12 +85,12 @@
       <div class="lg:col-4 md:col-6 col-12 each-field">
         <label for="price">Цена</label>
         <input
-          class="form-input col-12"
-          type="number"
           id="price"
           v-model="inputs.price.value"
+          class="form-input col-12"
+          type="number"
           @input="validate('price', 'number')"
-        />
+        >
         <span v-if="inputs.price.error" class="err-input-msg">{{
           inputs.price.error
         }}</span>
@@ -98,14 +98,14 @@
 
       <div class="lg:col-4 md:col-6 col-12 each-field">
         <label for="categoryId">Категории</label>
-        <div v-for="(categoryId, index) in categories" :key="categoryId?.id">
+        <div v-for="categoryId in categories" :key="categoryId?.id">
           <label :for="categoryId?.name">{{ categoryId?.nameRu }}</label>
           <input
-            class="form-input col-12"
-            type="text"
             :id="categoryId?.name"
             v-model="categoryValues[categoryId?.id]"
-          />
+            class="form-input col-12"
+            type="text"
+          >
         </div>
         <!-- <span v-if="inputs.categoryId.error" class="err-input-msg">{{ inputs.categoryId.error }}</span> -->
       </div>
@@ -113,11 +113,11 @@
       <div class="lg:col-4 md:col-6 col-12 each-field">
         <label for="subcategoryId">Подкатегории</label>
         <input
-          class="form-input col-12"
-          type="text"
           id="subcategoryId"
           v-model="inputs.subcategoryId.value"
-        />
+          class="form-input col-12"
+          type="text"
+        >
         <span v-if="inputs.subcategoryId.error" class="err-input-msg">{{
           inputs.subcategoryId.error
         }}</span>
@@ -126,11 +126,11 @@
       <div class="lg:col-4 md:col-6 col-12 each-field">
         <label for="brandId">Бренд</label>
         <input
-          class="form-input col-12"
-          type="text"
           id="brandId"
           v-model="inputs.brandId.value"
-        />
+          class="form-input col-12"
+          type="text"
+        >
         <span v-if="inputs.brandId.error" class="err-input-msg">{{
           inputs.brandId.error
         }}</span>
@@ -139,12 +139,12 @@
       <div class="lg:col-4 md:col-6 col-12 each-field">
         <label for="size">Размер</label>
         <input
-          class="form-input col-12"
-          type="text"
           id="size"
           v-model="inputs.size.value"
+          class="form-input col-12"
+          type="text"
           @input="validate('size', 'string')"
-        />
+        >
         <span v-if="inputs.size.error" class="err-input-msg">{{
           inputs.size.error
         }}</span>
@@ -153,12 +153,12 @@
       <div class="lg:col-4 md:col-6 col-12 each-field">
         <label for="size">Цвет</label>
         <input
-          class="form-input col-12"
-          type="text"
           id="color"
           v-model="inputs.color.value"
+          class="form-input col-12"
+          type="text"
           @input="validate('color', 'string')"
-        />
+        >
         <span v-if="inputs.color.error" class="err-input-msg">{{
           inputs.color.error
         }}</span>
@@ -167,12 +167,12 @@
       <div class="lg:col-4 md:col-6 col-12 each-field">
         <label for="size">Высыхание</label>
         <input
-          class="form-input col-12"
-          type="text"
           id="color"
           v-model="inputs.dryingTime.value"
+          class="form-input col-12"
+          type="text"
           @input="validate('dryingTime', 'string')"
-        />
+        >
         <span v-if="inputs.dryingTime.error" class="err-input-msg">{{
           inputs?.dryingTime?.error
         }}</span>
@@ -180,12 +180,12 @@
       <div class="lg:col-4 md:col-6 col-12 each-field">
         <label for="size">Расход</label>
         <input
-          class="form-input col-12"
-          type="text"
           id="color"
           v-model="inputs.consumption.value"
+          class="form-input col-12"
+          type="text"
           @input="validate('consumption', 'string')"
-        />
+        >
         <span v-if="inputs.consumption.error" class="err-input-msg">{{
           inputs.consumption.error
         }}</span>
@@ -194,43 +194,43 @@
       <div class="col-12 each-field">
         <label for="size">Объемы</label>
         <div class="all-variant">
-          <div v-for="variant in variants" class="variant" :key="variant?.id">
+          <div v-for="variant in variants" :key="variant?.id" class="variant">
             <img
               :src="varSizes[variant?.size]?.image"
               alt="variant"
-              @click="openFileInput(variant?.size)"
               style="cursor: pointer"
-            />
+              @click="openFileInput(variant?.size)"
+            >
             <input
+              id="fileInput"
               ref="fileInput"
               type="file"
-              id="fileInput"
               style="display: none"
               @change="(event) => handleNewVarImage(event)"
-            />
+            >
 
             <label :for="variant?.size">Размер</label>
             <input
-              class="form-input col-12"
-              type="text"
               :id="variant?.size"
               v-model="varSizes[variant?.size].size"
-            />
+              class="form-input col-12"
+              type="text"
+            >
             <label :for="variant?.size">Код</label>
             <input
-              class="form-input col-12"
-              type="number"
               :id="variant?.size"
               v-model="varSizes[variant?.size].code"
-            />
+              class="form-input col-12"
+              type="number"
+            >
 
             <label :for="variant?.size">Цена</label>
             <input
-              class="form-input col-12"
-              type="number"
               :id="variant?.size"
               v-model="varSizes[variant?.size].price"
-            />
+              class="form-input col-12"
+              type="number"
+            >
           </div>
         </div>
         <span v-if="inputs.color.error" class="err-input-msg">{{
@@ -241,37 +241,39 @@
       <div class="lg:col-4 md:col-6 col-12 each-field">
         <label for="size">Популярный</label>
         <input
-          class="form-input col-12"
-          type="checkbox"
           id="color"
           v-model="inputs.isPopular.value"
-        />
+          class="form-input col-12"
+          type="checkbox"
+        >
         <!-- <span v-if="inputs.color.error" class="err-input-msg">{{ inputs.isPopular.error }}</span> -->
       </div>
 
       <div class="lg:col-4 md:col-6 col-12 each-field">
         <label for="isFeatured">Рекомендуемый</label>
         <input
-          class="form-input col-12"
-          type="checkbox"
           id="isFeatured"
           v-model="inputs.isFeatured.value"
-        />
+          class="form-input col-12"
+          type="checkbox"
+        >
         <!-- <span v-if="inputs.color.error" class="err-input-msg">{{ inputs.isPopular.error }}</span> -->
       </div>
 
       <div class="lg:col-4 md:col-6 col-12 each-field">
         <label for="isBeneficial">Выгодный</label>
         <input
-          class="form-input col-12"
-          type="checkbox"
           id="isBeneficial"
           v-model="inputs.isBeneficial.value"
-        />
+          class="form-input col-12"
+          type="checkbox"
+        >
         <!-- <span v-if="inputs.color.error" class="err-input-msg">{{ inputs.isPopular.error }}</span> -->
       </div>
 
-      <button type="submit">Сохранить изменения</button>
+      <button type="submit">
+        Сохранить изменения
+      </button>
     </form>
 
     <button type="button" class="pink-button" @click="isVariantOpen = true">
@@ -279,67 +281,65 @@
     </button>
 
     <UIModal
-      :showModal="isVariantOpen"
-      @closeModal="isVariantOpen = false"
+      :show-modal="isVariantOpen"
       title="Добавить объем"
+      @close-modal="isVariantOpen = false"
     >
       <form
-        @submit.prevent="addVariant"
         class="flex flex-column align-items-start mt-3 gap-2"
+        @submit.prevent="addVariant"
       >
         <input
+          v-model="newVariants.size"
           type="text"
           placeholder="Размер"
           required
-          v-model="newVariants.size"
           class="basic-input"
-        />
+        >
         <input
+          v-model="newVariants.price"
           type="number"
           placeholder="Цена"
           required
-          v-model="newVariants.price"
           class="basic-input"
-        />
+        >
         <input
+          v-model="newVariants.code"
           type="number"
           placeholder="Код"
           required
-          v-model="newVariants.code"
           class="basic-input"
-        />
-        <input type="file" @change="handleFileChange" />
-        <button type="submit">Добавить</button>
+        >
+        <input type="file" @change="handleFileChange">
+        <button type="submit">
+          Добавить
+        </button>
       </form>
     </UIModal>
   </section>
 </template>
 
 <script setup lang="ts">
-import { Category, CategorySys } from "~/types/Category";
-import { Product } from "~/types/Product";
-import { Variant } from "~/types/Variant";
+import { CategorySys } from '~/types/Category';
+import { Product } from '~/types/Product';
+import { Variant } from '~/types/Variant';
 const { t } = useI18n();
 const route = useRoute();
 const id = route.params.id;
-//const { data: product } = await useApi(`/api/v1/Product/get-product-by-id/${id}`) as any;
+// const { data: product } = await useApi(`/api/v1/Product/get-product-by-id/${id}`) as any;
 const isVariantOpen = ref(false);
 const item = ref({} as Product);
 
 const productsStore = useProductsSstore();
 const newVariants = ref({
-  size: "",
-  price: "",
-  code: "",
-  image: "",
+  size: '',
+  price: '',
+  code: '',
+  image: ''
 });
 
 const handleFileChange = (event: any) => {
   newVariants.value.image = event.target.files[0];
-};
-
-const varImage = (image: string) => {
-  return image;
 };
 
 const variants = ref([] as Variant[]);
@@ -366,47 +366,46 @@ const convertToBase64 = (file: any) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => resolve(reader.result);
-    reader.onerror = (error) => reject(error);
+    reader.onerror = error => reject(error);
   });
 };
 
 const newVarImage = ref(null);
-const variantImage = ref("");
+const variantImage = ref('');
 const handleNewVarImage = async (event: any) => {
   newVarImage.value = event.target.files[0];
   const base64StringNewImage = await convertToBase64(newVarImage.value);
   variantImage.value = base64StringNewImage as unknown as string;
   varSizes[currVarSize.value].image = base64StringNewImage as unknown as string;
-  console.log("variants", variants);
-  console.log("varSizes", varSizes);
+  console.log('variants', variants);
+  console.log('varSizes', varSizes);
 };
-const currVarSize = ref("");
+const currVarSize = ref('');
 const openFileInput = (varSize: string) => {
-  const fileInput = document.getElementById("fileInput") as HTMLElement;
+  const fileInput = document.getElementById('fileInput') as HTMLElement;
   fileInput.click();
   currVarSize.value = varSize;
 };
 
 const addVariant = async () => {
   if (!newVariants.value.image) {
-    alert("Please select a file");
     return;
   }
 
   try {
     const base64String = await convertToBase64(newVariants.value.image);
     // Now you can send the base64String to your API
-    console.log("Base64 string:", base64String);
+    console.log('Base64 string:', base64String);
     const body = [
       {
         price: newVariants.value.price,
         code: newVariants.value.code,
         size: newVariants.value.size,
-        image: base64String,
-      },
+        image: base64String
+      }
     ];
     const response = await http.put(`/api/v1/Product/add-variants/${id}`, body);
-    console.log("response add variant", response);
+    console.log('response add variant', response);
   } catch (err) {
     console.log(err);
   } finally {
@@ -419,42 +418,42 @@ const categoryValues = reactive({} as any);
 const varSizes = reactive({} as any);
 
 const inputs = ref<Inputs>({
-  nameRu: { value: item.value?.nameRu, error: "", type: "string" },
-  nameKg: { value: item.value?.nameKg, error: "", type: "string" },
+  nameRu: { value: item.value?.nameRu, error: '', type: 'string' },
+  nameKg: { value: item.value?.nameKg, error: '', type: 'string' },
   descriptionRu: {
     value: item.value?.descriptionRu,
-    error: "",
-    type: "string",
+    error: '',
+    type: 'string'
   },
   descriptionKg: {
     value: item.value?.descriptionKg,
-    error: "",
-    type: "string",
+    error: '',
+    type: 'string'
   },
   shortDescriptionRu: {
     value: item.value?.shortDescriptionRu,
-    error: "",
-    type: "string",
+    error: '',
+    type: 'string'
   },
   shortDescriptionKg: {
     value: item.value?.shortDescriptionKg,
-    error: "",
-    type: "string",
+    error: '',
+    type: 'string'
   },
-  price: { value: item?.value?.price, error: "", type: "number" },
-  subcategoryId: { value: item?.value?.subcategoryId, error: "" },
-  brandId: { value: item?.value?.brandId, error: "" },
-  size: { value: item?.value?.size, error: "", type: "string" },
-  color: { value: item?.value?.colorType, error: "", type: "number" },
-  consumption: { value: item?.value?.consumption, error: "", type: "string" },
-  dryingTime: { value: item?.value?.dryingTime, error: "", type: "string" },
-  isPopular: { value: item?.value?.isPopular, error: "" },
-  isFeatured: { value: item?.value?.isFeatured, error: "" },
-  isBeneficial: { value: item?.value?.isBeneficial, error: "" },
+  price: { value: item?.value?.price, error: '', type: 'number' },
+  subcategoryId: { value: item?.value?.subcategoryId, error: '' },
+  brandId: { value: item?.value?.brandId, error: '' },
+  size: { value: item?.value?.size, error: '', type: 'string' },
+  color: { value: item?.value?.colorType, error: '', type: 'number' },
+  consumption: { value: item?.value?.consumption, error: '', type: 'string' },
+  dryingTime: { value: item?.value?.dryingTime, error: '', type: 'string' },
+  isPopular: { value: item?.value?.isPopular, error: '' },
+  isFeatured: { value: item?.value?.isFeatured, error: '' },
+  isBeneficial: { value: item?.value?.isBeneficial, error: '' },
   images: {
     value: item?.value?.images,
-    error: "",
-  },
+    error: ''
+  }
 });
 
 const { handleValues } = useInputValidation();
@@ -464,17 +463,17 @@ const validate = (field: string, type: string) => {
 };
 
 const submitUpdate = async () => {
-  console.log("varSizes", varSizes);
+  console.log('varSizes', varSizes);
   const prodCategories = Object.values(categoryValues);
   const prodVariantes = Object.values(varSizes).map((item: any) => {
-    if (item?.image && item?.image?.startsWith("http")) {
+    if (item?.image && item?.image?.startsWith('http')) {
       return { ...item, image: null };
     } else {
       return item;
     }
   });
 
-  console.log("prodVariantes", prodVariantes);
+  console.log('prodVariantes', prodVariantes);
   try {
     const body = {
       nameKg: inputs.value.nameKg.value,
@@ -495,16 +494,16 @@ const submitUpdate = async () => {
       consumption: inputs.value.consumption.value,
       dryingTime: inputs?.value?.dryingTime?.value,
       images: null,
-      variants: prodVariantes || null,
+      variants: prodVariantes || null
     };
 
     const response = await http.put(
       `/api/v1/Product/update-product/${id}`,
-      body,
+      body
     );
-    console.log("response", response);
+    console.log('response', response);
     if (response.status === 200) {
-      useNotif("success", t("updated"), t("success"));
+      useNotif('success', t('updated'), t('success'));
     }
   } catch (err) {
     console.log(err);
@@ -519,7 +518,7 @@ const editProduct = () => {
     }
   }
   const hasError = Object.values(inputs.value).some(
-    (input) => input.error !== "",
+    input => input.error !== ''
   );
   if (!hasError) {
     submitUpdate();
@@ -529,62 +528,62 @@ const editProduct = () => {
 onMounted(async () => {
   await productsStore.fetchProductById(id as string);
   item.value = productsStore?.getProduct?.product;
+
   if (item?.value?.variants) {
     variants.value = item.value.variants;
   }
-
-  console.log(item, "item");
-  console.log("productsStore get Prouct", productsStore.getProduct);
   categories.value = item?.value?.categories;
 
   item?.value?.categories.map((category: any) => {
     categoryValues[category.id] = category.id;
+    return categoryValues
   });
 
   item?.value?.variants?.map((variant: Variant) => {
     varSizes[variant?.size] = { ...variant };
+    return varSizes;
   });
-  console.log("varSizes on mounted", varSizes);
+
   inputs.value = {
-    nameRu: { value: item.value?.nameRu, error: "", type: "string" },
-    nameKg: { value: item.value?.nameKg, error: "", type: "string" },
+    nameRu: { value: item.value?.nameRu, error: '', type: 'string' },
+    nameKg: { value: item.value?.nameKg, error: '', type: 'string' },
     descriptionRu: {
       value: item.value?.descriptionRu,
-      error: "",
-      type: "string",
+      error: '',
+      type: 'string'
     },
     descriptionKg: {
       value: item.value?.descriptionKg,
-      error: "",
-      type: "string",
+      error: '',
+      type: 'string'
     },
     shortDescriptionRu: {
       value: item.value?.shortDescriptionRu,
-      error: "",
-      type: "string",
+      error: '',
+      type: 'string'
     },
     shortDescriptionKg: {
       value: item.value?.shortDescriptionKg,
-      error: "",
-      type: "string",
+      error: '',
+      type: 'string'
     },
-    price: { value: item?.value?.price, error: "", type: "number" },
+    price: { value: item?.value?.price, error: '', type: 'number' },
     //   categories: { value: item?.value?.categories, error: '' },
-    subcategoryId: { value: item?.value?.subcategoryId, error: "" },
-    brandId: { value: item?.value?.brandId, error: "" },
-    size: { value: item?.value?.size, error: "", type: "string" },
-    color: { value: item?.value?.colorType, error: "", type: "string" },
-    dryingTime: { value: item?.value?.dryingTime, error: "", type: "string" },
-    consumption: { value: item?.value?.consumption, error: "", type: "string" },
-    isPopular: { value: item?.value?.isPopular, error: "" },
-    isFeatured: { value: item?.value?.isFeatured, error: "" },
-    isBeneficial: { value: item?.value?.isBeneficial, error: "" },
+    subcategoryId: { value: item?.value?.subcategoryId, error: '' },
+    brandId: { value: item?.value?.brandId, error: '' },
+    size: { value: item?.value?.size, error: '', type: 'string' },
+    color: { value: item?.value?.colorType, error: '', type: 'string' },
+    dryingTime: { value: item?.value?.dryingTime, error: '', type: 'string' },
+    consumption: { value: item?.value?.consumption, error: '', type: 'string' },
+    isPopular: { value: item?.value?.isPopular, error: '' },
+    isFeatured: { value: item?.value?.isFeatured, error: '' },
+    isBeneficial: { value: item?.value?.isBeneficial, error: '' },
     images: {
       value: item?.value?.images,
-      error: "",
-    },
+      error: ''
+    }
   };
-  console.log("inputs", inputs);
+  console.log('inputs', inputs);
 });
 </script>
 

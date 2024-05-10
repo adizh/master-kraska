@@ -4,31 +4,31 @@
       <div class="flex flex-row gap-4 search">
         <div class="input-block">
           <input
+            v-model="productStore.filters.search"
             type="text"
             class="main-header-input"
-            v-model="productStore.filters.search"
-            @input="handleSearch"
             :placeholder="$t('whichProSearch')"
-          />
+            @input="handleSearch"
+          >
           <img
             src="../assets/icons/icon=search.svg"
             alt="search"
             class="search-icon"
-          />
+          >
         </div>
         <div class="btn-block">
           <button>Найти</button>
         </div>
       </div>
       <SearchOptions
-        :isSearchOpen="isSearchOpen"
-        @closeSearch="isSearchOpen = false"
+        :is-search-open="isSearchOpen"
+        @close-search="isSearchOpen = false"
       />
       <div
-        class="overlay-header-options"
         v-show="isSearchOpen"
+        class="overlay-header-options"
         :class="{ open: isSearchOpen }"
-      ></div>
+      />
     </div>
     <IndexMain />
     <Products />
@@ -53,13 +53,13 @@ watch(isSearchOpen, (value) => {
   }
 });
 const disableBodyScroll = () => {
-  document.body.style.overflow = "hidden";
+  document.body.style.overflow = 'hidden';
 };
 const enableBodyScroll = () => {
-  document.body.style.overflow = "auto";
+  document.body.style.overflow = 'auto';
 };
 onUnmounted(() => {
-  document.body.style.overflow = "auto";
+  document.body.style.overflow = 'auto';
 });
 </script>
 

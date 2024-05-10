@@ -7,24 +7,26 @@
           <li
             v-for="(item, index) in tabsOptions"
             :key="item"
-            @click="() => selectTab(index + 1)"
             :class="{ active: index + 1 === selectedTab }"
+            @click="() => selectTab(index + 1)"
           >
             {{ item }}
           </li>
-          <li @click="openLogout" class="">{{ $t("logoutext") }}</li>
+          <li class="" @click="openLogout">
+            {{ $t("logoutext") }}
+          </li>
         </ul>
 
         <div
-          class="col-12 sm:col-12 md:col-9 lg:col-8 right-side"
           v-if="selectedTab === 1"
+          class="col-12 sm:col-12 md:col-9 lg:col-8 right-side"
         >
           <ProfileForm />
         </div>
 
         <div
-          class="col-12 md:col-12 lg:col-9 right-side"
           v-else-if="selectedTab === 2"
+          class="col-12 md:col-12 lg:col-9 right-side"
         >
           <div class="order-history">
             <OrdersItem />
@@ -32,59 +34,55 @@
         </div>
 
         <div
-          class="col-12 md:col-12 lg:col-8 right-side"
           v-else-if="selectedTab === 3"
+          class="col-12 md:col-12 lg:col-8 right-side"
         >
-          <CartProductItem
-            v-if="cartStore.getAllCart?.length"
-            v-for="item in cartStore.getAllCart"
-            :key="item?.id"
-            :item="item"
-            @removeFromCart="removeFromCart"
-            @increaseCount="increaseCount"
-            @decreaseCount="decreaseCount"
-            @confirmDelete="confirmDelete"
-          >
-          </CartProductItem>
-          <div
-            v-if="cartStore.getAllCart?.length > 0"
-            class="flex justify-content-end flex-row"
-          >
-            <button class="btn-white-bg" @click="cartStore.saveNewCart">
-              {{ $t("saveChanges") }}
-            </button>
-          </div>
-
-          <div
-            class="cart-main-info-price col-12"
-            v-if="cartStore.getAllCart?.length"
-          >
-            <div class="lg:col-6 col-12 md:col-9">
-              <button class="pink-button" @click="isConfirmOpen = true">
-                {{ $t("goToRegister") }}
+          <div v-if="cartStore.getAllCart?.length">
+            <CartProductItem
+              v-for="item in cartStore.getAllCart"
+              :key="item?.id"
+              :item="item"
+              @remove-from-cart="removeFromCart"
+              @increase-count="increaseCount"
+              @decrease-count="decreaseCount"
+              @confirm-delete="confirmDelete"
+            />
+            <div
+              class="flex justify-content-end flex-row"
+            >
+              <button class="btn-white-bg" @click="cartStore.saveNewCart">
+                {{ $t("saveChanges") }}
               </button>
-              <div class="cart-main-info-price-block">
-                <div class="first">
-                  <span
-                    >{{ $t("all") }}: {{ totalOfProdTotals }}
-                    {{ $t("product") }}</span
-                  >
-                  <span>{{ cartStore.totalOfTotalSum }} сом</span>
-                </div>
-                <div class="second">
-                  <span>{{ $t("accountPiece") }}</span>
-                  <span>0%</span>
-                </div>
-                <input class="basic-input" placeholder="Промокод" />
-                <div class="last">
-                  <span>{{ $t("inTotal") }}</span>
-                  <span>{{ cartStore.totalOfTotalSum }} сом</span>
+            </div>
+
+            <div
+              class="cart-main-info-price col-12"
+            >
+              <div class="lg:col-6 col-12 md:col-9">
+                <button class="pink-button" @click="isConfirmOpen = true">
+                  {{ $t("goToRegister") }}
+                </button>
+                <div class="cart-main-info-price-block">
+                  <div class="first">
+                    <span>{{ $t("all") }}: {{ totalOfProdTotals }}
+                      {{ $t("product") }}</span>
+                    <span>{{ cartStore.totalOfTotalSum }} сом</span>
+                  </div>
+                  <div class="second">
+                    <span>{{ $t("accountPiece") }}</span>
+                    <span>0%</span>
+                  </div>
+                  <input class="basic-input" placeholder="Промокод">
+                  <div class="last">
+                    <span>{{ $t("inTotal") }}</span>
+                    <span>{{ cartStore.totalOfTotalSum }} сом</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <NoContent :title="$t('noCart')" v-else>
+          <NoContent v-else :title="$t('noCart')">
             <template #icon>
               <svg
                 width="44"
@@ -104,87 +102,93 @@
             </template>
           </NoContent>
           <Dialog
-            v-model:visible="isConfirmOpen"
+            :visible="isConfirmOpen"
             modal
             :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
             header=" "
           >
             <ConfirmPay
+              :title="$t('confirmOrderText')"
               @cancel="isConfirmOpen = false"
               @confirm="createOrder"
-              :title="$t('confirmOrderText')"
             />
           </Dialog>
         </div>
 
         <div
-          class="col-12 md:col-12 lg:col-8 right-side"
           v-else-if="selectedTab === 4"
+          class="col-12 md:col-12 lg:col-8 right-side"
         >
-          <ProfileReviews></ProfileReviews>
+          <ProfileReviews />
         </div>
 
         <div
-          class="col-12 md:col-12 lg:col-8 right-side"
           v-else-if="selectedTab === 5"
+          class="col-12 md:col-12 lg:col-8 right-side"
         >
           <ProfileNotifications />
         </div>
 
         <div
-          class="col-12 lg:col-8 md:col-12 right-side"
           v-else-if="selectedTab === 6"
+          class="col-12 lg:col-8 md:col-12 right-side"
         >
-          <div class="bookmarked-list" v-if="userBookmarks?.length">
+          <div v-if="userBookmarks?.length" class="bookmarked-list">
             <ProductsProductItem
               v-for="item in userBookmarks"
               :key="item.id"
               :product="item"
-              @addItemToBookmarks="addItemToBookmarks"
+              @add-item-to-bookmarks="addItemToBookmarks"
             />
           </div>
 
-          <NoContent title="Избранные пусто" v-else>
+          <NoContent v-else title="Избранные пусто">
             <template #icon>
               <img
                 src="../assets/icons/icon=heart.svg"
                 alt="heart"
                 class="no-content-img"
-              />
+              >
             </template>
           </NoContent>
         </div>
       </div>
 
       <Dialog
-        v-model:visible="isLogoutOpen"
+        :visible="isLogoutOpen"
         modal
         header=" "
         :style="{ padding: '20px 40px 50px 20px' }"
       >
         <template #header>
-          <div class="p-modal-header"></div>
+          <div class="p-modal-header" />
         </template>
         <template #closeicon>
           <span class="close-icon-modal">X</span>
         </template>
-        <div class="modal-header">{{ $t("logoutWarningText") }}?</div>
+        <div class="modal-header">
+          {{ $t("logoutWarningText") }}?
+        </div>
         <div class="modal-btns">
-          <button @click="isLogoutOpen = false">{{ $t("cancel") }}</button>
-          <button @click="confirmedLogout">{{ $t("logout") }}</button>
+          <button @click="isLogoutOpen = false">
+            {{ $t("cancel") }}
+          </button>
+          <button @click="confirmedLogout">
+            {{ $t("logout") }}
+          </button>
         </div>
       </Dialog>
 
       <Dialog
-        v-model:visible="isDeleteOpen"
+        :visible="isDeleteOpen"
         modal
         :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
         header=" "
       >
         <ConfirmPay
+          :title="$t('deleteCartProdWarning')"
           @confirm="removeFromCart"
           @cancel="isDeleteOpen = false"
-          :title="$t('deleteCartProdWarning')"
         />
       </Dialog>
     </ClientOnly>
@@ -192,8 +196,8 @@
 </template>
 
 <script setup lang="ts">
-import { Product, ExtendedProduct } from "~/types/Product";
-import { useI18n } from "vue-i18n";
+import { useI18n } from 'vue-i18n';
+import { Product, ExtendedProduct } from '~/types/Product';
 const { t } = useI18n();
 
 const isLogoutOpen = ref(false);
@@ -202,12 +206,12 @@ const isConfirmOpen = ref(false);
 const userBookmarks = ref<Product[]>([]);
 let selectedTab: Ref<number>;
 const tabsOptions = [
-  t("personalInfo"),
-  t("ordersHistory"),
-  t("cart"),
-  t("myReviews"),
-  t("notificationSettings"),
-  t("boormarksProfile"),
+  t('personalInfo'),
+  t('ordersHistory'),
+  t('cart'),
+  t('myReviews'),
+  t('notificationSettings'),
+  t('boormarksProfile')
 ];
 const store = useAuthStore();
 const productsStore = useProductsSstore();
@@ -221,11 +225,11 @@ const openLogout = () => {
 
 if (process.client) {
   if (
-    localStorage.getItem("selectedTab") &&
-    localStorage.getItem("selectedTab") !== null
+    localStorage.getItem('selectedTab') &&
+    localStorage.getItem('selectedTab') !== null
   ) {
     selectedTab = ref<number>(
-      parseInt(localStorage.getItem("selectedTab") as string),
+      parseInt(localStorage.getItem('selectedTab') as string)
     );
   } else {
     selectedTab = ref<number>(1);
@@ -238,10 +242,10 @@ const createOrder = () => {
 };
 
 const confirmedLogout = () => {
-  localStorage.removeItem("userId");
-  localStorage.removeItem("token");
+  localStorage.removeItem('userId');
+  localStorage.removeItem('token');
 
-  localStorage.removeItem("cart");
+  localStorage.removeItem('cart');
   window.location.reload();
 };
 
@@ -252,28 +256,28 @@ const selectTab = (tab: number) => {
   } else if (tab === 5) {
     fetchUserBookmarks();
   }
-  localStorage.setItem("selectedTab", selectedTab.value.toString());
+  localStorage.setItem('selectedTab', selectedTab.value.toString());
 };
 
 const fetchUserBookmarks = async () => {
   try {
     const response = await http.get(
-      `/api/v1/Bookmark/get-bookmark-by-user-id/${store.getUserId}`,
+      `/api/v1/Bookmark/get-bookmark-by-user-id/${store.getUserId}`
     );
-    console.log("response fetchUserBookmarks", response);
-    if (response.status == 200) {
+    console.log('response fetchUserBookmarks', response);
+    if (response.status === 200) {
       const filtered = response.data.products.map((item: Product) => {
-        if (store.getSelectedLang === "kg") {
+        if (store.getSelectedLang === 'kg') {
           return {
             ...item,
             name: item?.nameKg,
-            shortDescription: item?.shortDescriptionKg,
+            shortDescription: item?.shortDescriptionKg
           };
         } else {
           return {
             ...item,
             name: item?.nameRu,
-            shortDescription: item?.shortDescriptionRu,
+            shortDescription: item?.shortDescriptionRu
           };
         }
       });
@@ -310,7 +314,7 @@ const totalOfProdTotals = computed(() => {
   return cartStore.getAllCart.reduce((acc, rec) => acc + rec?.count, 0);
 });
 onUnmounted(() => {
-  localStorage.removeItem("selectedTab");
+  localStorage.removeItem('selectedTab');
 });
 
 onMounted(() => {
@@ -318,11 +322,11 @@ onMounted(() => {
   fetchUserBookmarks();
 
   if (!store.getUserId) {
-    navigateTo("/");
+    navigateTo('/');
   }
 });
 onBeforeRouteLeave(() => {
-  localStorage.removeItem("selectedTab");
+  localStorage.removeItem('selectedTab');
 });
 </script>
 

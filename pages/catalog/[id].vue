@@ -10,23 +10,23 @@
       </h1>
       <div class="header-help-icons">
         <input
+          v-model="productName"
           type="text"
           :placeholder="$t('searchPaint')"
           class="main-header-input"
-          v-model="productName"
           @input="handleSearch"
-        />
+        >
         <div class="block-style-select">
           <img
             src="../../assets/icons/ep_menu.svg"
             alt="ep menu"
             @click="visibleMethod = 'vertical'"
-          />
+          >
           <img
             src="../../assets/icons/f7_menu.svg"
             alt="menu"
             @click="visibleMethod = 'horizontal'"
-          />
+          >
         </div>
       </div>
     </div>
@@ -38,9 +38,9 @@
           class="closed-filters"
           @click="isFilterOpen = true"
         >
-          <span></span>
-          <span></span>
-          <span></span>
+          <span />
+          <span />
+          <span />
         </p>
         <p v-else class="open-filters" @click="isFilterOpen = false">
           <svg
@@ -60,12 +60,12 @@
       <CatalogFilters
         class="col-3"
         :class="{ 'close-filters': !isFilterOpen, 'col-12': isFilterOpen }"
-        @applyFilter="applyFilter"
+        @apply-filter="applyFilter"
       />
 
       <CatalogResults
         class="col-12 md:col-12 sm:col-12 lg:col-9 all-catalog-results"
-        :visibleMethod="visibleMethod"
+        :visible-method="visibleMethod"
         :class="{ close: isFilterOpen }"
       />
     </div>
@@ -73,15 +73,15 @@
 </template>
 
 <script setup lang="ts">
-type visibleMethod = "vertical" | "horizontal";
-const visibleMethod = ref<visibleMethod>("vertical");
+type VisibleMethod = 'vertical' | 'horizontal';
+const visibleMethod = ref<VisibleMethod>('vertical');
 
 const route = useRoute();
 const id = route.params.id;
 const authStore = useAuthStore();
 const { data: category } = useApi(
   `/api/v1/Category/get-category/${id}`,
-  {},
+  {}
 ) as any;
 const isFilterOpen = ref(false);
 
@@ -91,7 +91,7 @@ const applyFilter = () => {
 
 const productStore = useProductsSstore();
 
-const productName = defineModel("");
+const productName = defineModel<string>();
 const handleSearch = (event: any) => {
   productStore.filterProducts(event.target.value);
 };

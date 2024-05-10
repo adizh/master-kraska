@@ -3,16 +3,16 @@
     <section
       v-if="
         getProduct &&
-        getProduct != undefined &&
-        Object.entries(getProduct)?.length > 0 &&
-        !isLoading
+          getProduct != undefined &&
+          Object.entries(getProduct)?.length > 0 &&
+          !isLoading
       "
     >
-      <ProductPageHeader :productId="id" />
+      <ProductPageHeader :product-id="id" />
 
       <ProductPageInfo :item="getProduct?.product" />
 
-      <ProductPageSImilarItems :similarItems="getProduct?.similarProducts" />
+      <ProductPageSImilarItems :similar-items="getProduct?.similarProducts" />
       <ProductPageReviews :item="getProduct?.product" />
     </section>
 
@@ -41,13 +41,13 @@ onMounted(async () => {
   }, 1000);
 });
 
-console.log("getProduct", getProduct);
+console.log('getProduct', getProduct);
 
 watch(
   () => id,
   () => {
     productsStore.fetchProductById(id as string);
-  },
+  }
 );
 </script>
 

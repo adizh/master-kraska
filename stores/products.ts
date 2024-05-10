@@ -1,7 +1,7 @@
-import http from "@/composables/http";
-import { Product } from "@/types/Product";
+import http from '@/composables/http';
+import { Product } from '@/types/Product';
 
-export const useProductsSstore = defineStore("productsStore", {
+export const useProductsSstore = defineStore('productsStore', {
   state: () => ({
     allProducts: [] as Product[],
     specialProducts: [] as Product[],
@@ -10,41 +10,41 @@ export const useProductsSstore = defineStore("productsStore", {
     beneficialProds: [] as Product[],
     filterProductTotal: {
       totalPages: 0,
-      totalItems: 0,
+      totalItems: 0
     },
     isProductBookmarked: false,
     areFiltersLoading: false,
     product: {} as { product: Product; similarProducts: Product[] },
     filters: {
-      search: "",
+      search: '',
       categoryId: [] as string[],
       subdirectoryIds: [] as any,
       minPrice: 0,
       maxPrice: 0,
       brandId: [] as string[],
       currentPage: 1,
-      pageSize: 20,
-    },
+      pageSize: 20
+    }
   }),
   actions: {
-    async fetchAllProducts() {
+    async fetchAllProducts () {
       try {
-        const response = await http("/api/v1/Product/get-all-products");
-        console.log("response fetchAllProducts", response);
+        const response = await http('/api/v1/Product/get-all-products');
+        console.log('response fetchAllProducts', response);
         const authStore = useAuthStore();
         if (response.status === 200) {
           const filtered = response.data.map((item: Product) => {
-            if (authStore.getSelectedLang === "kg") {
+            if (authStore.getSelectedLang === 'kg') {
               return {
                 ...item,
                 name: item?.nameKg,
-                shortDescription: item?.shortDescriptionKg,
+                shortDescription: item?.shortDescriptionKg
               };
             } else {
               return {
                 ...item,
                 name: item?.nameRu,
-                shortDescription: item?.shortDescriptionRu,
+                shortDescription: item?.shortDescriptionRu
               };
             }
           });
@@ -54,66 +54,66 @@ export const useProductsSstore = defineStore("productsStore", {
         console.log(err);
       }
     },
-    async fetchSpecialProd(type: string) {
+    async fetchSpecialProd (type: string) {
       const authStore = useAuthStore();
       try {
         const response = await http(
-          `/api/v1/Product/get-popular-products?type=${type}`,
+          `/api/v1/Product/get-popular-products?type=${type}`
         );
         if (response.status === 200) {
-          if (type === "popular") {
+          if (type === 'popular') {
             this.popularProds = response.data?.popular?.map(
               (popItem: Product) => {
-                if (authStore.getSelectedLang === "kg") {
+                if (authStore.getSelectedLang === 'kg') {
                   return {
                     ...popItem,
                     name: popItem?.nameKg,
-                    shortDescription: popItem?.shortDescriptionKg,
+                    shortDescription: popItem?.shortDescriptionKg
                   };
                 } else {
                   return {
                     ...popItem,
                     name: popItem?.nameRu,
-                    shortDescription: popItem?.shortDescriptionRu,
+                    shortDescription: popItem?.shortDescriptionRu
                   };
                 }
-              },
+              }
             );
-          } else if (type === "featured") {
+          } else if (type === 'featured') {
             this.specialProducts = response.data?.featured?.map(
               (popItem: Product) => {
-                if (authStore.getSelectedLang === "kg") {
+                if (authStore.getSelectedLang === 'kg') {
                   return {
                     ...popItem,
                     name: popItem?.nameKg,
-                    shortDescription: popItem?.shortDescriptionKg,
+                    shortDescription: popItem?.shortDescriptionKg
                   };
                 } else {
                   return {
                     ...popItem,
                     name: popItem?.nameRu,
-                    shortDescription: popItem?.shortDescriptionRu,
+                    shortDescription: popItem?.shortDescriptionRu
                   };
                 }
-              },
+              }
             );
           } else {
             this.beneficialProds = response.data?.beneficial?.map(
               (popItem: Product) => {
-                if (authStore.getSelectedLang === "kg") {
+                if (authStore.getSelectedLang === 'kg') {
                   return {
                     ...popItem,
                     name: popItem?.nameKg,
-                    shortDescription: popItem?.shortDescriptionKg,
+                    shortDescription: popItem?.shortDescriptionKg
                   };
                 } else {
                   return {
                     ...popItem,
                     name: popItem?.nameRu,
-                    shortDescription: popItem?.shortDescriptionRu,
+                    shortDescription: popItem?.shortDescriptionRu
                   };
                 }
-              },
+              }
             );
           }
         }
@@ -122,16 +122,16 @@ export const useProductsSstore = defineStore("productsStore", {
       }
     },
 
-    async fetchProductById(productId: string) {
+    async fetchProductById (productId: string) {
       const authStore = useAuthStore();
       try {
         const response = await http(
-          `/api/v1/Product/get-product-by-id/${productId}`,
+          `/api/v1/Product/get-product-by-id/${productId}`
         );
         if (response.status === 200) {
           let filtered = [];
 
-          if (authStore.getSelectedLang === "kg") {
+          if (authStore.getSelectedLang === 'kg') {
             filtered = await {
               ...response.data,
               product: {
@@ -140,16 +140,16 @@ export const useProductsSstore = defineStore("productsStore", {
                 shortDescription: response.data?.product?.shortDescriptionKg,
                 description: response.data?.product?.descriptionKg.replace(
                   /<(\/?(p|br|h[1-5]|strong|img|a|div|span|li|ul|ol)( [^>]*)?)\/?>/g,
-                  "",
-                ),
+                  ''
+                )
               },
               similarProducts: response.data.similarProducts?.map(
                 (similar: Product) => ({
                   ...similar,
                   shortDescription: similar.shortDescriptionKg,
-                  name: similar?.nameKg,
-                }),
-              ),
+                  name: similar?.nameKg
+                })
+              )
             };
           } else {
             filtered = await {
@@ -160,16 +160,16 @@ export const useProductsSstore = defineStore("productsStore", {
                 shortDescription: response.data?.product?.shortDescriptionRu,
                 description: response.data?.product?.descriptionRu?.replace(
                   /<(\/?(p|br|h[1-5]|strong|img|a|div|span|li|ul|ol)( [^>]*)?)\/?>/g,
-                  "",
-                ),
+                  ''
+                )
               },
               similarProducts: response.data.similarProducts?.map(
                 (similar: Product) => ({
                   ...similar,
                   shortDescription: similar.shortDescriptionRu,
-                  name: similar?.nameRu,
-                }),
-              ),
+                  name: similar?.nameRu
+                })
+              )
             };
           }
 
@@ -180,40 +180,39 @@ export const useProductsSstore = defineStore("productsStore", {
       }
     },
 
-    async addToBookmarks(objectId: string) {
+    async addToBookmarks (objectId: string) {
       const authStore = useAuthStore();
       try {
         const response = await http.post(
-          "/api/v1/Bookmark/set-bookmarks",
+          '/api/v1/Bookmark/set-bookmarks',
           {},
           {
             params: {
               userId: authStore.getUserId,
-              objectId: objectId,
-            },
-          },
+              objectId
+            }
+          }
         );
         if (response.status === 200) {
-          useNotif("success", "Успешно обновлено", "Успех");
+          useNotif('success', 'Успешно обновлено', 'Успех');
         }
       } catch (err) {
         console.log(err);
       }
     },
 
-    setPrices(minPrice: number, maxPrice: number) {
+    setPrices (minPrice: number, maxPrice: number) {
       this.filters.minPrice = minPrice;
       this.filters.maxPrice = maxPrice;
     },
-    setTypeOfWork(value: any) {
+    setTypeOfWork (value: any) {
       if (value === null) {
         this.filters.subdirectoryIds = [];
       } else {
-        const ids = value.map((item: any) => item?.id);
         this.filters.subdirectoryIds.push(value[0]);
       }
     },
-    setSubDirectories(value: any) {
+    setSubDirectories (value: any) {
       if (value === null) {
         this.filters.subdirectoryIds = [];
       } else {
@@ -221,25 +220,25 @@ export const useProductsSstore = defineStore("productsStore", {
         this.filters.subdirectoryIds = [...ids];
       }
     },
-    async filterProducts(prodName?: string) {
+    async filterProducts (prodName?: string) {
       this.areFiltersLoading = true;
       const subDirs =
         this.filters.subdirectoryIds?.length > 0
-          ? this.filters.subdirectoryIds?.join(",")
+          ? this.filters.subdirectoryIds?.join(',')
           : null;
 
       const allBrands =
         this.filters?.brandId !== null && this.filters?.brandId?.length > 0
-          ? this.filters.brandId?.join(",")
+          ? this.filters.brandId?.join(',')
           : null;
 
       const categoriesId =
         this.filters?.categoryId?.length > 0 &&
         this.filters?.categoryId !== null
-          ? this.filters?.categoryId.join(",")
+          ? this.filters?.categoryId.join(',')
           : null;
 
-      console.log("categoriesId", categoriesId);
+      console.log('categoriesId', categoriesId);
       const query = {
         productName: this.filters.search || prodName,
         categoryId: categoriesId,
@@ -248,30 +247,30 @@ export const useProductsSstore = defineStore("productsStore", {
         maxPrice: this.filters.maxPrice || null,
         brandId: allBrands,
         page: this.filters.currentPage,
-        pageSize: this.filters.pageSize,
+        pageSize: this.filters.pageSize
       };
       const authStore = useAuthStore();
       try {
         const response = await http.get(
-          "/api/v1/Product/get-all-products-pagination",
-          { params: query },
+          '/api/v1/Product/get-all-products-pagination',
+          { params: query }
         );
-        console.log("response filterProducts", response);
+        console.log('response filterProducts', response);
         if (response.status === 200) {
           this.filterProductTotal.totalItems = response.data.totalItems;
           this.filterProductTotal.totalPages = response.data.totalPages;
           const filtered = response.data.items?.map((item: Product) => {
-            if (authStore.getSelectedLang === "kg") {
+            if (authStore.getSelectedLang === 'kg') {
               return {
                 ...item,
                 name: item?.nameKg,
-                shortDescription: item?.shortDescriptionKg,
+                shortDescription: item?.shortDescriptionKg
               };
             } else {
               return {
                 ...item,
                 name: item?.nameRu,
-                shortDescription: item?.shortDescriptionRu,
+                shortDescription: item?.shortDescriptionRu
               };
             }
           });
@@ -286,21 +285,21 @@ export const useProductsSstore = defineStore("productsStore", {
         }, 1000);
       }
     },
-    setCategoryId(categoryId: string) {
+    setCategoryId (categoryId: string) {
       this.filters.categoryId.push(categoryId);
       this.filterProducts();
     },
-    async getBookmarks(productId: string) {
+    async getBookmarks (productId: string) {
       const authStore = useAuthStore();
 
       try {
-        const response = await http("/api/v1/Bookmark/get-bookmarks", {
+        const response = await http('/api/v1/Bookmark/get-bookmarks', {
           params: {
             userId: authStore.getUserId,
-            objectId: productId,
-          },
+            objectId: productId
+          }
         });
-        console.log("getBookmarks id", response);
+        console.log('getBookmarks id', response);
 
         if (response.status === 200) {
           this.isProductBookmarked = response.data.message;
@@ -308,35 +307,35 @@ export const useProductsSstore = defineStore("productsStore", {
       } catch (err) {
         console.log(err);
       }
-    },
+    }
   },
   getters: {
-    getAllProducsts(state) {
+    getAllProducsts (state) {
       return state.allProducts;
     },
-    getFilteredProducts(state) {
+    getFilteredProducts (state) {
       return state.filteredProducts;
     },
-    getProductBookmarked(state) {
+    getProductBookmarked (state) {
       return state.isProductBookmarked;
     },
-    getProduct(state) {
+    getProduct (state) {
       return state.product;
     },
-    getProdTotal(state) {
+    getProdTotal (state) {
       return state.filterProductTotal;
     },
-    getLoadingState(state) {
+    getLoadingState (state) {
       return state.areFiltersLoading;
     },
-    getPopularProducts(state) {
+    getPopularProducts (state) {
       return state.popularProds;
     },
-    getSpecialProducts(state) {
+    getSpecialProducts (state) {
       return state.specialProducts;
     },
-    getBenefProducts(state) {
+    getBenefProducts (state) {
       return state.beneficialProds;
-    },
-  },
+    }
+  }
 });

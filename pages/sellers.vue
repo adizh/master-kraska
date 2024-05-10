@@ -1,7 +1,9 @@
 <template>
   <section class="all-sellers">
     <h1>{{ $t("sellers") }}</h1>
-    <p class="sub-info-seller">{{ $t("sellersInfo") }}</p>
+    <p class="sub-info-seller">
+      {{ $t("sellersInfo") }}
+    </p>
     <div class="all-sellers-blocks">
       <ItemsSeller type="page" />
       <!-- <div v-for="seller in brandsStore.getAllSellers" :key="seller?.id" class="all-sellers-each">

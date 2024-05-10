@@ -1,15 +1,15 @@
 <template>
   <div class="main-header">
     <div class="left" @click="backHome">
-      <img src="/logo-master.png" class="logo-img" />
+      <img src="/logo-master.png" class="logo-img">
     </div>
 
     <ul class="bottom">
       <div
-        class="overlay"
         v-if="isBurgerMenuOpen"
+        class="overlay"
         @click="closeBurgerMenu"
-      ></div>
+      />
       <ul class="bottom-part" :class="{ 'open-bottom-part': isBurgerMenuOpen }">
         <li
           class="catalog-li"
@@ -22,10 +22,10 @@
             :class="{ rotated: isCatalogOpen }"
             src="../assets/icons/icon=components-closed-arrow.svg"
             alt="open-arrow"
-          />
+          >
           <Catalog
-            :isCatalogOpen="isCatalogOpen"
-            @closeCatalog="closeCatalog"
+            :is-catalog-open="isCatalogOpen"
+            @close-catalog="closeCatalog"
           />
         </li>
 
@@ -40,36 +40,44 @@
             :class="{ rotated: isCatalogOpen }"
             src="../assets/icons/icon=components-closed-arrow.svg"
             alt="open-arrow"
-          />
+          >
           <Catalog
-            :isCatalogOpen="isCatalogOpen"
-            @closeCatalog="closeCatalog"
+            :is-catalog-open="isCatalogOpen"
+            @close-catalog="closeCatalog"
           />
         </li>
 
-        <li @click="gotToPage('/koler')">{{ $t("tinting") }}</li>
-        <li @click="gotToPage('/pay-deliver')">{{ $t("payDelivery") }}</li>
-        <li @click="gotToPage('/about-us')">{{ $t("aboutUs") }}</li>
-        <li @click="gotToPage('/contacts')">{{ $t("contacts") }}</li>
+        <li @click="gotToPage('/koler')">
+          {{ $t("tinting") }}
+        </li>
+        <li @click="gotToPage('/pay-deliver')">
+          {{ $t("payDelivery") }}
+        </li>
+        <li @click="gotToPage('/about-us')">
+          {{ $t("aboutUs") }}
+        </li>
+        <li @click="gotToPage('/contacts')">
+          {{ $t("contacts") }}
+        </li>
       </ul>
       <ul class="top-part">
         <li class="phone">
-          <img src="../assets/icons/icon=phone loight.svg" alt="phone" />
+          <img src="../assets/icons/icon=phone loight.svg" alt="phone">
           <a href="tel:+996 509 910 148"> +996 509 910 148</a>
         </li>
-        <li @click="gotToPage('/cart')" class="cart-li">
-          <img src="../assets/icons/icon=cart.svg" alt="cart" />
+        <li class="cart-li" @click="gotToPage('/cart')">
+          <img src="../assets/icons/icon=cart.svg" alt="cart">
           <span v-if="screenSize === 'large'">{{ $t("cart") }}</span>
           <span class="cart-li-num">{{ cartStore?.getAllCart?.length }}</span>
         </li>
         <li @click="toggleProfile">
-          <img src="../assets/icons/icon=user.svg" alt="" />
+          <img src="../assets/icons/icon=user.svg" alt="">
           <span v-if="screenSize === 'large'">{{ $t("profile") }}</span>
         </li>
-        <li class="burger-menu" v-if="!isBurgerMenuOpen" @click="openBurger">
-          <span></span>
-          <span></span>
-          <span></span>
+        <li v-if="!isBurgerMenuOpen" class="burger-menu" @click="openBurger">
+          <span />
+          <span />
+          <span />
         </li>
         <li v-else @click="isBurgerMenuOpen = false">
           <svg
@@ -87,19 +95,18 @@
         </li>
       </ul>
     </ul>
-  </div>
 
-  <Dialog
-    v-model:visible="isProfileOpen"
-    modal
-    :style="{ width: '450px', padding: '10px 40px 40px 40px' }"
-  >
-    <AuthModal @closeModal="isProfileOpen = false" />
-  </Dialog>
+    <Dialog
+      :visible="isProfileOpen"
+      modal
+      :style="{ width: '450px', padding: '10px 40px 40px 40px' }"
+    >
+      <AuthModal @close-modal="isProfileOpen = false" />
+    </Dialog>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { CatalogItem } from "~/types/Catalog";
 const isBurgerMenuOpen = ref(false);
 const isCatalogOpen = ref(false);
 const isProfileOpen = ref();
@@ -113,9 +120,9 @@ const closeBurgerMenu = () => {
 const openBurger = () => {
   isBurgerMenuOpen.value = true;
   if (isBurgerMenuOpen.value) {
-    document.body.classList.add("dimmed-body");
+    document.body.classList.add('dimmed-body');
   } else {
-    document.body.classList.remove("dimmed-body");
+    document.body.classList.remove('dimmed-body');
   }
 };
 
@@ -142,10 +149,7 @@ const updateScreenWidth = () => {
 };
 
 onMounted(() => {
-  window.addEventListener("resize", updateScreenWidth);
-  window.addEventListener("scroll", (event) => {
-    // syncScroll()
-  });
+  window.addEventListener('resize', updateScreenWidth);
 });
 const router = useRouter();
 
@@ -156,26 +160,22 @@ const gotToPage = (link: string) => {
 };
 
 onUnmounted(() => {
-  window.removeEventListener("resize", updateScreenWidth);
+  window.removeEventListener('resize', updateScreenWidth);
 });
 
 const screenSize = computed(() => {
   if (screenWidth.value >= 768) {
-    return "large";
+    return 'large';
   }
 });
 
-const goToCatalog = (item: CatalogItem) => {
-  navigateTo(`/catalog/${item.id}`);
-};
-
 const backHome = () => {
-  return navigateTo("/");
+  return navigateTo('/');
 };
 
 const toggleProfile = () => {
   if (authStore.getUserId && authStore.getUserId?.length > 0) {
-    return navigateTo("/profile");
+    return navigateTo('/profile');
   } else {
     isProfileOpen.value = !isProfileOpen.value;
   }
@@ -185,7 +185,7 @@ const closeProfileOpen = () => {
   isProfileOpen.value = false;
 };
 
-provide("closeProfileOpen", closeProfileOpen);
+provide('closeProfileOpen', closeProfileOpen);
 </script>
 
 <style scoped lang="scss">

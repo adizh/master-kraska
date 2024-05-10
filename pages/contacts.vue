@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { addressList } from "@/assets/js/addressList";
+import { addressList } from '@/assets/js/addressList';
 </script>
 
 <style scoped lang="scss">

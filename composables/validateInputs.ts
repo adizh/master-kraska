@@ -4,41 +4,41 @@ export const useInputValidation = () => {
   const handleValues = (
     inputs: any,
     fieldName: string,
-    validationType: string | any,
+    validationType: string | any
   ) => {
     const value = inputs[fieldName].value;
 
     inputs[fieldName].value = value;
 
-    inputs[fieldName].error = "";
+    inputs[fieldName].error = '';
 
-    if (validationType === "string") {
-      if (value === "") {
-        inputs[fieldName].error = "Это поле обязательно";
+    if (validationType === 'string') {
+      if (value === '') {
+        inputs[fieldName].error = 'Это поле обязательно';
       }
-    } else if (validationType === "email") {
+    } else if (validationType === 'email') {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(value)) {
-        inputs[fieldName].error = "Неправильный формат почты";
+        inputs[fieldName].error = 'Неправильный формат почты';
       }
-    } else if (validationType === "number") {
-      if (value === "") {
-        inputs[fieldName].error = "Это поле обязательно";
+    } else if (validationType === 'number') {
+      if (value === '') {
+        inputs[fieldName].error = 'Это поле обязательно';
       }
-    } else if (validationType === "rating") {
+    } else if (validationType === 'rating') {
       if (value <= 0) {
-        inputs[fieldName].error = "Это поле обязательно";
+        inputs[fieldName].error = 'Это поле обязательно';
       }
-    } else if (validationType === "password") {
+    } else if (validationType === 'password') {
       inputs[fieldName].error =
-        value?.length < 8 ? "Пароль должен быть больше 8 символов" : "";
-    } else if (validationType === "passwordRepeat") {
+        value?.length < 8 ? 'Пароль должен быть больше 8 символов' : '';
+    } else if (validationType === 'passwordRepeat') {
       inputs[fieldName].error =
         value !== inputs.password.value
-          ? "Пароли должны совпадать"
+          ? 'Пароли должны совпадать'
           : !value
-            ? "Это поле обязательно"
-            : "";
+              ? 'Это поле обязательно'
+              : '';
     }
   };
 

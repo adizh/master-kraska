@@ -74,7 +74,7 @@
     />
   </div>
 
-  <NoContent v-else :title="$t('noHistoryOrder')">
+  <NoContent v-else-if="!userOrders?.length" :title="$t('noHistoryOrder')">
     <template #icon>
       <img
         src="../../assets/icons/black/icon=components -time-notfill.svg"

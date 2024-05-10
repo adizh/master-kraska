@@ -13,8 +13,8 @@
             v-for="item in filteredBrands"
             :key="item?.id"
             class="koler-section-select-names"
-            @click="chooseBrand(item)"
             :class="{ active: item?.name === selectedBrand?.name }"
+            @click="chooseBrand(item)"
           >
             {{ item?.name }}
           </p>
@@ -22,54 +22,54 @@
 
         <div class="col-9 second-block">
           <input
+            id="searcg"
+            v-model="tintingSearch"
             type="text"
             name="search"
-            id="searcg"
             :placeholder="$t('colorCode')"
             class="basic-input"
-            v-model="tintingSearch"
             @input="handleSearch"
-          />
+          >
           <div class="danger-text">
             {{ $t("kolerWarning") }}
           </div>
 
           <div class="koler-part">
             <div class="koler-colors">
-              <div class="bottom" v-if="activeBrand?.length">
+              <div v-if="activeBrand?.length" class="bottom">
                 <div
                   v-for="item in activeBrand"
                   :key="item.id"
                   class="bottom-item"
                   :style="{ background: '#' + item.rgb }"
-                  @click="selectColor(item)"
                   :class="{ 'selected-color': item?.id === selectedColor?.id }"
+                  @click="selectColor(item)"
                 >
                   <p class="flex flex-row align-items-center gap-1">
                     <span>{{ item.code }}</span>
                     <img
+                      v-show="item?.id === selectedColor?.id"
                       src="../assets/icons/carbon_checkmark-filled (1).svg"
                       alt="carbon"
                       class="carbon"
-                      v-show="item?.id === selectedColor?.id"
-                    />
+                    >
                   </p>
                 </div>
               </div>
 
               <UIPagination
                 :total="totalPages"
-                :currentActive="currentPage"
-                @changePage="changePage"
+                :current-active="currentPage"
+                @change-page="changePage"
               />
             </div>
 
             <div class="koler-change">
-              <img src="/koler.png" id="img" format="webp" />
+              <img id="img" src="/koler.png" format="webp">
               <div
                 id="bg"
                 :style="{ background: '#' + selectedColor?.rgb || 'white' }"
-              ></div>
+              />
             </div>
           </div>
         </div>
@@ -83,14 +83,14 @@
 </template>
 
 <script setup lang="ts">
-import { Brands } from "~/types/Brands";
-import { Tinting } from "@/types/Tinting";
+import { Brands } from '~/types/Brands';
+import { Tinting } from '@/types/Tinting';
 
 const currentBrandsColors = ref<Tinting[]>([]);
 const allTingings = ref<Tinting[]>([]);
 const activeBrand = ref<Tinting[]>([]);
 
-const tintingSearch = ref("");
+const tintingSearch = ref('');
 const currentPage = ref(1);
 const pageSize = ref(27);
 const totalPages = ref(10);
@@ -108,7 +108,7 @@ const selectColor = (item: Tinting) => {
 onMounted(async () => {
   await fetchAllTintings();
   currentBrandsColors.value = allTingings.value?.filter(
-    (item: Tinting) => item?.brandId === selectedBrand?.value.id,
+    (item: Tinting) => item?.brandId === selectedBrand?.value.id
   );
 });
 
@@ -133,10 +133,10 @@ const fetchBrandsId = async (id: string) => {
 
 const fetchAllData = async (ids: string[]) => {
   const idsNull = [
-    "902dea30-e9a6-4d6c-accf-97d4590d9852",
-    "8b9f00af-1ff0-400e-be67-3f4753c89970",
+    '902dea30-e9a6-4d6c-accf-97d4590d9852',
+    '8b9f00af-1ff0-400e-be67-3f4753c89970'
   ];
-  const filtered = ids.filter((item) => !idsNull.includes(item));
+  const filtered = ids.filter(item => !idsNull.includes(item));
   const results = [];
   for (const id of filtered) {
     const data = await fetchBrandsId(id);
@@ -148,7 +148,7 @@ const fetchAllData = async (ids: string[]) => {
   filteredBrands.value = results.filter((item: Brands) => Boolean(item));
   selectedBrand.value = results[0];
   currentBrandsColors.value = allTingings.value?.filter(
-    (item: Tinting) => item?.brandId === selectedBrand?.value.id,
+    (item: Tinting) => item?.brandId === selectedBrand?.value.id
   );
   fetchTintingsByBrand(selectedBrand.value);
   return [];
@@ -157,9 +157,9 @@ const fetchAllData = async (ids: string[]) => {
 const fetchTintingsByBrand = async (brand: Brands) => {
   try {
     const response = await http(
-      `/api/v1/Tinting/get-all-tintings-pagination?page=${currentPage.value}&pageSize=${pageSize?.value}&brandId=${brand?.id}&code=${tintingSearch?.value}`,
+      `/api/v1/Tinting/get-all-tintings-pagination?page=${currentPage.value}&pageSize=${pageSize?.value}&brandId=${brand?.id}&code=${tintingSearch?.value}`
     );
-    console.log("response fetchTintingsByBrand", response);
+    console.log('response fetchTintingsByBrand', response);
     if (response.status === 200) {
       activeBrand.value = response.data.items;
 
@@ -172,12 +172,12 @@ const fetchTintingsByBrand = async (brand: Brands) => {
 
 const fetchAllTintings = async () => {
   try {
-    const response = await http("/api/v1/Tinting/get-all-tintings");
+    const response = await http('/api/v1/Tinting/get-all-tintings');
     // const response = await http(`/api/v1/Tinting/get-all-tintings-pagination?page=${currentPage.value}&pageSize=${pageSize?.value}&brandId=${selectedBrand?.value.id}`);
     if (response.status === 200) {
       allTingings.value = response.data;
 
-      console.log("response data fetchAllTintings", response.data);
+      console.log('response data fetchAllTintings', response.data);
       const uniqueIds = response.data.reduce((ids: any, obj: Tinting) => {
         if (!ids.includes(obj?.brandId)) {
           ids.push(obj?.brandId);
@@ -195,9 +195,9 @@ const fetchAllTintings = async () => {
 const chooseBrand = (value: Brands) => {
   selectedBrand.value = value;
   currentBrandsColors.value = allTingings.value?.filter(
-    (item: Tinting) => item?.brandId === selectedBrand?.value.id,
+    (item: Tinting) => item?.brandId === selectedBrand?.value.id
   );
-  tintingSearch.value = "";
+  tintingSearch.value = '';
   fetchTintingsByBrand(selectedBrand.value);
 };
 </script>

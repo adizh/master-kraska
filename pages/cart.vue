@@ -1,19 +1,20 @@
 <template>
   <div>
     <section v-if="store.getAllCart?.length">
-      <div class="main-header-h1">{{ $t("cart") }}</div>
+      <div class="main-header-h1">
+        {{ $t("cart") }}
+      </div>
       <div class="cart-main grid">
         <div class="cart-main-info lg:col-8 md:col-12 sm:col-12">
           <CartProductItem
             v-for="cartItem in store.getAllCart"
             :key="cartItem.id"
             :item="cartItem"
-            @removeFromCart="removeFromCart"
-            @increaseCount="increaseCount"
-            @decreaseCount="decreaseCount"
-            @confirmDelete="confirmDelete"
-          >
-          </CartProductItem>
+            @remove-from-cart="removeFromCart"
+            @increase-count="increaseCount"
+            @decrease-count="decreaseCount"
+            @confirm-delete="confirmDelete"
+          />
         </div>
 
         <div class="cart-main-info-price lg:col-4 md:col-6 sm:col-12 col-12">
@@ -25,17 +26,15 @@
           </button>
           <div class="cart-main-info-price-block">
             <div class="first">
-              <span
-                >{{ $t("all") }}: {{ totalOfProdTotals }} 
-                {{ $t("product") }}</span
-              >
+              <span>{{ $t("all") }}: {{ totalOfProdTotals }}
+                {{ $t("product") }}</span>
               <span>{{ store.totalOfTotalSum }} сом</span>
             </div>
             <div class="second">
               <span>{{ $t("accountPiece") }}</span>
               <span>0%</span>
             </div>
-            <input class="basic-input" placeholder="Промокод" disabled />
+            <input class="basic-input" placeholder="Промокод" disabled>
             <div class="last">
               <span>{{ $t("inTotal") }}</span>
               <span>{{ store.totalOfTotalSum }} сом</span>
@@ -73,55 +72,55 @@
     </section>
 
     <Dialog
-      v-model:visible="isConfirmOpen"
+      :visible="isConfirmOpen"
       modal
       :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
       header=" "
     >
       <ConfirmPay
+        :title="$t('confirmOrderText')"
         @confirm="createOrder"
         @cancel="isConfirmOpen = false"
-        :title="$t('confirmOrderText')"
       />
     </Dialog>
 
     <Dialog
-      v-model:visible="isDeleteOpen"
+      :visible="isDeleteOpen"
       modal
       :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
       header=" "
     >
       <ConfirmPay
+        :title="$t('deleteCartProdWarning')"
         @confirm="removeFromCart"
         @cancel="isDeleteOpen = false"
-        :title="$t('deleteCartProdWarning')"
       />
     </Dialog>
 
     <Dialog
-      v-model:visible="isProfileOpen"
+      :visible="isProfileOpen"
       modal
       :style="{ width: '450px', padding: '10px 40px 40px 40px' }"
     >
-      <AuthModal @closeModal="isProfileOpen = false" />
+      <AuthModal @close-modal="isProfileOpen = false" />
     </Dialog>
     <Dialog
-      v-model:visible="isConfirmOpen"
+      :visible="isConfirmOpen"
       modal
       :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
       header=" "
     >
       <ConfirmPay
+        :title="$t('confirmOrderText')"
         @cancel="isConfirmOpen = false"
         @confirm="createOrder"
-        :title="$t('confirmOrderText')"
       />
     </Dialog>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ExtendedProduct } from "~/types/Product";
+import { ExtendedProduct } from '~/types/Product';
 const store = useCartStore();
 const orderStore = useOrderStore();
 const authStore = useAuthStore();
@@ -130,7 +129,7 @@ const isConfirmOpen = ref(false);
 const isDeleteOpen = ref(false);
 const isProfileOpen = ref(false);
 
-console.log("cart store", store.getAllCart);
+console.log('cart store', store.getAllCart);
 
 const confirmDelete = (prop: ExtendedProduct) => {
   isDeleteOpen.value = true;

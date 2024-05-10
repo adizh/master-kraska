@@ -1,14 +1,14 @@
-import { Brands, Seller } from "~/types/Brands";
+import { Brands, Seller } from '~/types/Brands';
 
-export const useBrandsStore = defineStore("brandsStore", {
+export const useBrandsStore = defineStore('brandsStore', {
   state: () => ({
     brands: [] as Brands[],
-    sellers: [] as Seller[],
+    sellers: [] as Seller[]
   }),
   actions: {
-    async fetchAllBrands() {
+    async fetchAllBrands () {
       try {
-        const response = await http("/api/v1/Brand/get-all-brands");
+        const response = await http('/api/v1/Brand/get-all-brands');
 
         if (response.status === 200) {
           this.brands = response.data;
@@ -17,13 +17,13 @@ export const useBrandsStore = defineStore("brandsStore", {
         console.log(err);
       }
     },
-    async fetchAllSellers() {
+    async fetchAllSellers () {
       const authStore = useAuthStore();
       try {
-        const response = await http("/api/v1/Seller/get-all-sellers");
+        const response = await http('/api/v1/Seller/get-all-sellers');
         if (response.status === 200) {
           const filtered = response.data.map((seller: Seller) => {
-            if (authStore.getSelectedLang === "ru") {
+            if (authStore.getSelectedLang === 'ru') {
               return { ...seller, sellerInfo: seller?.descriptionRu };
             } else {
               return { ...seller, sellerInfo: seller?.descriptionKg };
@@ -35,7 +35,7 @@ export const useBrandsStore = defineStore("brandsStore", {
         console.log(err);
       }
     },
-    async fetchAllBrandId(brandId: string) {
+    async fetchAllBrandId (brandId: string) {
       try {
         const response = await http(`/api/v1/Brand/get-brand/${brandId}`);
 
@@ -45,14 +45,14 @@ export const useBrandsStore = defineStore("brandsStore", {
       } catch (err) {
         console.log(err);
       }
-    },
+    }
   },
   getters: {
-    getAllBrands(state) {
+    getAllBrands (state) {
       return state.brands;
     },
-    getAllSellers(state) {
+    getAllSellers (state) {
       return state.sellers;
-    },
-  },
+    }
+  }
 });

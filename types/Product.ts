@@ -1,6 +1,6 @@
-import { Category } from "./Category";
-import { Review } from "./Review";
-import { Variant } from "./Variant";
+import { Category } from './Category';
+import { Review } from './Review';
+import { Variant } from './Variant';
 
 export type Product = {
   id: string;

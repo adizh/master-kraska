@@ -26,7 +26,9 @@
     </div>
 
     <div class="delivery-from">
-      <h1 class="delivery-header-h1">{{ $t("pickUpCondition") }}</h1>
+      <h1 class="delivery-header-h1">
+        {{ $t("pickUpCondition") }}
+      </h1>
       <div>
         <span class="delivery-info-header">
           {{ $t("pickCon1") }}
@@ -47,7 +49,9 @@
     </div>
 
     <div class="delivery">
-      <h1 class="delivery-header-h1">{{ $t("deliverRules") }}</h1>
+      <h1 class="delivery-header-h1">
+        {{ $t("deliverRules") }}
+      </h1>
       <div class="delivery-info">
         <ul class="list">
           <li>
@@ -74,7 +78,9 @@
     </div>
 
     <div class="delivery">
-      <h1 class="delivery-header-h1">{{ $t("pay") }}</h1>
+      <h1 class="delivery-header-h1">
+        {{ $t("pay") }}
+      </h1>
 
       <div class="delivery-info">
         <span class="delivery-info-header">{{ $t("typeOfPay") }}</span>
@@ -95,7 +101,9 @@
           <li>
             {{ $t("typeOfPay1") }}
           </li>
-          <li class="danger">{{ $t("attention") }}!</li>
+          <li class="danger">
+            {{ $t("attention") }}!
+          </li>
           <li>
             {{ $t("dangerText1") }}
           </li>
