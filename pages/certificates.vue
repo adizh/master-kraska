@@ -11,23 +11,23 @@
 </template>
 
 <script setup lang="ts">
-import { Certificate } from '@/types/Brands';
+import { Certificate } from "@/types/Brands";
 const certificates = ref([] as Certificate[]);
 const props = defineProps({
   type: {
     type: String,
-    default: ''
+    default: ""
   }
 });
 
 const computedCertificates = computed(() => {
-  return props.type === 'page'
+  return props.type === "page"
     ? certificates.value?.slice(0, 3)
     : certificates.value;
 });
 const getCertiticates = async () => {
   try {
-    const response = await http('/api/v1/Banner/get-all-certificates');
+    const response = await http("/api/v1/Banner/get-all-certificates");
     if (response.status === 200) {
       certificates.value = response.data;
     }

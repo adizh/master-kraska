@@ -11,18 +11,18 @@
 </template>
 
 <script setup lang="ts">
-import 'primevue/resources/themes/aura-light-green/theme.css';
+import "primevue/resources/themes/aura-light-green/theme.css";
 useHead({
-  title: 'Master Kraska',
-  meta: [{ name: 'Master Kraska' }]
+  title: "Master Kraska",
+  meta: [{ name: "Master Kraska" }]
 });
 
 const nuxtApp = useNuxtApp();
 const loading = ref(false);
-nuxtApp.hook('page:start', () => {
+nuxtApp.hook("page:start", () => {
   loading.value = true;
 });
-nuxtApp.hook('page:finish', () => {
+nuxtApp.hook("page:finish", () => {
   loading.value = false;
 });
 </script>

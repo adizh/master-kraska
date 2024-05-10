@@ -1,6 +1,6 @@
-import { AllCatalog } from '~/types/Catalog';
-import { Category, CategorySys } from '~/types/Category';
-export const useCatalogStore = defineStore('catalogStore', {
+import { AllCatalog } from "~/types/Catalog";
+import { Category, CategorySys } from "~/types/Category";
+export const useCatalogStore = defineStore("catalogStore", {
   state: () => ({
     allCatalogs: [] as AllCatalog[],
     allCategories: [] as Category[],
@@ -10,13 +10,13 @@ export const useCatalogStore = defineStore('catalogStore', {
     async fetchAllCatalogs () {
       const authStore = useAuthStore();
       try {
-        const response = await http('/api/v1/Helpers/get-all-catalogs');
-        console.log(response, 'response get All catalogs');
+        const response = await http("/api/v1/Helpers/get-all-catalogs");
+        console.log(response, "response get All catalogs");
         if (response.status === 200) {
           const filteredCatalogByLang = response.data.map(
             (item: AllCatalog) => {
               const subdirectory = item.subdirectory.map((subItem: any) => {
-                if (authStore.getSelectedLang === 'kg') {
+                if (authStore.getSelectedLang === "kg") {
                   return { ...subItem, name: subItem?.nameKg };
                 } else {
                   return { ...subItem, name: subItem?.nameRu };
@@ -24,7 +24,7 @@ export const useCatalogStore = defineStore('catalogStore', {
               });
 
               let itemName;
-              if (authStore.getSelectedLang === 'kg') {
+              if (authStore.getSelectedLang === "kg") {
                 itemName = item.nameKg;
               } else {
                 itemName = item.nameRu;
@@ -47,9 +47,9 @@ export const useCatalogStore = defineStore('catalogStore', {
           `/api/v1/Category/get-top-category-by-id?id=${categoryId}`
         );
         if (response.status === 200) {
-          console.log('respons get top category byif', response);
+          console.log("respons get top category byif", response);
           const filtered = response.data.map((item: Category) => {
-            if (authStore?.getSelectedLang === 'kg') {
+            if (authStore?.getSelectedLang === "kg") {
               return {
                 ...item,
                 category: { ...item?.category, name: item?.category?.nameKg },
@@ -84,7 +84,7 @@ export const useCatalogStore = defineStore('catalogStore', {
     async getCatalogId (cagalogId: string) {
       try {
         const response = await http(`/api/v1/Helpers/get-catalog/${cagalogId}`);
-        console.log('response getCatalogId', response);
+        console.log("response getCatalogId", response);
         if (response.status === 200) {
           return response.data;
         }
@@ -98,7 +98,7 @@ export const useCatalogStore = defineStore('catalogStore', {
         const response = await http(
           `/api/v1/Helpers/get-all-subdirectories-by-directoryId?id=${catalogId}`
         );
-        console.log('response fetchSubCatalogs', response);
+        console.log("response fetchSubCatalogs", response);
         // return response.data;
       } catch (err) {
         console.log(err);
@@ -108,11 +108,11 @@ export const useCatalogStore = defineStore('catalogStore', {
     async fetchAllCategories () {
       const authStore = useAuthStore();
       try {
-        const response = await http('/api/v1/Category/get-all-top-categories');
-        console.log('response all categories', response);
+        const response = await http("/api/v1/Category/get-all-top-categories");
+        console.log("response all categories", response);
         if (response.status === 200) {
           const filtered = response.data.map((item: Category) => {
-            if (authStore.getSelectedLang === 'kg') {
+            if (authStore.getSelectedLang === "kg") {
               return {
                 ...item,
                 category: { ...item?.category, name: item?.category?.nameKg }

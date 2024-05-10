@@ -180,11 +180,10 @@
         }}</span>
       </div>
       <div class="lg:col-4 md:col-6 col-12 each-field">
-
-          <label for="size" class="flex flex-row justify-content-between">
-            <span> Расход </span>
-            <span class="cursor" @click="isDeleteOpen = true">X</span>
-          </label>
+        <label for="size" class="flex flex-row justify-content-between">
+          <span> Расход </span>
+          <span class="cursor" @click="isDeleteOpen = true">X</span>
+        </label>
 
         <input
           id="color"
@@ -325,7 +324,7 @@
     </UIModal>
 
     <Dialog
-      :visible="isDeleteOpen"
+      v-model:visible="isDeleteOpen"
       modal
       :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
       header=" "
@@ -340,9 +339,9 @@
 </template>
 
 <script setup lang="ts">
-import { CategorySys } from '~/types/Category';
-import { Product } from '~/types/Product';
-import { Variant } from '~/types/Variant';
+import { CategorySys } from "~/types/Category";
+import { Product } from "~/types/Product";
+import { Variant } from "~/types/Variant";
 const { t } = useI18n();
 const route = useRoute();
 const id = route.params.id;
@@ -351,10 +350,10 @@ const item = ref({} as Product);
 const productsStore = useProductsSstore();
 const isDeleteOpen = ref(false);
 const newVariants = ref({
-  size: '',
-  price: '',
-  code: '',
-  image: ''
+  size: "",
+  price: "",
+  code: "",
+  image: ""
 });
 
 const handleFileChange = (event: any) => {
@@ -390,16 +389,16 @@ const convertToBase64 = (file: any) => {
 };
 
 const newVarImage = ref(null);
-const variantImage = ref('');
+const variantImage = ref("");
 const handleNewVarImage = async (event: any) => {
   newVarImage.value = event.target.files[0];
   const base64StringNewImage = await convertToBase64(newVarImage.value);
   variantImage.value = base64StringNewImage as unknown as string;
   varSizes[currVarSize.value].image = base64StringNewImage as unknown as string;
 };
-const currVarSize = ref('');
+const currVarSize = ref("");
 const openFileInput = (varSize: string) => {
-  const fileInput = document.getElementById('fileInput') as HTMLElement;
+  const fileInput = document.getElementById("fileInput") as HTMLElement;
   fileInput.click();
   currVarSize.value = varSize;
 };
@@ -424,7 +423,7 @@ const addVariant = async () => {
       }
     ];
     const response = await http.put(`/api/v1/Product/add-variants/${id}`, body);
-    console.log('response add variant', response);
+    console.log("response add variant", response);
   } catch (err) {
     console.log(err);
   } finally {
@@ -437,41 +436,41 @@ const categoryValues = reactive({} as any);
 const varSizes = reactive({} as any);
 
 const inputs = ref<Inputs>({
-  nameRu: { value: item.value?.nameRu, error: '', type: 'string' },
-  nameKg: { value: item.value?.nameKg, error: '', type: 'string' },
+  nameRu: { value: item.value?.nameRu, error: "", type: "string" },
+  nameKg: { value: item.value?.nameKg, error: "", type: "string" },
   descriptionRu: {
     value: item.value?.descriptionRu,
-    error: '',
-    type: 'string'
+    error: "",
+    type: "string"
   },
   descriptionKg: {
     value: item.value?.descriptionKg,
-    error: '',
-    type: 'string'
+    error: "",
+    type: "string"
   },
   shortDescriptionRu: {
     value: item.value?.shortDescriptionRu,
-    error: '',
-    type: 'string'
+    error: "",
+    type: "string"
   },
   shortDescriptionKg: {
     value: item.value?.shortDescriptionKg,
-    error: '',
-    type: 'string'
+    error: "",
+    type: "string"
   },
-  price: { value: item?.value?.price, error: '', type: 'number' },
-  subcategoryId: { value: item?.value?.subcategoryId, error: '' },
-  brandId: { value: item?.value?.brandId, error: '' },
-  size: { value: item?.value?.size, error: '', type: 'string' },
-  color: { value: item?.value?.colorType, error: '', type: 'number' },
-  consumption: { value: item?.value?.consumption, error: '', type: 'string' },
-  dryingTime: { value: item?.value?.dryingTime, error: '', type: 'string' },
-  isPopular: { value: item?.value?.isPopular, error: '' },
-  isFeatured: { value: item?.value?.isFeatured, error: '' },
-  isBeneficial: { value: item?.value?.isBeneficial, error: '' },
+  price: { value: item?.value?.price, error: "", type: "number" },
+  subcategoryId: { value: item?.value?.subcategoryId, error: "" },
+  brandId: { value: item?.value?.brandId, error: "" },
+  size: { value: item?.value?.size, error: "", type: "string" },
+  color: { value: item?.value?.colorType, error: "", type: "number" },
+  consumption: { value: item?.value?.consumption, error: "", type: "string" },
+  dryingTime: { value: item?.value?.dryingTime, error: "", type: "string" },
+  isPopular: { value: item?.value?.isPopular, error: "" },
+  isFeatured: { value: item?.value?.isFeatured, error: "" },
+  isBeneficial: { value: item?.value?.isBeneficial, error: "" },
   images: {
     value: item?.value?.images,
-    error: ''
+    error: ""
   }
 });
 
@@ -482,17 +481,17 @@ const validate = (field: string, type: string) => {
 };
 
 const submitUpdate = async () => {
-  console.log('varSizes', varSizes);
+  console.log("varSizes", varSizes);
   const prodCategories = Object.values(categoryValues);
   const prodVariantes = Object.values(varSizes).map((item: any) => {
-    if (item?.image && item?.image?.startsWith('http')) {
+    if (item?.image && item?.image?.startsWith("http")) {
       return { ...item, image: null };
     } else {
       return item;
     }
   });
 
-  console.log('prodVariantes', prodVariantes);
+  console.log("prodVariantes", prodVariantes);
   try {
     const body = {
       nameKg: inputs.value.nameKg.value,
@@ -520,9 +519,9 @@ const submitUpdate = async () => {
       `/api/v1/Product/update-product/${id}`,
       body
     );
-    console.log('response', response);
+    console.log("response", response);
     if (response.status === 200) {
-      useNotif('success', t('updated'), t('success'));
+      useNotif("success", t("updated"), t("success"));
     }
   } catch (err) {
     console.log(err);
@@ -537,7 +536,7 @@ const editProduct = () => {
     }
   }
   const hasError = Object.values(inputs.value).some(
-    input => input.error !== ''
+    input => input.error !== ""
   );
   if (!hasError) {
     submitUpdate();
@@ -564,45 +563,45 @@ onMounted(async () => {
   });
 
   inputs.value = {
-    nameRu: { value: item.value?.nameRu, error: '', type: 'string' },
-    nameKg: { value: item.value?.nameKg, error: '', type: 'string' },
+    nameRu: { value: item.value?.nameRu, error: "", type: "string" },
+    nameKg: { value: item.value?.nameKg, error: "", type: "string" },
     descriptionRu: {
       value: item.value?.descriptionRu,
-      error: '',
-      type: 'string'
+      error: "",
+      type: "string"
     },
     descriptionKg: {
       value: item.value?.descriptionKg,
-      error: '',
-      type: 'string'
+      error: "",
+      type: "string"
     },
     shortDescriptionRu: {
       value: item.value?.shortDescriptionRu,
-      error: '',
-      type: 'string'
+      error: "",
+      type: "string"
     },
     shortDescriptionKg: {
       value: item.value?.shortDescriptionKg,
-      error: '',
-      type: 'string'
+      error: "",
+      type: "string"
     },
-    price: { value: item?.value?.price, error: '', type: 'number' },
+    price: { value: item?.value?.price, error: "", type: "number" },
     //   categories: { value: item?.value?.categories, error: '' },
-    subcategoryId: { value: item?.value?.subcategoryId, error: '' },
-    brandId: { value: item?.value?.brandId, error: '' },
-    size: { value: item?.value?.size, error: '', type: 'string' },
-    color: { value: item?.value?.colorType, error: '', type: 'string' },
-    dryingTime: { value: item?.value?.dryingTime, error: '', type: 'string' },
-    consumption: { value: item?.value?.consumption, error: '', type: 'string' },
-    isPopular: { value: item?.value?.isPopular, error: '' },
-    isFeatured: { value: item?.value?.isFeatured, error: '' },
-    isBeneficial: { value: item?.value?.isBeneficial, error: '' },
+    subcategoryId: { value: item?.value?.subcategoryId, error: "" },
+    brandId: { value: item?.value?.brandId, error: "" },
+    size: { value: item?.value?.size, error: "", type: "string" },
+    color: { value: item?.value?.colorType, error: "", type: "string" },
+    dryingTime: { value: item?.value?.dryingTime, error: "", type: "string" },
+    consumption: { value: item?.value?.consumption, error: "", type: "string" },
+    isPopular: { value: item?.value?.isPopular, error: "" },
+    isFeatured: { value: item?.value?.isFeatured, error: "" },
+    isBeneficial: { value: item?.value?.isBeneficial, error: "" },
     images: {
       value: item?.value?.images,
-      error: ''
+      error: ""
     }
   };
-  console.log('inputs', inputs);
+  console.log("inputs", inputs);
 });
 </script>
 

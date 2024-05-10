@@ -72,7 +72,7 @@
     </section>
 
     <Dialog
-      :visible="isConfirmOpen"
+      v-model:visible="isConfirmOpen"
       modal
       :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
       header=" "
@@ -85,7 +85,7 @@
     </Dialog>
 
     <Dialog
-      :visible="isDeleteOpen"
+      v-model:visible="isDeleteOpen"
       modal
       :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
       header=" "
@@ -98,14 +98,14 @@
     </Dialog>
 
     <Dialog
-      :visible="isProfileOpen"
+      v-model:visible="isProfileOpen"
       modal
       :style="{ width: '450px', padding: '10px 40px 40px 40px' }"
     >
       <AuthModal @close-modal="isProfileOpen = false" />
     </Dialog>
     <Dialog
-      :visible="isConfirmOpen"
+      v-model:visible="isConfirmOpen"
       modal
       :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
       header=" "
@@ -120,7 +120,7 @@
 </template>
 
 <script setup lang="ts">
-import { ExtendedProduct } from '~/types/Product';
+import { ExtendedProduct } from "~/types/Product";
 const store = useCartStore();
 const orderStore = useOrderStore();
 const authStore = useAuthStore();
@@ -129,7 +129,7 @@ const isConfirmOpen = ref(false);
 const isDeleteOpen = ref(false);
 const isProfileOpen = ref(false);
 
-console.log('cart store', store.getAllCart);
+console.log("cart store", store.getAllCart);
 
 const confirmDelete = (prop: ExtendedProduct) => {
   isDeleteOpen.value = true;

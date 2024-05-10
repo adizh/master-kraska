@@ -93,7 +93,7 @@
     </ul>
 
     <Dialog
-      :visible="isProfileOpen"
+      v-model:visible="isProfileOpen"
       modal
       :style="{ width: '450px', padding: '10px 40px 40px 40px' }"
     >
@@ -116,9 +116,9 @@ const closeBurgerMenu = () => {
 const openBurger = () => {
   isBurgerMenuOpen.value = true;
   if (isBurgerMenuOpen.value) {
-    document.body.classList.add('dimmed-body');
+    document.body.classList.add("dimmed-body");
   } else {
-    document.body.classList.remove('dimmed-body');
+    document.body.classList.remove("dimmed-body");
   }
 };
 
@@ -145,7 +145,7 @@ const updateScreenWidth = () => {
 };
 
 onMounted(() => {
-  window.addEventListener('resize', updateScreenWidth);
+  window.addEventListener("resize", updateScreenWidth);
 });
 const router = useRouter();
 
@@ -156,22 +156,22 @@ const gotToPage = (link: string) => {
 };
 
 onUnmounted(() => {
-  window.removeEventListener('resize', updateScreenWidth);
+  window.removeEventListener("resize", updateScreenWidth);
 });
 
 const screenSize = computed(() => {
   if (screenWidth.value >= 768) {
-    return 'large';
+    return "large";
   }
 });
 
 const backHome = () => {
-  return navigateTo('/');
+  return navigateTo("/");
 };
 
 const toggleProfile = () => {
   if (authStore.getUserId && authStore.getUserId?.length > 0) {
-    return navigateTo('/profile');
+    return navigateTo("/profile");
   } else {
     isProfileOpen.value = !isProfileOpen.value;
   }
@@ -181,7 +181,7 @@ const closeProfileOpen = () => {
   isProfileOpen.value = false;
 };
 
-provide('closeProfileOpen', closeProfileOpen);
+provide("closeProfileOpen", closeProfileOpen);
 </script>
 
 <style scoped lang="scss">

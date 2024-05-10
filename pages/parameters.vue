@@ -179,36 +179,36 @@
 </template>
 
 <script setup lang="ts">
-import { AllCatalog, CatalogCheckbox } from '~/types/Catalog';
+import { AllCatalog, CatalogCheckbox } from "~/types/Catalog";
 const showResults = ref(false);
 const catalogStore = useCatalogStore();
 const productsStore = useProductsSstore();
 const authStore = useAuthStore();
 const minPrice = ref(0);
 const maxPrice = ref(0);
-const typeOfWork = ref('');
+const typeOfWork = ref("");
 const isProdReceived = ref(false);
 
 const items = [
   {
-    id: 'd12f4dfb-6f54-4a37-9cd3-1d6d5423e084',
-    name: 'ТИП РАБОТ'
+    id: "d12f4dfb-6f54-4a37-9cd3-1d6d5423e084",
+    name: "ТИП РАБОТ"
   },
   {
-    id: 'c8409cbf-4b89-492d-bbb6-fce1813815d3',
-    name: 'ТИП ЛКМ'
+    id: "c8409cbf-4b89-492d-bbb6-fce1813815d3",
+    name: "ТИП ЛКМ"
   },
   {
-    id: '5ff5e6eb-884b-4e64-ae7b-d99bede77b9b',
-    name: 'МАТЕРИАЛ РАБОЧЕЙ ПОВЕРХНОСТИ'
+    id: "5ff5e6eb-884b-4e64-ae7b-d99bede77b9b",
+    name: "МАТЕРИАЛ РАБОЧЕЙ ПОВЕРХНОСТИ"
   },
   {
-    id: 'd637e138-5784-4d3d-bb91-77a7a185469e',
-    name: 'ТИП ОБЪЕКТА'
+    id: "d637e138-5784-4d3d-bb91-77a7a185469e",
+    name: "ТИП ОБЪЕКТА"
   },
   {
-    id: '4b5d79cb-b7fd-4646-8dc2-6fafd0d3fd3e',
-    name: 'РАЗБАВИТЕЛЬ'
+    id: "4b5d79cb-b7fd-4646-8dc2-6fafd0d3fd3e",
+    name: "РАЗБАВИТЕЛЬ"
   }
 ];
 
@@ -220,14 +220,14 @@ const filteredCatalogs = computed(() => {
 
 const firstBlock = computed(() => {
   return filteredCatalogs.value?.filter((item: AllCatalog) => {
-    return item?.name.toLowerCase() === 'ТИП РАБОТ'.toLocaleLowerCase();
+    return item?.name.toLowerCase() === "ТИП РАБОТ".toLocaleLowerCase();
   });
 });
 
 const secondOptions = [
-  'МАТЕРИАЛ РАБОЧЕЙ ПОВЕРХНОСТИ',
-  'ТИП ОБЪЕКТА',
-  'РАЗБАВИТЕЛЬ'
+  "МАТЕРИАЛ РАБОЧЕЙ ПОВЕРХНОСТИ",
+  "ТИП ОБЪЕКТА",
+  "РАЗБАВИТЕЛЬ"
 ];
 const secondBlock = computed(() => {
   return filteredCatalogs.value.filter((item) => {
@@ -237,7 +237,7 @@ const secondBlock = computed(() => {
 
 const thirdBlock = computed(() => {
   return filteredCatalogs.value.filter(
-    item => item?.name?.toLocaleLowerCase() === 'ТИП ЛКМ'.toLocaleLowerCase()
+    item => item?.name?.toLocaleLowerCase() === "ТИП ЛКМ".toLocaleLowerCase()
   );
 });
 
@@ -292,7 +292,7 @@ const updateCheckboxState = (itemId: string, subId: string, event: any) => {
   const subIndex = checkboxStates?.value[itemId]?.values?.findIndex(
     (val: { id: string }) => val.id === subId
   );
-  if (event === 'select-btn' && subIndex !== -1) {
+  if (event === "select-btn" && subIndex !== -1) {
     if (checkboxStates.value[itemId]?.values) {
       checkboxStates.value[itemId].values[subIndex].value = true;
       checkboxStates.value[itemId].values.forEach(

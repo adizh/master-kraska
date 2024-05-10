@@ -1,17 +1,17 @@
-import http from '@/composables/http';
+import http from "@/composables/http";
 
-export const useAuthStore = defineStore('authStore', {
+export const useAuthStore = defineStore("authStore", {
   state: () => ({
     user: {
-      firstName: '',
-      lastName: '',
-      address: '',
-      phone: '',
-      email: '',
-      image: '',
+      firstName: "",
+      lastName: "",
+      address: "",
+      phone: "",
+      email: "",
+      image: "",
       isNotificationsAllowed: false
     },
-    selectedLanguage: 'ru'
+    selectedLanguage: "ru"
   }),
   actions: {
     async fetchUser () {
@@ -20,7 +20,7 @@ export const useAuthStore = defineStore('authStore', {
           const response = await http(
             `/api/v1/User/get-user-by-id/${this.getUserId}`
           );
-          console.log('response fetchUser', response);
+          console.log("response fetchUser", response);
           this.user.firstName = response.data.firstName;
           this.user.lastName = response.data.lastName;
           this.user.address = response.data.address;
@@ -42,15 +42,15 @@ export const useAuthStore = defineStore('authStore', {
   getters: {
     getUserId: () => {
       if (process.client) {
-        return localStorage.getItem('userId')
-          ? localStorage.getItem('userId')
-          : '';
+        return localStorage.getItem("userId")
+          ? localStorage.getItem("userId")
+          : "";
       }
     },
 
     getSelectedLang (state) {
       if (process.client) {
-        const localLan = localStorage.getItem('selectedLanguage');
+        const localLan = localStorage.getItem("selectedLanguage");
         if (localLan) {
           return localLan;
         }

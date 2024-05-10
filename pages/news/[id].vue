@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import { News } from '@/types/News';
+import { News } from "@/types/News";
 const route = useRoute();
 const singleNew = ref({} as News);
 const activeNews = ref([] as News[]);
@@ -51,7 +51,7 @@ const fetchNew = async () => {
     const response = await http(`/api/v1/News/get-news/${route?.params?.id}`);
 
     if (response.status === 200) {
-      if (authStore?.getSelectedLang === 'kg') {
+      if (authStore?.getSelectedLang === "kg") {
         singleNew.value = {
           ...response.data,
           name: response.data?.nameKg,
@@ -74,10 +74,10 @@ const fetchNew = async () => {
 
 const fetchActiveNews = async () => {
   try {
-    const response = await http('/api/v1/News/get-active-news');
+    const response = await http("/api/v1/News/get-active-news");
     if (response.status === 200) {
       activeNews.value = response.data?.map((news: News) => {
-        if (authStore.getSelectedLang === 'kg') {
+        if (authStore.getSelectedLang === "kg") {
           return {
             ...news,
             name: news?.nameKg,
@@ -93,7 +93,7 @@ const fetchActiveNews = async () => {
           };
         }
       });
-      console.log('response acfive', response);
+      console.log("response acfive", response);
     }
   } catch (err) {
     console.log(err);

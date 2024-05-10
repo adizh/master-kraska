@@ -35,12 +35,12 @@ export interface LoginInputs {
 }
 
 export type PaymentTypes =
-  | 'Банковской картой'
-  | 'Наличными'
-  | 'MBank'
-  | 'MegaPay'
-  | 'Элкарт'
-  | '';
+  | "Банковской картой"
+  | "Наличными"
+  | "MBank"
+  | "MegaPay"
+  | "Элкарт"
+  | "";
 
 export type LanguageOptions = {
   name: string;

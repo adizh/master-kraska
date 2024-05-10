@@ -1,7 +1,7 @@
-import http from '@/composables/http';
-import { Product } from '@/types/Product';
+import http from "@/composables/http";
+import { Product } from "@/types/Product";
 
-export const useProductsSstore = defineStore('productsStore', {
+export const useProductsSstore = defineStore("productsStore", {
   state: () => ({
     allProducts: [] as Product[],
     specialProducts: [] as Product[],
@@ -16,7 +16,7 @@ export const useProductsSstore = defineStore('productsStore', {
     areFiltersLoading: false,
     product: {} as { product: Product; similarProducts: Product[] },
     filters: {
-      search: '',
+      search: "",
       categoryId: [] as string[],
       subdirectoryIds: [] as any,
       minPrice: 0,
@@ -29,12 +29,12 @@ export const useProductsSstore = defineStore('productsStore', {
   actions: {
     async fetchAllProducts () {
       try {
-        const response = await http('/api/v1/Product/get-all-products');
-        console.log('response fetchAllProducts', response);
+        const response = await http("/api/v1/Product/get-all-products");
+        console.log("response fetchAllProducts", response);
         const authStore = useAuthStore();
         if (response.status === 200) {
           const filtered = response.data.map((item: Product) => {
-            if (authStore.getSelectedLang === 'kg') {
+            if (authStore.getSelectedLang === "kg") {
               return {
                 ...item,
                 name: item?.nameKg,
@@ -61,10 +61,10 @@ export const useProductsSstore = defineStore('productsStore', {
           `/api/v1/Product/get-popular-products?type=${type}`
         );
         if (response.status === 200) {
-          if (type === 'popular') {
+          if (type === "popular") {
             this.popularProds = response.data?.popular?.map(
               (popItem: Product) => {
-                if (authStore.getSelectedLang === 'kg') {
+                if (authStore.getSelectedLang === "kg") {
                   return {
                     ...popItem,
                     name: popItem?.nameKg,
@@ -79,10 +79,10 @@ export const useProductsSstore = defineStore('productsStore', {
                 }
               }
             );
-          } else if (type === 'featured') {
+          } else if (type === "featured") {
             this.specialProducts = response.data?.featured?.map(
               (popItem: Product) => {
-                if (authStore.getSelectedLang === 'kg') {
+                if (authStore.getSelectedLang === "kg") {
                   return {
                     ...popItem,
                     name: popItem?.nameKg,
@@ -100,7 +100,7 @@ export const useProductsSstore = defineStore('productsStore', {
           } else {
             this.beneficialProds = response.data?.beneficial?.map(
               (popItem: Product) => {
-                if (authStore.getSelectedLang === 'kg') {
+                if (authStore.getSelectedLang === "kg") {
                   return {
                     ...popItem,
                     name: popItem?.nameKg,
@@ -131,7 +131,7 @@ export const useProductsSstore = defineStore('productsStore', {
         if (response.status === 200) {
           let filtered = [];
 
-          if (authStore.getSelectedLang === 'kg') {
+          if (authStore.getSelectedLang === "kg") {
             filtered = await {
               ...response.data,
               product: {
@@ -140,7 +140,7 @@ export const useProductsSstore = defineStore('productsStore', {
                 shortDescription: response.data?.product?.shortDescriptionKg,
                 description: response.data?.product?.descriptionKg.replace(
                   /<(\/?(p|br|h[1-5]|strong|img|a|div|span|li|ul|ol)( [^>]*)?)\/?>/g,
-                  ''
+                  ""
                 )
               },
               similarProducts: response.data.similarProducts?.map(
@@ -160,7 +160,7 @@ export const useProductsSstore = defineStore('productsStore', {
                 shortDescription: response.data?.product?.shortDescriptionRu,
                 description: response.data?.product?.descriptionRu?.replace(
                   /<(\/?(p|br|h[1-5]|strong|img|a|div|span|li|ul|ol)( [^>]*)?)\/?>/g,
-                  ''
+                  ""
                 )
               },
               similarProducts: response.data.similarProducts?.map(
@@ -184,7 +184,7 @@ export const useProductsSstore = defineStore('productsStore', {
       const authStore = useAuthStore();
       try {
         const response = await http.post(
-          '/api/v1/Bookmark/set-bookmarks',
+          "/api/v1/Bookmark/set-bookmarks",
           {},
           {
             params: {
@@ -194,7 +194,7 @@ export const useProductsSstore = defineStore('productsStore', {
           }
         );
         if (response.status === 200) {
-          useNotif('success', 'Успешно обновлено', 'Успех');
+          useNotif("success", "Успешно обновлено", "Успех");
         }
       } catch (err) {
         console.log(err);
@@ -224,21 +224,21 @@ export const useProductsSstore = defineStore('productsStore', {
       this.areFiltersLoading = true;
       const subDirs =
         this.filters.subdirectoryIds?.length > 0
-          ? this.filters.subdirectoryIds?.join(',')
+          ? this.filters.subdirectoryIds?.join(",")
           : null;
 
       const allBrands =
         this.filters?.brandId !== null && this.filters?.brandId?.length > 0
-          ? this.filters.brandId?.join(',')
+          ? this.filters.brandId?.join(",")
           : null;
 
       const categoriesId =
         this.filters?.categoryId?.length > 0 &&
         this.filters?.categoryId !== null
-          ? this.filters?.categoryId.join(',')
+          ? this.filters?.categoryId.join(",")
           : null;
 
-      console.log('categoriesId', categoriesId);
+      console.log("categoriesId", categoriesId);
       const query = {
         productName: this.filters.search || prodName,
         categoryId: categoriesId,
@@ -252,15 +252,15 @@ export const useProductsSstore = defineStore('productsStore', {
       const authStore = useAuthStore();
       try {
         const response = await http.get(
-          '/api/v1/Product/get-all-products-pagination',
+          "/api/v1/Product/get-all-products-pagination",
           { params: query }
         );
-        console.log('response filterProducts', response);
+        console.log("response filterProducts", response);
         if (response.status === 200) {
           this.filterProductTotal.totalItems = response.data.totalItems;
           this.filterProductTotal.totalPages = response.data.totalPages;
           const filtered = response.data.items?.map((item: Product) => {
-            if (authStore.getSelectedLang === 'kg') {
+            if (authStore.getSelectedLang === "kg") {
               return {
                 ...item,
                 name: item?.nameKg,
@@ -293,13 +293,13 @@ export const useProductsSstore = defineStore('productsStore', {
       const authStore = useAuthStore();
 
       try {
-        const response = await http('/api/v1/Bookmark/get-bookmarks', {
+        const response = await http("/api/v1/Bookmark/get-bookmarks", {
           params: {
             userId: authStore.getUserId,
             objectId: productId
           }
         });
-        console.log('getBookmarks id', response);
+        console.log("getBookmarks id", response);
 
         if (response.status === 200) {
           this.isProductBookmarked = response.data.message;

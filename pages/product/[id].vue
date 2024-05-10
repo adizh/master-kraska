@@ -41,7 +41,7 @@ onMounted(async () => {
   }, 1000);
 });
 
-console.log('getProduct', getProduct);
+console.log("getProduct", getProduct);
 
 watch(
   () => id,

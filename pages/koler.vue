@@ -83,14 +83,14 @@
 </template>
 
 <script setup lang="ts">
-import { Brands } from '~/types/Brands';
-import { Tinting } from '@/types/Tinting';
+import { Brands } from "~/types/Brands";
+import { Tinting } from "@/types/Tinting";
 
 const currentBrandsColors = ref<Tinting[]>([]);
 const allTingings = ref<Tinting[]>([]);
 const activeBrand = ref<Tinting[]>([]);
 
-const tintingSearch = ref('');
+const tintingSearch = ref("");
 const currentPage = ref(1);
 const pageSize = ref(27);
 const totalPages = ref(10);
@@ -133,8 +133,8 @@ const fetchBrandsId = async (id: string) => {
 
 const fetchAllData = async (ids: string[]) => {
   const idsNull = [
-    '902dea30-e9a6-4d6c-accf-97d4590d9852',
-    '8b9f00af-1ff0-400e-be67-3f4753c89970'
+    "902dea30-e9a6-4d6c-accf-97d4590d9852",
+    "8b9f00af-1ff0-400e-be67-3f4753c89970"
   ];
   const filtered = ids.filter(item => !idsNull.includes(item));
   const results = [];
@@ -159,7 +159,7 @@ const fetchTintingsByBrand = async (brand: Brands) => {
     const response = await http(
       `/api/v1/Tinting/get-all-tintings-pagination?page=${currentPage.value}&pageSize=${pageSize?.value}&brandId=${brand?.id}&code=${tintingSearch?.value}`
     );
-    console.log('response fetchTintingsByBrand', response);
+    console.log("response fetchTintingsByBrand", response);
     if (response.status === 200) {
       activeBrand.value = response.data.items;
 
@@ -172,12 +172,12 @@ const fetchTintingsByBrand = async (brand: Brands) => {
 
 const fetchAllTintings = async () => {
   try {
-    const response = await http('/api/v1/Tinting/get-all-tintings');
+    const response = await http("/api/v1/Tinting/get-all-tintings");
     // const response = await http(`/api/v1/Tinting/get-all-tintings-pagination?page=${currentPage.value}&pageSize=${pageSize?.value}&brandId=${selectedBrand?.value.id}`);
     if (response.status === 200) {
       allTingings.value = response.data;
 
-      console.log('response data fetchAllTintings', response.data);
+      console.log("response data fetchAllTintings", response.data);
       const uniqueIds = response.data.reduce((ids: any, obj: Tinting) => {
         if (!ids.includes(obj?.brandId)) {
           ids.push(obj?.brandId);
@@ -197,7 +197,7 @@ const chooseBrand = (value: Brands) => {
   currentBrandsColors.value = allTingings.value?.filter(
     (item: Tinting) => item?.brandId === selectedBrand?.value.id
   );
-  tintingSearch.value = '';
+  tintingSearch.value = "";
   fetchTintingsByBrand(selectedBrand.value);
 };
 </script>

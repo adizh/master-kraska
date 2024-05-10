@@ -1,157 +1,153 @@
 <template>
-  <ClientOnly>
-    <div class="item-page-header">
-      <div class="left">
-        <img :src="productImage" alt="product" />
-      </div>
-      <div class="middle">
-        <div class="middle-header">
-          {{ getProduct?.product?.name }}
+  <div>
+    <ClientOnly>
+      <div class="item-page-header">
+        <div class="left">
+          <img :src="productImage" alt="product">
         </div>
-        <div>
-          <p
-            class="each-block-info-col flex flex-column align-items-start gap-2"
-          >
-            <span>
-              {{ $t("storeMark") }}
-            </span>
-            <img :src="productBrand?.logo" alt="brand" class="brand-logo" />
-          </p>
-        </div>
-        <div class="middle-review">
-          <span class="each-block-info-col">{{ $t("rating") }}</span>
-          <div class="middle-rating">
-            <span class="middle-review-number">{{
-              getProduct?.product?.rating?.toFixed(2)
-            }}</span>
-            <Rating
-              v-model="ratingValue"
-              :cancel="false"
-              :value="ratingValue"
-              disabled
-            />
-
-            <a class="middle-review-text" href="#product-reviews">{{
-              $t("reviews")
-            }}</a>
+        <div class="middle">
+          <div class="middle-header">
+            {{ getProduct?.product?.name }}
           </div>
-        </div>
-
-        <div class="middle-volume">
-          <span class="each-block-info-col">{{ $t("volume") }}</span>
-
-          <div
-            class="middle-volume-buttons"
-            v-if="getProduct?.product?.variants"
-          >
-            <button
-              v-for="(btn, index) in getProduct?.product?.variants"
-              :key="btn?.id"
-              :class="{ 'active-btn': volumeBtn === btn?.size }"
-              class="volume-btn"
-              @click="selectVolumeSize(btn, index)"
+          <div>
+            <p
+              class="each-block-info-col flex flex-column align-items-start gap-2"
             >
-              {{ btn?.size }}
+              <span>
+                {{ $t("storeMark") }}
+              </span>
+              <img :src="productBrand?.logo" alt="brand" class="brand-logo" />
+            </p>
+          </div>
+          <div class="middle-review">
+            <span class="each-block-info-col">{{ $t("rating") }}</span>
+            <div class="middle-rating">
+              <span class="middle-review-number">{{
+                getProduct?.product?.rating?.toFixed(2)
+              }}</span>
+              <Rating
+                v-model="ratingValue"
+                :cancel="false"
+                :value="ratingValue"
+                disabled
+              />
+
+              <a class="middle-review-text" href="#product-reviews">{{
+                $t("reviews")
+              }}</a>
+            </div>
+          </div>
+
+          <div class="middle-volume">
+            <span class="each-block-info-col">{{ $t("volume") }}</span>
+            <div class="middle-volume-buttons">
+              <button
+                v-for="(btn, index) in getProduct?.product?.variants"
+                :key="btn?.id"
+                :class="{ 'active-btn': volumeBtn === btn?.size }"
+                class="volume-btn"
+                @click="selectVolumeSize(btn, index)"
+              >
+                {{ btn?.size }} 
+              </button>
+             <button class="volume-btn" :class="{ 'active-btn': volumeBtn === getProduct?.product?.size }" @click="selectedDefaultVolume(getProduct?.product?.size)">{{ getProduct?.product?.size }}</button>
+            </div>
+          </div>
+
+          <div class="middle-koler">
+            <span class="each-block-info-col">{{ $t("baseTinting") }}</span>
+            <button class="middle-koler-btn">
+              А (белая, {{ $t("lightTinting") }})
             </button>
-            <!-- <span  v-if="volumeBtn === '10'" class="remove-volume" @click="()=>removeVolume()">X</span> -->
+          </div>
+          <div>
+            <span class="each-block-info-col">
+              {{ $t("consumption") }}
+            </span>
+            <p>{{ getProduct?.product?.consumption }}</p>
+          </div>
+          <div>
+            <span class="each-block-info-col">{{ $t("parameters") }} </span>
+            <div class="middle-parameters">
+              <button @click="toggle">
+                <span>{{ $t("count") }}</span>
+                <img src="../../assets/icons/ion_calculator-outline.svg" />
+              </button>
+            </div>
           </div>
         </div>
+        <div class="right">
+          <div class="header">
+            <span>{{ $t("prices") }}</span>
+            <UIBookmarks :product="getProduct?.product" />
+          </div>
 
-        <div class="middle-koler">
-          <span class="each-block-info-col">{{ $t("baseTinting") }}</span>
-          <button class="middle-koler-btn">
-            А (белая, {{ $t("lightTinting") }})
-          </button>
-        </div>
-        <div>
-          <span class="each-block-info-col">
-            {{ $t("consumption") }}
-          </span>
-          <p>{{ getProduct?.product?.consumption }}</p>
-        </div>
-        <div>
-          <span class="each-block-info-col">{{ $t("parameters") }} </span>
-          <div class="middle-parameters">
-            <button @click="toggle">
-              <span>{{ $t("count") }}</span>
-              <img src="../../assets/icons/ion_calculator-outline.svg" />
+          <div class="numbers">
+            <p>
+              <span>{{ $t("piece") }}</span>
+              <span class="numbers-price">{{ selectedProductPrice }} сом</span>
+            </p>
+            <p><span>л</span>500 сом</p>
+            <p><span>м2</span>50 сом</p>
+          </div>
+
+          <div class="count">
+            <span class="each-block-info-col">{{ $t("quantity") }}</span>
+            <button class="prod-count-buttons">
+              <span @click="decreaseCount">-</span>
+              <span>{{ countToBuy }}</span>
+              <span @click="increaseCount">+</span>
             </button>
+          </div>
+
+          <div class="count">
+            <span class="each-block-info-col">{{ $t("sum") }}</span>
+            {{ selectedProductPrice * countToBuy }} сом
+          </div>
+
+          <div class="buy-btns">
+            <button @click="addToCart">
+              {{ isProductExistsInCart ? $t("addToCart") : $t("addedToCart") }}
+            </button>
+            <button @click.capture="buyNow">{{ $t("buyNow") }}</button>
           </div>
         </div>
       </div>
-      <div class="right">
-        <div class="header">
-          <span>{{ $t("prices") }}</span>
-          <UIBookmarks :product="getProduct?.product" />
-        </div>
+    </ClientOnly>
 
-        <div class="numbers">
-          <p>
-            <span>{{ $t("piece") }}</span>
-            <span class="numbers-price">{{ selectedProductPrice }} сом</span>
-          </p>
-          <p><span>л</span>500 сом</p>
-          <p><span>м2</span>50 сом</p>
-        </div>
-
-        <div class="count">
-          <span class="each-block-info-col">{{ $t("quantity") }}</span>
-          <button class="prod-count-buttons">
-            <span @click="decreaseCount">-</span>
-            <span>{{ countToBuy }}</span>
-            <span @click="increaseCount">+</span>
-          </button>
-        </div>
-
-        <div class="count">
-          <span class="each-block-info-col">{{ $t("sum") }}</span>
-          {{ selectedProductPrice * countToBuy }} сом
-        </div>
-
-        <div class="buy-btns">
-          <button @click="addToCart">
-            {{ isProductExistsInCart ? $t("addToCart") : $t("addedToCart") }}
-          </button>
-          <button @click.capture="buyNow">{{ $t("buyNow") }}</button>
-        </div>
+    <OverlayPanel ref="countOverlay" class="countOverlay">
+      <div class="count-overlay">
+        <span class="header">{{ $t("count") }}</span>
+        <p class="count-overlay-info">{{ $t("productCountInfo") }}</p>
       </div>
-    </div>
-  </ClientOnly>
-
-  <OverlayPanel ref="countOverlay" class="countOverlay">
-    <div class="count-overlay">
-      <span class="header">{{ $t("count") }}</span>
-      <p class="count-overlay-info">{{ $t("productCountInfo") }}</p>
-    </div>
-  </OverlayPanel>
-  <Dialog
-    :visible="isProfileOpen"
-    modal
-    :style="{ width: '450px', padding: '10px 40px 40px 40px' }"
-  >
-    <AuthModal @closeModal="isProfileOpen = false" />
-  </Dialog>
-  <Dialog
-    :visible="isConfirmOpen"
-    modal
-    :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
-    header=" "
-  >
-    <ConfirmPay
-      @cancel="isConfirmOpen = false"
-      @confirm="confirmCreatePay"
-      :title="$t('confirmOrderText')"
-    />
-  </Dialog>
+    </OverlayPanel>
+    <Dialog
+      v-model:visible="isProfileOpen"
+      modal
+      :style="{ width: '450px', padding: '10px 40px 40px 40px' }"
+    >
+      <AuthModal @closeModal="() => (isProfileOpen = false)" />
+    </Dialog>
+    <Dialog
+      v-model:visible="isConfirmOpen"
+      modal
+      :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
+      header=" "
+    >
+      <ConfirmPay
+        @cancel="isConfirmOpen = false"
+        @confirm="confirmCreatePay"
+        :title="$t('confirmOrderText')"
+      />
+    </Dialog>
+  </div>
 </template>
 
 <script setup lang="ts">
 import Rating from "primevue/rating";
 import { ExtendedProduct } from "@/types/Product";
 import { Brands } from "~/types/Brands";
-
 const isConfirmOpen = ref(false);
-
 const props = defineProps<{
   productId: string;
 }>();
@@ -165,13 +161,10 @@ const productStore = useProductsSstore();
 const store = useCartStore();
 const productBrand = ref({} as Brands);
 const selectedProductPrice = ref(0);
-const length = ref(0);
-const width = ref(0);
+
 const isProductBookmarked = ref(false);
 const isProfileOpen = ref(false);
 const { getProduct } = storeToRefs(productStore);
-
-const sumHeight = computed(() => length.value * width.value);
 
 const { t } = useI18n();
 
@@ -198,6 +191,18 @@ const selectVolumeSize = (value: any, index: number) => {
     }
   }
 };
+
+
+
+const selectedDefaultVolume=(value:string)=>{
+  if(  volumeBtn.value===value){
+    removeVolume()
+  }else{
+    volumeBtn.value=value;
+  selectedProductPrice.value =getProduct.value?.product?.price
+  }
+  
+}
 
 const decreaseCount = () => {
   if (countToBuy.value > 1) {
@@ -294,15 +299,13 @@ const { data: getBookmarkItem } = useApi("/api/v1/Bookmark/get-bookmarks", {
   method: "get",
   query: {
     userId: authStore.getUserId,
-    objectId: getProduct.value?.product?.id,
-  },
+    objectId: getProduct.value?.product?.id
+  }
 }) as any;
 
 const isProductExistsInCart = computed(() => {
-  const index = store.getAllCart?.findIndex(
-    (item) => item?.id === getProduct.value?.product?.id,
-  );
-  return index !== -1 ? false : true;
+  const index = store.getAllCart?.findIndex((item) => item?.id === getProduct.value?.product?.id)
+  return index !== -1
 });
 
 const leastSmallAmount = ref(0);
@@ -336,6 +339,7 @@ onMounted(async () => {
   }
   selectedProductPrice.value = getProduct.value?.product?.price;
   totalPrice.value = countToBuy.value * selectedProductPrice.value;
+  volumeBtn.value=getProduct.value?.product?.size;
 });
 </script>
 

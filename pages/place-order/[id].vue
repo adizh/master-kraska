@@ -114,7 +114,7 @@
     </div>
 
     <Dialog
-      :visible="isMagVisible"
+      v-model:visible="isMagVisible"
       modal
       :style="{ padding: '10px 20px' }"
       class="dialog-mag"
@@ -155,7 +155,7 @@
     </Dialog>
 
     <Dialog
-      :visible="isWarningOpen"
+      v-model:visible="isWarningOpen"
       modal
       header=" "
       :style="{ width: '30rem', padding: '20px 40px 50px 20px' }"
@@ -191,8 +191,8 @@
 </template>
 
 <script setup lang="ts">
-import { AddressList } from '~/types/Items';
-import { OrderItem, UserOrder } from '~/types/Order';
+import { AddressList } from "~/types/Items";
+import { OrderItem, UserOrder } from "~/types/Order";
 
 definePageMeta({
   layout: false
@@ -207,12 +207,12 @@ const selectedOrderPlacement = ref(1);
 const currentOrder = ref({} as OrderItem);
 
 const pickupErr = ref({
-  store: '',
-  payMethod: ''
+  store: "",
+  payMethod: ""
 });
 const authStore = useAuthStore();
 const method = ref(1);
-const selectedMarket = ref({ name: t('selectStore') } as AddressList);
+const selectedMarket = ref({ name: t("selectStore") } as AddressList);
 
 // const isMbnankOpen = ref(false);
 const isPaymentOpen = ref(false);
@@ -220,17 +220,17 @@ const isPaymentOpen = ref(false);
 const isMagVisible = ref(false);
 const payStore = usePayStore();
 const isWarningOpen = ref(false);
-const pickUpPay = ref('');
+const pickUpPay = ref("");
 const orderStore = useOrderStore();
 
 const closePayModal = () => {
   isWarningOpen.value = true;
 };
 const choosePayMethod = (value: string) => {
-  console.log('value', value);
+  console.log("value", value);
   pickUpPay.value = value;
 
-  if (value === t('cash')) {
+  if (value === t("cash")) {
     sendOrderCash();
   }
 };
@@ -240,7 +240,7 @@ const sendOrderCash = async () => {
   try {
     const body = {
       orderId: route.params?.id,
-      shopId: '',
+      shopId: "",
       name: orderStore.deliveryForm.name.value,
       lastName: orderStore.deliveryForm.lastName.value,
       address: orderStore.deliveryForm.address.value,
@@ -251,12 +251,12 @@ const sendOrderCash = async () => {
       deliveryType: 1
     };
     const result = await orderStore.sendOrder(body, 1);
-    console.log('send order deliver in cash', result);
+    console.log("send order deliver in cash", result);
     if (result?.data?.code === 200) {
-      useNotif('success', t('orderSent'), t('success'));
+      useNotif("success", t("orderSent"), t("success"));
       payStore.setExit(true);
-      localStorage.removeItem('cart');
-      return navigateTo('/');
+      localStorage.removeItem("cart");
+      return navigateTo("/");
     }
   } catch (err) {
     console.log(err);
@@ -270,18 +270,18 @@ const getOrderId = async () => {
     const response = await http(
       `/api/v1/Order/get-order-id/${route?.params?.id}`
     );
-    console.log('response', response);
+    console.log("response", response);
     if (response.status === 200) {
       currentOrder.value = {
         ...response.data,
         items: response.data?.items?.map((item: UserOrder) => {
-          if (authStore.getSelectedLang === 'kg') {
+          if (authStore.getSelectedLang === "kg") {
             return {
               ...item,
               productName: item?.productNameKg,
               productDescription: item?.productDescriptionKg.replace(
                 /<(\/?(p|br|h[1-5]|strong|img|a|div|span|li|ul|ol)( [^>]*)?)\/?>/g,
-                ''
+                ""
               )
             };
           } else {
@@ -290,7 +290,7 @@ const getOrderId = async () => {
               productName: item?.productNameRu,
               productDescription: item?.productDescriptionRu?.replace(
                 /<(\/?(p|br|h[1-5]|strong|img|a|div|span|li|ul|ol)( [^>]*)?)\/?>/g,
-                ''
+                ""
               )
             };
           }
@@ -298,7 +298,7 @@ const getOrderId = async () => {
       };
     }
 
-    console.log('currentOrder', currentOrder);
+    console.log("currentOrder", currentOrder);
   } catch (err) {
     console.log(err);
   }
@@ -309,12 +309,12 @@ const deleteOrder = async () => {
     const response = await http.delete(
       `/api/v1/Order/delete-order?orderNumber=${cartStore.getCurrentOrder?.orderNumber}`
     );
-    console.log('delete order response', response);
+    console.log("delete order response", response);
     if (response.status === 200) {
-      useNotif('success', t('orderCancelled'), t('success'));
+      useNotif("success", t("orderCancelled"), t("success"));
       isWarningOpen.value = false;
       isPaymentOpen.value = false;
-      return navigateTo('/');
+      return navigateTo("/");
     }
   } catch (err) {
     console.log(err);
@@ -333,7 +333,7 @@ const selMethod = (type: number) => {
 const selectAddress = (item: AddressList) => {
   selectedMarket.value = item;
   isMagVisible.value = false;
-  pickupErr.value.store = '';
+  pickupErr.value.store = "";
 };
 const resultPicUp = ref();
 
@@ -347,7 +347,7 @@ const submitOrder = async () => {
         name: authStore.getUser?.firstName,
         lastName: authStore.getUser?.lastName,
         address: authStore.getUser?.address,
-        city: '',
+        city: "",
         phone: authStore?.getUser?.phone,
         email: authStore.getUser?.email,
         comment: orderStore.delForm.comment?.value,
@@ -358,18 +358,18 @@ const submitOrder = async () => {
 
       if (resultPicUp.value.data.code === 200) {
         payStore.setExit(true);
-        localStorage.removeItem('cart');
-        return navigateTo('/');
+        localStorage.removeItem("cart");
+        return navigateTo("/");
       }
     } else if (!selectedMarket?.value?.id) {
-      pickupErr.value.store = t('selectStore');
+      pickupErr.value.store = t("selectStore");
     }
   } else {
     for (const fieldName in orderStore.delForm) {
       const field =
         orderStore.delForm[fieldName as keyof typeof orderStore.delForm];
 
-      if ('type' in field) {
+      if ("type" in field) {
         const validationType = field.type;
         orderStore.handleValues(
           fieldName as keyof typeof orderStore.delForm,
@@ -378,14 +378,14 @@ const submitOrder = async () => {
       }
     }
     const hasError = Object.values(orderStore.deliveryForm).some(
-      input => input.error !== ''
+      input => input.error !== ""
     );
 
     if (!hasError) {
       const body = {
         orderId: route.params?.id,
 
-        shopId: '',
+        shopId: "",
 
         name: orderStore.deliveryForm.name.value,
 
@@ -403,7 +403,7 @@ const submitOrder = async () => {
         deliveryType: 1
       };
       const result = await orderStore.sendOrder(body, 1);
-      console.log('result in submitOrder', result);
+      console.log("result in submitOrder", result);
       if (result?.status === 200) {
         isPaymentOpen.value = true;
       }
@@ -412,8 +412,8 @@ const submitOrder = async () => {
 };
 
 onMounted(() => {
-  const section = document.querySelector('.footer-section') as HTMLElement;
-  section.style.display = 'none';
+  const section = document.querySelector(".footer-section") as HTMLElement;
+  section.style.display = "none";
   orderStore.fetchOrderById(route.params?.id as string);
   authStore.fetchUser();
   orderStore?.fetchAllShops();
@@ -430,7 +430,7 @@ watch(
 onBeforeRouteLeave((_, __, next) => {
   if (!payStore.getExit) {
     const answer = window.confirm(
-      'Вы уверены, что хотите выйти? Заказ будет отменен в случае выхода'
+      "Вы уверены, что хотите выйти? Заказ будет отменен в случае выхода"
     );
     if (answer) {
       deleteOrder();

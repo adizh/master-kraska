@@ -73,8 +73,8 @@
 </template>
 
 <script setup lang="ts">
-type VisibleMethod = 'vertical' | 'horizontal';
-const visibleMethod = ref<VisibleMethod>('vertical');
+type VisibleMethod = "vertical" | "horizontal";
+const visibleMethod = ref<VisibleMethod>("vertical");
 
 const route = useRoute();
 const id = route.params.id;

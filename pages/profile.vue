@@ -98,7 +98,7 @@
             </template>
           </NoContent>
           <Dialog
-            :visible="isConfirmOpen"
+            v-model:visible="isConfirmOpen"
             modal
             :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
             header=" "
@@ -151,7 +151,7 @@
       </div>
 
       <Dialog
-        :visible="isLogoutOpen"
+        v-model:visible="isLogoutOpen"
         modal
         header=" "
         :style="{ padding: '20px 40px 50px 20px' }"
@@ -176,7 +176,7 @@
       </Dialog>
 
       <Dialog
-        :visible="isDeleteOpen"
+        v-model:visible="isDeleteOpen"
         modal
         :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
         header=" "
@@ -192,8 +192,8 @@
 </template>
 
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n';
-import { Product, ExtendedProduct } from '~/types/Product';
+import { useI18n } from "vue-i18n";
+import { Product, ExtendedProduct } from "~/types/Product";
 const { t } = useI18n();
 
 const isLogoutOpen = ref(false);
@@ -202,12 +202,12 @@ const isConfirmOpen = ref(false);
 const userBookmarks = ref<Product[]>([]);
 let selectedTab: Ref<number>;
 const tabsOptions = [
-  t('personalInfo'),
-  t('ordersHistory'),
-  t('cart'),
-  t('myReviews'),
-  t('notificationSettings'),
-  t('boormarksProfile')
+  t("personalInfo"),
+  t("ordersHistory"),
+  t("cart"),
+  t("myReviews"),
+  t("notificationSettings"),
+  t("boormarksProfile")
 ];
 const store = useAuthStore();
 const productsStore = useProductsSstore();
@@ -221,11 +221,11 @@ const openLogout = () => {
 
 if (process.client) {
   if (
-    localStorage.getItem('selectedTab') &&
-    localStorage.getItem('selectedTab') !== null
+    localStorage.getItem("selectedTab") &&
+    localStorage.getItem("selectedTab") !== null
   ) {
     selectedTab = ref<number>(
-      parseInt(localStorage.getItem('selectedTab') as string)
+      parseInt(localStorage.getItem("selectedTab") as string)
     );
   } else {
     selectedTab = ref<number>(1);
@@ -238,10 +238,10 @@ const createOrder = () => {
 };
 
 const confirmedLogout = () => {
-  localStorage.removeItem('userId');
-  localStorage.removeItem('token');
+  localStorage.removeItem("userId");
+  localStorage.removeItem("token");
 
-  localStorage.removeItem('cart');
+  localStorage.removeItem("cart");
   window.location.reload();
 };
 
@@ -252,7 +252,7 @@ const selectTab = (tab: number) => {
   } else if (tab === 5) {
     fetchUserBookmarks();
   }
-  localStorage.setItem('selectedTab', selectedTab.value.toString());
+  localStorage.setItem("selectedTab", selectedTab.value.toString());
 };
 
 const fetchUserBookmarks = async () => {
@@ -260,10 +260,10 @@ const fetchUserBookmarks = async () => {
     const response = await http.get(
       `/api/v1/Bookmark/get-bookmark-by-user-id/${store.getUserId}`
     );
-    console.log('response fetchUserBookmarks', response);
+    console.log("response fetchUserBookmarks", response);
     if (response.status === 200) {
       const filtered = response.data.products.map((item: Product) => {
-        if (store.getSelectedLang === 'kg') {
+        if (store.getSelectedLang === "kg") {
           return {
             ...item,
             name: item?.nameKg,
@@ -310,7 +310,7 @@ const totalOfProdTotals = computed(() => {
   return cartStore.getAllCart.reduce((acc, rec) => acc + rec?.count, 0);
 });
 onUnmounted(() => {
-  localStorage.removeItem('selectedTab');
+  localStorage.removeItem("selectedTab");
 });
 
 onMounted(() => {
@@ -318,11 +318,11 @@ onMounted(() => {
   fetchUserBookmarks();
 
   if (!store.getUserId) {
-    navigateTo('/');
+    navigateTo("/");
   }
 });
 onBeforeRouteLeave(() => {
-  localStorage.removeItem('selectedTab');
+  localStorage.removeItem("selectedTab");
 });
 </script>
 

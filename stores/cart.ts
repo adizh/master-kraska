@@ -1,7 +1,7 @@
-import { ExtendedProduct } from '@/types/Product';
-import { OrderItem } from '~/types/Order';
+import { ExtendedProduct } from "@/types/Product";
+import { OrderItem } from "~/types/Order";
 
-export const useCartStore = defineStore('cartStore', {
+export const useCartStore = defineStore("cartStore", {
   state: () => ({
     cart: [] as ExtendedProduct[],
     countToBuy: 1,
@@ -13,7 +13,7 @@ export const useCartStore = defineStore('cartStore', {
 
       if (prodIndex === -1) {
         this.cart.push(prod);
-        localStorage.setItem('cart', JSON.stringify(this.cart));
+        localStorage.setItem("cart", JSON.stringify(this.cart));
       }
     },
 
@@ -21,7 +21,7 @@ export const useCartStore = defineStore('cartStore', {
       const index = this.cart.findIndex(item => item.id === updatedItem.id);
       if (index !== -1) {
         this.cart.splice(index, 1, updatedItem);
-        localStorage.setItem('cart', JSON.stringify(this.cart));
+        localStorage.setItem("cart", JSON.stringify(this.cart));
       }
     },
     decreaseCount (item: ExtendedProduct) {
@@ -30,7 +30,7 @@ export const useCartStore = defineStore('cartStore', {
         updatedItem.count--;
         updatedItem.totalProdSum = updatedItem.count * updatedItem.initPrice;
 
-        console.log('decreaseCount updatedItem', updatedItem);
+        console.log("decreaseCount updatedItem", updatedItem);
         this.updateCartItem(updatedItem);
       }
     },
@@ -50,11 +50,11 @@ export const useCartStore = defineStore('cartStore', {
 
     removeFromCart (item: ExtendedProduct) {
       this.cart = this.cart.filter(value => value.id !== item.id);
-      localStorage.setItem('cart', JSON.stringify(this.cart));
+      localStorage.setItem("cart", JSON.stringify(this.cart));
     },
     saveNewCart () {
-      localStorage.setItem('cart', JSON.stringify(this.cart));
-      useNotif('success', 'Изменения сохранены', 'Успешно');
+      localStorage.setItem("cart", JSON.stringify(this.cart));
+      useNotif("success", "Изменения сохранены", "Успешно");
     },
 
     setCurrentOrder (item: OrderItem) {
@@ -64,7 +64,7 @@ export const useCartStore = defineStore('cartStore', {
   getters: {
     getAllCart (state) {
       if (process.client) {
-        const items = localStorage.getItem('cart');
+        const items = localStorage.getItem("cart");
         if (items) {
           state.cart = JSON.parse(items);
         }

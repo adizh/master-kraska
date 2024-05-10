@@ -1,9 +1,9 @@
-import ru from './ru.json';
-import kg from './kg-2.json';
+import ru from "./ru.json";
+import kg from "./kg-2.json";
 
-let lan = 'ru';
+let lan = "ru";
 if (process.client) {
-  const localLan = localStorage.getItem('selectedLanguage');
+  const localLan = localStorage.getItem("selectedLanguage");
   if (localLan) {
     lan = localLan;
   }
