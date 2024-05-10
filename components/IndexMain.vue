@@ -3,14 +3,12 @@
 
     <Swiper
     :slides-per-view="1"
-    :navigation="true"
-    :loop="true"
-    :modules="[SwiperNavigation,SwiperAutoplay,SwiperEffectCreative]"
+    :modules="[SwiperNavigation,SwiperEffectCreative,SwiperAutoplay]"
     :effect="'creative'"
     :creative-effect="{
       prev: {
-        shadow: false,
-        translate: ['-20%', 0, -1],
+        shadow: true,
+        translate: [0, 0, -400],
       },
       next: {
         translate: ['100%', 0, 0],
@@ -337,15 +335,11 @@ const prevSlide = () => {
   width: 100%;
   img {
     width: 100%;
-    height:573px;
   }
 }
 .slider-wrapper {
-  background: $main-white;
   border-radius: 10px;
   position: relative;
-  height:573px;
-
 }
 
 .slider-wrapper .controls-circle span.active-control {
