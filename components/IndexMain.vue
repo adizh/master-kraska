@@ -4,7 +4,18 @@
     <Swiper
     :slides-per-view="1"
     :navigation="true"
-    :modules="[SwiperNavigation]"
+    :loop="true"
+    :modules="[SwiperNavigation,SwiperAutoplay,SwiperEffectCreative]"
+    :effect="'creative'"
+    :creative-effect="{
+      prev: {
+        shadow: false,
+        translate: ['-20%', 0, -1],
+      },
+      next: {
+        translate: ['100%', 0, 0],
+      },
+    }"
     :autoplay="{
       delay: 2000
     }"

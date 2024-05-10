@@ -128,7 +128,7 @@
 
 <style scoped lang="scss">
 section{
-  padding:20px 4rem;
+  padding:0 4rem;
 }
 %each-li {
   list-style: disc !important;
@@ -205,7 +205,6 @@ h1{
   margin:0 auto;
   background-position: center center;
   width: 100%;
-  height:520px;
   @include flex(column, center, start);
   padding: 0 0 150px 50px;
   margin-bottom: 80px;
@@ -231,6 +230,10 @@ h1{
 .list {
   max-width: 600px;
   padding-left: 20px;
+}
+
+@media (min-width:1400px){
+
 }
 
 @media (max-width: 768px) {
