@@ -36,9 +36,16 @@
     <div class="product-infomation">
       <span>{{ $t("consumption") }}: {{ product?.consumption }}</span>
       <span>{{ $t("dryingTime") }}: {{ product?.dryingTime }}</span>
-      <span>{{ $t("volume") }}: {{ product?.size }}</span>
+      <span class="volume">{{ $t("volume") }}: {{ product?.size }}л
+      <span v-for="vars in product?.variants?.slice(0,2)" :key="vars?.id"> - {{ vars?.size }}л</span>
+        </span>
     </div>
 
+    <div class="item-add-btns">
+      <button @click.stop="removeCount">-</button>
+      <span>{{ countToBuy }}</span>
+      <button @click.stop="increaseCount">+</button>
+    </div>
     <button class="pink-button prod-price" @click.stop="addCart">
       {{
         !isItemHovered
@@ -48,11 +55,7 @@
             : $t("addedToCart")
       }}
     </button>
-    <div class="item-add-btns">
-      <button @click.stop="removeCount">-</button>
-      <span>{{ countToBuy }}</span>
-      <button @click.stop="increaseCount">+</button>
-    </div>
+  
   </div>
 </template>
 
@@ -76,7 +79,6 @@ const isProductExistsInCart = computed(() => {
 const isItemHovered = ref(false);
 
 const itemHover = () => {
-  console.log("itemHover");
   isItemHovered.value = true;
 };
 const itemHoverLeave = () => {
@@ -172,6 +174,8 @@ onMounted(async () => {
   await productsStore.getBookmarks(props?.product?.id);
 
   isProductBookmarked.value = productsStore?.getProductBookmarked;
+
+
 });
 </script>
 
@@ -213,6 +217,7 @@ onMounted(async () => {
 }
 
 .item-block {
+
   transition: 0.5s ease all;
   border-radius: 10px;
   @include flex(column, start, start);
@@ -252,10 +257,9 @@ onMounted(async () => {
   width: 28%;
   padding: 20px 32px;
   overflow: hidden;
-  height: 480px;
-
   .prod-img {
     width: 120px;
+    margin:0 auto;
     height: 120px;
   }
 
@@ -272,6 +276,7 @@ onMounted(async () => {
     height: 100%;
     line-height: 20px;
     margin-bottom: 10px;
+    height:60px;
   }
 
   &-info {

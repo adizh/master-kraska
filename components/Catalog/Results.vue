@@ -29,10 +29,9 @@
   <div
     v-else-if="
       !productStore.getLoadingState &&
-      !productStore?.getFilteredProducts?.length
-    "
+      !productStore?.getFilteredProducts?.length"
   >
-    {{ $t("noData") }}
+    {{ $t("noDataCatalogSearch") }}
   </div>
   <div v-else class="text-center">
     <ProgressSpinner />

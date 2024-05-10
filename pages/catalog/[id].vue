@@ -93,6 +93,7 @@ const productStore = useProductsSstore();
 
 const productName = defineModel<string>();
 const handleSearch = (event: any) => {
+  productStore.setCurrentPage(1)
   productStore.filterProducts(event.target.value);
 };
 onMounted(() => {

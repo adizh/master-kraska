@@ -43,7 +43,7 @@ onMounted(async () => {
   handleResize();
   window.addEventListener("resize", handleResize);
   await store.fetchSpecialProd("popular");
-  console.log("specialProducts", store.getSpecialProducts);
+  console.log("store.getPopularProducts", store.getPopularProducts);
 });
 
 onUnmounted(() => {
@@ -79,5 +79,10 @@ onUnmounted(() => {
 
 :deep(.swiper-button-next) {
   margin-right: -10px;
+}
+
+
+:deep(.slider-wrapper){
+display: flex;
 }
 </style>

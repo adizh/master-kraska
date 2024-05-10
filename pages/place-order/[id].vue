@@ -378,7 +378,7 @@ const submitOrder = async () => {
       }
     }
     const hasError = Object.values(orderStore.deliveryForm).some(
-      input => input.error !== ""
+      (input) => input.error !== ""
     );
 
     if (!hasError) {

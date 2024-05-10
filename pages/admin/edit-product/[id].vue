@@ -384,7 +384,7 @@ const convertToBase64 = (file: any) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => resolve(reader.result);
-    reader.onerror = error => reject(error);
+    reader.onerror = (error) => reject(error);
   });
 };
 
@@ -536,7 +536,7 @@ const editProduct = () => {
     }
   }
   const hasError = Object.values(inputs.value).some(
-    input => input.error !== ""
+    (input) => input.error !== ""
   );
   if (!hasError) {
     submitUpdate();

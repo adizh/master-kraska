@@ -7,18 +7,34 @@
     {{ $t("remove") }}
     <img src="../../assets/icons/icon=heart fill.svg" alt="heart icon" />
   </button>
+
+
+  <Dialog
+  v-model:visible="isProfileOpen"
+  modal
+  :style="{ width: '450px', padding: '10px 40px 40px 40px' }"
+>
+  <AuthModal @close-modal="() => (isProfileOpen = false)" />
+</Dialog>
+
 </template>
 
 <script setup lang="ts">
 import { Product } from "~/types/Product";
 const productsStore = useProductsSstore();
+const authStore = useAuthStore();
+const isProfileOpen =ref(false)
 const props = defineProps<{
   product: Product;
 }>();
 const isProductBookmarked = ref(false);
 const toggleBoomark = (id: string) => {
-  isProductBookmarked.value = !isProductBookmarked.value;
-  productsStore.addToBookmarks(id);
+  if (authStore?.getUserId) {
+    isProductBookmarked.value = !isProductBookmarked.value;
+    productsStore.addToBookmarks(id);
+  }else{
+    isProfileOpen.value=true
+  }
 };
 onMounted(async () => {
   await productsStore.getBookmarks(props?.product?.id);
@@ -28,6 +44,7 @@ onMounted(async () => {
 </script>
 
 <style scoped lang="scss">
+@import "../../assets/tabs.scss";
 button {
   @include footerSpan(20px, 16px);
   font-weight: 400;

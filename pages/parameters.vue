@@ -214,7 +214,7 @@ const items = [
 
 const filteredCatalogs = computed(() => {
   return catalogStore.getAllCatalogs.filter((item: AllCatalog) => {
-    return items.filter(obj => obj.name === item?.name.toUpperCase());
+    return items.filter((obj) => obj.name === item?.name.toUpperCase());
   });
 });
 
@@ -237,7 +237,7 @@ const secondBlock = computed(() => {
 
 const thirdBlock = computed(() => {
   return filteredCatalogs.value.filter(
-    item => item?.name?.toLocaleLowerCase() === "ТИП ЛКМ".toLocaleLowerCase()
+    (item) => item?.name?.toLocaleLowerCase() === "ТИП ЛКМ".toLocaleLowerCase()
   );
 });
 
@@ -262,7 +262,7 @@ const initializeCheckboxStates = () => {
     checkboxStates.value[item.id] = {
       name: item.name,
       id: item.id,
-      values: item.subdirectory.map(sub => ({
+      values: item.subdirectory.map((sub) => ({
         id: sub.id,
         value: false,
         name: sub?.name
@@ -315,7 +315,7 @@ const updateCheckboxState = (itemId: string, subId: string, event: any) => {
   // console.log('checkboxStates', checkboxStates)
   const valuesArray = Object.values(checkboxStates.value);
 
-  const filteredValues = valuesArray.flatMap(item =>
+  const filteredValues = valuesArray.flatMap((item) =>
     item.values?.filter((sub: { value: boolean }) => sub.value === true)
   );
   if (!filteredValues?.length) {

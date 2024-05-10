@@ -11,7 +11,9 @@
         <div class="product-infomation">
           <span>{{ $t("consumption") }}: {{ item?.consumption }}</span>
           <span>{{ $t("dryingTime") }}: {{ item?.dryingTime }}</span>
-          <span>{{ $t("volume") }}: {{ item?.size }}</span>
+          <span class="volume">{{ $t("volume") }}: {{ item?.size }}л
+            <span v-for="vars in item?.variants?.slice(0,2)" :key="vars?.id"> - {{ vars?.size }}л</span>
+              </span>
         </div>
       </div>
     </div>
@@ -62,6 +64,8 @@ const confirmDelete = () => {
     emit("confirmDelete", props?.item);
   }
 };
+
+
 </script>
 
 <style scoped>

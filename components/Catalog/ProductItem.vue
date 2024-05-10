@@ -20,7 +20,15 @@
     <div class="product-infomation">
       <span>{{ $t("consumption") }}: {{ product?.consumption }}</span>
       <span>{{ $t("dryingTime") }}: {{ product?.dryingTime }}</span>
-      <span>{{ $t("volume") }}: {{ product?.size }}</span>
+      <span class="volume">{{ $t("volume") }}: {{ product?.size }}л
+        <span v-for="vars in product?.variants?.slice(0,2)" :key="vars?.id"> - {{ vars?.size }}л</span>
+          </span>
+    </div>
+
+    <div class="item-add-btns">
+      <button @click.stop="removeCount">-</button>
+      <span>{{ countToBuy }}</span>
+      <button @click.stop="increaseCount">+</button>
     </div>
     <button class="pink-button prod-price" @click.stop="addCart">
       {{
@@ -31,11 +39,7 @@
             : $t("addedToCart")
       }}
     </button>
-    <div class="item-add-btns">
-      <button @click.stop="removeCount">-</button>
-      <span>{{ countToBuy }}</span>
-      <button @click.stop="increaseCount">+</button>
-    </div>
+   
   </div>
 
   <div
@@ -52,7 +56,9 @@
         <div class="product-infomation">
           <span>{{ $t("consumption") }}: {{ product?.consumption }}</span>
           <span>{{ $t("dryingTime") }}: {{ product?.dryingTime }}</span>
-          <span>{{ $t("volume") }}: {{ product?.size }}</span>
+          <span class="volume">{{ $t("volume") }}: {{ product?.size }}л
+            <span v-for="vars in product?.variants?.slice(0,2)" :key="vars?.id"> - {{ vars?.size }}л</span>
+              </span>
         </div>
       </div>
     </div>
@@ -88,14 +94,8 @@ const router = useRouter();
 const countToBuy = ref(1);
 const { t } = useI18n();
 const cartStore = useCartStore();
+console.log('prop product',props?.product)
 
-watch(
-  () => props?.visibleMethod,
-  () => {
-    console.log("props?.visibleMethod", props?.visibleMethod);
-  },
-);
-console.log("props?.visibleMethod", props?.visibleMethod);
 const prodBrand = ref("");
 
 const isProductExistsInCart = computed(() => {
@@ -218,6 +218,7 @@ const productName = (name: string) => {
   }
 }
 
+
 @keyframes slideFromTopToBottom {
   from {
     transform: translateY(-100%);
@@ -228,6 +229,7 @@ const productName = (name: string) => {
     opacity: 1;
   }
 }
+
 
 .item-add {
   opacity: 0;
@@ -280,6 +282,7 @@ const productName = (name: string) => {
   img {
     width: 120px;
     height: 120px;
+    margin:0 auto;
   }
 
   &-name {
@@ -292,6 +295,7 @@ const productName = (name: string) => {
     height: 60px;
     line-height: 20px;
     margin-top: 10px;
+    height:60px
   }
 
   &-info {

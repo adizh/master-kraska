@@ -60,6 +60,7 @@ export const useProductsSstore = defineStore("productsStore", {
         const response = await http(
           `/api/v1/Product/get-popular-products?type=${type}`
         );
+        console.log('the roor response from the popluar product',response)
         if (response.status === 200) {
           if (type === "popular") {
             this.popularProds = response.data?.popular?.map(
@@ -219,6 +220,9 @@ export const useProductsSstore = defineStore("productsStore", {
         const ids = value.map((item: any) => item?.id);
         this.filters.subdirectoryIds = [...ids];
       }
+    },
+    setCurrentPage(page:number){
+this.filters.currentPage=page
     },
     async filterProducts (prodName?: string) {
       this.areFiltersLoading = true;

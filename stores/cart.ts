@@ -9,7 +9,7 @@ export const useCartStore = defineStore("cartStore", {
   }),
   actions: {
     addToCart (prod: ExtendedProduct) {
-      const prodIndex = this.cart.findIndex(el => el?.id === prod?.id);
+      const prodIndex = this.cart.findIndex((el) => el?.id === prod?.id);
 
       if (prodIndex === -1) {
         this.cart.push(prod);
@@ -18,7 +18,7 @@ export const useCartStore = defineStore("cartStore", {
     },
 
     updateCartItem (updatedItem: ExtendedProduct) {
-      const index = this.cart.findIndex(item => item.id === updatedItem.id);
+      const index = this.cart.findIndex((item) => item.id === updatedItem.id);
       if (index !== -1) {
         this.cart.splice(index, 1, updatedItem);
         localStorage.setItem("cart", JSON.stringify(this.cart));
@@ -49,7 +49,7 @@ export const useCartStore = defineStore("cartStore", {
     },
 
     removeFromCart (item: ExtendedProduct) {
-      this.cart = this.cart.filter(value => value.id !== item.id);
+      this.cart = this.cart.filter((value) => value.id !== item.id);
       localStorage.setItem("cart", JSON.stringify(this.cart));
     },
     saveNewCart () {

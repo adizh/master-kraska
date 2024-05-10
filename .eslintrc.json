@@ -24,11 +24,11 @@
     "semi": "off",
     "no-alert": "off",
     "vue/multi-word-component-names": "off",
-  //  "prettier/prettier": ["error", { "singleQuote": false }],
-   "quotes":"off",
+    //  "prettier/prettier": ["error", { "singleQuote": false }],
+    "quotes": "off",
     "no-lonely-if": "off",
-    "arrow-parens":"off",
-    "eslint-plugin-vue/no-v-model-argument":"off"
+    "arrow-parens": "off",
+    "vue/no-v-model-argument": "off"
   }
   //"ignorePatterns": ["**/*.vue"]
 }

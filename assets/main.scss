@@ -563,6 +563,11 @@ h2 {
   }
 }
 
+.volume{
+  height:23px;
+  overflow: hidden;
+  overflow-x: hidden;
+}
 .item-block-description {
   @include textFormat(14px, 20px, 600, $main-dark-grey);
   max-width: 95%;

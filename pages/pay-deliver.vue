@@ -143,15 +143,18 @@
   margin-bottom: 20px;
   max-width: 680px;
 }
-.delivery-info {
-}
+
 .delivery-info-header {
   @include textFormat(20px, 20px, 600, $main-black);
   margin-bottom: 20px;
   display: block;
-  font-family: "Avenir Next Medium";
+  text-transform: none; 
+-webkit-font-smoothing: antialiased; 
+-moz-osx-font-smoothing: grayscale; 
 }
-
+h1{
+  font-family: 'Avenir Next Medium';
+}
 .delivery-from {
   .delivery-info-header {
     max-width: 600px;
@@ -188,26 +191,35 @@
   }
 }
 
+
 .header {
   margin-bottom: 80px;
   background-image: url("/static/delivery.png");
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   border-radius: 10px;
-
+  margin:0 auto;
   background-position: center center;
-  width: 100%;
+  width: 1180px;
+  height:520px;
   @include flex(column, center, start);
   padding: 0 0 50px 50px;
 
   h1 {
     margin: 20.9rem 0 50px 0;
-    @include textFormat(74px, 101px, 600, #fff !important);
+    @include textFormat(74px !important, 101px, 600, #fff !important);
+
+    text-transform: none; 
+-webkit-font-smoothing: antialiased; 
+-moz-osx-font-smoothing: grayscale; 
   }
 
   p {
     max-width: 625px;
     @include textFormat(20px !important, 27px, 500, #fff !important);
+    text-transform: none; 
+-webkit-font-smoothing: antialiased; 
+-moz-osx-font-smoothing: grayscale; 
   }
 }
 

@@ -1,6 +1,75 @@
 <template>
   <div class="carousel-slider">
-    <div class="slider-wrapper">
+
+    <Swiper
+    :slides-per-view="1"
+    :navigation="true"
+    :modules="[SwiperNavigation]"
+    :autoplay="{
+      delay: 2000
+    }"
+    :style="{ '--swiper-navigation-size': '23px' }"
+  >
+    <SwiperSlide>
+      <div class="slider-wrapper">
+        <div class="main-page-header">
+          <div class="left">
+            <h1>Мастер Краска</h1>
+            <div class="sub-header">{{ $t("officialRepres") }}</div>
+            <button class="pink-button" @click="navigateTo('/parameters')">
+              {{ $t("searchByParams") }}
+            </button>
+          </div>
+          <div class="right">
+            <img src="../public/main-page.png" class="large-image" format="webp" />
+            <img src="../public/vertical-main.png" format="webp" class="small-image" />
+          </div>
+        </div>
+      </div>
+    
+    </SwiperSlide>
+    <SwiperSlide>
+      <div class="banner-block slider-wrapper">
+        <img src="../assets/images/1180x520.png" format="webp" />
+      </div>    
+    </SwiperSlide>
+
+
+    <SwiperSlide>
+      <div class="banner-block">
+        <img src="../assets/images/image001.png" format="webp" />
+      </div>    
+    </SwiperSlide>
+
+
+    <SwiperSlide>
+      <div class="banner-block">
+        <img src="../assets/images/Oikos_Banner_Kraska_1180x520.gif" format="webp" />
+      </div>    
+    </SwiperSlide>
+
+    <SwiperSlide>
+      <div class="banner-block">
+        <img   src="../assets/images/Oikos_Banner_Kraska_1180x520_Encanto.jpg" format="webp" />
+      </div>    
+    </SwiperSlide>
+
+    <SwiperSlide>
+      <div class="banner-block">
+        <img  src="../assets/images/Oikos_Banner_Kraska_1180x520_MultidecorSkin.jpg" format="webp" />
+      </div>    
+    </SwiperSlide>
+
+    <SwiperSlide>
+      <div class="banner-block">
+        <img src="../assets/images/Oikos_Banner_Kraska_1180x520_Ottocento.jpg" format="webp" />
+      </div>    
+    </SwiperSlide>
+
+    
+  </Swiper>
+
+    <!-- <div class="slider-wrapper">
       <div
         class="main-page-header animate__animated"
         v-if="currentIndex === 0"
@@ -181,7 +250,7 @@
           alt="arrow-left"
         />
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -252,41 +321,20 @@ const prevSlide = () => {
 </script>
 
 <style scoped lang="scss">
+
 .banner-block {
+  width: 100%;
   img {
     width: 100%;
+    height:573px;
   }
 }
 .slider-wrapper {
   background: $main-white;
   border-radius: 10px;
   position: relative;
+  height:573px;
 
-  .controls {
-    position: absolute;
-    @include flex(row, center, center);
-    bottom: 27px;
-    right: 40px;
-
-    img:hover {
-      cursor: pointer;
-    }
-
-    &-circle {
-      span {
-        display: inline-block;
-        background: $slider-border-color;
-        border-radius: 100%;
-        width: 10px;
-        height: 10px;
-        margin-right: 10px;
-
-        &:hover {
-          cursor: pointer;
-        }
-      }
-    }
-  }
 }
 
 .slider-wrapper .controls-circle span.active-control {
@@ -328,18 +376,21 @@ h1 {
 }
 
 :deep(.swiper-button-next) {
-  top: 97% !important;
-  position: absolute;
-  color: #000;
-  right: 5.9rem !important;
+  color: #fff;
+  background: #00000020;
+  padding:18px;
+  &:hover{
+    background: #00000040;
+  }
 }
 
 :deep(.swiper-button-prev) {
-  top: 97% !important;
-  position: absolute;
-  left: 83.8%;
-
-  color: #000;
+  background: #00000020;
+  padding:18px;
+  color: #fff;
+  &:hover{
+    background: #00000040;
+  }
 }
 
 :deep(
@@ -354,7 +405,7 @@ h1 {
 }
 
 :deep(.swiper-slide) {
-  @include flex(row, space-between, center !important);
+
 }
 
 .small-image {

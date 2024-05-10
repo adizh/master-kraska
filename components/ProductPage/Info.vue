@@ -10,15 +10,6 @@
           {{ $t("desctiption") }}
         </button>
       </div>
-      <div>
-        <button
-          class="tab-btns-prod"
-          :class="{ 'active-tab-btn': activeTab === 2 }"
-          @click="selectTab(2)"
-        >
-          {{ $t("certificates") }}
-        </button>
-      </div>
     </div>
 
     <div class="desc-part" v-if="activeTab === 1">
@@ -136,19 +127,6 @@ const selectTab = (tab: number) => {
   div {
     width: 20%;
     @include flex(row, center, center);
-  }
-}
-
-.tabs-select div:first-child {
-  position: relative;
-
-  &::after {
-    position: absolute;
-    content: "";
-    width: 1px;
-    height: 64px;
-    background: $slider-border-color;
-    right: 0;
   }
 }
 

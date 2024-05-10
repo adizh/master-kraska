@@ -3,7 +3,7 @@
     <ClientOnly>
       <div class="item-page-header">
         <div class="left">
-          <img :src="productImage" alt="product">
+          <img :src="productImage" alt="product" />
         </div>
         <div class="middle">
           <div class="middle-header">
@@ -48,9 +48,17 @@
                 class="volume-btn"
                 @click="selectVolumeSize(btn, index)"
               >
-                {{ btn?.size }} 
+                {{ btn?.size }}
               </button>
-             <button class="volume-btn" :class="{ 'active-btn': volumeBtn === getProduct?.product?.size }" @click="selectedDefaultVolume(getProduct?.product?.size)">{{ getProduct?.product?.size }}</button>
+              <button
+                class="volume-btn"
+                :class="{
+                  'active-btn': volumeBtn === getProduct?.product?.size,
+                }"
+                @click="selectedDefaultVolume(getProduct?.product?.size)"
+              >
+                {{ getProduct?.product?.size }}
+              </button>
             </div>
           </div>
 
@@ -87,8 +95,6 @@
               <span>{{ $t("piece") }}</span>
               <span class="numbers-price">{{ selectedProductPrice }} сом</span>
             </p>
-            <p><span>л</span>500 сом</p>
-            <p><span>м2</span>50 сом</p>
           </div>
 
           <div class="count">
@@ -109,7 +115,9 @@
             <button @click="addToCart">
               {{ isProductExistsInCart ? $t("addToCart") : $t("addedToCart") }}
             </button>
-            <button @click.capture="buyNow">{{ $t("buyNow") }}</button>
+            <button @click.capture="buyNow">
+              {{ $t("buyNow") }}
+            </button>
           </div>
         </div>
       </div>
@@ -118,7 +126,9 @@
     <OverlayPanel ref="countOverlay" class="countOverlay">
       <div class="count-overlay">
         <span class="header">{{ $t("count") }}</span>
-        <p class="count-overlay-info">{{ $t("productCountInfo") }}</p>
+        <p class="count-overlay-info">
+          {{ $t("productCountInfo") }}
+        </p>
       </div>
     </OverlayPanel>
     <Dialog
@@ -126,7 +136,7 @@
       modal
       :style="{ width: '450px', padding: '10px 40px 40px 40px' }"
     >
-      <AuthModal @closeModal="() => (isProfileOpen = false)" />
+      <AuthModal @close-modal="() => (isProfileOpen = false)" />
     </Dialog>
     <Dialog
       v-model:visible="isConfirmOpen"
@@ -135,9 +145,9 @@
       header=" "
     >
       <ConfirmPay
+        :title="$t('confirmOrderText')"
         @cancel="isConfirmOpen = false"
         @confirm="confirmCreatePay"
-        :title="$t('confirmOrderText')"
       />
     </Dialog>
   </div>
@@ -192,17 +202,14 @@ const selectVolumeSize = (value: any, index: number) => {
   }
 };
 
-
-
-const selectedDefaultVolume=(value:string)=>{
-  if(  volumeBtn.value===value){
-    removeVolume()
-  }else{
-    volumeBtn.value=value;
-  selectedProductPrice.value =getProduct.value?.product?.price
+const selectedDefaultVolume = (value: string) => {
+  if (volumeBtn.value === value) {
+    removeVolume();
+  } else {
+    volumeBtn.value = value;
+    selectedProductPrice.value = getProduct.value?.product?.price;
   }
-  
-}
+};
 
 const decreaseCount = () => {
   if (countToBuy.value > 1) {
@@ -210,9 +217,7 @@ const decreaseCount = () => {
     if (getProduct.value?.product?.price) {
       totalPrice.value = countToBuy.value * getProduct.value?.product?.price;
     }
-
-    if (isProductExistsInCart.value) {
-    } else {
+    if (!isProductExistsInCart.value) {
       if (getProduct.value?.product?.price) {
         const updatedItem = {
           ...getProduct?.value?.product,
@@ -221,7 +226,6 @@ const decreaseCount = () => {
           initPrice: +getProduct.value?.product?.price,
         };
         if (updatedItem) {
-          console.log("updatedItem", updatedItem);
           store.updateCartItem(updatedItem);
           useNotif("success", t("successEdited"), t("success"));
         }
@@ -234,8 +238,7 @@ const increaseCount = () => {
   if (getProduct.value?.product?.price) {
     totalPrice.value = countToBuy.value * getProduct.value?.product?.price;
   }
-  if (isProductExistsInCart.value) {
-  } else {
+  if (!isProductExistsInCart.value) {
     if (getProduct.value?.product?.price) {
       const updatedItem = {
         ...getProduct?.value?.product,
@@ -295,17 +298,19 @@ const addToCart = () => {
   store.addToCart(prodItem);
 };
 
-const { data: getBookmarkItem } = useApi("/api/v1/Bookmark/get-bookmarks", {
-  method: "get",
-  query: {
-    userId: authStore.getUserId,
-    objectId: getProduct.value?.product?.id
-  }
-}) as any;
+// const { data } = useApi("/api/v1/Bookmark/get-bookmarks", {
+//   method: "get",
+//   query: {
+//     userId: authStore.getUserId,
+//     objectId: getProduct.value?.product?.id
+//   }
+// }) as any;
 
 const isProductExistsInCart = computed(() => {
-  const index = store.getAllCart?.findIndex((item) => item?.id === getProduct.value?.product?.id)
-  return index !== -1
+  const index = store.getAllCart?.findIndex(
+    (item) => item?.id === getProduct.value?.product?.id,
+  );
+  return index !== -1;
 });
 
 const leastSmallAmount = ref(0);
@@ -339,7 +344,7 @@ onMounted(async () => {
   }
   selectedProductPrice.value = getProduct.value?.product?.price;
   totalPrice.value = countToBuy.value * selectedProductPrice.value;
-  volumeBtn.value=getProduct.value?.product?.size;
+  volumeBtn.value = getProduct.value?.product?.size;
 });
 </script>
 
@@ -471,7 +476,7 @@ onMounted(async () => {
   }
 
   .numbers {
-    @include flex(row, space-between, center);
+    @include flex(row, center, center);
 
     &-price {
       color: $main-blue !important;

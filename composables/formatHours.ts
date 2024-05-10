@@ -13,6 +13,6 @@ const dayAbbreviations = {
 export const formatHours = (hours: string) => {
   return hours.replace(
     openHoursRegex,
-    match => dayAbbreviations[match as keyof typeof dayAbbreviations]
+    (match) => dayAbbreviations[match as keyof typeof dayAbbreviations]
   );
 };
