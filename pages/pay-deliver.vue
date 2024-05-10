@@ -137,6 +137,10 @@
 .main-section-site {
   margin: 0 !important;
 }
+.delivery,.delivery-from{
+  padding-left:4rem;
+  
+}
 
 .delivery-header-h1 {
   margin-top: 60px;
@@ -203,7 +207,8 @@ h1{
   width: 1180px;
   height:520px;
   @include flex(column, center, start);
-  padding: 0 0 50px 50px;
+  padding: 0 0 150px 50px;
+  margin-bottom: 80px;
 
   h1 {
     margin: 20.9rem 0 50px 0;
