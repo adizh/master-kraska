@@ -127,6 +127,9 @@
 <script setup lang="ts"></script>
 
 <style scoped lang="scss">
+section{
+  padding:20px 4rem;
+}
 %each-li {
   list-style: disc !important;
   color: $main-dark-grey;
@@ -137,10 +140,7 @@
 .main-section-site {
   margin: 0 !important;
 }
-.delivery,.delivery-from{
-  padding-left:4rem;
-  
-}
+
 
 .delivery-header-h1 {
   margin-top: 60px;
@@ -204,7 +204,7 @@ h1{
   border-radius: 10px;
   margin:0 auto;
   background-position: center center;
-  width: 1180px;
+  width: 100%;
   height:520px;
   @include flex(column, center, start);
   padding: 0 0 150px 50px;
