@@ -68,7 +68,7 @@ h4 {
   color: $main-pink;
   text-align: center;
   font-weight: 600;
-  margin: 40px 0 120px 0;
+  margin: 40px 0 80px 0;
 }
 
 .info {

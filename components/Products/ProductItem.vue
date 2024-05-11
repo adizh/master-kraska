@@ -36,8 +36,8 @@
     <div class="product-infomation">
       <span>{{ $t("consumption") }}: {{ product?.consumption }}</span>
       <span>{{ $t("dryingTime") }}: {{ product?.dryingTime }}</span>
-      <span class="volume">{{ $t("volume") }}: {{ product?.size }}л
-      <span v-for="vars in product?.variants?.slice(0,2)" :key="vars?.id"> - {{ vars?.size }}л</span>
+      <span class="volume">{{ $t("volume") }} (л): {{ product?.size }}
+      <span v-for="vars in product?.variants?.slice(0,2)" :key="vars?.id"> / {{ vars?.size?.split(' ')[0] }}</span>
         </span>
     </div>
 

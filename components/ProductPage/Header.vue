@@ -42,13 +42,13 @@
             <span class="each-block-info-col">{{ $t("volume") }}</span>
             <div class="middle-volume-buttons">
               <button
-                v-for="(btn, index) in getProduct?.product?.variants"
+                v-for="(btn, index) in itemVariants"
                 :key="btn?.id"
                 :class="{ 'active-btn': volumeBtn === btn?.size }"
                 class="volume-btn"
                 @click="selectVolumeSize(btn, index)"
               >
-                {{ btn?.size }}
+                {{ btn?.bases?.value }}
               </button>
               <button
                 class="volume-btn"
@@ -64,8 +64,9 @@
 
           <div class="middle-koler">
             <span class="each-block-info-col">{{ $t("baseTinting") }}</span>
-            <button class="middle-koler-btn">
-              А (белая, {{ $t("lightTinting") }})
+            <button class="middle-koler-btn" >
+              {{ baseTinting }}
+              <!-- А (белая, {{ $t("lightTinting") }}) -->
             </button>
           </div>
           <div>
@@ -157,6 +158,7 @@
 import Rating from "primevue/rating";
 import { ExtendedProduct } from "@/types/Product";
 import { Brands } from "~/types/Brands";
+import { Variant } from "~/types/Variant";
 const isConfirmOpen = ref(false);
 const props = defineProps<{
   productId: string;
@@ -171,7 +173,7 @@ const productStore = useProductsSstore();
 const store = useCartStore();
 const productBrand = ref({} as Brands);
 const selectedProductPrice = ref(0);
-
+const selectedBase=ref('')
 const isProductBookmarked = ref(false);
 const isProfileOpen = ref(false);
 const { getProduct } = storeToRefs(productStore);
@@ -198,6 +200,8 @@ const selectVolumeSize = (value: any, index: number) => {
       }
       selectedProductPrice.value =
         getProduct.value?.product?.variants[index].price;
+
+        selectedBase.value = value?.bases?.base
     }
   }
 };
@@ -208,6 +212,7 @@ const selectedDefaultVolume = (value: string) => {
   } else {
     volumeBtn.value = value;
     selectedProductPrice.value = getProduct.value?.product?.price;
+    selectedBase.value=''
   }
 };
 
@@ -298,13 +303,26 @@ const addToCart = () => {
   store.addToCart(prodItem);
 };
 
-// const { data } = useApi("/api/v1/Bookmark/get-bookmarks", {
-//   method: "get",
-//   query: {
-//     userId: authStore.getUserId,
-//     objectId: getProduct.value?.product?.id
-//   }
-// }) as any;
+
+//const itemVariants =ref([] as Variant[])
+
+
+const itemVariants=computed(()=>{
+  return getProduct?.value?.product.variants?.map((item:Variant)=>{
+  const word='База'
+
+  const sizes= item?.size.split(' ')
+  const value=sizes[0]
+  const base=sizes[1] + sizes[2]
+  console.log('sizes',sizes)
+  console.log('base',base)
+
+return {...item, bases:{value:value, base:base} }
+ 
+})
+})
+console.log('itemVariants',itemVariants)
+
 
 const isProductExistsInCart = computed(() => {
   const index = store.getAllCart?.findIndex(
@@ -321,6 +339,8 @@ const prodCart = computed(() => {
   );
 });
 
+
+
 if (prodCart.value && prodCart.value !== null) {
   countToBuy.value = prodCart?.value?.count;
 }
@@ -329,7 +349,19 @@ const removeVolume = () => {
   selectedProductPrice.value = getProduct.value?.product?.price;
   volumeBtn.value = "";
   productImage.value = getProduct?.value?.product?.images[0];
+  selectedBase.value=''
 };
+
+
+const baseTinting=computed(()=>{
+
+  const base= selectedBase?.value?.split(/(?=[А-ЯA-Za-z])/).join(' ');
+  console.log('baseeeeeeee',base?.toLowerCase().includes('a'))
+  return base?.toLowerCase()?.includes('A'?.toLocaleLowerCase()) ? base +t('lightTinting') : t('')
+ //return selectedBase && selectedBase?.value.length? selectedBase?.value?.split(/(?=[А-ЯA-Za-z])/).join(' '):t('noData')
+})
+
+
 onUnmounted(() => {
   leastSmallAmount.value = 0;
 });
