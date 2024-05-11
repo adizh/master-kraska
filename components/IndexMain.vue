@@ -3,8 +3,7 @@
 
     <Swiper
     :slides-per-view="1"
-    :modules="[SwiperNavigation,SwiperEffectCreative,SwiperAutoplay]"
-    :effect="'creative'"
+    :modules="[SwiperNavigation,SwiperEffectCreative]"
     :creative-effect="{
       prev: {
         shadow: true,
@@ -335,6 +334,7 @@ const prevSlide = () => {
   width: 100%;
   img {
     width: 100%;
+    height:573px
   }
 }
 .slider-wrapper {
@@ -350,6 +350,8 @@ const prevSlide = () => {
   margin-bottom: 80px;
   padding: 4.5rem 0 4.5rem 50px;
   @include flex(row, space-between, center);
+  background: $main-white;
+  height:573px
 }
 
 .right {
@@ -357,6 +359,7 @@ const prevSlide = () => {
 
   img {
     width: 100%;
+
   }
 }
 

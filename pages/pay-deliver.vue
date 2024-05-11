@@ -129,6 +129,7 @@
 <style scoped lang="scss">
 section{
   padding:0 4rem;
+  margin-top: -30px;
 }
 %each-li {
   list-style: disc !important;
@@ -208,6 +209,7 @@ h1{
   @include flex(column, center, start);
   padding: 0 0 150px 50px;
   margin-bottom: 80px;
+  height:520px;
 
   h1 {
     margin: 20.9rem 0 50px 0;
@@ -232,16 +234,31 @@ h1{
   padding-left: 20px;
 }
 
-@media (min-width:1400px){
-
+@media (max-width:1200px){
+.header{
+  padding-bottom:250px
+}
 }
 
-@media (max-width: 768px) {
+@media (max-width:1000px){
+  .header{
+    h1{
+      display: none;
+    }
+    p{
+      display: none;
+    }
+  }
+}
+
+@media (max-width:992px){
   .header {
-    background-size: auto;
-    height: 60vh;
+    background-size: cover;
+    height:auto;
     padding-right: 40px;
   }
+}
+@media (max-width: 768px) {
 
   .header h1 {
     margin-top: 3rem !important;
@@ -269,6 +286,13 @@ h1{
   .header {
     display: none;
     padding-left: 10px;
+    margin-top: 0;
+  }
+  section{
+    padding:40px 20px;
+  }
+  .list,.delivery-from .list,.delivery-from .delivery-info-header{
+    padding-left:0;
   }
 }
 </style>
