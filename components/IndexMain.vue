@@ -3,7 +3,11 @@
 
     <Swiper
     :slides-per-view="1"
-    :modules="[SwiperNavigation,SwiperEffectCreative]"
+    :modules="[SwiperNavigation,SwiperEffectCreative,SwiperAutoplay,SwiperController]"
+    :navigation="true"
+    :autoplay="{
+      delay:5000
+    }"
     :creative-effect="{
       prev: {
         shadow: true,
@@ -13,9 +17,7 @@
         translate: ['100%', 0, 0],
       },
     }"
-    :autoplay="{
-      delay: 2000
-    }"
+ 
     :style="{ '--swiper-navigation-size': '23px' }"
   >
     <SwiperSlide>
@@ -334,11 +336,11 @@ const prevSlide = () => {
   width: 100%;
   img {
     width: 100%;
-    height:573px
+    height:573px;
+    border-radius: 20px;
   }
 }
 .slider-wrapper {
-  border-radius: 10px;
   position: relative;
 }
 
@@ -351,7 +353,8 @@ const prevSlide = () => {
   padding: 4.5rem 0 4.5rem 50px;
   @include flex(row, space-between, center);
   background: $main-white;
-  height:573px
+  height:573px;
+  border-radius: 20px;
 }
 
 .right {

@@ -24,12 +24,8 @@
     <div class="brands-pictures">
       <Swiper
         :slides-per-view="4"
-        :loop="true"
         :modules="[SwiperAutoplay, SwiperController, SwiperNavigation]"
-        :autoplay="{
-          delay: 2000,
-          disableOnInteraction: true,
-        }"
+        :autoplay="true"
       >
         <SwiperSlide v-for="item in brandsStore.getAllBrands" :key="item.id">
           <img
@@ -43,6 +39,7 @@
             "
           />
         </SwiperSlide>
+  
       </Swiper>
     </div>
   </div>
