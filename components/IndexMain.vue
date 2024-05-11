@@ -347,7 +347,7 @@ const prevSlide = () => {
 }
 
 .main-page-header {
-  margin-bottom: 80px;
+  margin-bottom: 40px;
   padding: 4.5rem 0 4.5rem 50px;
   @include flex(row, space-between, center);
   background: $main-white;

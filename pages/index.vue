@@ -1,5 +1,6 @@
 <template>
   <section>
+    <IndexMain />
     <div class="search-place">
       <div class="flex flex-row gap-4 search">
         <div class="input-block">
@@ -30,7 +31,6 @@
         :class="{ open: isSearchOpen }"
       />
     </div>
-    <IndexMain />
     <Products />
     <Actions />
     <Advantages />
@@ -67,7 +67,7 @@ onUnmounted(() => {
 .search-place {
   position: relative;
   width: 100%;
-  margin-bottom: 40px;
+  margin-bottom: 80px;
 
   button {
     box-shadow: 0px 0px 0px 0.5px #0000000d;
