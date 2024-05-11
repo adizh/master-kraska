@@ -1,6 +1,7 @@
 // handleValues.ts
 
 export const useInputValidation = () => {
+  const {t}=useI18n()
   const handleValues = (
     inputs: any,
     fieldName: string,
@@ -14,30 +15,30 @@ export const useInputValidation = () => {
 
     if (validationType === "string") {
       if (value === "") {
-        inputs[fieldName].error = "Это поле обязательно";
+        inputs[fieldName].error = t('requiredField');
       }
     } else if (validationType === "email") {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(value)) {
-        inputs[fieldName].error = "Неправильный формат почты";
+        inputs[fieldName].error = t('incorrectEmail');
       }
     } else if (validationType === "number") {
       if (value === "") {
-        inputs[fieldName].error = "Это поле обязательно";
+        inputs[fieldName].error = t('requiredField');
       }
     } else if (validationType === "rating") {
       if (value <= 0) {
-        inputs[fieldName].error = "Это поле обязательно";
+        inputs[fieldName].error =t('requiredField');
       }
     } else if (validationType === "password") {
       inputs[fieldName].error =
-        value?.length < 8 ? "Пароль должен быть больше 8 символов" : "";
+        value?.length < 8 ? t('passwordRequire') : "";
     } else if (validationType === "passwordRepeat") {
       inputs[fieldName].error =
         value !== inputs.password.value
-          ? "Пароли должны совпадать"
+          ? t('passwordSync')
           : !value
-              ? "Это поле обязательно"
+              ?t('requiredField')
               : "";
     }
   };

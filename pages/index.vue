@@ -17,7 +17,7 @@
           >
         </div>
         <div class="btn-block">
-          <button>Найти</button>
+          <button>{{ $t('find') }}</button>
         </div>
       </div>
       <SearchOptions

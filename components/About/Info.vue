@@ -6,7 +6,7 @@
       <br />
       {{ subHeader }}
       <button class="read-all-btn" @click="openBlock" v-if="!openInfo">
-        {{ $t("Еще") }}
+        {{ $t("more") }}
       </button>
       <button class="read-all-btn" @click="closeBlock" v-else>
         {{ $t("closeBlock") }}
