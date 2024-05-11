@@ -542,9 +542,16 @@ const editProduct = () => {
     submitUpdate();
   }
 };
+const authStore=useAuthStore()
+
+const router=useRouter()
 
 onMounted(async () => {
+  if(authStore?.getRole!=='Admin'){
+    router.push('/')
+}
   await productsStore.fetchProductById(id as string);
+  
   item.value = productsStore?.getProduct?.product;
 
   if (item?.value?.variants) {
