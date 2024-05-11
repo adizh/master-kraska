@@ -54,7 +54,7 @@ export const useCartStore = defineStore("cartStore", {
     },
     saveNewCart () {
       localStorage.setItem("cart", JSON.stringify(this.cart));
-      useNotif("success", "Изменения сохранены", "Успешно");
+      useNotifLocal("success", "changesSaved", "success");
     },
 
     setCurrentOrder (item: OrderItem) {

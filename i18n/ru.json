@@ -237,6 +237,7 @@
   "incorrectPassword": "Неправильный пароль",
   "passwordReset": "Пароль сброшен и обновлен!",
   "success": "Успешно",
+  "changesSaved":"Изменения сохранены",
   "reviewAdded": "Отзыв оставлен!",
   "successEdited": "Успешно редактировано!",
   "commentDeleted": "Комментарий удален",
@@ -258,5 +259,7 @@
   "deleteCartProdWarning": "Вы действительно хотите удалить товар",
   "otherNews": "Другие новости",
   "noDataCatalogSearch":"Упс, поиск ничего не обнаружил. Попробуйте поставить другие параметры",
-  "litres":"литров"
+  "litres":"литров",
+  "layersNum":"Количество слоев",
+  "surfacePrepare":"Подготовка поверхности"
 }

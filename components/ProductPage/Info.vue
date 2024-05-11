@@ -23,7 +23,7 @@
             @click="toggleProdDesc"
             v-if="!isDescrOpen && isProdDesctLong"
           >
-            Читать все
+            {{$t('more')}}
           </button>
           <button
             class="read-all-btn"
@@ -36,12 +36,14 @@
         <p v-else>{{ $t("noData") }}</p>
       </div>
       <div class="desc-part-info">
-        <span>Количество слоев</span>
-        <p>2 слоя</p>
+        <span>{{ $t('layersNum') }}</span>
+
+        <p>{{ $t('noData') }}</p>
       </div>
       <div class="desc-part-info">
-        <span>Подготовка поверхности</span>
-        <p v-if="prodSurface">
+        <span>{{ $t('surfacePrepare') }}</span>
+        <p>{{ $t("noData") }}</p>
+        <!-- <p v-if="prodSurface">
           {{ prodSurface }}
           <button
             class="read-all-btn"
@@ -57,8 +59,8 @@
           >
             Закрыть
           </button>
-        </p>
-        <p v-else>{{ $t("noData") }}</p>
+        </p> -->
+        <!-- <p v-else>{{ $t("noData") }}</p> -->
       </div>
     </div>
     <div class="certificate-part" v-else>{{ $t("certificates") }}</div>
@@ -79,9 +81,9 @@ const isSurfaceOpen = ref(false);
 const isProdDesctLong = computed(() => {
   return props?.item?.description?.length > descriptionLen.value;
 });
-const isSurfaceLong = computed(() => {
-  return props?.item?.surfacePreparations?.length > surfaceLen.value;
-});
+// const isSurfaceLong = computed(() => {
+//   return props?.item?.surfacePreparations?.length > surfaceLen.value;
+// });
 
 const prodDescr = computed(() => {
   return isProdDesctLong
@@ -89,11 +91,11 @@ const prodDescr = computed(() => {
     : props?.item?.description;
 });
 
-const prodSurface = computed(() => {
-  return isSurfaceLong
-    ? props?.item?.surfacePreparations?.slice(0, surfaceLen.value)
-    : props?.item?.surfacePreparations;
-});
+// const prodSurface = computed(() => {
+//   return isSurfaceLong
+//     ? props?.item?.surfacePreparations?.slice(0, surfaceLen.value)
+//     : props?.item?.surfacePreparations;
+// });
 
 const toggleProdDesc = () => {
   isDescrOpen.value = !isDescrOpen.value;
@@ -104,14 +106,14 @@ const toggleProdDesc = () => {
   }
 };
 
-const toggleProdSurface = () => {
-  isSurfaceOpen.value = !isSurfaceOpen.value;
-  if (isSurfaceOpen.value) {
-    surfaceLen.value = props?.item?.surfacePreparations?.length;
-  } else {
-    surfaceLen.value = 480;
-  }
-};
+// const toggleProdSurface = () => {
+//   isSurfaceOpen.value = !isSurfaceOpen.value;
+//   if (isSurfaceOpen.value) {
+//     surfaceLen.value = props?.item?.surfacePreparations?.length;
+//   } else {
+//     surfaceLen.value = 480;
+//   }
+// };
 const activeTab = ref(1);
 const selectTab = (tab: number) => {
   activeTab.value = tab;

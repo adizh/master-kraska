@@ -70,7 +70,7 @@ export const useOrderStore = defineStore("orderStore", {
         const response = await http.post("/api/v1/Order/order-delivery", body);
         console.log("send order response", response);
         if (response.data.code === 200 && deliveryType === 0) {
-          useNotif("success", "Заказ отправлен!", "Успешно");
+          useNotifLocal("success", "orderSent!", 'success');
         }
         return response;
       } catch (err) {
@@ -112,7 +112,7 @@ export const useOrderStore = defineStore("orderStore", {
         );
         console.log("response create order", response);
         if (response.status === 200) {
-          useNotif("success", "Заказ создан", "Успешно");
+          useNotifLocal("success", "orderSent", "success");
           cartStore.setCurrentOrder(response?.data?.message);
           console.log("response data mesage", response?.data?.message);
           if (response.data.code === 200) {

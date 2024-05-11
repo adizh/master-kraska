@@ -60,7 +60,7 @@ export const usePayStore = defineStore("payStore", {
           // this.mbank.statusCode = "201";
           // return (this.mbank.status = "Платеж в обработке...");
         } else if (response.data.code === "1") {
-          useNotif("error", "Произошла ошибка", "Ошибка");
+          useNotifLocal("error", "errOccurred", "error");
         }
       } catch (err) {
         console.log(err);

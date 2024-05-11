@@ -195,7 +195,7 @@ export const useProductsSstore = defineStore("productsStore", {
           }
         );
         if (response.status === 200) {
-          useNotif("success", "Успешно обновлено", "Успех");
+          useNotifLocal("success", "updated", "success");
         }
       } catch (err) {
         console.log(err);
