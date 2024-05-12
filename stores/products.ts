@@ -303,7 +303,6 @@ this.filters.currentPage=page
             objectId: productId
           }
         });
-        console.log("getBookmarks id", response);
 
         if (response.status === 200) {
           this.isProductBookmarked = response.data.message;

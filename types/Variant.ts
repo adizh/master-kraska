@@ -4,4 +4,5 @@ export type Variant = {
   size: string;
   id?: string;
   image: string;
+  base:string
 };

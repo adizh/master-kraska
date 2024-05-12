@@ -44,7 +44,7 @@
               <button
                 v-for="(btn, index) in getProduct?.product?.variants"
                 :key="btn?.id"
-                :class="{ 'active-btn': volumeBtn === btn?.id }"
+                :class="{ 'active-btn': volumeBtn === btn?.id || volumeBtn===btn?.size }"
                 class="volume-btn"
                 @click="selectVolumeSize(btn, index)"
               >

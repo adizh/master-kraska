@@ -222,6 +222,14 @@
               class="form-input col-12"
               type="text"
             >
+
+            <label :for="variant?.base">База</label>
+            <input
+              :id="variant?.base"
+              v-model="varSizes[variant?.size].base"
+              class="form-input col-12"
+              type="text"
+            >
             <label :for="variant?.size">Код</label>
             <input
               :id="variant?.size"
@@ -310,6 +318,13 @@
           class="basic-input"
         >
         <input
+        v-model="newVariants.base"
+        type="text"
+        placeholder="База"
+        required
+        class="basic-input"
+      >
+        <input
           v-model="newVariants.code"
           type="number"
           placeholder="Код"
@@ -353,7 +368,8 @@ const newVariants = ref({
   size: "",
   price: "",
   code: "",
-  image: ""
+  image: "",
+  base:""
 });
 
 const handleFileChange = (event: any) => {
@@ -419,6 +435,7 @@ const addVariant = async () => {
         price: newVariants.value.price,
         code: newVariants.value.code,
         size: newVariants.value.size,
+        base:newVariants.value?.base,
         image: base64String
       }
     ];
@@ -554,6 +571,8 @@ onMounted(async () => {
   
   item.value = productsStore?.getProduct?.product;
 
+
+  console.log('item',item)
   if (item?.value?.variants) {
     variants.value = item.value.variants;
   }
@@ -608,7 +627,6 @@ onMounted(async () => {
       error: ""
     }
   };
-  console.log("inputs", inputs);
 });
 </script>
 
