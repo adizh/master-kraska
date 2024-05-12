@@ -114,7 +114,7 @@
 
           <div class="buy-btns">
             <button @click="addToCart">
-              {{ isProductExistsInCart ? $t("addToCart") : $t("addedToCart") }}
+              {{ !isProductExistsInCart ? $t("addToCart") : $t("addedToCart") }}
             </button>
             <button @click.capture="buyNow">
               {{ $t("buyNow") }}
@@ -222,7 +222,7 @@ const decreaseCount = () => {
     if (getProduct.value?.product?.price) {
       totalPrice.value = countToBuy.value * getProduct.value?.product?.price;
     }
-    if (!isProductExistsInCart.value) {
+    if (isProductExistsInCart.value) {
       if (getProduct.value?.product?.price) {
         const updatedItem = {
           ...getProduct?.value?.product,
@@ -243,7 +243,7 @@ const increaseCount = () => {
   if (getProduct.value?.product?.price) {
     totalPrice.value = countToBuy.value * getProduct.value?.product?.price;
   }
-  if (!isProductExistsInCart.value) {
+  if (isProductExistsInCart.value) {
     if (getProduct.value?.product?.price) {
       const updatedItem = {
         ...getProduct?.value?.product,
