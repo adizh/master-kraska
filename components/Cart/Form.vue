@@ -48,12 +48,14 @@
           :placeholder="$t('addressPlaceholder')"
           v-model="deliveryForm.address.value"
           required
-          @input="handleDeliveryForm('address', 'string')"
+          @input='handleAddress'
         />
         <span v-if="deliveryForm.address.error" class="err-input-msg">{{
           $t(deliveryForm.address.error)
         }}</span>
       </div>
+
+ <div v-if="suggestedAddress?.length">     {{ suggestedAddress?.map((item:any)=>item?.title?.text) }}</div>
     </div>
 
     <div class="cart-form-block">
@@ -139,6 +141,7 @@
 </template>
 
 <script setup lang="ts">
+import axios from 'axios'
 const isPayOpen = ref(false);
 const orderStore = useOrderStore();
 const authStore = useAuthStore();
@@ -151,8 +154,27 @@ const handleDeliveryForm = (
   orderStore.handleValues(field, type);
 };
 
+const suggestedAddress=ref([] as any)
+const fetchRes=async(value:string)=>{
+  console.log('received value',value)
+  const response =await axios(`https://suggest-maps.yandex.ru/v1/suggest?apikey=798689f9-b63e-4521-9012-a04e936abe52&text=${value}`);
+  console.log('wha is a burg resukt',response)
+  if(response.status===200){
+    suggestedAddress.value=response.data.results
+  }
+
+}
 const selectedPayMethod = ref("");
 
+const handleAddress =async(event:any)=>{
+  const value = event.target?.value;
+  console.log(value)
+  if(value?.length){
+    await fetchRes(value)
+  }
+
+
+}
 const choosePayMethod = (value: string) => {
   isPayOpen.value = true;
   selectedPayMethod.value = value;

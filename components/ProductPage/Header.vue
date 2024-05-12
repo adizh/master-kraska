@@ -42,20 +42,20 @@
             <span class="each-block-info-col">{{ $t("volume") }}</span>
             <div class="middle-volume-buttons">
               <button
-                v-for="(btn, index) in itemVariants"
+                v-for="(btn, index) in getProduct?.product?.variants"
                 :key="btn?.id"
-                :class="{ 'active-btn': volumeBtn === btn?.size }"
+                :class="{ 'active-btn': volumeBtn === btn?.id }"
                 class="volume-btn"
                 @click="selectVolumeSize(btn, index)"
               >
-                {{ btn?.bases?.value }}
+                {{ btn?.size }}
               </button>
               <button
                 class="volume-btn"
                 :class="{
-                  'active-btn': volumeBtn === getProduct?.product?.size,
+                  'active-btn': volumeBtn === getProduct?.product?.id,
                 }"
-                @click="selectedDefaultVolume(getProduct?.product?.size)"
+                @click="selectedDefaultVolume(getProduct?.product?.id)"
               >
                 {{ getProduct?.product?.size }}
               </button>
@@ -64,8 +64,8 @@
 
           <div class="middle-koler">
             <span class="each-block-info-col">{{ $t("baseTinting") }}</span>
-            <button class="middle-koler-btn" >
-              {{ baseTinting }}
+            <button class="middle-koler-btn">
+      {{ selectedBase ?selectedBase :$t('noData')  }}
               <!-- А (белая, {{ $t("lightTinting") }}) -->
             </button>
           </div>
@@ -188,10 +188,10 @@ productImage.value = getProduct.value.product?.images[0];
 ratingValue.value = getProduct.value?.product?.rating;
 
 const selectVolumeSize = (value: any, index: number) => {
-  if (volumeBtn.value === value?.size) {
+  if (volumeBtn.value === value?.id) {
     removeVolume();
   } else {
-    volumeBtn.value = value?.size;
+    volumeBtn.value = value?.id;
     if (getProduct.value?.product?.variants) {
       if (value?.image) {
         productImage.value = value?.image;
@@ -201,7 +201,7 @@ const selectVolumeSize = (value: any, index: number) => {
       selectedProductPrice.value =
         getProduct.value?.product?.variants[index].price;
 
-        selectedBase.value = value?.bases?.base
+        selectedBase.value = value?.base
     }
   }
 };
@@ -304,24 +304,9 @@ const addToCart = () => {
 };
 
 
-//const itemVariants =ref([] as Variant[])
 
 
-const itemVariants=computed(()=>{
-  return getProduct?.value?.product.variants?.map((item:Variant)=>{
-  const word='База'
 
-  const sizes= item?.size.split(' ')
-  const value=sizes[0]
-  const base=sizes[1] + sizes[2]
-  console.log('sizes',sizes)
-  console.log('base',base)
-
-return {...item, bases:{value:value, base:base} }
- 
-})
-})
-console.log('itemVariants',itemVariants)
 
 
 const isProductExistsInCart = computed(() => {
@@ -353,13 +338,7 @@ const removeVolume = () => {
 };
 
 
-const baseTinting=computed(()=>{
 
-  const base= selectedBase?.value?.split(/(?=[А-ЯA-Za-z])/).join(' ');
-  console.log('baseeeeeeee',base?.toLowerCase().includes('a'))
-  return base?.toLowerCase()?.includes('A'?.toLocaleLowerCase()) ? base +t('lightTinting') : t('')
- //return selectedBase && selectedBase?.value.length? selectedBase?.value?.split(/(?=[А-ЯA-Za-z])/).join(' '):t('noData')
-})
 
 
 onUnmounted(() => {

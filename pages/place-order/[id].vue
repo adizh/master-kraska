@@ -191,6 +191,7 @@
 </template>
 
 <script setup lang="ts">
+import axios from "axios";
 import { AddressList } from "~/types/Items";
 import { OrderItem, UserOrder } from "~/types/Order";
 
@@ -199,13 +200,9 @@ definePageMeta({
 });
 
 const { t } = useI18n();
-
 const cartStore = useCartStore();
-
 const selectedOrderPlacement = ref(1);
-
 const currentOrder = ref({} as OrderItem);
-
 const pickupErr = ref({
   store: "",
   payMethod: ""
@@ -418,6 +415,8 @@ onMounted(() => {
   authStore.fetchUser();
   orderStore?.fetchAllShops();
   getOrderId();
+
+  
 });
 
 watch(
