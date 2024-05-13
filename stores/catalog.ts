@@ -5,6 +5,7 @@ export const useCatalogStore = defineStore("catalogStore", {
     allCatalogs: [] as AllCatalog[],
     allCategories: [] as Category[],
     linkedCategories: [] as CategorySys[],
+    allLinkedCategories: [] as CategorySys[],
     category: [] as Category[]
   }),
   actions: {
@@ -47,12 +48,18 @@ export const useCatalogStore = defineStore("catalogStore", {
         console.log("response all categories", response);
         if (response.status === 200) {
           this.linkedCategories = response.data
+          this.allLinkedCategories = response.data
         }
       } catch (err) {
         console.log(err);
       }
     },
-
+    filterLinkedCategories(value:string){
+      console.log('allLinkedCategories',this.allLinkedCategories)
+      this.linkedCategories = this.allLinkedCategories.filter((item:CategorySys)=>item?.nameRu?.toLowerCase().includes(value?.toLowerCase()));
+      console.log('value',value)
+      console.log('linkedCategories',this.linkedCategories)
+    },
     async fetchCategoryById (categoryId: string) {
       const authStore = useAuthStore();
       try {

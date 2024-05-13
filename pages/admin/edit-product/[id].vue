@@ -107,7 +107,9 @@
 
   <UISelect v-for="item in categoryValues?.value" :key="item?.id" :options="catalogStore?.getLinkedCategories" label="nameRu" 
   @selectValue="selectValue"
-  :isDropdownOpen="isCategoryOpen === item?.id" :selectedValue="item" @openDropdown="openDropdown" @deleteCategory="deleteCategory"/>
+  :isDropdownOpen="isCategoryOpen === item?.id" :selectedValue="item" @openDropdown="openDropdown" @deleteCategory="deleteCategory"
+  @searchCategories=searchCategories
+  />
 
         <!-- <div v-for="categoryId in categories" :key="categoryId?.id">
           <label :for="categoryId?.name">{{ categoryId?.nameRu }}</label>
@@ -390,7 +392,11 @@ const currentCategory=ref({} as CategorySys)
 const productsStore = useProductsSstore();
 const catalogStore=useCatalogStore()
 const isDeleteOpen = ref(false);
-const isCategoryOpen=ref('')
+const isCategoryOpen=ref('');
+
+const searchCategories =(value:string)=>{
+  catalogStore.filterLinkedCategories(value)
+}
 const newVariants = ref({
   size: "",
   price: "",

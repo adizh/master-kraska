@@ -15,16 +15,21 @@
         />
       </div>
   
+
+
       <Transition name="slide-fade">
+       <div>
         <ul class="ui-options" v-if="isDropdownOpen">
+            <input type="text" class="basic-input" v-model="searchCategory" @input="searchCategories"/>
           <li
-            v-for="item in options"
+            v-for="item in props?.options"
             :key="item?.value"
             @click="emit('selectValue', item,selectedValue)"
           >
             {{ item[label] }}
           </li>
         </ul>
+       </div>
       </Transition>
     </div>
   </template>
@@ -33,10 +38,14 @@
   import { LanguageOptions } from "@/types/Items";
 import { PropType } from "vue";
 import { CategorySys } from "~/types/Category";
+const searchCategory=ref('')
+const filteredOptions = ref<any[]>([]);
+
+const searchCategories =(event:any)=>{
+emit('searchCategories',event?.target?.value)
+}
   
-  
-  
-  const emit = defineEmits(['openDropdown', 'selectValue','deleteCategory'])
+  const emit = defineEmits(['openDropdown', 'selectValue','deleteCategory','searchCategories'])
   const openDropdown = (selectedValue:CategorySys) => {
     emit("openDropdown",selectedValue);
   };
@@ -51,6 +60,12 @@ import { CategorySys } from "~/types/Category";
     isDropdownOpen: boolean;
     label:string
   }>();
+
+  onMounted(()=>{
+    filteredOptions.value = props?.options;
+    console.log('filteredOptions',filteredOptions)
+    console.log('props?.options;',props?.options)
+  })
   </script>
   
   <style scoped lang="scss">
