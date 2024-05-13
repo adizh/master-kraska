@@ -367,7 +367,7 @@
     header=" "
   >
     <ConfirmPay
-      :title="`Вы действительно хотите удалить категорию ${currentCategory?.nameRu}?`"
+      :title="`Вы действительно хотите удалить категорию ${currentCategory?.nameRu}`"
       @cancel="isDeleteCategoryOpen = false"
       @confirm="confirmCategoryDelete"
     />
