@@ -98,7 +98,10 @@
 
       <div class="lg:col-4 md:col-6 col-12 each-field">
         <label for="categoryId">Категории</label>
-        <div v-for="categoryId in categories" :key="categoryId?.id">
+
+          <Dropdown :options="categories" optionLabel="nameRu" placeholder="Категория" class="w-full md:w-14rem" />
+
+        <!-- <div v-for="categoryId in categories" :key="categoryId?.id">
           <label :for="categoryId?.name">{{ categoryId?.nameRu }}</label>
           <input
             :id="categoryId?.name"
@@ -106,8 +109,7 @@
             class="form-input col-12"
             type="text"
           >
-        </div>
-        <!-- <span v-if="inputs.categoryId.error" class="err-input-msg">{{ inputs.categoryId.error }}</span> -->
+        </div> -->
       </div>
 
       <div class="lg:col-4 md:col-6 col-12 each-field">
@@ -260,7 +262,6 @@
           class="form-input col-12"
           type="checkbox"
         >
-        <!-- <span v-if="inputs.color.error" class="err-input-msg">{{ inputs.isPopular.error }}</span> -->
       </div>
 
       <div class="lg:col-4 md:col-6 col-12 each-field">
@@ -271,7 +272,6 @@
           class="form-input col-12"
           type="checkbox"
         >
-        <!-- <span v-if="inputs.color.error" class="err-input-msg">{{ inputs.isPopular.error }}</span> -->
       </div>
 
       <div class="lg:col-4 md:col-6 col-12 each-field">
@@ -282,7 +282,7 @@
           class="form-input col-12"
           type="checkbox"
         >
-        <!-- <span v-if="inputs.color.error" class="err-input-msg">{{ inputs.isPopular.error }}</span> -->
+      
       </div>
 
       <button type="submit">
@@ -564,9 +564,9 @@ const authStore=useAuthStore()
 const router=useRouter()
 
 onMounted(async () => {
-  if(authStore?.getRole!=='Admin'){
-    router.push('/')
-}
+//   if(authStore?.getRole!=='Admin'){
+//     router.push('/')
+// }
   await productsStore.fetchProductById(id as string);
   
   item.value = productsStore?.getProduct?.product;

@@ -2,9 +2,9 @@
   <div class="each-section">
     <ProductsPopular />
 
-    <ProductsUseful />
+    <!-- <ProductsUseful />
 
-    <ProductsRecommended />
+    <ProductsRecommended /> -->
 
     <div class="koler">
       <h5 class="koler-header">{{ $t("tinting") }}</h5>

@@ -9,9 +9,9 @@ const authStore=useAuthStore()
 
 const router=useRouter()
 onMounted(()=>{
-if(authStore?.getRole!=='Admin'){
-    router.push('/')
-}
+// if(authStore?.getRole!=='Admin'){
+//     router.push('/')
+// }
 })
 
 
