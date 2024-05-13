@@ -160,7 +160,7 @@ const isPayOpen = ref(false);
 const isDropdownOpen = ref(false);
 const orderStore = useOrderStore();
 const authStore = useAuthStore();
-const { deliveryForm, delForm } = storeToRefs(orderStore);
+const { deliveryForm } = storeToRefs(orderStore);
 
 const handleDeliveryForm = (
   field: keyof typeof orderStore.delForm,
@@ -168,12 +168,11 @@ const handleDeliveryForm = (
 ) => {
   orderStore.handleValues(field, type);
 };
-
+const config = useRuntimeConfig();
+console.log('config',config)
 const suggestedAddress=ref([] as any)
 const fetchRes=async(value:string)=>{
-  console.log('received value',value)
-  const response =await axios(`https://suggest-maps.yandex.ru/v1/suggest?apikey=798689f9-b63e-4521-9012-a04e936abe52&text=${value}`);
-  console.log('wha is a burg resukt',response)
+  const response =await axios(`https://suggest-maps.yandex.ru/v1/suggest?apikey=${config?.public?.YANDEX_API}&text=${value}`);
   if(response.status===200){
     suggestedAddress.value=response.data.results
   }
@@ -184,7 +183,6 @@ const selectedPayMethod = ref("");
 const handleAddress =async(event:any)=>{
   const value = event.target?.value;
   await fetchRes(value);
-  console.log(value)
   if(value?.length){
     isDropdownOpen.value=true
     orderStore.delForm.address.error=''

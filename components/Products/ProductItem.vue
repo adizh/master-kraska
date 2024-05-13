@@ -244,6 +244,7 @@ onMounted(async () => {
   }
 }
 .item-add-btns {
+  margin-top: 10px;
   opacity: 0;
   visibility: hidden;
   @include flex(row, center, center, 20px);

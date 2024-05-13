@@ -64,7 +64,6 @@ export default defineNuxtConfig({
     right: true,
     duration: 5000
   },
-
   $development: {
     image: {
       dir: "assets/images"
@@ -77,5 +76,14 @@ export default defineNuxtConfig({
   },
   routeRules: {
     "/": { prerender: true }
-  }
+  },
+  runtimeConfig: {
+    public:{
+      YANDEX_API: process.env.YANDEX_API
+    }
+
+    // public: {
+    //   apiBase: ''
+    // }
+  },
 });
