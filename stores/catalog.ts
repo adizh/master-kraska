@@ -4,6 +4,7 @@ export const useCatalogStore = defineStore("catalogStore", {
   state: () => ({
     allCatalogs: [] as AllCatalog[],
     allCategories: [] as Category[],
+    linkedCategories: [] as CategorySys[],
     category: [] as Category[]
   }),
   actions: {
@@ -34,6 +35,18 @@ export const useCatalogStore = defineStore("catalogStore", {
             }
           );
           this.allCatalogs = filteredCatalogByLang;
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+    async fetchAllCategoriesLinked(){
+      try {
+        const response = await http("/api/v1/Category/get-all-categories");
+        console.log("response all categories", response);
+        if (response.status === 200) {
+          this.linkedCategories = response.data
         }
       } catch (err) {
         console.log(err);
@@ -120,7 +133,7 @@ export const useCatalogStore = defineStore("catalogStore", {
             } else {
               return {
                 ...item,
-                category: { ...item?.category, name: item?.category?.nameKg }
+                category: { ...item?.category, name: item?.category?.nameRu }
               };
             }
           });
@@ -140,6 +153,9 @@ export const useCatalogStore = defineStore("catalogStore", {
     },
     getCategory (state) {
       return state.category;
+    },
+    getLinkedCategories(state){
+      return state.linkedCategories
     }
   }
 });

@@ -99,7 +99,15 @@
       <div class="lg:col-4 md:col-6 col-12 each-field">
         <label for="categoryId">Категории</label>
 
-          <Dropdown :options="categories" optionLabel="nameRu" placeholder="Категория" class="w-full md:w-14rem" />
+
+        <!-- <select name="category" id="category">
+          <option :value="item?.nameRu" v-for="item in categories" :key="item?.id"></option>
+        </select> -->
+
+
+  <UISelect v-for="item in categoryValues?.value" :key="item?.id" :options="catalogStore?.getLinkedCategories" label="nameRu" 
+  @selectValue="selectValue"
+  :isDropdownOpen="isCategoryOpen === item?.id" :selectedValue="item" @openDropdown="openDropdown"/>
 
         <!-- <div v-for="categoryId in categories" :key="categoryId?.id">
           <label :for="categoryId?.name">{{ categoryId?.nameRu }}</label>
@@ -345,7 +353,7 @@
       header=" "
     >
       <ConfirmPay
-        title="Вы действительно хотите удалить расход?"
+        title="Вы действительно хотите удалить расход"
         @cancel="isDeleteOpen = false"
         @confirm="confirmDelete"
       />
@@ -354,7 +362,7 @@
 </template>
 
 <script setup lang="ts">
-import { CategorySys } from "~/types/Category";
+import { Category, CategorySys } from "~/types/Category";
 import { Product } from "~/types/Product";
 import { Variant } from "~/types/Variant";
 const { t } = useI18n();
@@ -363,7 +371,9 @@ const id = route.params.id;
 const isVariantOpen = ref(false);
 const item = ref({} as Product);
 const productsStore = useProductsSstore();
+const catalogStore=useCatalogStore()
 const isDeleteOpen = ref(false);
+const isCategoryOpen=ref('')
 const newVariants = ref({
   size: "",
   price: "",
@@ -376,6 +386,25 @@ const handleFileChange = (event: any) => {
   newVariants.value.image = event.target.files[0];
 };
 
+
+
+const openDropdown =(value:CategorySys)=>{
+  if(  isCategoryOpen.value===value?.id){
+    isCategoryOpen.value='';
+    console.log('isCategoryOpen',isCategoryOpen)
+  }else{
+    isCategoryOpen.value=value?.id
+  }
+
+
+}
+
+const selectValue =(newCategory:CategorySys,selectedValue:CategorySys)=>{
+ const itemIndex = categoryValues.value.findIndex((item:CategorySys)=>item?.id===selectedValue?.id);
+  categoryValues.value.splice(itemIndex,1,newCategory)
+
+  isCategoryOpen.value='';
+}
 const variants = ref([] as Variant[]);
 
 interface InputField {
@@ -497,9 +526,13 @@ const validate = (field: string, type: string) => {
   handleValues(inputs.value, field, type);
 };
 
+
+const getCategory =(id:string)=>{
+  const category= item?.value?.categories?.find((item:any)=>item?.id===id) as any
+  return category?.nameRu
+}
 const submitUpdate = async () => {
-  console.log("varSizes", varSizes);
-  const prodCategories = Object.values(categoryValues);
+  const prodCategories = categoryValues.value.map((item:CategorySys)=>item?.id)
   const prodVariantes = Object.values(varSizes).map((item: any) => {
     if (item?.image && item?.image?.startsWith("http")) {
       return { ...item, image: null };
@@ -508,7 +541,6 @@ const submitUpdate = async () => {
     }
   });
 
-  console.log("prodVariantes", prodVariantes);
   try {
     const body = {
       nameKg: inputs.value.nameKg.value,
@@ -568,7 +600,7 @@ onMounted(async () => {
 //     router.push('/')
 // }
   await productsStore.fetchProductById(id as string);
-  
+  catalogStore?.fetchAllCategoriesLinked()
   item.value = productsStore?.getProduct?.product;
 
 
@@ -576,12 +608,17 @@ onMounted(async () => {
   if (item?.value?.variants) {
     variants.value = item.value.variants;
   }
+
+  console.log('item',item)
   categories.value = item?.value?.categories;
 
-  item?.value?.categories.map((category: any) => {
-    categoryValues[category.id] = category.id;
-    return categoryValues;
-  });
+  categoryValues.value= item?.value?.categories
+  // item?.value?.categories.map((category: any) => {
+  //   categoryValues[category.id] = category;
+  //   return categoryValues;
+  // });
+
+  console.log('categoryValues',categoryValues)
 
   item?.value?.variants?.map((variant: Variant) => {
     varSizes[variant?.size] = { ...variant };
@@ -628,6 +665,8 @@ onMounted(async () => {
     }
   };
 });
+
+console.log('categories',categories)
 </script>
 
 <style scoped lang="scss">
