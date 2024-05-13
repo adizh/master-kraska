@@ -267,7 +267,7 @@ const getOrderId = async () => {
     const response = await http(
       `/api/v1/Order/get-order-id/${route?.params?.id}`
     );
-    console.log("response", response);
+    console.log("response get Order By Id", response);
     if (response.status === 200) {
       currentOrder.value = {
         ...response.data,
@@ -275,20 +275,12 @@ const getOrderId = async () => {
           if (authStore.getSelectedLang === "kg") {
             return {
               ...item,
-              productName: item?.productNameKg,
-              productDescription: item?.productDescriptionKg.replace(
-                /<(\/?(p|br|h[1-5]|strong|img|a|div|span|li|ul|ol)( [^>]*)?)\/?>/g,
-                ""
-              )
+              productName: item?.productNameKg
             };
           } else {
             return {
               ...item,
-              productName: item?.productNameRu,
-              productDescription: item?.productDescriptionRu?.replace(
-                /<(\/?(p|br|h[1-5]|strong|img|a|div|span|li|ul|ol)( [^>]*)?)\/?>/g,
-                ""
-              )
+              productName: item?.productNameRu
             };
           }
         })

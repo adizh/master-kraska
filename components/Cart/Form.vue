@@ -161,6 +161,7 @@ const isDropdownOpen = ref(false);
 const orderStore = useOrderStore();
 const authStore = useAuthStore();
 const { deliveryForm } = storeToRefs(orderStore);
+const config = useRuntimeConfig();
 
 const handleDeliveryForm = (
   field: keyof typeof orderStore.delForm,
@@ -168,8 +169,8 @@ const handleDeliveryForm = (
 ) => {
   orderStore.handleValues(field, type);
 };
-const config = useRuntimeConfig();
-console.log('config',config)
+
+
 const suggestedAddress=ref([] as any)
 const fetchRes=async(value:string)=>{
   const response =await axios(`https://suggest-maps.yandex.ru/v1/suggest?apikey=${config?.public?.YANDEX_API}&text=${value}`);

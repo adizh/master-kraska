@@ -51,7 +51,7 @@
                 </div>
               </div>
               <div class="col-5 md:col-3 lg:col-2">
-                <p>{{ item?.quantity }} {{ $t("piece") }}</p>
+                <p>{{ $t("piece") }}</p>
               </div>
               <div class="col-12 md:col-3 lg:col-2">
                 <p>{{ item?.price * item?.quantity }} сом</p>
@@ -194,14 +194,12 @@ const getOrderByUser = async () => {
             if (authStore.getSelectedLang === "kg") {
               return {
                 ...eachItem,
-                productName: eachItem?.productNameKg,
-                productDescription: eachItem?.productDescriptionKg,
+                productName: eachItem?.productNameKg
               };
             } else {
               return {
                 ...eachItem,
-                productName: eachItem?.productNameRu,
-                productDescription: eachItem?.productDescriptionRu,
+                productName: eachItem?.productNameRu
               };
             }
           }),

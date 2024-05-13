@@ -266,14 +266,12 @@ const fetchUserBookmarks = async () => {
         if (store.getSelectedLang === "kg") {
           return {
             ...item,
-            name: item?.nameKg,
-            shortDescription: item?.shortDescriptionKg
+            name: item?.nameKg
           };
         } else {
           return {
             ...item,
             name: item?.nameRu,
-            shortDescription: item?.shortDescriptionRu
           };
         }
       });
