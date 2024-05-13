@@ -415,22 +415,28 @@ h1 {
   justify-content: flex-end !important;
 }
 
-:deep(.swiper-slide) {
-
-}
-
 .small-image {
   display: none;
 }
 
 @media (max-width: 786px) {
+  .banner-block {
+    img {
+      height:auto;
+    }
+  }
+
+  .main-page-header{
+    height:auto;
+  }
   .sub-header {
-    font-size: 18px;
-    max-width: 340px;
+    font-size: 18px !important;
+    max-width: 340px !important;
   }
 
   h1 {
-    font-size: 48px;
+    font-size: 48px !important;
+    line-height: 49px !important;
   }
 
   .main-page-header {
@@ -457,7 +463,7 @@ h1 {
     font-size: 16px;
     max-width: 440px;
   }
-
+ 
   .pink-button {
     font-size: 16px;
     padding: 8px 20px;

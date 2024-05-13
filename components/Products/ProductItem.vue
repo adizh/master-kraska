@@ -42,9 +42,13 @@
     </div>
 
     <div class="item-add-btns">
-      <button @click.stop="removeCount">-</button>
+      <button @click.stop="removeCount">  <svg width="14" height="2" viewBox="0 0 14 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M14 1.998H0V-0.00199986H14V1.998Z" fill="#222222"/>
+        </svg></button>
       <span>{{ countToBuy }}</span>
-      <button @click.stop="increaseCount">+</button>
+      <button @click.stop="increaseCount">  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M14 7.998H8V13.998H6V7.998H0V5.998H6V-0.00199986H8V5.998H14V7.998Z" fill="#222222"/>
+        </svg></button>
     </div>
     <button class="pink-button prod-price" @click.stop="addCart">
       {{
@@ -245,13 +249,27 @@ onMounted(async () => {
   @include flex(row, center, center, 20px);
   width: 100%;
   color: $main-black;
-  button {
-    background: none;
-    outline: none;
-    border: none;
-    font-size: 20px;
-    line-height: 32px;
+  span{
+    font-size: 16px;
+    line-height: 20px;
   }
+    button {
+      background: #F5F5F5;
+      border-radius: 50%;
+      outline: none;
+      padding:  5px;
+      border: none;
+      font-size: 20px;
+      line-height: 32px;
+      @include flex(row,center,center);
+      &:hover{
+        background: #DDDDDD;
+  
+      }
+      &:first-child{
+        padding:11px 5px;
+      }
+    }
 }
 .item-block {
   width: 28%;
