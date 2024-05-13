@@ -4,6 +4,9 @@
         <span>
           {{ selectedValue?.nameRu }}
         </span>
+
+
+        <span @click.stop.capture="deleteCategory">X</span>
         <img
           class="arrow"
           :class="{ rotated: isDropdownOpen }"
@@ -33,11 +36,15 @@ import { CategorySys } from "~/types/Category";
   
   
   
-  const emit = defineEmits(['openDropdown', 'selectValue'])
+  const emit = defineEmits(['openDropdown', 'selectValue','deleteCategory'])
   const openDropdown = (selectedValue:CategorySys) => {
     emit("openDropdown",selectedValue);
   };
   
+  const deleteCategory =()=>{
+    console.log('deleteCategory',props?.selectedValue)
+    emit('deleteCategory',props.selectedValue)
+  }
   const props = defineProps<{
     selectedValue: any;
     options: any[];

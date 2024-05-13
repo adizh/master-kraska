@@ -107,7 +107,7 @@
 
   <UISelect v-for="item in categoryValues?.value" :key="item?.id" :options="catalogStore?.getLinkedCategories" label="nameRu" 
   @selectValue="selectValue"
-  :isDropdownOpen="isCategoryOpen === item?.id" :selectedValue="item" @openDropdown="openDropdown"/>
+  :isDropdownOpen="isCategoryOpen === item?.id" :selectedValue="item" @openDropdown="openDropdown" @deleteCategory="deleteCategory"/>
 
         <!-- <div v-for="categoryId in categories" :key="categoryId?.id">
           <label :for="categoryId?.name">{{ categoryId?.nameRu }}</label>
@@ -358,6 +358,20 @@
         @confirm="confirmDelete"
       />
     </Dialog>
+
+
+    <Dialog
+    v-model:visible="isDeleteCategoryOpen"
+    modal
+    :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
+    header=" "
+  >
+    <ConfirmPay
+      :title="`Вы действительно хотите удалить категорию ${currentCategory?.nameRu}?`"
+      @cancel="isDeleteCategoryOpen = false"
+      @confirm="confirmCategoryDelete"
+    />
+  </Dialog>
   </section>
 </template>
 
@@ -369,7 +383,10 @@ const { t } = useI18n();
 const route = useRoute();
 const id = route.params.id;
 const isVariantOpen = ref(false);
+const isDeleteCategoryOpen = ref(false);
 const item = ref({} as Product);
+
+const currentCategory=ref({} as CategorySys)
 const productsStore = useProductsSstore();
 const catalogStore=useCatalogStore()
 const isDeleteOpen = ref(false);
@@ -386,7 +403,10 @@ const handleFileChange = (event: any) => {
   newVariants.value.image = event.target.files[0];
 };
 
-
+const deleteCategory=(item:CategorySys)=>{
+  currentCategory.value=item;
+  isDeleteCategoryOpen.value=true
+}
 
 const openDropdown =(value:CategorySys)=>{
   if(  isCategoryOpen.value===value?.id){
@@ -422,6 +442,14 @@ interface InputField {
 
 interface Inputs {
   [key: string]: InputField;
+}
+
+const confirmCategoryDelete =()=>{
+  const categoryIndex= categoryValues?.value.findIndex((item:CategorySys)=>item?.id===currentCategory?.value?.id)
+categoryValues.value.splice(categoryIndex,1);
+isDeleteCategoryOpen.value=false;
+editProduct()
+
 }
 
 const convertToBase64 = (file: any) => {
