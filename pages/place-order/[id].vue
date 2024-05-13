@@ -371,31 +371,27 @@ const submitOrder = async () => {
     );
 
     if (!hasError) {
-      const body = {
-        orderId: route.params?.id,
+   
+      const address=orderStore.deliveryForm.address.value + orderStore.deliveryForm.houseNumber.value + orderStore.deliveryForm.blockNumber.value  + orderStore.deliveryForm.floorNumber.value 
+   console.log('address',address)
+      // const body = {
 
-        shopId: "",
-
-        name: orderStore.deliveryForm.name.value,
-
-        lastName: orderStore.deliveryForm.lastName.value,
-
-        address: orderStore.deliveryForm.address.value,
-
-        city: orderStore.deliveryForm.city.value,
-
-        phone: orderStore.deliveryForm.phone.value,
-
-        email: orderStore.deliveryForm.email.value,
-
-        comment: orderStore.deliveryForm.comment.value,
-        deliveryType: 1
-      };
-      const result = await orderStore.sendOrder(body, 1);
-      console.log("result in submitOrder", result);
-      if (result?.status === 200) {
-        isPaymentOpen.value = true;
-      }
+      //   orderId: route.params?.id,
+      //   shopId: "",
+      //   name: orderStore.deliveryForm.name.value,
+      //   lastName: orderStore.deliveryForm.lastName.value,
+      //   address: orderStore.deliveryForm.address.value,
+      //   city: orderStore.deliveryForm.city.value,
+      //   phone: orderStore.deliveryForm.phone.value,
+      //   email: orderStore.deliveryForm.email.value,
+      //   comment: orderStore.deliveryForm.comment.value,
+      //   deliveryType: 1
+      // };
+      // const result = await orderStore.sendOrder(body, 1);
+      // console.log("result in submitOrder", result);
+      // if (result?.status === 200) {
+      //   isPaymentOpen.value = true;
+      // }
     }
   }
 };

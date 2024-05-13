@@ -79,9 +79,23 @@
           type="text"
           id="address"
           v-model="inputs.address.value"
-          @input="validate('address', 'string')"
+          @input="handleAddress($event)"
         />
 
+        <Transition name="slide-fade">
+          <ul class="ui-options lg:w-30rem w-12 md:w-30rem" v-if="isAddressOpen">
+            <li
+              v-for="item in suggestedAddress"
+              :key="item?.value"
+              @click="selectAddress(item)"
+  
+            >
+              {{ item?.title?.text }}
+            
+              <span v-show="item?.subtitle?.text">, {{ item?.subtitle?.text }}</span>
+            </li>
+          </ul>
+        </Transition>
         <span class="err-input-msg"> {{ inputs.address.error }}</span>
       </div>
 
@@ -129,10 +143,13 @@
 </template>
 
 <script setup lang="ts">
+import axios from 'axios'
 import { useI18n } from "vue-i18n";
+const isAddressOpen=ref(false)
+const config = useRuntimeConfig();
 const { locale, setLocale } = useI18n();
 import { LanguageOptions } from "@/types/Items";
-
+const suggestedAddress=ref([] as any);
 const store = useAuthStore();
 const userLogo = ref("");
 const initLan = ref({
@@ -185,6 +202,37 @@ const validate = (field: string, type: string) => {
   handleValues(inputs.value, field, type);
 };
 
+const selectAddress =(item:any)=>{
+  
+  const address= item?.subtitle?.text ?  item?.title?.text +', '+ item?.subtitle?.text :  item?.title?.text 
+  console.log(address)
+
+inputs.value.address.value=address;
+isAddressOpen.value=false
+
+}
+
+
+const handleAddress=async(event:any)=>{
+  const value =event.target?.value
+  if(value){
+    isAddressOpen.value=true
+  }  else{
+    isAddressOpen.value=false
+  }
+
+
+await  fetchRes(value)
+}
+
+
+const fetchRes=async(value:string)=>{
+  const response =await axios(`https://suggest-maps.yandex.ru/v1/suggest?apikey=${config?.public?.YANDEX_API}&text=${value}`);
+  if(response.status===200){
+  console.log('address response',response)
+    suggestedAddress.value=response.data.results
+  }
+}
 const editUser = async () => {
   const validationTypes: any = {
     firstName: "string",
@@ -239,6 +287,47 @@ const uploadLogo = (event: any) => {
 </script>
 
 <style scoped lang="scss">
+
+.ui-options {
+  border: 1px solid $slider-border-color;
+  border-radius: 8px;
+  padding: 6px;
+  @include textFormat(16px, 20px, 400, #000);
+
+  li {
+    padding: 16px;
+    border-radius: 10px;
+    transition: 0.3s ease all;
+
+    &:hover {
+      background: $main-white;
+      cursor: pointer;
+      transition: 0.3s ease all;
+    }
+  }
+}
+
+.open-options {
+  visibility: visible;
+  opacity: 1;
+  animation: slideFromTop 0.5s forwards;
+}
+
+
+
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateY(-5%);
+  opacity: 0;
+}
 .change-password-btn {
   @extend %button-shared;
   background: #fff;

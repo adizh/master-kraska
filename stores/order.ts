@@ -9,7 +9,10 @@ export const useOrderStore = defineStore("orderStore", {
       phone: { value: "", error: "", type: "string" },
       city: { value: "", error: "", type: "string" },
       address: { value: "", error: "", type: "string" },
-      comment: { value: "", error: "" }
+      comment: { value: "", error: "" },
+      houseNumber: { value: "", error: "",type:'string' },
+      floorNumber: { value: "", error: "" },
+      blockNumber: { value: "", error: "" },
     },
 
     shops: [] as AddressList[]

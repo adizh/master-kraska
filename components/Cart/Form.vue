@@ -65,11 +65,41 @@
           >
             {{ item?.title?.text }},
           
-            <span>{{ item?.subtitle?.text }}</span>
+            <span v-show="item?.subtitle?.text">{{ item?.subtitle?.text }}</span>
           </li>
         </ul>
       </Transition>
- <!-- <div v-if="suggestedAddress?.length">  {{ suggestedAddress?.map((item:any)=>item?.title?.text) }}</div> -->
+  <div class="address-form lg:w-30rem w-12 md:w-30rem">
+   <div class="flex flex-column gap-2 address-input">
+    <input
+    type="text"
+    class="basic-input"
+    :placeholder="$t('houseNumber')"
+    v-model="deliveryForm.houseNumber.value"
+    @input="handleDeliveryForm('houseNumber', 'string')"
+    required
+  />
+  <span v-if="deliveryForm.houseNumber.error" class="err-input-msg">{{
+    $t(deliveryForm.houseNumber.error)
+  }}</span>
+   </div>
+
+  <input
+  type="text"
+  class="basic-input address-input"
+  :placeholder="$t('blockNumber')"
+  v-model="deliveryForm.blockNumber.value"
+  required
+/>
+<input
+type="text"
+class="basic-input address-input"
+:placeholder="$t('floorNumber')"
+v-model="deliveryForm.floorNumber.value"
+required
+/>
+  </div>
+
     </div>
 
     <div class="cart-form-block">
@@ -172,14 +202,17 @@ const handleDeliveryForm = (
 };
 
 
-const suggestedAddress=ref([] as any)
+const suggestedAddress=ref([] as any);
+
+
 const fetchRes=async(value:string)=>{
   const response =await axios(`https://suggest-maps.yandex.ru/v1/suggest?apikey=${config?.public?.YANDEX_API}&text=${value}`);
   if(response.status===200){
+  console.log('address response',response)
     suggestedAddress.value=response.data.results
   }
-
 }
+
 const selectedPayMethod = ref("");
 
 const handleAddress =async(event:any)=>{
@@ -197,12 +230,15 @@ const handleAddress =async(event:any)=>{
 }
 
 const selectAddress =(item:any)=>{
-  const address =item?.title?.text + ', ' +item?.subtitle?.text
+  if(item?.subtitle?.text){
+    const address =item?.title?.text + ', ' + item?.subtitle?.text
 orderStore?.setOrderAddress(address);
 isDropdownOpen.value=false;
 orderStore?.setOrderCity(item?.subtitle?.text)
 orderStore.delForm.city.error=''
+  }  
 }
+
 const choosePayMethod = (value: string) => {
   isPayOpen.value = true;
   selectedPayMethod.value = value;
@@ -216,6 +252,14 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+.address-form{
+  @include flex(row,start,start);
+  margin-top: 10px;
+  .address-input{
+    width: 34%;
+  }
+
+}
 .cart-form {
   &-block {
     @extend %border-bottoms;

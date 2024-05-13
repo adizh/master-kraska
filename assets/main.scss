@@ -568,6 +568,9 @@ h2 {
   overflow: hidden;
   overflow-x: hidden;
 }
+.gap-10{
+  gap:10px
+}
 .item-block-description {
   @include textFormat(14px, 20px, 600, $main-dark-grey);
   max-width: 95%;
