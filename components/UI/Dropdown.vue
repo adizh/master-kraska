@@ -42,6 +42,7 @@ const props = defineProps<{
   selectedValue: LanguageOptions;
   options: LanguageOptions[];
   isDropdownOpen: boolean;
+  label:string
 }>();
 </script>
 

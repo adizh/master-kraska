@@ -125,6 +125,12 @@ export const useOrderStore = defineStore("orderStore", {
           //  isConfirmOpen.value = false;
         }
       }
+    },
+    setOrderAddress(value:string){
+      this.delForm.address.value=value;
+    },
+    setOrderCity(value:string){
+      this.delForm.city.value=value
     }
   },
   getters: {

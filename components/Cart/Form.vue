@@ -55,7 +55,21 @@
         }}</span>
       </div>
 
- <div v-if="suggestedAddress?.length">     {{ suggestedAddress?.map((item:any)=>item?.title?.text) }}</div>
+      <Transition name="slide-fade">
+        <ul class="ui-options lg:w-30rem w-12 md:w-30rem" v-if="isDropdownOpen">
+          <li
+            v-for="item in suggestedAddress"
+            :key="item?.value"
+            @click="selectAddress(item)"
+
+          >
+            {{ item?.title?.text }},
+          
+            <span>{{ item?.subtitle?.text }}</span>
+          </li>
+        </ul>
+      </Transition>
+ <!-- <div v-if="suggestedAddress?.length">  {{ suggestedAddress?.map((item:any)=>item?.title?.text) }}</div> -->
     </div>
 
     <div class="cart-form-block">
@@ -143,6 +157,7 @@
 <script setup lang="ts">
 import axios from 'axios'
 const isPayOpen = ref(false);
+const isDropdownOpen = ref(false);
 const orderStore = useOrderStore();
 const authStore = useAuthStore();
 const { deliveryForm, delForm } = storeToRefs(orderStore);
@@ -168,12 +183,25 @@ const selectedPayMethod = ref("");
 
 const handleAddress =async(event:any)=>{
   const value = event.target?.value;
+  await fetchRes(value);
   console.log(value)
   if(value?.length){
-    await fetchRes(value)
+    isDropdownOpen.value=true
+    orderStore.delForm.address.error=''
+  }else{
+    isDropdownOpen.value=false;
+    orderStore.delForm.address.error='requiredField'
   }
 
 
+}
+
+const selectAddress =(item:any)=>{
+  const address =item?.title?.text + ', ' +item?.subtitle?.text
+orderStore?.setOrderAddress(address);
+isDropdownOpen.value=false;
+orderStore?.setOrderCity(item?.subtitle?.text)
+orderStore.delForm.city.error=''
 }
 const choosePayMethod = (value: string) => {
   isPayOpen.value = true;
@@ -207,6 +235,48 @@ onMounted(() => {
   margin-bottom: 5px !important;
   width: 68%;
 }
+
+.ui-options {
+  border: 1px solid $slider-border-color;
+  border-radius: 8px;
+  padding: 6px;
+  @include textFormat(16px, 20px, 400, #000);
+
+  li {
+    padding: 16px;
+    border-radius: 10px;
+    transition: 0.3s ease all;
+
+    &:hover {
+      background: $main-white;
+      cursor: pointer;
+      transition: 0.3s ease all;
+    }
+  }
+}
+
+.open-options {
+  visibility: visible;
+  opacity: 1;
+  animation: slideFromTop 0.5s forwards;
+}
+
+
+
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateY(-5%);
+  opacity: 0;
+}
+
 
 @media (max-width: 480px) {
   .cart-form {

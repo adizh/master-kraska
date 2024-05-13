@@ -93,6 +93,8 @@
           @click="isPasswordChangOpen = !isPasswordChangOpen"
         >
           {{ $t("changePassword") }}
+
+
         </button>
       </div>
       <div class="col-6 each-field">
@@ -103,6 +105,7 @@
           :options="lanOptions"
           @toggleDropdownUI="toggleDropdownUI"
           @selectValue="selectLanguage"
+          label="name"
         />
       </div>
     </div>
