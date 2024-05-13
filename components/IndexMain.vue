@@ -3,11 +3,10 @@
 
     <Swiper
     :slides-per-view="1"
-    :modules="[SwiperNavigation,SwiperEffectCreative,SwiperAutoplay,SwiperController]"
+    :modules="[SwiperNavigation,SwiperEffectCreative,SwiperController]"
     :navigation="true"
-    :autoplay="{
-      delay:5000
-    }"
+    :creative="true"
+    
     :creative-effect="{
       prev: {
         shadow: true,
@@ -447,21 +446,39 @@ h1 {
     font-size: 18px;
     padding: 10px 20px;
   }
+  .right {
+   display: none;
+  }
+  
 }
 
-@media (max-width: 468px) {
-  .main-page-header {
-    flex-direction: column;
-    gap: 28px;
-  }
-
+@media (max-width: 700px){
   h1 {
     font-size: 36px !important;
+    margin-bottom: 0;
+  }
+  .pink-button {
+    font-size: 16px;
   }
 
   .sub-header {
     font-size: 16px;
     max-width: 440px;
+  }
+}
+
+@media (max-width: 790px) {
+  .main-page-header {
+    padding:10px 10px 20px 10px;
+  }
+  .pink-button{
+    margin-top: 5px;
+  }
+}
+@media (max-width: 468px) {
+  .main-page-header {
+    flex-direction: column;
+    gap: 28px;
   }
  
   .pink-button {

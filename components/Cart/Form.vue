@@ -101,6 +101,7 @@
           mask="+999 999 99 99 99"
           placeholder="+996 700 55 55 55"
           v-model="deliveryForm.phone.value"
+          class="lg:w-30rem w-12 md:w-30rem"
           required
           @update:modelValue="handleDeliveryForm('phone', 'string')"
         />
