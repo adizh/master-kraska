@@ -60,7 +60,7 @@ export const useProductsSstore = defineStore("productsStore", {
         const response = await http(
           `/api/v1/Product/get-popular-products?type=${type}`
         );
-        console.log('the roor response from the popluar product',response)
+ 
         if (response.status === 200) {
           if (type === "popular") {
             this.popularProds = response.data?.popular?.map(
@@ -239,19 +239,20 @@ this.filters.currentPage=page
       const categoriesId =
         this.filters?.categoryId?.length > 0 &&
         this.filters?.categoryId !== null
-          ? this.filters?.categoryId.join(",")
+          ? this.filters?.categoryId.join(',')
           : null;
 
-      console.log("categoriesId", categoriesId);
+
       const query = {
         productName: this.filters.search || prodName,
-        categoryId: categoriesId,
+        categoriesId: categoriesId,
         subdirectoryIds: subDirs,
         minPrice: this.filters.minPrice || null,
         maxPrice: this.filters.maxPrice || null,
         brandId: allBrands,
         page: this.filters.currentPage,
-        pageSize: this.filters.pageSize
+        pageSize: this.filters.pageSize,
+        colorType:null
       };
       const authStore = useAuthStore();
       try {
@@ -259,6 +260,8 @@ this.filters.currentPage=page
           "/api/v1/Product/get-all-products-pagination",
           { params: query }
         );
+
+        console.log('query in filterProduct',query)
         console.log("response filterProducts", response);
         if (response.status === 200) {
           this.filterProductTotal.totalItems = response.data.totalItems;

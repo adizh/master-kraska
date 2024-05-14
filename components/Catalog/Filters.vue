@@ -392,20 +392,18 @@ onMounted(async () => {
     productsStore?.filters.brandId.push(brandIdQuery.value);
   }
   if (route?.query?.subCategory) {
+    console.log('route?.query?.subCategory>>>>?????')
     productsStore.filters.categoryId.push(
       route.query.subCategory as unknown as string,
     );
+    console.log(' productsStore.filters.categoryId', productsStore.filters.categoryId)
   }
-  productsStore.filterProducts();
+  await productsStore.filterProducts();
 });
 
-watch(
-  () => authStore.getSelectedLang,
-  async (newVal, oldVal) => {
-    await catalogStore.fetchAllCatalogs();
-    initializeCheckboxStates();
-  },
-);
+
+
+
 </script>
 
 <style lang="scss" scoped>

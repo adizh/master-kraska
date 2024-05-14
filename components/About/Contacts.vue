@@ -127,7 +127,7 @@ const mainShop = computed(() => {
 });
 onMounted(async () => {
   await orderStore?.fetchAllShops();
-  console.log("getShops", orderStore?.getShops);
+
 });
 watch(
   () => authStore.getSelectedLang,

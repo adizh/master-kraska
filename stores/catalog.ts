@@ -13,7 +13,6 @@ export const useCatalogStore = defineStore("catalogStore", {
       const authStore = useAuthStore();
       try {
         const response = await http("/api/v1/Helpers/get-all-catalogs");
-        console.log(response, "response get All catalogs");
         if (response.status === 200) {
           const filteredCatalogByLang = response.data.map(
             (item: AllCatalog) => {
@@ -45,7 +44,7 @@ export const useCatalogStore = defineStore("catalogStore", {
     async fetchAllCategoriesLinked(){
       try {
         const response = await http("/api/v1/Category/get-all-categories");
-        console.log("response all categories", response);
+
         if (response.status === 200) {
           this.linkedCategories = response.data
           this.allLinkedCategories = response.data
@@ -129,7 +128,7 @@ export const useCatalogStore = defineStore("catalogStore", {
       const authStore = useAuthStore();
       try {
         const response = await http("/api/v1/Category/get-all-top-categories");
-        console.log("response all categories", response);
+
         if (response.status === 200) {
           const filtered = response.data.map((item: Category) => {
             if (authStore.getSelectedLang === "kg") {

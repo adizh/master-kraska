@@ -66,7 +66,8 @@ const currentProduct=ref({} as Product)
 const confirmedItemDelete=()=>{
 
 
-productsStore.deleteProduct(currentProduct?.value)
+productsStore.deleteProduct(currentProduct?.value);
+isDeleteOpen.value=false
 }
 
 const openDelete=(item:Product)=>{

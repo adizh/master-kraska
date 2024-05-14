@@ -80,6 +80,7 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
+  
   closeCatalog: [];
 }>();
 const goToCatalog = (item: Category) => {

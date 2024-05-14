@@ -39,7 +39,9 @@
           @click="isFilterOpen = true"
         >
           <span />
+
           <span />
+          
           <span />
         </p>
         <p v-else class="open-filters" @click="isFilterOpen = false">

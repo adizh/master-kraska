@@ -96,7 +96,7 @@ const getDiscounts = async () => {
   try {
     const response = await http("/api/v1/Banner/get-all-banners");
     if (response.status === 200) {
-      console.log("response data in discount", response);
+
       discounts.value = response.data.map((item: Discount) => {
         if (authStore?.getSelectedLang === "kg") {
           return {
@@ -127,14 +127,13 @@ const bannerImage = ref<HTMLImageElement | null>(null);
 const targetElement = ref<HTMLElement | null>(null);
 
 const updateHeight = () => {
-  console.log('is update wokring')
+
   if (bannerImage.value && targetElement.value) {
 
     const imageHeight = bannerImage.value.clientHeight;
-    console.log('imageHeight',imageHeight)
+
     targetElement.value.style.height = `${imageHeight}px`;
-    console.log('updateHeight targetElement',targetElement.value.style.height)
-    console.log('updateHeight bannerImage',bannerImage.value.style.height)
+    
   }
 };
 watch(

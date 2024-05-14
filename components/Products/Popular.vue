@@ -43,7 +43,6 @@ onMounted(async () => {
   handleResize();
   window.addEventListener("resize", handleResize);
   await store.fetchSpecialProd("popular");
-  console.log("store.getPopularProducts", store.getPopularProducts);
 });
 
 onUnmounted(() => {
