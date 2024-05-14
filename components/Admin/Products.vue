@@ -10,7 +10,13 @@
         >
           <template #edit-items>
 <div class="admin-icons">
-  <div @click.stop="navigateTo(`/admin/edit-product/${item.id}`)">
+  <div @click.stop="navigateTo(`/admin/edit-product/${item.id}`,{
+    external: true,
+    open: {
+      target: '_blank',
+    }
+  }
+    )">
     <img
     src="../../assets/icons/tdesign_edit.svg"
     alt="edit"

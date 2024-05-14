@@ -633,6 +633,8 @@ const editProduct = () => {
   );
   if (!hasError) {
     submitUpdate();
+
+    router.push('/admin')
   }
 };
 const authStore=useAuthStore()

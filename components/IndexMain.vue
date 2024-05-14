@@ -3,10 +3,12 @@
 
     <Swiper
     :slides-per-view="1"
-    :modules="[SwiperNavigation,SwiperEffectCreative,SwiperController]"
+    :modules="[SwiperNavigation,SwiperEffectCreative,SwiperController,SwiperAutoplay]"
     :navigation="true"
     :creative="true"
-    
+    :autoplay="{
+      delay:5000
+    }"
     :creative-effect="{
       prev: {
         shadow: true,
