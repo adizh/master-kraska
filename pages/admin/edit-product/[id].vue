@@ -6,7 +6,7 @@
         <input
           id="name"
           v-model="inputs.nameRu.value"
-          class="form-input col-12"
+          class="basic-input col-12"
           type="text"
           @input="validate('nameRu', 'string')"
         >
@@ -20,7 +20,7 @@
         <input
           id="name"
           v-model="inputs.nameKg.value"
-          class="form-input col-12"
+          class="basic-input col-12"
           type="text"
           @input="validate('nameKg', 'string')"
         >
@@ -34,7 +34,7 @@
         <input
           id="description"
           v-model="inputs.descriptionRu.value"
-          class="form-input col-12"
+          class="basic-input col-12"
           type="text"
           @input="validate('descriptionRu', 'string')"
         >
@@ -47,7 +47,7 @@
         <input
           id="descriptionKg"
           v-model="inputs.descriptionKg.value"
-          class="form-input col-12"
+          class="basic-input col-12"
           type="text"
           @input="validate('descriptionKg', 'string')"
         >
@@ -60,7 +60,7 @@
         <input
           id="shortDescriptionRu"
           v-model="inputs.shortDescriptionRu.value"
-          class="form-input col-12"
+          class="basic-input col-12"
           type="text"
           @input="validate('shortDescriptionRu', 'string')"
         >
@@ -73,7 +73,7 @@
         <input
           id="shortDescriptionKg"
           v-model="inputs.shortDescriptionKg.value"
-          class="form-input col-12"
+          class="basic-input col-12"
           type="text"
           @input="validate('shortDescriptionRu', 'string')"
         >
@@ -87,7 +87,7 @@
         <input
           id="price"
           v-model="inputs.price.value"
-          class="form-input col-12"
+          class="basic-input col-12"
           type="number"
           @input="validate('price', 'number')"
         >
@@ -110,7 +110,7 @@
         <input
           id="subcategoryId"
           v-model="inputs.subcategoryId.value"
-          class="form-input col-12"
+          class="basic-input col-12"
           type="text"
         >
         <span v-if="inputs.subcategoryId.error" class="err-input-msg">{{
@@ -131,7 +131,7 @@
         <!-- <input
           id="brandId"
           v-model="inputs.brandId.value"
-          class="form-input col-12"
+          class="basic-input col-12"
           type="text"
         >
         <span v-if="inputs.brandId.error" class="err-input-msg">{{
@@ -146,7 +146,7 @@
         <input
           id="size"
           v-model="inputs.size.value"
-          class="form-input col-12"
+          class="basic-input col-12"
           type="text"
           @input="validate('size', 'string')"
         >
@@ -160,7 +160,7 @@
         <input
           id="color"
           v-model="inputs.color.value"
-          class="form-input col-12"
+          class="basic-input col-12"
           type="text"
           @input="validate('color', 'string')"
         >
@@ -174,7 +174,7 @@
         <input
           id="color"
           v-model="inputs.dryingTime.value"
-          class="form-input col-12"
+          class="basic-input col-12"
           type="text"
           @input="validate('dryingTime', 'string')"
         >
@@ -191,7 +191,7 @@
         <input
           id="color"
           v-model="inputs.consumption.value"
-          class="form-input col-12"
+          class="basic-input col-12"
           type="text"
           @input="validate('consumption', 'string')"
         >
@@ -222,7 +222,7 @@
             <input
               :id="variant?.size"
               v-model="varSizes[variant?.size].size"
-              class="form-input col-12"
+              class="basic-input col-12"
               type="text"
             >
 
@@ -230,14 +230,14 @@
             <input
               :id="variant?.base"
               v-model="varSizes[variant?.size].base"
-              class="form-input col-12"
+              class="basic-input col-12"
               type="text"
             >
             <label :for="variant?.size">Код</label>
             <input
               :id="variant?.size"
               v-model="varSizes[variant?.size].code"
-              class="form-input col-12"
+              class="basic-input col-12"
               type="number"
             >
 
@@ -245,7 +245,7 @@
             <input
               :id="variant?.size"
               v-model="varSizes[variant?.size].price"
-              class="form-input col-12"
+              class="basic-input col-12"
               type="number"
             >
           </div>
@@ -260,7 +260,7 @@
         <input
           id="color"
           v-model="inputs.isPopular.value"
-          class="form-input col-12"
+          class="basic-input col-12"
           type="checkbox"
         >
       </div>
@@ -270,7 +270,7 @@
         <input
           id="isFeatured"
           v-model="inputs.isFeatured.value"
-          class="form-input col-12"
+          class="basic-input col-12"
           type="checkbox"
         >
       </div>
@@ -280,7 +280,7 @@
         <input
           id="isBeneficial"
           v-model="inputs.isBeneficial.value"
-          class="form-input col-12"
+          class="basic-input col-12"
           type="checkbox"
         >
       
