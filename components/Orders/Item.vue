@@ -68,7 +68,7 @@
     </div>
 
     <UIPagination
-      :total="10"
+      :total="totalPages"
       :currentActive="currentPage"
       @changePage="changePage"
     />
@@ -116,7 +116,7 @@
 import { OrderItem, UserOrder } from "~/types/Order";
 import moment from "moment";
 import { User } from "~/types/User";
-
+const totalPages=ref(1)
 const isPayOpen = ref(false);
 const formatDated = (date: string) => {
   return moment(date).format("D/MM/YY");
@@ -178,16 +178,18 @@ const toggleCatalog = (id: string) => {
 };
 const changePage = (page: number) => {
   currentPage.value = page;
+  getOrderByUser()
 };
 
 const getOrderByUser = async () => {
   try {
     const response = await http(
-      `/api/v1/Order/get-orders-by-user-id/${authStore.getUserId}`,
+      `/api/v1/Order/get-orders-by-user-id/${authStore.getUserId}?page=${currentPage?.value}&pageSize=4`,
     );
     if (response.status === 200) {
       console.log("get order by user", response);
-      userOrders.value = response.data.map((order: OrderItem) => {
+      totalPages.value=response.data?.totalPages
+      userOrders.value = response.data?.items?.map((order: OrderItem) => {
         return {
           ...order,
           items: order?.items.map((eachItem) => {
