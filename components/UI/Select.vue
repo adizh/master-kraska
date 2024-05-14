@@ -2,11 +2,11 @@
     <div class="ui-dropdown col-6">
       <div class="selected-option basic-input" @click="openDropdown(selectedValue)">
         <span>
-          {{ selectedValue?.nameRu }}
+          {{ selectedValue[label] }}
         </span>
 
 
-        <span @click.stop.capture="deleteCategory">X</span>
+        <span @click.stop.capture="deleteCategory" v-show="type==='category'">X</span>
         <img
           class="arrow"
           :class="{ rotated: isDropdownOpen }"
@@ -58,7 +58,8 @@ emit('searchCategories',event?.target?.value)
     selectedValue: any;
     options: any[];
     isDropdownOpen: boolean;
-    label:string
+    label:string;
+    type?:string
   }>();
 
   onMounted(()=>{

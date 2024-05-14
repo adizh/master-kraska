@@ -98,28 +98,11 @@
 
       <div class="lg:col-4 md:col-6 col-12 each-field">
         <label for="categoryId">Категории</label>
-
-
-        <!-- <select name="category" id="category">
-          <option :value="item?.nameRu" v-for="item in categories" :key="item?.id"></option>
-        </select> -->
-
-
   <UISelect v-for="item in categoryValues?.value" :key="item?.id" :options="catalogStore?.getLinkedCategories" label="nameRu" 
   @selectValue="selectValue"
   :isDropdownOpen="isCategoryOpen === item?.id" :selectedValue="item" @openDropdown="openDropdown" @deleteCategory="deleteCategory"
-  @searchCategories=searchCategories
+  @searchCategories=searchCategories  type="category"
   />
-
-        <!-- <div v-for="categoryId in categories" :key="categoryId?.id">
-          <label :for="categoryId?.name">{{ categoryId?.nameRu }}</label>
-          <input
-            :id="categoryId?.name"
-            v-model="categoryValues[categoryId?.id]"
-            class="form-input col-12"
-            type="text"
-          >
-        </div> -->
       </div>
 
       <div class="lg:col-4 md:col-6 col-12 each-field">
@@ -137,7 +120,15 @@
 
       <div class="lg:col-4 md:col-6 col-12 each-field">
         <label for="brandId">Бренд</label>
-        <input
+
+
+<UISelect  :options="brandsStore?.getAllBrands" label="name" 
+@selectValue="selectBrand"
+:isDropdownOpen="isBrandOpen" :selectedValue="selectedBrand" @openDropdown="toggleBrand" 
+@searchCategories='seachBrands' type="brand"
+/>
+      
+        <!-- <input
           id="brandId"
           v-model="inputs.brandId.value"
           class="form-input col-12"
@@ -145,7 +136,7 @@
         >
         <span v-if="inputs.brandId.error" class="err-input-msg">{{
           inputs.brandId.error
-        }}</span>
+        }}</span> -->
       </div>
 
       <div class="lg:col-4 md:col-6 col-12 each-field">
@@ -378,6 +369,7 @@
 </template>
 
 <script setup lang="ts">
+import { Brands } from "~/types/Brands";
 import { Category, CategorySys } from "~/types/Category";
 import { Product } from "~/types/Product";
 import { Variant } from "~/types/Variant";
@@ -387,12 +379,14 @@ const id = route.params.id;
 const isVariantOpen = ref(false);
 const isDeleteCategoryOpen = ref(false);
 const item = ref({} as Product);
-
+const brandsStore=useBrandsStore()
 const currentCategory=ref({} as CategorySys)
 const productsStore = useProductsSstore();
 const catalogStore=useCatalogStore()
+const isBrandOpen =ref(false)
 const isDeleteOpen = ref(false);
 const isCategoryOpen=ref('');
+const selectedBrand =ref({} as Brands)
 
 const searchCategories =(value:string)=>{
   catalogStore.filterLinkedCategories(value)
@@ -409,6 +403,15 @@ const handleFileChange = (event: any) => {
   newVariants.value.image = event.target.files[0];
 };
 
+const selectBrand=(brand:Brands,{})=>{
+  inputs.value.brandId.value =brand?.id;
+  selectedBrand.value=brand;
+  isBrandOpen.value=false
+}
+
+const toggleBrand=()=>{
+  isBrandOpen.value=!isBrandOpen.value
+}
 const deleteCategory=(item:CategorySys)=>{
   currentCategory.value=item;
   isDeleteCategoryOpen.value=true
@@ -425,10 +428,14 @@ const openDropdown =(value:CategorySys)=>{
 
 }
 
+
+const seachBrands =(value:string)=>{
+console.log(value);
+brandsStore.searchBrands(value)
+}
 const selectValue =(newCategory:CategorySys,selectedValue:CategorySys)=>{
  const itemIndex = categoryValues.value.findIndex((item:CategorySys)=>item?.id===selectedValue?.id);
   categoryValues.value.splice(itemIndex,1,newCategory)
-
   isCategoryOpen.value='';
 }
 const variants = ref([] as Variant[]);
@@ -469,12 +476,14 @@ const convertToBase64 = (file: any) => {
 
 const newVarImage = ref(null);
 const variantImage = ref("");
+
 const handleNewVarImage = async (event: any) => {
   newVarImage.value = event.target.files[0];
   const base64StringNewImage = await convertToBase64(newVarImage.value);
   variantImage.value = base64StringNewImage as unknown as string;
   varSizes[currVarSize.value].image = base64StringNewImage as unknown as string;
 };
+
 const currVarSize = ref("");
 const openFileInput = (varSize: string) => {
   const fileInput = document.getElementById("fileInput") as HTMLElement;
@@ -575,6 +584,7 @@ const submitUpdate = async () => {
     }
   });
 
+  console.log('brandiN',inputs?.value?.brandId)
   try {
     const body = {
       nameKg: inputs.value.nameKg.value,
@@ -634,10 +644,14 @@ onMounted(async () => {
 //     router.push('/')
 // }
   await productsStore.fetchProductById(id as string);
-  catalogStore?.fetchAllCategoriesLinked()
+  catalogStore?.fetchAllCategoriesLinked();
+
+
   item.value = productsStore?.getProduct?.product;
 
-
+  await brandsStore.fetchAllBrandId(item?.value?.brandId)
+  await brandsStore.fetchAllBrands();
+  selectedBrand.value=brandsStore.getBrand
   console.log('item',item)
   if (item?.value?.variants) {
     variants.value = item.value.variants;
