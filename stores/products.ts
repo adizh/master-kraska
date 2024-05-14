@@ -310,6 +310,21 @@ this.filters.currentPage=page
       } catch (err) {
         console.log(err);
       }
+    },
+
+    async deleteProduct(product:Product){
+      try{
+       const response = await http.delete(`/api/v1/Product/delete-product-by-id/${product?.id}`);
+if(response.status===200){
+  console.log('response delete product',response);
+  useNotif("success", "Продукт удален!", "Успешно");
+}
+       
+      }catch(err){
+        console.log(err);
+        
+       useNotif("error", "Ошибка при удалении продукта", "Ошибка");
+      }
     }
   },
   getters: {

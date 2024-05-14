@@ -9,9 +9,22 @@
           :product="item"
         >
           <template #edit-items>
-            <div @click.stop="navigateTo(`/admin/edit-product/${item.id}`)">
-              Edit item
-            </div>
+<div class="admin-icons">
+  <div @click.stop="navigateTo(`/admin/edit-product/${item.id}`)">
+    <img
+    src="../../assets/icons/tdesign_edit.svg"
+    alt="edit"
+   
+  />
+  </div>
+
+  <div @click.stop="openDelete(item)">
+    <img
+    src="../../assets/icons/icon=trash.svg"
+    alt="trash"
+  />
+  </div>
+</div>
           </template>
         </ProductsProductItem>
       </div>
@@ -25,11 +38,41 @@
     <div v-else class="text-center">
       <ProgressSpinner />
     </div>
+
+
+
+    <Dialog
+    v-model:visible="isDeleteOpen"
+    modal
+    :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
+    header=" "
+  >
+    <ConfirmPay
+      @cancel="isDeleteOpen = false"
+      @confirm="confirmedItemDelete"
+      title='Вы действительно хотите удалить этот продукт'
+    />
+  </Dialog>
   </div>
 </template>
 
 <script setup lang="ts">
+import { Product } from '~/types/Product';
+
 const productsStore = useProductsSstore();
+const isDeleteOpen =ref(false)
+
+const currentProduct=ref({} as Product)
+const confirmedItemDelete=()=>{
+
+
+productsStore.deleteProduct(currentProduct?.value)
+}
+
+const openDelete=(item:Product)=>{
+  isDeleteOpen.value=true
+  currentProduct.value=item
+}
 const changePage = (page: number) => {
   productsStore.filters.currentPage = page;
   productsStore.filterProducts();
@@ -44,6 +87,23 @@ onMounted(() => {
   margin-top: 40px;
   @include flex(row, center, center, 20px);
   flex-wrap: wrap;
+}
+
+.admin-icons{
+  @include flex(row,start,center,20px);
+  div{
+    width:34px;
+    height:34px;
+    background: #F5F5F5;
+    border-radius: 50%;
+padding:11px;
+@include flex(row,center,center);
+    &:hover{
+      background: #DDDDDD
+
+    }
+
+  }
 }
 
 @media (max-width: 1100px) {

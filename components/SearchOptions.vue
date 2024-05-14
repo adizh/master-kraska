@@ -69,10 +69,7 @@ const searchName = (name: string) => {
 };
 onMounted(async () => {
   await catalogStore.fetchAllCategories();
-  console.log(
-    "catalogStore  in seafh opention??",
-    catalogStore.getAllCategories,
-  );
+ 
   firstCategoryItem.value = catalogStore?.getAllCategories[0];
 
   if (!productStore?.getLoadingState && productStore?.getFilteredProducts) {

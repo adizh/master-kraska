@@ -17,8 +17,10 @@
             class="search-icon"
           >
         </div>
-        <div class="btn-block">
+        <div class="btn-block" @click.stop="router.push(`/catalog/${firstCategoryItem?.category?.id}`)">
+
           <button>{{ $t('find') }}</button>
+
         </div>
       </div>
       <SearchOptions
@@ -38,10 +40,16 @@
 </template>
 
 <script setup lang="ts">
+
+import { Category } from "~/types/Category";
+
 const productStore = useProductsSstore();
+const catalogStore =useCatalogStore()
 const isSearchOpen = ref(false);
+const firstCategoryItem = ref({} as Category);
+const router =useRouter()
 const handleSearch = (event: any) => {
-  isSearchOpen.value = event.target.value.trim().length > 0;
+  isSearchOpen.value = event.target?.value?.trim().length > 0;
   productStore.filterProducts();
 };
 
@@ -58,6 +66,13 @@ const disableBodyScroll = () => {
 const enableBodyScroll = () => {
   document.body.style.overflow = "auto";
 };
+
+onMounted(async()=>{
+  await catalogStore.fetchAllCategories();
+ 
+ firstCategoryItem.value = catalogStore?.getAllCategories[0];
+})
+
 onUnmounted(() => {
   document.body.style.overflow = "auto";
 });

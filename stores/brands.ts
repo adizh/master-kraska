@@ -46,8 +46,7 @@ allBrands:[] as Brands[],
         if (response.status === 200) {
 
           this.brand=response.data;
-          console.log('this brand',this.brand)
-          console.log('response single brand', response.data)
+     
         }
       } catch (err) {
         console.log(err);

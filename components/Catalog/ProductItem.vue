@@ -106,7 +106,7 @@ const router = useRouter();
 const countToBuy = ref(1);
 const { t } = useI18n();
 const cartStore = useCartStore();
-console.log('prop product',props?.product)
+
 
 const prodBrand = ref("");
 
@@ -202,7 +202,6 @@ const addCart = () => {
 const isItemHovered = ref(false);
 
 const itemHover = () => {
-  console.log("itemHover");
   isItemHovered.value = true;
 };
 const itemHoverLeave = () => {
