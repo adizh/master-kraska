@@ -21,7 +21,7 @@
   >
     <SwiperSlide>
       <div class="slider-wrapper">
-        <div class="main-page-header">
+        <div class="main-page-header"  ref="targetElement">
           <div class="left">
             <h1>Мастер Краска</h1>
             <div class="sub-header">{{ $t("officialRepres") }}</div>
@@ -39,7 +39,7 @@
     </SwiperSlide>
     <SwiperSlide>
       <div class="banner-block slider-wrapper">
-        <img src="../assets/images/1180x520.png" format="webp" />
+        <img src="../assets/images/1180x520.png" format="webp" id="'banner-image" ref="bannerImage" @load="updateHeight"/>
       </div>    
     </SwiperSlide>
 
@@ -78,188 +78,7 @@
     
   </Swiper>
 
-    <!-- <div class="slider-wrapper">
-      <div
-        class="main-page-header animate__animated"
-        v-if="currentIndex === 0"
-        :class="{
-          animate__slideInRight: currentIndex === 0 && direction === 'next',
-          animate__slideInLeft: currentIndex === 0 && direction === 'prev',
-        }"
-      >
-        <div class="left">
-          <h1>Мастер Краска</h1>
-          <div class="sub-header">{{ $t("officialRepres") }}</div>
-          <button class="pink-button" @click="navigateTo('/parameters')">
-            {{ $t("searchByParams") }}
-          </button>
-        </div>
-        <div class="right">
-          <img src="/main-page.png" class="large-image" format="webp" />
-          <img src="/vertical-main.png" format="webp" class="small-image" />
-        </div>
-      </div>
-
-      <div
-        class="animate__animated"
-        v-else-if="currentIndex === 1"
-        :class="{
-          animate__fadeInRight: currentIndex === 1 && direction === 'next',
-          animate__fadeInLeft: currentIndex === 1 && direction === 'prev',
-        }"
-      >
-        <div class="banner-block">
-          <img src="../assets/images/1180x520.png" format="webp" />
-        </div>
-      </div>
-
-      <div
-        class="animate__animated"
-        v-else-if="currentIndex === 2"
-        :class="{
-          animate__slideInRight: currentIndex === 2 && direction === 'next',
-          animate__slideInLeft: currentIndex === 2 && direction === 'prev',
-        }"
-      >
-        <div class="banner-block">
-          <img src="../assets/images/image001.png" format="webp" />
-        </div>
-      </div>
-      <div
-        class="animate__animated"
-        v-else-if="currentIndex === 3"
-        :class="{
-          animate__slideInRight: currentIndex === 3 && direction === 'next',
-          animate__slideInLeft: currentIndex === 3 && direction === 'prev',
-        }"
-      >
-        <div class="banner-block">
-          <img
-            src="../assets/images/Oikos_Banner_Kraska_1180x520.gif"
-            format="webp"
-          />
-        </div>
-      </div>
-
-      <div
-        class="animate__animated"
-        v-else-if="currentIndex === 4"
-        :class="{
-          animate__slideInRight: currentIndex === 4 && direction === 'next',
-          animate__slideInLeft: currentIndex === 4 && direction === 'prev',
-        }"
-      >
-        <div class="banner-block">
-          <img
-            src="../assets/images/Oikos_Banner_Kraska_1180x520_Encanto.jpg"
-            format="webp"
-          />
-        </div>
-      </div>
-
-      <div
-        class="animate__animated"
-        v-else-if="currentIndex === 5"
-        :class="{
-          animate__slideInRight: currentIndex === 5 && direction === 'next',
-          animate__slideInLeft: currentIndex === 5 && direction === 'prev',
-        }"
-      >
-        <div class="banner-block">
-          <img
-            src="../assets/images/Oikos_Banner_Kraska_1180x520_MultidecorSkin.jpg"
-            format="webp"
-          />
-        </div>
-      </div>
-
-      <div
-        class="animate__animated"
-        v-else-if="currentIndex === 6"
-        :class="{
-          animate__slideInRight: currentIndex === 6 && direction === 'next',
-          animate__slideInLeft: currentIndex === 6 && direction === 'prev',
-        }"
-      >
-        <div class="banner-block">
-          <img
-            src="../assets/images/Oikos_Banner_Kraska_1180x520_Ottocento.jpg"
-            format="webp"
-          />
-        </div>
-      </div>
-
-      <div class="controls">
-        <img
-          src="../assets/icons/arrow-right.svg"
-          @click="prevSlide"
-          alt="arrow"
-        />
-        <div class="controls-circle">
-          <span
-            @click="changeSlide(0)"
-            :class="{
-              'active-control': currentIndex === 0,
-              'next-slide': direction === 'next',
-              'prev-slide': direction === 'prev',
-            }"
-          ></span>
-          <span
-            @click="changeSlide(1)"
-            :class="{
-              'active-control': currentIndex === 1,
-              'next-slide': direction === 'next',
-              'prev-slide': direction === 'prev',
-            }"
-          ></span>
-          <span
-            @click="changeSlide(2)"
-            :class="{
-              'active-control': currentIndex === 2,
-              'next-slide': direction === 'next',
-              'prev-slide': direction === 'prev',
-            }"
-          ></span>
-          <span
-            @click="changeSlide(3)"
-            :class="{
-              'active-control': currentIndex === 3,
-              'next-slide': direction === 'next',
-              'prev-slide': direction === 'prev',
-            }"
-          ></span>
-          <span
-            @click="changeSlide(4)"
-            :class="{
-              'active-control': currentIndex === 4,
-              'next-slide': direction === 'next',
-              'prev-slide': direction === 'prev',
-            }"
-          ></span>
-          <span
-            @click="changeSlide(5)"
-            :class="{
-              'active-control': currentIndex === 5,
-              'next-slide': direction === 'next',
-              'prev-slide': direction === 'prev',
-            }"
-          ></span>
-          <span
-            @click="changeSlide(6)"
-            :class="{
-              'active-control': currentIndex === 6,
-              'next-slide': direction === 'next',
-              'prev-slide': direction === 'prev',
-            }"
-          ></span>
-        </div>
-        <img
-          @click="nextSlide"
-          src="../assets/icons/arrow-left.svg"
-          alt="arrow-left"
-        />
-      </div>
-    </div> -->
+  
   </div>
 </template>
 
@@ -304,9 +123,38 @@ const getDiscounts = async () => {
     isLoading.value = false;
   }
 };
+const bannerImage = ref<HTMLImageElement | null>(null);
+const targetElement = ref<HTMLElement | null>(null);
+
+const updateHeight = () => {
+  console.log('is update wokring')
+  if (bannerImage.value && targetElement.value) {
+
+    const imageHeight = bannerImage.value.clientHeight;
+    console.log('imageHeight',imageHeight)
+    targetElement.value.style.height = `${imageHeight}px`;
+    console.log('updateHeight targetElement',targetElement.value.style.height)
+    console.log('updateHeight bannerImage',bannerImage.value.style.height)
+  }
+};
+watch(
+  () => bannerImage.value?.clientHeight,
+  (newHeight) => {
+    if (newHeight) {
+      updateHeight();
+    }
+  }
+);
 onMounted(() => {
   getDiscounts();
+  window.addEventListener('resize', updateHeight);
 });
+
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', updateHeight);
+});
+
 import "animate.css";
 const currentIndex = ref(0);
 const direction = ref("");
@@ -330,6 +178,11 @@ const prevSlide = () => {
 </script>
 
 <style scoped lang="scss">
+.carousel-slider{
+  margin-left:-2rem !important;
+  margin-right:-2rem !important;
+}
+
 
 .banner-block {
   width: 100%;
@@ -418,15 +271,25 @@ h1 {
   display: none;
 }
 
+
+@media (min-width:1400px){
+  .carousel-slider{
+      margin-top: -4.6rem !important;
+      margin-left: -10rem !important;
+      margin-right: -10rem !important;
+    }
+  }
+  @media (max-width:1100px){
+    .carousel-slider{
+      margin-top:-4rem;
+    }
+  }
+
 @media (max-width: 786px) {
   .banner-block {
     img {
       height:auto;
     }
-  }
-
-  .main-page-header{
-    height:auto;
   }
   .sub-header {
     font-size: 18px !important;
@@ -472,19 +335,47 @@ h1 {
     padding:10px 10px 20px 10px;
   }
   .pink-button{
-    margin-top: 5px;
+    margin-top: 40px;
   }
 }
-@media (max-width: 468px) {
+
+@media (max-width:576px){
+  .pink-button{
+    margin-top: 5px;
+  }
+  h1 {
+    font-size: 26px !important;
+    margin-bottom: 0;
+  }
+ 
+  .main-page-header{
+    padding-top: 30px !important;
+  }
+  .sub-header {
+    font-size: 16px !important;
+    max-width: 440px  !important;
+  }
+  .sub-header{
+    line-height: 33px !important;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .carousel-slider{
+    margin-top: -7.3rem !important;
+  }
+  .sub-header{
+    line-height: 28px !important;
+  }
   .main-page-header {
     flex-direction: column;
     gap: 28px;
   }
  
   .pink-button {
-    font-size: 16px;
+    font-size: 16px !important;
     padding: 8px 20px;
-    margin: 1.3rem;
   }
 
   .large-image {
@@ -493,6 +384,44 @@ h1 {
 
   .small-image {
     display: block;
+  }
+
+
+}
+@media (max-width: 468px){
+  .carousel-slider{
+    margin-top: -0.3rem !important;
+  }
+}
+@media (max-width: 430px){
+ h1{
+  font-size: 20px !important;
+ }
+ .sub-header{
+  font-size: 14px !important;
+  line-height: 20px !important;
+ }
+ .pink-button{
+  font-size: 13px !important;
+        padding: 6px 14px;
+        margin-top: 15px;
+      
+    
+ }
+ .main-page-header{
+  padding-top: 20px !important;
+}
+}
+
+@media (max-width:360px){
+  .main-page-header {
+    padding-top: 5px !important;
+  }
+  .left{
+    align-items: center;
+  }
+  .sub-header{
+    line-height: 18px;
   }
 }
 </style>

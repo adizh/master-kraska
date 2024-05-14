@@ -67,6 +67,8 @@ onUnmounted(() => {
 section{
   margin-top: -2.6rem;
 }
+
+
 .search-place {
   position: relative;
   width: 100%;
