@@ -1,4 +1,4 @@
-import { AllCatalog } from "~/types/Catalog";
+import { AllCatalog, SubDirHelper } from "~/types/Catalog";
 import { Category, CategorySys } from "~/types/Category";
 export const useCatalogStore = defineStore("catalogStore", {
   state: () => ({
@@ -6,7 +6,9 @@ export const useCatalogStore = defineStore("catalogStore", {
     allCategories: [] as Category[],
     linkedCategories: [] as CategorySys[],
     allLinkedCategories: [] as CategorySys[],
-    category: [] as Category[]
+    category: [] as Category[],
+    allHelpersSubDir:[] as SubDirHelper[],
+    allHelpersSubDirFilter:[] as SubDirHelper[],
   }),
   actions: {
     async fetchAllCatalogs () {
@@ -148,7 +150,38 @@ export const useCatalogStore = defineStore("catalogStore", {
       } catch (err) {
         console.log(err);
       }
-    }
+    },
+    async fetchCatalog(categoryId:string){
+      try{
+      const response = await http(`/api/v1/Helpers/get-catalog/${categoryId}`);
+      if(response.status===200){
+        return response.data
+      }
+      }catch(err){
+        console.log(err)
+      }
+    },
+    searchSubDirs(value:string){
+     this.allHelpersSubDir=this.allHelpersSubDirFilter.filter((item)=>item?.nameRu?.toLowerCase().includes(value?.toLowerCase()))
+    },
+    async getHelpersSubDirs() {
+      try {
+        const response = await http('/api/v1/Helpers/get-all-subdirectories');
+        if (response.status === 200) {
+          const results = await Promise.all(response.data.map(async (helper: SubDirHelper) => {
+            const result = await this.fetchCatalog(helper?.categoryId);
+            return { ...helper, category: await result?.nameRu };
+          }));
+    
+          this.allHelpersSubDir = results;
+          this.allHelpersSubDirFilter = results;
+          console.log('this.allHelpersSubDir', this.allHelpersSubDir);
+        }
+      } catch (error) {
+        console.error('Error fetching helpers subdirectories:', error);
+      }
+    },
+   
   },
   getters: {
     getAllCatalogs (state) {
@@ -162,6 +195,9 @@ export const useCatalogStore = defineStore("catalogStore", {
     },
     getLinkedCategories(state){
       return state.linkedCategories
+    },
+    getHelperSubDirs(state){
+      return state.allHelpersSubDir
     }
   }
 });

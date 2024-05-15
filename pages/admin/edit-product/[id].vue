@@ -105,30 +105,8 @@
   />
       </div>
 
-
-      <div class="lg:col-4 md:col-6 col-12 each-field">
-        <label for="subcategoryId">Подкатегории (helpersMain)</label>
-
-        <UISelect v-for="item in categoryValues?.value" :key="item?.id" :options="catalogStore?.getLinkedCategories" label="nameRu" 
-        @selectValue="selectValue"
-        :isDropdownOpen="isCategoryOpen === item?.id" :selectedValue="item" @openDropdown="openDropdown" @deleteCategory="deleteCategory"
-        @searchCategories=searchCategories  type="category"
-        />
-        <!-- <input
-          id="subcategoryId"
-          v-model="inputs.subcategoryId.value"
-          class="basic-input col-12"
-          type="text"
-        >
-        <span v-if="inputs.subcategoryId.error" class="err-input-msg">{{
-          inputs.subcategoryId.error
-        }}</span> -->
-      </div>
-
       <div class="lg:col-4 md:col-6 col-12 each-field">
         <label for="brandId">Бренд</label>
-
-
 <UISelect  :options="brandsStore?.getAllBrands" label="name" 
 @selectValue="selectBrand"
 :isDropdownOpen="isBrandOpen" :selectedValue="selectedBrand" @openDropdown="toggleBrand" 
@@ -137,6 +115,16 @@
       
       </div>
 
+
+      <div class="lg:col-6 md:col-6 col-12 each-field">
+        <label for="subcategoryId">Подкатегории (helpersMain)</label>
+        <UISelect v-for="helper in productHelpers" :key="helper?.id" :options="catalogStore.getHelperSubDirs" label="nameRu" 
+        @selectValue="selectSubDir" :isDropdownOpen="isHelperOpen === helper?.id" :selectedValue="helper" @openDropdown="toggleHelper" @deleteCategory="deleteSubDir"
+        @searchCategories='catalogStore.searchSubDirs'  type="subdir"
+        />
+      </div>
+
+     
       <div class="lg:col-4 md:col-6 col-12 each-field">
         <label for="size" class="flex flex-row justify-content-between">
           <span> Размер </span>
@@ -353,7 +341,6 @@
       />
     </Dialog>
 
-
     <Dialog
     v-model:visible="isDeleteCategoryOpen"
     modal
@@ -367,7 +354,18 @@
     />
   </Dialog>
 
-
+  <Dialog
+  v-model:visible="isSubDirDeleteOpen"
+  modal
+  :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
+  header=" "
+>
+  <ConfirmPay
+    :title="`Вы действительно хотите удалить подкатегорию  ${currentSubDir?.category}: ${currentSubDir?.nameRu}`"
+    @cancel="isSubDirDeleteOpen = false"
+    @confirm="confirmSubDirDelete"
+  />
+</Dialog>
 
   <UIModal
   :show-modal="isCategoryCreateOpen"
@@ -413,7 +411,9 @@
     </button>
 
 </UIModal>
+
   </section>
+
 </template>
 
 <script setup lang="ts">
@@ -421,6 +421,7 @@ import { Brands } from "~/types/Brands";
 import { Category, CategorySys } from "~/types/Category";
 import { Product } from "~/types/Product";
 import { Variant } from "~/types/Variant";
+import {SubDirHelper} from '@/types/Catalog'
 const { t } = useI18n();
 const route = useRoute();
 const id = route.params.id;
@@ -434,10 +435,14 @@ const catalogStore=useCatalogStore()
 const isBrandOpen =ref(false)
 const isDeleteOpen = ref(false);
 const isCategoryCreateOpen = ref(false);
+const isSubDirDeleteOpen=ref(false)
 const isCategoryOpen=ref('');
 const selectedBrand =ref({} as Brands)
 const searchCategory =ref('')
 const newCategory=ref({} as CategorySys)
+const isHelperOpen=ref('')
+const productHelpers=ref([] as SubDirHelper[])
+const currentSubDir=ref({} as any)
 const searchCategories =(value:string)=>{
   catalogStore.filterLinkedCategories(value)
 }
@@ -448,6 +453,18 @@ const newVariants = ref({
   image: "",
   base:""
 });
+const deleteSubDir =(value:SubDirHelper,mainValue:string)=>{
+  isSubDirDeleteOpen.value=true;
+  currentSubDir.value={...value, category:mainValue}
+  console.log('currentSubDir',currentSubDir)
+}
+const toggleHelper =(value:SubDirHelper)=>{
+  if(isHelperOpen.value===value?.id){
+    isHelperOpen.value=''
+  }else{
+    isHelperOpen.value=value?.id
+  }
+}
 
 const handleFileChange = (event: any) => {
   newVariants.value.image = event.target.files[0];
@@ -466,7 +483,8 @@ const deleteCategory=(item:CategorySys)=>{
   currentCategory.value=item;
   isDeleteCategoryOpen.value=true
 }
-const openCategory=ref(false)
+const openCategory=ref(false);
+
 const toggleCreateCategory =()=>{
   openCategory.value=!  openCategory.value
 }
@@ -480,11 +498,11 @@ const openDropdown =(value:CategorySys)=>{
   }
 }
 
-
 const seachBrands =(value:string)=>{
 console.log(value);
 brandsStore.searchBrands(value)
 }
+
 const selectValue =(newCategory:CategorySys,selectedValue:CategorySys)=>{
  const itemIndex = categoryValues.value.findIndex((item:CategorySys)=>item?.id===selectedValue?.id);
   categoryValues.value.splice(itemIndex,1,newCategory)
@@ -510,16 +528,24 @@ interface Inputs {
 }
 
 const confirmCategoryDelete =()=>{
-  const categoryIndex= categoryValues?.value.findIndex((item:CategorySys)=>item?.id===currentCategory?.value?.id)
-categoryValues.value.splice(categoryIndex,1);
-isDeleteCategoryOpen.value=false;
-editProduct()
+ const categoryIndex= categoryValues?.value.findIndex((item:CategorySys)=>item?.id===currentCategory?.value?.id)
+ categoryValues.value.splice(categoryIndex,1);
+ isDeleteCategoryOpen.value=false;
+ editProduct()
 }
 
+
+const confirmSubDirDelete =()=>{
+ const index= productHelpers?.value.findIndex((item:SubDirHelper)=>item?.id===currentSubDir?.value?.id)
+ productHelpers.value.splice(index,1);
+
+
+ isSubDirDeleteOpen.value=false
+ editProduct()
+}
 const selectNewCategory =(item:CategorySys)=>{
   newCategory.value=item;
   openCategory.value=false;
-  console.log('newCategory',newCategory)
 }
 
 const createNewProdCategory =async()=>{
@@ -563,6 +589,11 @@ const openFileInput = (varSize: string) => {
   fileInput.click();
   currVarSize.value = varSize;
 };
+
+const selectSubDir =(value:SubDirHelper,prevValue:SubDirHelper)=>{
+  const index= productHelpers.value.findIndex((item:SubDirHelper)=>item?.id===prevValue?.id)
+  productHelpers.value.splice(index,1,value)
+}
 
 const confirmDelete = () => {
   inputs.value.consumption.value = null as unknown as string;
@@ -643,10 +674,6 @@ const validate = (field: string, type: string) => {
 };
 
 
-const getCategory =(id:string)=>{
-  const category= item?.value?.categories?.find((item:any)=>item?.id===id) as any
-  return category?.nameRu
-}
 const submitUpdate = async () => {
   const prodCategories = categoryValues.value.map((item:CategorySys)=>item?.id)
   const prodVariantes = Object.values(varSizes).map((item: any) => {
@@ -657,7 +684,10 @@ const submitUpdate = async () => {
     }
   });
 
-  console.log('brandiN',inputs?.value?.brandId)
+
+
+  const subDirs=productHelpers?.value?.map((item)=>item?.id)
+  console.log('subDirs',subDirs)
   try {
     const body = {
       nameKg: inputs.value.nameKg.value,
@@ -668,8 +698,9 @@ const submitUpdate = async () => {
       shortDescriptionKg: inputs.value.shortDescriptionKg.value,
       price: inputs.value.price.value,
       categoryIds: prodCategories || null,
-      subcategoryId: inputs.value.subcategoryId.value || null,
+     // subcategoryId: inputs.value.subcategoryId.value || null,
       brandId: inputs.value.brandId.value || null,
+      subdirectoryId:subDirs || null,
       size: inputs.value.size.value,
       colorType: inputs.value.color.value,
       isPopular: inputs.value.isPopular.value,
@@ -695,6 +726,7 @@ const submitUpdate = async () => {
 };
 
 const editProduct = (type:string='') => {
+  console.log('herlpersMain',productHelpers)
   for (const fieldName in inputs.value) {
     if (Object.prototype.hasOwnProperty.call(inputs.value, fieldName)) {
       const fieldType = inputs.value[fieldName].type;
@@ -707,11 +739,11 @@ const editProduct = (type:string='') => {
   if (!hasError) {
     submitUpdate();
     if(type==='form'){
-      router.push('/admin')
+     // router.push('/admin')
     }
   }
 };
-const authStore=useAuthStore()
+
 
 const router=useRouter()
 
@@ -728,7 +760,7 @@ onMounted(async () => {
   await brandsStore.fetchAllBrandId(item?.value?.brandId)
   await brandsStore.fetchAllBrands();
   selectedBrand.value=brandsStore.getBrand
-  console.log('item',item)
+
   if (item?.value?.variants) {
     variants.value = item.value.variants;
   }
@@ -736,13 +768,12 @@ onMounted(async () => {
   console.log('item',item)
   categories.value = item?.value?.categories;
 
-  categoryValues.value= item?.value?.categories
-  // item?.value?.categories.map((category: any) => {
-  //   categoryValues[category.id] = category;
-  //   return categoryValues;
-  // });
+  categoryValues.value= item?.value?.categories;
 
-  console.log('categoryValues',categoryValues)
+  productHelpers.value=item?.value?.helpersMain
+ 
+catalogStore.getHelpersSubDirs()
+
 
   item?.value?.variants?.map((variant: Variant) => {
     varSizes[variant?.size] = { ...variant };

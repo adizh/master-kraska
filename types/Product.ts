@@ -1,3 +1,4 @@
+import { SubDirHelper } from "./Catalog";
 import { Category } from "./Category";
 import { Review } from "./Review";
 import { Variant } from "./Variant";
@@ -36,14 +37,7 @@ export type Product = {
   reviews: Review[];
   price: number;
   categories: Category[];
-  helpersMain: {
-    id: string;
-    name: string;
-    description: string;
-    categoryId: string;
-    products: [];
-    category: null;
-  }[];
+  helpersMain: SubDirHelper[],
   size: string;
   colorType: number;
   products: [];

@@ -190,7 +190,6 @@ const prevSlide = () => {
   img {
     width: 100%;
     height:573px;
-    border-radius: 20px;
   }
 }
 .slider-wrapper {
@@ -207,7 +206,7 @@ const prevSlide = () => {
   @include flex(row, space-between, center);
   background: $main-white;
   height:573px;
-  border-radius: 20px;
+
 }
 
 .right {

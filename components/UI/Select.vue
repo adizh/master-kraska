@@ -1,11 +1,12 @@
 <template>
     <div class="ui-dropdown col-6">
       <div class="selected-option basic-input" @click="openDropdown(selectedValue)">
+        <span v-if="type==='subdir'" >{{ catalog?.nameRu}}: </span>
         <span>
           {{ selectedValue[label] }}
         </span>
 
-        <span @click.stop.capture="deleteCategory" v-show="type==='category'">X</span>
+        <span @click.stop.capture="deleteCategory" v-show="type==='category' || type==='subdir'">X</span>
         <img
           class="arrow"
           :class="{ rotated: isDropdownOpen }"
@@ -13,8 +14,6 @@
           alt="open-arrow"
         />
       </div>
-  
-
 
       <Transition name="slide-fade">
        <div>
@@ -25,7 +24,7 @@
             :key="item?.value"
             @click="emit('selectValue', item,selectedValue,index)"
           >
-            {{ item[label] }}
+          {{ item?.category}}: {{ item[label] }}
           </li>
         </ul>
        </div>
@@ -36,8 +35,10 @@
   <script setup lang="ts">
   import { LanguageOptions } from "@/types/Items";
 import { PropType } from "vue";
+import { SubDirHelper } from "~/types/Catalog";
 import { CategorySys } from "~/types/Category";
 const searchCategory=ref('')
+const catalogStore=useCatalogStore()
 const filteredOptions = ref<any[]>([]);
 const searchCategories =(event:any)=>{
 emit('searchCategories',event?.target?.value)
@@ -49,9 +50,17 @@ emit('searchCategories',event?.target?.value)
   };
   
   const deleteCategory =()=>{
-    console.log('deleteCategory',props?.selectedValue)
-    emit('deleteCategory',props.selectedValue)
+    emit('deleteCategory',props.selectedValue,catalog.value?.nameRu)
   }
+
+  const  catalog=ref({} as SubDirHelper)
+  const fetchMainCatalog = async()=>{
+    catalog.value = await catalogStore.fetchCatalog(props?.selectedValue?.categoryId);
+}
+
+
+
+
   const props = defineProps<{
     selectedValue: any;
     options: any[];
@@ -62,8 +71,7 @@ emit('searchCategories',event?.target?.value)
 
   onMounted(()=>{
     filteredOptions.value = props?.options;
-    console.log('filteredOptions',filteredOptions)
-
+    fetchMainCatalog()
   })
   </script>
   

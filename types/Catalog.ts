@@ -12,6 +12,16 @@ export type SubCatalog = {
   nameRu: string;
   nameKg: string;
 };
+
+export type SubDirHelper={
+  "id": string,
+"nameRu":string,
+"nameKg": string,
+"isActive": boolean,
+"categoryId": string,
+"products": [],
+"category": null
+}
 export type AllCatalog = {
   id: string;
   nameRu: string;
