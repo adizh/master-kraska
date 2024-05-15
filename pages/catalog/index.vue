@@ -79,11 +79,14 @@ type VisibleMethod = "vertical" | "horizontal";
 const visibleMethod = ref<VisibleMethod>("vertical");
 
 const route = useRoute();
-const id = route.params.id;
+const id = ref(route.query?.category)
+
+console.log('route',route)
 const authStore = useAuthStore();
+const catalogStore =useCatalogStore()
 const { data: category } = useApi(
-  `/api/v1/Category/get-category/${id}`,
-  {}
+  `/api/v1/Category/get-category/${id?.value}`,
+  {watch:[id]}
 ) as any;
 const isFilterOpen = ref(false);
 
@@ -98,8 +101,21 @@ const handleSearch = (event: any) => {
   productStore.setCurrentPage(1)
   productStore.filterProducts(event.target.value);
 };
+
+watch(
+  () => id?.value,
+  async (newHeight) => {
+    console.log('is id being chanfs here????')
+    if (newHeight) {
+     
+      //await catalogStore.fetchCategoryById(id?.value as string);
+    }
+  }
+);
 onMounted(() => {
-  productStore.setCategoryId(id as string);
+  if(id?.value){
+    productStore.setCategoryId(id.value as string);
+  }
   productStore.filterProducts();
 });
 </script>

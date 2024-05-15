@@ -33,7 +33,7 @@
             alt="logo"
             @click="
               navigateTo({
-                path: `/catalog/${firstCategoryItem?.category?.id}`,
+                path: `/catalog`,
                 query: { brandId: item?.id },
               })
             "

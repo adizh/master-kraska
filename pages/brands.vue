@@ -10,7 +10,7 @@
           alt="brand logo"
           @click="
             router.push({
-              path: `/catalog/${firstCategoryItem?.category?.id}`,
+              path: `/catalog`,
               query: { brandId: item?.id },
             })
           "

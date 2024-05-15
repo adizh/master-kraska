@@ -1,6 +1,6 @@
 <template>
   <div class="filters">
-    <div class="subcategories">
+    <div class="subcategories" v-if="route?.query?.category">
       <div
         v-for="subCategory in catalogStore?.getCategory[0]?.subcategories"
         :key="subCategory?.id"
@@ -381,22 +381,24 @@ const getRemainingItemCount = (item: AllCatalog) => {
 
 onMounted(async () => {
   await catalogStore.fetchAllCatalogs();
-
   await initializeCheckboxStates();
-
-  await catalogStore.fetchCategoryById(route?.params?.id as string);
   brandsStore.fetchAllBrands();
+
+  if(route?.query?.category){
+  await catalogStore.fetchCategoryById(route?.query?.category as string);
+}
+
   if (route?.query?.brandId) {
+    console.log('brandid in route query',route.query)
     brandIdQuery.value = route?.query?.brandId as string;
     isBrandOpen.value = true;
-    productsStore?.filters.brandId.push(brandIdQuery.value);
+    productsStore?.filters.brandId.push(route?.query?.brandId as string);
   }
   if (route?.query?.subCategory) {
-    console.log('route?.query?.subCategory>>>>?????')
     productsStore.filters.categoryId.push(
       route.query.subCategory as unknown as string,
     );
-    console.log(' productsStore.filters.categoryId', productsStore.filters.categoryId)
+
   }
   await productsStore.filterProducts();
 });

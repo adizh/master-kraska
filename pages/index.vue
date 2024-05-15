@@ -17,7 +17,7 @@
             class="search-icon"
           >
         </div>
-        <div class="btn-block" @click.stop="router.push(`/catalog/${firstCategoryItem?.category?.id}`)">
+        <div class="btn-block" @click.stop="router.push(`/catalog`)">
 
           <button>{{ $t('find') }}</button>
 

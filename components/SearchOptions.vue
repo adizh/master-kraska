@@ -35,7 +35,7 @@
     <button
       class="look-all-btn"
       v-if="productStore.getFilteredProducts?.length"
-      @click.stop="router.push(`/catalog/${firstCategoryItem?.category?.id}`)"
+      @click.stop="router.push(`/catalog`)"
     >
       <span>{{ $t("lookAll") }}</span>
       <img src="../assets/icons/icon=components-more.svg" alt="more" />
