@@ -291,11 +291,11 @@ onMounted(async () => {
     width: 100%;
     display: block;
     word-wrap: break-word;
-    max-height: 60px;
+
     height: 100%;
     line-height: 20px;
     margin-bottom: 10px;
-    height:60px;
+    height:80px;
   }
 
   &-info {

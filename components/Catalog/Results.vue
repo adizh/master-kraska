@@ -7,7 +7,7 @@
     "
   >
     <div
-      class="results"
+      class="results col-12 md:col-12 sm:col-12 lg:col-12"
       :class="{ horizontal: visibleMethod === 'horizontal' }"
     >
       <CatalogProductItem
@@ -26,13 +26,13 @@
     </div>
   </div>
 
-  <!-- <div
+  <div
     v-else-if="
       !productStore.getLoadingState &&
       !productStore?.getFilteredProducts?.length"
   >
     {{ $t("noDataCatalogSearch") }}
-  </div> -->
+  </div>
   <div v-else-if="productStore.getLoadingState" class="text-center">
     <ProgressSpinner />
   </div>

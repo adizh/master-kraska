@@ -105,9 +105,16 @@
   />
       </div>
 
+
       <div class="lg:col-4 md:col-6 col-12 each-field">
-        <label for="subcategoryId">Подкатегории</label>
-        <input
+        <label for="subcategoryId">Подкатегории (helpersMain)</label>
+
+        <UISelect v-for="item in categoryValues?.value" :key="item?.id" :options="catalogStore?.getLinkedCategories" label="nameRu" 
+        @selectValue="selectValue"
+        :isDropdownOpen="isCategoryOpen === item?.id" :selectedValue="item" @openDropdown="openDropdown" @deleteCategory="deleteCategory"
+        @searchCategories=searchCategories  type="category"
+        />
+        <!-- <input
           id="subcategoryId"
           v-model="inputs.subcategoryId.value"
           class="basic-input col-12"
@@ -115,7 +122,7 @@
         >
         <span v-if="inputs.subcategoryId.error" class="err-input-msg">{{
           inputs.subcategoryId.error
-        }}</span>
+        }}</span> -->
       </div>
 
       <div class="lg:col-4 md:col-6 col-12 each-field">

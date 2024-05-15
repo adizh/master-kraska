@@ -318,10 +318,10 @@ span{
     color: $main-black;
     width: 100%;
     display: block;
-    height: 60px;
+
     line-height: 20px;
     margin-top: 10px;
-    height:60px
+    height:80px
   }
 
   &-info {
