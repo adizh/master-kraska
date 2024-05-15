@@ -75,7 +75,7 @@
           v-model="inputs.shortDescriptionKg.value"
           class="basic-input col-12"
           type="text"
-          @input="validate('shortDescriptionRu', 'string')"
+          @input="validate('shortDescriptionKg', 'string')"
         >
         <span v-if="inputs.shortDescriptionKg.error" class="err-input-msg">{{
           inputs.shortDescriptionKg.error
@@ -388,7 +388,7 @@
   <Transition name="slide-fade">
    <div>
     <ul class="ui-options" v-if="openCategory">
-        <!-- <input type="text" class="basic-input" v-model="searchCategory" @input="searchCategories"/> -->
+        <input type="text" class="basic-input" v-model="searchCategory" @input="(event:any)=>searchCategories(event?.target?.value)"/>
       <li
         v-for="(item,index) in catalogStore?.getLinkedCategories"
         :key="item?.id" 
@@ -429,6 +429,7 @@ const isDeleteOpen = ref(false);
 const isCategoryCreateOpen = ref(false);
 const isCategoryOpen=ref('');
 const selectedBrand =ref({} as Brands)
+const searchCategory =ref('')
 const newCategory=ref({} as CategorySys)
 const searchCategories =(value:string)=>{
   catalogStore.filterLinkedCategories(value)

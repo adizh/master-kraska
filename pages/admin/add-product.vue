@@ -22,6 +22,13 @@
   }}</span>
 </div>
 
+<div class="lg:col-4 md:col-6 col-12">
+  <label for="popular">Популярный</label>
+  <input type="checkbox" id="popular" v-model="isPopular">
+</div>
+
+
+
 <div class="lg:col-4 md:col-6 col-12" v-if="categoryCount?.length">
 <label for="category">Категория</label>
 
@@ -40,6 +47,7 @@
   <Transition name="slide-fade">
    <div>
     <ul class="ui-options" v-if="index===isCategoryOpen">
+      <input type="text" class="basic-input"  @input="(event:any)=>searchCategories(event?.target?.value)"/>
       <li
         v-for="item in catalogStore?.getLinkedCategories"
         :key="item?.id"
@@ -53,7 +61,16 @@
 </div>
 
 </div>
+<div class="lg:col-4 md:col-6 col-12 flex flex-column">
 
+  <label for="image">Картинка</label>
+  <input type="file" @change="uploadImage"/>
+
+  <span v-if="arrErrors?.image?.error" class="err-input-msg">{{
+    arrErrors?.image?.error
+    }}</span>
+
+</div>
 <div class="lg:col-4 md:col-6 col-12">
   <label for="category">Бренд</label>
   
@@ -68,10 +85,13 @@
         src="../../assets/icons/icon=components-closed-arrow.svg"
         alt="open-arrow"
       />
+
+  
     </div>
     <Transition name="slide-fade">
      <div>
       <ul class="ui-options" v-if="isBrandOpen">
+        <input type="text" class="basic-input"  @input="(event:any)=>seachBrands(event?.target?.value)"/>
         <li
           v-for="item in brandsStore?.getAllBrands"
           :key="item?.id"
@@ -82,7 +102,14 @@
       </ul>
      </div>
     </Transition>
+
+ 
   </div>
+  <span v-if="arrErrors?.brand?.error" class="err-input-msg">{{
+    arrErrors?.brand?.error
+    }}</span>
+
+
   </div>
 
 
@@ -130,11 +157,18 @@ type Input={
   key?:string
 }
 type Fields = {
-  [key: string]: Input | boolean | string[]  |string| { id: string; size: string; price: number; code: number; image: string; base: string }[];
+  [key: string]: Input | boolean | string[] |Variant[]  |string| { id: string; size: string; price: number; code: number; image: string; base: string }[];
 };
+
+const searchCategories =(value:string)=>{
+  catalogStore.filterLinkedCategories(value)
+}
 const catalogStore=useCatalogStore();
 const categoryCount=ref([] as number[]);
-
+const seachBrands =(value:string)=>{
+console.log(value);
+brandsStore.searchBrands(value)
+}
 const selectedCategories=ref([] as any[]);
 const selectedBrand=ref({} as Brands)
 const isBrandOpen=ref(false)
@@ -146,7 +180,12 @@ const selectCategory = (category: any,index:number) => {
   isCategoryOpen.value=''
 };
 
+const isPopular=ref(false)
 
+const arrErrors={
+  brand:{error:""},
+  image:{error:""},
+}
 const variantCount = ref<number[]>([]);
 
 // Initialize an array to store the variant details
@@ -158,6 +197,16 @@ const addCategoryCount =()=>{
   for(let i =0;i<value;i++){
     categoryCount.value.push(i)
   }
+}
+
+
+const prodImages=ref([] as string[])
+const uploadImage =async(event:any)=>{
+  let value = event.target.files[0];
+  arrErrors.image.error=''
+  const base64StringNewImage = await useConvertToBase64(value) as unknown as string
+  prodImages.value=[base64StringNewImage];
+
 
 }
 
@@ -186,7 +235,6 @@ const addVariantCount =()=>{
 
 }
 
-
 const toggleDropdown =(item:number)=>{
   if(isCategoryOpen.value===item){
     isCategoryOpen.value=''
@@ -197,7 +245,8 @@ const toggleDropdown =(item:number)=>{
 
 const selectBrand =(item:Brands)=>{
   selectedBrand.value=item;
-  isBrandOpen.value=false
+  isBrandOpen.value=false;
+  arrErrors.brand.error=''
 }
 const { handleValues } = useInputValidation();
 const fields=ref<Fields>({
@@ -222,30 +271,67 @@ const fields=ref<Fields>({
   ],
   "brandId":  '',
   "images": [
-    "string"
+    ""
   ],
   "categoryIds": [
     "3fa85f64-5717-4562-b3fc-2c963f66afa6"
   ],
-  "variants": [
-    {
-      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-      "size": "string",
-      "price": 0,
-      "code": 0,
-      "image": "string",
-      "base": "string"
-    }
-  ]
+  "variants": allVariants.value
 })
 
 
 const addProduct=async()=>{
+  console.log('inputs',inputs)
 
+  const values =Object.values(inputs?.value)
+  let body: { [key: string]: any } = {};
+  for (let i = 0; i < values.length; i++) {
+  const current = values[i];
+  if (current && typeof current === 'object' && typeof current.key !== 'undefined') {
+    const key = current.key;
+    if (key !== null && typeof key !== 'undefined') {
+      body[key] = current.value;
+    }
+  }
+}
+const categories=selectedCategories?.value?.filter(Boolean).map((item)=>item?.id)
+  function allFieldsHaveValues(obj: any) {
+    return Object.values(obj).every(value => value !== "" && value !== null && value !== undefined);
+}
+
+const filteredVariants = allVariants.value?.filter(obj => allFieldsHaveValues(obj));
+const remaining={
+  "isPopular": isPopular?.value,
+  "isFeatured": false,
+  "isBeneficial": false,
+  "subdirectoryId":null,
+  "brandId":  selectedBrand?.value?.id,
+  "images": prodImages?.value,
+  "categoryIds": categories,
+  "variants": filteredVariants
+}
+
+console.log(body)
+const result={...body,...remaining}
+console.log('result',result)
+try{
+const response = await http.post(`/api/v1/Product/create-product`,result);
+console.log('response',response)
+if(response.status===200){
+  useNotif('success','Продукт создан!','Успешно');
+  window.location.reload()
+}
+
+}catch(err){
+  console.log(err)
+}
 }
 
 const formAdd = () => {
- console.log('variants',allVariants)
+
+
+
+
   for (const fieldName in inputs.value) {
     if (Object.prototype.hasOwnProperty.call(inputs.value, fieldName)) {
       const fieldType = inputs.value[fieldName].type;
@@ -255,12 +341,19 @@ const formAdd = () => {
   const hasError = Object.values(inputs.value).some(
     (input) => input.error !== ""
   );
-  if (!hasError) {
-alert('Add profuct')
-    
+  
+
+  if (!selectedBrand?.value?.id){
+    arrErrors.brand.error='Это поле обязательно'
+  } if(!prodImages?.value?.length){
+    arrErrors.image.error='Это поле обязательно'
+  } else if (!hasError &&  prodImages?.value?.length && selectedBrand?.value) {
+
+  addProduct()
     // submitUpdate();
     // router.push('/admin')
-  }
+
+  } 
 };
 
 

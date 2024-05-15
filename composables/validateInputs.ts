@@ -9,11 +9,8 @@ export const useInputValidation = () => {
   ) => {
 
 
-    console.log('input',inputs)
-    console.log('fieldName',fieldName)
-    console.log('validationType',validationType)
     const value = inputs[fieldName].value;
-console.log('what is value',value)
+
     inputs[fieldName].value = value;
 
     inputs[fieldName].error = "";
