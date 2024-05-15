@@ -24,7 +24,9 @@
             :key="item?.value"
             @click="emit('selectValue', item,selectedValue,index)"
           >
-          {{ item?.category}}: {{ item[label] }}
+      <span v-if="type==='subdir'">    {{ item?.category}}:</span>
+          
+          {{ item[label] }}
           </li>
         </ul>
        </div>

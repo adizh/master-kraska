@@ -30,7 +30,7 @@
             @click="toggleProdDesc"
             v-else-if="isDescrOpen"
           >
-            Закрыть
+            {{ $t('close') }}
           </button>
         </p>
         <p v-else>{{ $t("noData") }}</p>

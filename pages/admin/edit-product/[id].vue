@@ -284,6 +284,9 @@
     <button type="button" class="pink-button" @click="isCategoryCreateOpen = true">
       +Добавить категорию
     </button>
+    <button type="button" class="pink-button" @click="isSubDirCreateOpen = true">
+      +Добавить подкатегорию
+    </button>
     <UIModal
       :show-modal="isVariantOpen"
       title="Добавить объем"
@@ -412,6 +415,50 @@
 
 </UIModal>
 
+
+<UIModal
+:show-modal="isSubDirCreateOpen"
+title="Добавить подкатегорию"
+@close-modal="isSubDirCreateOpen = false"
+>
+<div class="ui-dropdown col-6">
+<div class="selected-option basic-input" @click="toggleSubDirCreate">
+  <span v-if="newSubDir?.category && newSubDir?.nameRu">
+
+   {{ `${newSubDir?.category}: ${newSubDir?.nameRu}` }}
+  </span>
+  <span v-else>Выбрать подкатегорию</span>
+
+  
+  <img
+    class="arrow"
+    :class="{ rotated: openSubDir }"
+    src="../../../assets/icons/icon=components-closed-arrow.svg"
+    alt="open-arrow"
+  />
+</div>
+<Transition name="slide-fade">
+ <div>
+  <ul class="ui-options" v-if="openSubDir">
+      <input type="text" class="basic-input" @input="(event:any)=>catalogStore.searchSubDirs(event?.target?.value)"/>
+    <li
+      v-for="(item,index) in catalogStore.getHelperSubDirs"
+      :key="item?.id" 
+      @click="selectNewSubDir(item)"
+   
+    >
+     {{item?.category}}: {{ item?.nameRu }}
+    </li>
+  </ul>
+ </div>
+</Transition>
+</div>
+
+  <button type="button" @click='createNewProdCategory'>
+    Добавить
+  </button>
+
+</UIModal>
   </section>
 
 </template>
@@ -434,7 +481,10 @@ const productsStore = useProductsSstore();
 const catalogStore=useCatalogStore()
 const isBrandOpen =ref(false)
 const isDeleteOpen = ref(false);
+const openSubDir = ref(false);
 const isCategoryCreateOpen = ref(false);
+const isSubDirCreateOpen = ref(false);
+const newSubDir=ref()
 const isSubDirDeleteOpen=ref(false)
 const isCategoryOpen=ref('');
 const selectedBrand =ref({} as Brands)
@@ -445,6 +495,17 @@ const productHelpers=ref([] as SubDirHelper[])
 const currentSubDir=ref({} as any)
 const searchCategories =(value:string)=>{
   catalogStore.filterLinkedCategories(value)
+}
+
+
+console.log('what is NEWSUBDIR',newSubDir)
+const selectNewSubDir=(item:SubDirHelper)=>{
+  newSubDir.value=item;
+  console.log('newSubDir',newSubDir)
+}
+
+const toggleSubDirCreate =()=>{
+  openSubDir.value=!openSubDir.value
 }
 const newVariants = ref({
   size: "",
