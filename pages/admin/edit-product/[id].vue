@@ -128,15 +128,6 @@
 @searchCategories='seachBrands' type="brand"
 />
       
-        <!-- <input
-          id="brandId"
-          v-model="inputs.brandId.value"
-          class="basic-input col-12"
-          type="text"
-        >
-        <span v-if="inputs.brandId.error" class="err-input-msg">{{
-          inputs.brandId.error
-        }}</span> -->
       </div>
 
       <div class="lg:col-4 md:col-6 col-12 each-field">
@@ -633,7 +624,6 @@ const editProduct = () => {
   );
   if (!hasError) {
     submitUpdate();
-
     router.push('/admin')
   }
 };

@@ -22,9 +22,9 @@
         <ul class="ui-options" v-if="isDropdownOpen">
             <input type="text" class="basic-input" v-model="searchCategory" @input="searchCategories"/>
           <li
-            v-for="item in props?.options"
+            v-for="(item,index) in props?.options"
             :key="item?.value"
-            @click="emit('selectValue', item,selectedValue)"
+            @click="emit('selectValue', item,selectedValue,index)"
           >
             {{ item[label] }}
           </li>
@@ -40,7 +40,6 @@ import { PropType } from "vue";
 import { CategorySys } from "~/types/Category";
 const searchCategory=ref('')
 const filteredOptions = ref<any[]>([]);
-
 const searchCategories =(event:any)=>{
 emit('searchCategories',event?.target?.value)
 }
@@ -65,7 +64,7 @@ emit('searchCategories',event?.target?.value)
   onMounted(()=>{
     filteredOptions.value = props?.options;
     console.log('filteredOptions',filteredOptions)
-    console.log('props?.options;',props?.options)
+
   })
   </script>
   
