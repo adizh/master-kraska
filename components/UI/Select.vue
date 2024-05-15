@@ -5,7 +5,6 @@
           {{ selectedValue[label] }}
         </span>
 
-
         <span @click.stop.capture="deleteCategory" v-show="type==='category'">X</span>
         <img
           class="arrow"

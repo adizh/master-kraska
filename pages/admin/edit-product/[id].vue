@@ -1,6 +1,6 @@
 <template>
   <section>
-    <form class="grid" @submit.prevent="editProduct">
+    <form class="grid" @submit.prevent="editProduct('form')">
       <div class="lg:col-4 md:col-6 col-12 each-field">
         <label for="name">Имя</label>
         <input
@@ -96,7 +96,7 @@
         }}</span>
       </div>
 
-      <div class="lg:col-4 md:col-6 col-12 each-field">
+      <div class="lg:col-4 md:col-6 col-12 each-field" v-if="item?.categories?.length">
         <label for="categoryId">Категории</label>
   <UISelect v-for="item in categoryValues?.value" :key="item?.id" :options="catalogStore?.getLinkedCategories" label="nameRu" 
   @selectValue="selectValue"
@@ -286,6 +286,9 @@
       +Добавить объемы
     </button>
 
+    <button type="button" class="pink-button" @click="isCategoryCreateOpen = true">
+      +Добавить категорию
+    </button>
     <UIModal
       :show-modal="isVariantOpen"
       title="Добавить объем"
@@ -356,6 +359,53 @@
       @confirm="confirmCategoryDelete"
     />
   </Dialog>
+
+
+
+  <UIModal
+  :show-modal="isCategoryCreateOpen"
+  title="Добавить категорию"
+  @close-modal="isCategoryCreateOpen = false"
+>
+<div class="ui-dropdown col-6">
+  <div class="selected-option basic-input" @click="toggleCreateCategory">
+    <span>
+
+     {{  newCategory?.nameRu||'Выбрать категорию'  }}
+    </span>
+
+    
+    <img
+      class="arrow"
+      :class="{ rotated: isCategoryCreateOpen }"
+      src="../../../assets/icons/icon=components-closed-arrow.svg"
+      alt="open-arrow"
+    />
+  </div>
+
+
+
+  <Transition name="slide-fade">
+   <div>
+    <ul class="ui-options" v-if="openCategory">
+        <!-- <input type="text" class="basic-input" v-model="searchCategory" @input="searchCategories"/> -->
+      <li
+        v-for="(item,index) in catalogStore?.getLinkedCategories"
+        :key="item?.id" 
+        @click='selectNewCategory(item)'
+      >
+        {{ item?.nameRu }}
+      </li>
+    </ul>
+   </div>
+  </Transition>
+</div>
+
+    <button type="button" @click='createNewProdCategory'>
+      Добавить
+    </button>
+
+</UIModal>
   </section>
 </template>
 
@@ -376,9 +426,10 @@ const productsStore = useProductsSstore();
 const catalogStore=useCatalogStore()
 const isBrandOpen =ref(false)
 const isDeleteOpen = ref(false);
+const isCategoryCreateOpen = ref(false);
 const isCategoryOpen=ref('');
 const selectedBrand =ref({} as Brands)
-
+const newCategory=ref({} as CategorySys)
 const searchCategories =(value:string)=>{
   catalogStore.filterLinkedCategories(value)
 }
@@ -407,6 +458,10 @@ const deleteCategory=(item:CategorySys)=>{
   currentCategory.value=item;
   isDeleteCategoryOpen.value=true
 }
+const openCategory=ref(false)
+const toggleCreateCategory =()=>{
+  openCategory.value=!  openCategory.value
+}
 
 const openDropdown =(value:CategorySys)=>{
   if(  isCategoryOpen.value===value?.id){
@@ -415,8 +470,6 @@ const openDropdown =(value:CategorySys)=>{
   }else{
     isCategoryOpen.value=value?.id
   }
-
-
 }
 
 
@@ -453,7 +506,28 @@ const confirmCategoryDelete =()=>{
 categoryValues.value.splice(categoryIndex,1);
 isDeleteCategoryOpen.value=false;
 editProduct()
+}
 
+const selectNewCategory =(item:CategorySys)=>{
+  newCategory.value=item;
+  openCategory.value=false;
+  console.log('newCategory',newCategory)
+}
+
+const createNewProdCategory =async()=>{
+  if(newCategory?.value?.id){
+    try{
+const response = await http.put(`/api/v1/Product/add-category/${item?.value?.id}?categoryId=${newCategory?.value?.id}`);
+console.log('response new caegory',response);
+if(response.status===200){
+  useNotif('success','Категория добавлена!','Успешно')
+}
+    }catch(err){
+      console.log(err)
+    }finally{
+      isCategoryCreateOpen.value=false
+    }
+  }
 }
 
 const convertToBase64 = (file: any) => {
@@ -612,7 +686,7 @@ const submitUpdate = async () => {
   }
 };
 
-const editProduct = () => {
+const editProduct = (type:string='') => {
   for (const fieldName in inputs.value) {
     if (Object.prototype.hasOwnProperty.call(inputs.value, fieldName)) {
       const fieldType = inputs.value[fieldName].type;
@@ -624,7 +698,9 @@ const editProduct = () => {
   );
   if (!hasError) {
     submitUpdate();
-    router.push('/admin')
+    if(type==='form'){
+      router.push('/admin')
+    }
   }
 };
 const authStore=useAuthStore()
@@ -710,6 +786,82 @@ console.log('categories',categories)
 </script>
 
 <style scoped lang="scss">
+.selected-option {
+  @include flex(row, space-between, center);
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.ui-options {
+  border: 1px solid $slider-border-color;
+  border-radius: 8px;
+  padding: 6px;
+  max-height:200px;
+  overflow-y: auto;
+  @include textFormat(16px, 20px, 400, #000);
+
+  li {
+    padding: 16px;
+    border-radius: 10px;
+    transition: 0.3s ease all;
+
+    &:hover {
+      background: $main-white;
+      cursor: pointer;
+      transition: 0.3s ease all;
+    }
+  }
+}
+
+.open-options {
+  visibility: visible;
+  opacity: 1;
+  animation: slideFromTop 0.5s forwards;
+}
+
+.ui-dropdown {
+  width: 100%;
+}
+
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateY(-5%);
+  opacity: 0;
+}
+
+@keyframes slideFromTop {
+  from {
+    transform: translateY(-5%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(1%);
+    opacity: 1;
+  }
+}
+
+@keyframes slideFromBottomToTop {
+  from {
+    transform: translateY(5%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
 button {
   margin-top: 20px;
   @extend %button-shared;
