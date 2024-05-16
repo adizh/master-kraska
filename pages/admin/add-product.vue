@@ -296,7 +296,7 @@ return compressedFile
 const uploadImage =async(event:any)=>{
 isImageLoading.value=true
 const result =await checkImgCompression(event);
-if(result>targetSizeBytes){
+if(result?.size>targetSizeBytes){
   arrErrors.image.error='Размер слишком большой'
 }
 if(result && result!==undefined){
@@ -318,16 +318,10 @@ const handleImage=async(event:any,index:number)=>{
 
 else if(result.size<targetSizeBytes && result && result!==undefined){
   allVariants.value[index].loading=false
-
   const base64StringNewImage = await useConvertToBase64(result) as unknown as string
   allVariants.value[index].image = base64StringNewImage as unknown as string;
 }
 
-  // const base64StringNewImage = await useConvertToBase64(value);
-  // value = base64StringNewImage as unknown as string;
-
-
-  // allVariants.value[index].image = base64StringNewImage as unknown as string;
 }
 
 const addVariantCount =()=>{
@@ -404,7 +398,7 @@ const subCategories=selectedSubCategories?.value?.filter(Boolean)?.map((item)=>i
 const filteredVariants = allVariants.value?.filter(obj => allFieldsHaveValues(obj));
 
 
-console.log('filteredVariants',filteredVariants)
+
 const remaining={
   "isPopular": isPopular?.value,
   "isFeatured": false,

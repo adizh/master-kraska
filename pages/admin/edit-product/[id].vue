@@ -190,20 +190,24 @@
         <label for="size">Объемы</label>
         <div class="all-variant">
           <div v-for="variant in variants" :key="variant?.id" class="variant">
+          <div class="img-variant">
             <img
-              :src="varSizes[variant?.size]?.image"
-              alt="variant"
-              style="cursor: pointer"
-              @click="openFileInput(variant?.size)"
-            >
-            <input
-              id="fileInput"
-              ref="fileInput"
-              type="file"
-              style="display: none"
-              @change="(event) => handleNewVarImage(event)"
-            >
+            :src="varSizes[variant?.size]?.image"
+            alt="variant"
+            style="cursor: pointer"
+            @click="openFileInput(variant?.size)"
+          >
+          <input
+            id="fileInput"
+            ref="fileInput"
+            type="file"
+            style="display: none"
+            @change="(event) => handleNewVarImage(event)"
+          >
+          <span v-if="varSizes[variant?.size]?.error" class="err-input-msg">{{ varSizes[variant?.size]?.error }}</span>
 
+          <ProgressSpinner v-if="varSizes[variant?.size]?.loading"/>
+          </div>
             <label :for="variant?.size">Размер</label>
             <input
               :id="variant?.size"
@@ -466,6 +470,7 @@ title="Добавить подкатегорию"
 <script setup lang="ts">
 import { Brands } from "~/types/Brands";
 import { Category, CategorySys } from "~/types/Category";
+import imageCompression from 'browser-image-compression';
 import { Product } from "~/types/Product";
 import { Variant } from "~/types/Variant";
 import {SubDirHelper} from '@/types/Catalog'
@@ -563,6 +568,25 @@ const seachBrands =(value:string)=>{
 console.log(value);
 brandsStore.searchBrands(value)
 }
+const targetSizeBytes = 150 * 1024;
+const checkImgCompression=async(event:any)=>{
+  let value = event.target.files[0];
+  let options = {
+  maxSizeMB: 0.1465,     
+  useWebWorker: true,  
+};
+let compressedFile = value;
+if(value?.size > targetSizeBytes){
+  try {
+  compressedFile = await imageCompression(value, options);
+  console.log('Original file size:', (value.size / 1024).toFixed(2), 'KB');
+  console.log('Compressed file size:', (compressedFile.size / 1024).toFixed(2), 'KB');
+} catch (error) {
+  console.error('Compression error:', error);
+}
+}
+return compressedFile
+}
 
 const selectValue =(newCategory:CategorySys,selectedValue:CategorySys)=>{
  const itemIndex = categoryValues.value.findIndex((item:CategorySys)=>item?.id===selectedValue?.id);
@@ -639,9 +663,22 @@ const variantImage = ref("");
 
 const handleNewVarImage = async (event: any) => {
   newVarImage.value = event.target.files[0];
-  const base64StringNewImage = await convertToBase64(newVarImage.value);
+  varSizes[currVarSize.value].loading=true;
+
+  const result =await checkImgCompression(event);
+
+if(result?.size>targetSizeBytes){
+  varSizes[currVarSize.value].error='Размер файла слишком большой';
+  varSizes[currVarSize.value].loading=false
+}
+else if(result.size<targetSizeBytes && result && result!==undefined){
+  console.log('result is smaller and defined',result)
+  varSizes[currVarSize.value].loading=false
+  const base64StringNewImage = await useConvertToBase64(result) as unknown as string
   variantImage.value = base64StringNewImage as unknown as string;
   varSizes[currVarSize.value].image = base64StringNewImage as unknown as string;
+}
+
 };
 
 const currVarSize = ref("");
@@ -837,7 +874,7 @@ catalogStore.getHelpersSubDirs()
 
 
   item?.value?.variants?.map((variant: Variant) => {
-    varSizes[variant?.size] = { ...variant };
+    varSizes[variant?.size] = { ...variant,error:'',loading:false };
     return varSizes;
   });
 
@@ -979,6 +1016,9 @@ button {
   div {
     width: 20%;
   }
+}
+.variant .img-variant{
+  width: 100%;
 }
 
 @media (max-width: 768px) {
