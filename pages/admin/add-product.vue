@@ -27,8 +27,6 @@
   <input type="checkbox" id="popular" v-model="isPopular">
 </div>
 
-
-
 <div class="lg:col-4 md:col-6 col-12" v-if="categoryCount?.length">
 <label for="category">Категория</label>
 
@@ -94,7 +92,6 @@
   </div>
   
   </div>
-
 
 <div class="lg:col-4 md:col-6 col-12 flex flex-column">
   <label for="image">Картинка</label>
@@ -166,10 +163,19 @@
         <input type="text" :id="'base-' + index" v-model="allVariants[index].base" class="basic-input">
         <label :for="'file-' + index">Картинка</label>
         <input type="file" :id="'file-' + index" class="basic-input" @change="handleImage($event,index)">
+
+        <span v-if="allVariants[index].error" class="err-input-msg">{{
+          allVariants[index].error
+          }}</span>
+
+        <ProgressSpinner v-if="allVariants[index].loading"/>
       </div>
     </div>
     
     </div>
+
+
+
 <div class="lg:col-4 md:col-6 col-12">
   <button type="button" class="pink-button" @click.capture="addCategoryCount">+Добавить категорию</button>
   <button type="button" class="pink-button" @click.capture="addVariantCount">+Добавить объем</button>
@@ -214,7 +220,9 @@ const arrErrors={
   brand:{error:""},
   image:{error:""},
 }
+
 const variantCount = ref<number[]>([]);
+
 const allVariants = ref<Variant[]>([]);
 const prodImages=ref([] as string[])
 
@@ -262,60 +270,64 @@ const addSubDirCount =()=>{
     subDirCount.value.push(i)
   }
 }
+const targetSizeBytes = 150 * 1024;
 
 
-
-const uploadImage =async(event:any)=>{
-  let result;
+const checkImgCompression=async(event:any)=>{
   let value = event.target.files[0];
-  arrErrors.image.error='';
-  const targetSizeBytes = 150 * 1024;
-  isImageLoading.value=true
-
-let options = {
+  let options = {
   maxSizeMB: 0.1465,     
   useWebWorker: true,  
 };
-
 let compressedFile = value;
 if(value?.size > targetSizeBytes){
   try {
   compressedFile = await imageCompression(value, options);
-  if (compressedFile.size > targetSizeBytes) {
-    arrErrors.image.error='Размер слишком большой'
-  }else{
-    result=compressedFile
-  }
   console.log('Original file size:', (value.size / 1024).toFixed(2), 'KB');
   console.log('Compressed file size:', (compressedFile.size / 1024).toFixed(2), 'KB');
 } catch (error) {
   console.error('Compression error:', error);
-}finally{
-  isImageLoading.value=false
 }
-}else{
-
-  isImageLoading.value=false;
-  result=value
+}
+return compressedFile
 }
 
 
-console.log('RESULT',result)
+const uploadImage =async(event:any)=>{
+isImageLoading.value=true
+const result =await checkImgCompression(event);
+if(result>targetSizeBytes){
+  arrErrors.image.error='Размер слишком большой'
+}
 if(result && result!==undefined){
+  isImageLoading.value=false
   const base64StringNewImage = await useConvertToBase64(result) as unknown as string
   prodImages.value=[base64StringNewImage];
 }
-
-
 console.log('prodImages',prodImages)
 }
 
-
 const handleImage=async(event:any,index:number)=>{
-  let value = event.target.files[0];
-  const base64StringNewImage = await useConvertToBase64(value);
-  value = base64StringNewImage as unknown as string;
+  allVariants.value[index].loading=true
+  const result = await checkImgCompression(event);
+  console.log('what is aresult??',result)
+  if(result.size > targetSizeBytes){
+    allVariants.value[index].error='Размер слишком большой'
+    allVariants.value[index].loading=false
+}
+
+else if(result.size<targetSizeBytes && result && result!==undefined){
+  allVariants.value[index].loading=false
+
+  const base64StringNewImage = await useConvertToBase64(result) as unknown as string
   allVariants.value[index].image = base64StringNewImage as unknown as string;
+}
+
+  // const base64StringNewImage = await useConvertToBase64(value);
+  // value = base64StringNewImage as unknown as string;
+
+
+  // allVariants.value[index].image = base64StringNewImage as unknown as string;
 }
 
 const addVariantCount =()=>{
@@ -340,6 +352,7 @@ const selectBrand =(item:Brands)=>{
   arrErrors.brand.error=''
 }
 const { handleValues } = useInputValidation();
+
 const fields=ref<Fields>({
     "nameKg": {value:'',error:'',type:'string',field:'Название (кырг)'},
   "nameRu": {value:'',error:'',type:'string',field:'Название'},
@@ -389,6 +402,9 @@ const categories=selectedCategories?.value?.filter(Boolean)?.map((item)=>item?.i
 }
 const subCategories=selectedSubCategories?.value?.filter(Boolean)?.map((item)=>item?.id)
 const filteredVariants = allVariants.value?.filter(obj => allFieldsHaveValues(obj));
+
+
+console.log('filteredVariants',filteredVariants)
 const remaining={
   "isPopular": isPopular?.value,
   "isFeatured": false,
