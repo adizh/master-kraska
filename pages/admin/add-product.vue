@@ -102,6 +102,8 @@
   <span v-if="arrErrors?.image?.error" class="err-input-msg">{{
     arrErrors?.image?.error
     }}</span>
+
+    <ProgressSpinner v-if="isImageLoading"/>
 </div>
 
 <div class="lg:col-4 md:col-6 col-12">
@@ -182,6 +184,7 @@
 import { Brands } from '~/types/Brands';
 import { CategorySys } from '~/types/Category';
 import { Variant } from '~/types/Variant';
+import imageCompression from 'browser-image-compression';
 const isCategoryOpen=ref()
 type Input={
   value:string,
@@ -194,16 +197,11 @@ type Fields = {
   [key: string]: Input | boolean | string[] |Variant[]  |string| { id: string; size: string; price: number; code: number; image: string; base: string }[];
 };
 
-const searchCategories =(value:string)=>{
-  catalogStore.filterLinkedCategories(value)
-}
 const catalogStore=useCatalogStore();
 const isSubCategoryOpen=ref()
 const categoryCount=ref([] as number[]);
 const subDirCount=ref([] as number[])
-const seachBrands =(value:string)=>{
-brandsStore.searchBrands(value)
-}
+const isImageLoading=ref(false)
 const selectedCategories=ref([] as any[]);
 const selectedSubCategories=ref([] as any[]);
 const selectedBrand=ref({} as Brands)
@@ -211,18 +209,33 @@ const isBrandOpen=ref(false)
 const brandsStore=useBrandsStore()
 const selectedCategory=ref({} as CategorySys)
 const selectedSubCategory=ref({} as CategorySys)
+const isPopular=ref(false)
+const arrErrors={
+  brand:{error:""},
+  image:{error:""},
+}
+const variantCount = ref<number[]>([]);
+const allVariants = ref<Variant[]>([]);
+const prodImages=ref([] as string[])
+
 const selectCategory = (category: any,index:number) => {
   selectedCategory.value=category;
   selectedCategories.value[index] = category;
   isCategoryOpen.value=''
 };
 
+const searchCategories =(value:string)=>{
+  catalogStore.filterLinkedCategories(value)
+}
+const seachBrands =(value:string)=>{
+brandsStore.searchBrands(value)
+}
 const selectSubCategory  = (subCategory: any,index:number) => {
   selectedSubCategory.value=subCategory;
   selectedSubCategories.value[index] = subCategory;
  isSubCategoryOpen.value=''
 };
-const isPopular=ref(false)
+
 
 
 const toggleSubCategory =(index:number)=>{
@@ -232,13 +245,7 @@ const toggleSubCategory =(index:number)=>{
     isSubCategoryOpen.value=index
   }
 }
-const arrErrors={
-  brand:{error:""},
-  image:{error:""},
-}
-const variantCount = ref<number[]>([]);
 
-const allVariants = ref<Variant[]>([]);
 const addCategoryCount =()=>{
   let value=0;
   value++;
@@ -257,12 +264,50 @@ const addSubDirCount =()=>{
 }
 
 
-const prodImages=ref([] as string[])
+
 const uploadImage =async(event:any)=>{
+  let result;
   let value = event.target.files[0];
-  arrErrors.image.error=''
-  const base64StringNewImage = await useConvertToBase64(value) as unknown as string
+  arrErrors.image.error='';
+  const targetSizeBytes = 150 * 1024;
+  isImageLoading.value=true
+
+let options = {
+  maxSizeMB: 0.1465,     
+  useWebWorker: true,  
+};
+
+let compressedFile = value;
+if(value?.size > targetSizeBytes){
+  try {
+  compressedFile = await imageCompression(value, options);
+  if (compressedFile.size > targetSizeBytes) {
+    arrErrors.image.error='Размер слишком большой'
+  }else{
+    result=compressedFile
+  }
+  console.log('Original file size:', (value.size / 1024).toFixed(2), 'KB');
+  console.log('Compressed file size:', (compressedFile.size / 1024).toFixed(2), 'KB');
+} catch (error) {
+  console.error('Compression error:', error);
+}finally{
+  isImageLoading.value=false
+}
+}else{
+
+  isImageLoading.value=false;
+  result=value
+}
+
+
+console.log('RESULT',result)
+if(result && result!==undefined){
+  const base64StringNewImage = await useConvertToBase64(result) as unknown as string
   prodImages.value=[base64StringNewImage];
+}
+
+
+console.log('prodImages',prodImages)
 }
 
 
@@ -280,7 +325,9 @@ const addVariantCount =()=>{
 }
 
 const toggleDropdown =(item:number)=>{
+
   if(isCategoryOpen.value===item){
+
     isCategoryOpen.value=''
   }else{
     isCategoryOpen.value=item;
@@ -372,7 +419,6 @@ if(response.status===200){
 }
 
 const formAdd = () => {
-
   for (const fieldName in inputs.value) {
     if (Object.prototype.hasOwnProperty.call(inputs.value, fieldName)) {
       const fieldType = inputs.value[fieldName].type;
@@ -393,7 +439,6 @@ const formAdd = () => {
 addProduct()
   } 
 };
-
 
 
 const inputs = ref<{ [key: string]: Input }>({});

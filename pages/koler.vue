@@ -147,7 +147,7 @@ const fetchAllData = async (ids: string[]) => {
   const filteredOnes= results.filter((item: Brands) => Boolean(item));
   const desiredOrder =['Tikkurila','Teknos','Sirca','Ярославские','Marshall','Dulux'];
   filteredBrands.value=desiredOrder.map(name => filteredOnes.find(obj => obj.name === name));
-  selectedBrand.value = results[0];
+  selectedBrand.value = filteredBrands.value[0];
   currentBrandsColors.value = allTingings.value?.filter(
     (item: Tinting) => item?.brandId === selectedBrand?.value.id
   );
@@ -174,7 +174,6 @@ const fetchTintingsByBrand = async (brand: Brands) => {
 const fetchAllTintings = async () => {
   try {
     const response = await http("/api/v1/Tinting/get-all-tintings");
-    // const response = await http(`/api/v1/Tinting/get-all-tintings-pagination?page=${currentPage.value}&pageSize=${pageSize?.value}&brandId=${selectedBrand?.value.id}`);
     if (response.status === 200) {
       allTingings.value = response.data;
 

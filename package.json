@@ -19,6 +19,7 @@
     "@vuesimple/vs-toast": "^3.0.5",
     "animate.css": "^4.1.1",
     "axios": "^1.6.8",
+    "browser-image-compression": "^2.0.2",
     "moment": "^2.30.1",
     "nuxt": "^3.10.3",
     "nuxt-snackbar": "^1.0.4",
