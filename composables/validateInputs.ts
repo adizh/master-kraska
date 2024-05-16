@@ -9,6 +9,7 @@ export const useInputValidation = () => {
   ) => {
 
 
+    console.log('what is inputs in comsposabe',inputs)
     const value = inputs[fieldName].value;
 
     inputs[fieldName].value = value;

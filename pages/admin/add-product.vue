@@ -11,7 +11,7 @@
 
 <template v-else>
   <label :for="item?.field">{{ item?.field }}</label>
-  <input  v-model="item.value" :id="item?.field" class="basic-input" :type="item?.type==='string' ? 'text':'number'"
+  <input  v-model="item.value" :id="item?.field" class="basic-input" :type="!item?.type || item.type === 'string' ? 'text' : 'number'"
   @input="validate(item.key as string,item?.type as string)"
   >
 </template>
@@ -61,16 +61,49 @@
 </div>
 
 </div>
-<div class="lg:col-4 md:col-6 col-12 flex flex-column">
 
+
+<div class="lg:col-4 md:col-6 col-12" v-if="subDirCount?.length">
+  <label for="category">Подкатегория</label>
+  <div class="ui-dropdown col-6" v-for="(item,index) in subDirCount" :key="item">
+    <div class="selected-option basic-input" @click="toggleSubCategory(index)">
+      <span>
+       {{ selectedSubCategories[index]?.nameRu || 'Выберите подкатегорию'}}
+      </span>
+      <img
+        class="arrow"
+        :class="{ rotated: isSubCategoryOpen ===index}"
+        src="../../assets/icons/icon=components-closed-arrow.svg"
+        alt="open-arrow"
+      />
+    </div>
+    <Transition name="slide-fade">
+     <div>
+      <ul class="ui-options" v-if="index===isSubCategoryOpen">
+        <input type="text" class="basic-input"  @input="(event:any)=>catalogStore.searchSubDirs(event?.target?.value)"/>
+        <li
+          v-for="item in catalogStore?.getHelperSubDirs"
+          :key="item?.id"
+           @click="selectSubCategory(item,index)"
+        >
+          {{ item?.nameRu }}
+        </li>
+      </ul>
+     </div>
+    </Transition>
+  </div>
+  
+  </div>
+
+
+<div class="lg:col-4 md:col-6 col-12 flex flex-column">
   <label for="image">Картинка</label>
   <input type="file" @change="uploadImage"/>
-
   <span v-if="arrErrors?.image?.error" class="err-input-msg">{{
     arrErrors?.image?.error
     }}</span>
-
 </div>
+
 <div class="lg:col-4 md:col-6 col-12">
   <label for="category">Бренд</label>
   
@@ -138,6 +171,7 @@
 <div class="lg:col-4 md:col-6 col-12">
   <button type="button" class="pink-button" @click.capture="addCategoryCount">+Добавить категорию</button>
   <button type="button" class="pink-button" @click.capture="addVariantCount">+Добавить объем</button>
+  <button type="button" class="pink-button" @click.capture="addSubDirCount">+Добавить подкатегорию</button>
   <button type="submit" class="btn-white-bg">Создать</button>
 </div>
 </form>
@@ -164,31 +198,46 @@ const searchCategories =(value:string)=>{
   catalogStore.filterLinkedCategories(value)
 }
 const catalogStore=useCatalogStore();
+const isSubCategoryOpen=ref()
 const categoryCount=ref([] as number[]);
+const subDirCount=ref([] as number[])
 const seachBrands =(value:string)=>{
-console.log(value);
 brandsStore.searchBrands(value)
 }
 const selectedCategories=ref([] as any[]);
+const selectedSubCategories=ref([] as any[]);
 const selectedBrand=ref({} as Brands)
 const isBrandOpen=ref(false)
 const brandsStore=useBrandsStore()
 const selectedCategory=ref({} as CategorySys)
+const selectedSubCategory=ref({} as CategorySys)
 const selectCategory = (category: any,index:number) => {
   selectedCategory.value=category;
   selectedCategories.value[index] = category;
   isCategoryOpen.value=''
 };
 
+const selectSubCategory  = (subCategory: any,index:number) => {
+  selectedSubCategory.value=subCategory;
+  selectedSubCategories.value[index] = subCategory;
+ isSubCategoryOpen.value=''
+};
 const isPopular=ref(false)
 
+
+const toggleSubCategory =(index:number)=>{
+  if(isSubCategoryOpen.value===index){
+    isSubCategoryOpen.value=null
+  }else{
+    isSubCategoryOpen.value=index
+  }
+}
 const arrErrors={
   brand:{error:""},
   image:{error:""},
 }
 const variantCount = ref<number[]>([]);
 
-// Initialize an array to store the variant details
 const allVariants = ref<Variant[]>([]);
 const addCategoryCount =()=>{
   let value=0;
@@ -196,6 +245,14 @@ const addCategoryCount =()=>{
   selectedCategories.value.push(null); 
   for(let i =0;i<value;i++){
     categoryCount.value.push(i)
+  }
+}
+const addSubDirCount =()=>{
+  let value=0;
+  value++;
+
+  for(let i =0;i<value;i++){
+    subDirCount.value.push(i)
   }
 }
 
@@ -206,8 +263,6 @@ const uploadImage =async(event:any)=>{
   arrErrors.image.error=''
   const base64StringNewImage = await useConvertToBase64(value) as unknown as string
   prodImages.value=[base64StringNewImage];
-
-
 }
 
 
@@ -216,23 +271,12 @@ const handleImage=async(event:any,index:number)=>{
   const base64StringNewImage = await useConvertToBase64(value);
   value = base64StringNewImage as unknown as string;
   allVariants.value[index].image = base64StringNewImage as unknown as string;
-
-
 }
+
 const addVariantCount =()=>{
   const newIndex = variantCount.value.length;
   variantCount.value.push(newIndex);
   allVariants.value.push({ size: '',price:0,code:0,base:'',image:'' });
-  console.log('allVariants:', allVariants.value);
-//   let value=0;
-
-//   value++;
-//   for(let i =0;i<value;i++){
-//     variantCount.value.push(i);
-//     allVariants.value[i]={size:''};
-//   }
-// console.log(allVariants)
-
 }
 
 const toggleDropdown =(item:number)=>{
@@ -281,8 +325,6 @@ const fields=ref<Fields>({
 
 
 const addProduct=async()=>{
-  console.log('inputs',inputs)
-
   const values =Object.values(inputs?.value)
   let body: { [key: string]: any } = {};
   for (let i = 0; i < values.length; i++) {
@@ -294,32 +336,34 @@ const addProduct=async()=>{
     }
   }
 }
-const categories=selectedCategories?.value?.filter(Boolean).map((item)=>item?.id)
+const categories=selectedCategories?.value?.filter(Boolean)?.map((item)=>item?.id)
   function allFieldsHaveValues(obj: any) {
     return Object.values(obj).every(value => value !== "" && value !== null && value !== undefined);
 }
-
+const subCategories=selectedSubCategories?.value?.filter(Boolean)?.map((item)=>item?.id)
 const filteredVariants = allVariants.value?.filter(obj => allFieldsHaveValues(obj));
 const remaining={
   "isPopular": isPopular?.value,
   "isFeatured": false,
   "isBeneficial": false,
-  "subdirectoryId":null,
+  "subdirectoryId":subCategories || null,
   "brandId":  selectedBrand?.value?.id,
   "images": prodImages?.value,
   "categoryIds": categories,
   "variants": filteredVariants
 }
 
-console.log(body)
+
 const result={...body,...remaining}
-console.log('result',result)
+
 try{
 const response = await http.post(`/api/v1/Product/create-product`,result);
 console.log('response',response)
 if(response.status===200){
   useNotif('success','Продукт создан!','Успешно');
-  window.location.reload()
+  setTimeout(()=>{
+    window.location.reload()
+  },500)
 }
 
 }catch(err){
@@ -328,9 +372,6 @@ if(response.status===200){
 }
 
 const formAdd = () => {
-
-
-
 
   for (const fieldName in inputs.value) {
     if (Object.prototype.hasOwnProperty.call(inputs.value, fieldName)) {
@@ -349,16 +390,12 @@ const formAdd = () => {
     arrErrors.image.error='Это поле обязательно'
   } else if (!hasError &&  prodImages?.value?.length && selectedBrand?.value) {
 
-  addProduct()
-    // submitUpdate();
-    // router.push('/admin')
-
+addProduct()
   } 
 };
 
 
 
-const fieldsObj = fields.value as any
 const inputs = ref<{ [key: string]: Input }>({});
 
 for (const key in fields.value) {
@@ -372,9 +409,11 @@ for (const key in fields.value) {
   handleValues(inputs.value, field, type);
 };
 
+console.log('inputs',inputs)
 onMounted(()=>{
 catalogStore.fetchAllCategoriesLinked();
 brandsStore.fetchAllBrands()
+catalogStore.getHelpersSubDirs()
 })
 
 </script>
