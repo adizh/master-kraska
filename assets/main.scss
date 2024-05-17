@@ -93,8 +93,8 @@ ul li {
 }
 
 .overlay-header-options.open {
-  opacity: 1;
-  visibility: visible;
+  opacity: 0;
+  visibility: hidden;
   transition: 0.5s ease all;
 }
 

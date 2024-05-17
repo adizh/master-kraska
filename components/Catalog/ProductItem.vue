@@ -318,7 +318,7 @@ span{
     color: $main-black;
     width: 100%;
     display: block;
-
+overflow-x: hidden;
     line-height: 20px;
     margin-top: 10px;
     height:80px
