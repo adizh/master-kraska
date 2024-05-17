@@ -329,6 +329,13 @@
           class="basic-input"
         >
         <input type="file" @change="handleFileChange">
+
+        <ProgressSpinner v-if="newVariants?.imgLoading"/>
+
+        <span v-if="newVariants?.imgError" class="err-input-msg">{{
+          newVariants?.imgError
+        }}</span>
+
         <button type="submit">
           Добавить
         </button>
@@ -518,13 +525,16 @@ const newVariants = ref({
   price: "",
   code: "",
   image: "",
-  base:""
+  base:"",
+  imgLoading:false,
+  imgError:''
 });
 const deleteSubDir =(value:SubDirHelper,mainValue:string)=>{
   isSubDirDeleteOpen.value=true;
   currentSubDir.value={...value, category:mainValue}
   console.log('currentSubDir',currentSubDir)
 }
+
 const toggleHelper =(value:SubDirHelper)=>{
   if(isHelperOpen.value===value?.id){
     isHelperOpen.value=''
@@ -533,8 +543,21 @@ const toggleHelper =(value:SubDirHelper)=>{
   }
 }
 
-const handleFileChange = (event: any) => {
-  newVariants.value.image = event.target.files[0];
+const handleFileChange = async(event: any) => {
+  newVariants.value.imgLoading=true;
+  const result =await checkImgCompression(event);
+if(result?.size>targetSizeBytes){
+  newVariants.value.imgLoading=false;
+  newVariants.value.imgError='Размер файла слишком большой';
+  newVariants.value.image =''
+}
+else if(result.size<targetSizeBytes && result && result!==undefined){
+  newVariants.value.imgLoading=false;
+  const base64StringNewImage = await useConvertToBase64(result) as unknown as string
+  newVariants.value.image  = base64StringNewImage as unknown as string;
+  newVariants.value.imgError=''
+}
+
 };
 
 const selectBrand=(brand:Brands,{})=>{
@@ -665,9 +688,7 @@ const variantImage = ref("");
 const handleNewVarImage = async (event: any) => {
   newVarImage.value = event.target.files[0];
   varSizes[currVarSize.value].loading=true;
-
   const result =await checkImgCompression(event);
-
 if(result?.size>targetSizeBytes){
   varSizes[currVarSize.value].error='Размер файла слишком большой';
   varSizes[currVarSize.value].loading=false
@@ -704,14 +725,13 @@ const addVariant = async () => {
     return;
   }
   try {
-    const base64String = await convertToBase64(newVariants.value.image);
     const body = [
       {
         price: newVariants.value.price,
         code: newVariants.value.code,
         size: newVariants.value.size,
         base:newVariants.value?.base,
-    //    image: base64String
+     image: newVariants.value.image
       }
     ];
     const response = await http.put(`/api/v1/Product/add-variants/${id}`, body);
@@ -771,7 +791,6 @@ const { handleValues } = useInputValidation();
 const validate = (field: string, type: string) => {
   handleValues(inputs.value, field, type);
 };
-
 
 const submitUpdate = async () => {
   const prodCategories = categoryValues.value.map((item:CategorySys)=>item?.id)
