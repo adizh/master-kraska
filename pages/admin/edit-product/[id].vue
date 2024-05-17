@@ -96,7 +96,7 @@
         }}</span>
       </div>
 
-      <div class="lg:col-4 md:col-6 col-12 each-field" v-if="item?.categories?.length">
+      <div class="lg:col-4 md:col-6 col-12 each-field" v-if="categoryValues?.value?.length>0">
         <label for="categoryId">Категории</label>
   <UISelect v-for="item in categoryValues?.value" :key="item?.id" :options="catalogStore?.getLinkedCategories" label="nameRu" 
   @selectValue="selectValue"
@@ -104,6 +104,42 @@
   @searchCategories=searchCategories  type="category"
   />
       </div>
+
+  <div class="lg:col-4 md:col-6 col-6 each-field"  v-else>
+        <label for="categoryId">Категории</label>
+        <div class="selected-option basic-input" @click="toggleCreateCategory">
+          <span>
+      
+           {{  newCategory?.nameRu||'Выбрать категорию'  }}
+          </span>
+      
+          <img
+            class="arrow"
+            :class="{ rotated: isCategoryCreateOpen }"
+            src="../../../assets/icons/icon=components-closed-arrow.svg"
+            alt="open-arrow"
+          />
+        </div>
+      
+        <Transition name="slide-fade">
+         <div>
+          <ul class="ui-options" v-if="openCategory">
+              <input type="text" class="basic-input" v-model="searchCategory" @input="(event:any)=>searchCategories(event?.target?.value)"/>
+            <li
+              v-for="(item,index) in catalogStore?.getLinkedCategories"
+              :key="item?.id" 
+              @click='selectNewCategory(item)'
+            >
+              {{ item?.nameRu }}
+            </li>
+          </ul>
+         </div>
+        </Transition>
+      </div>
+
+
+
+
 
       <div class="lg:col-4 md:col-6 col-12 each-field">
         <label for="brandId">Бренд</label>
@@ -190,7 +226,7 @@
         <label for="size">Объемы</label>
         <div class="all-variant">
           <div v-for="variant in variants" :key="variant?.id" class="variant">
-          <div class="img-variant">
+          <div class="img-variant ">
             <img
             :src="varSizes[variant?.size]?.image"
             alt="variant"
@@ -204,9 +240,12 @@
             style="display: none"
             @change="(event) => handleNewVarImage(event)"
           >
-          <span v-if="varSizes[variant?.size]?.error" class="err-input-msg">{{ varSizes[variant?.size]?.error }}</span>
 
-          <ProgressSpinner v-if="varSizes[variant?.size]?.loading"/>
+          <!-- <ProgressSpinner v-if="varSizes[variant?.size]?.loading"/> -->
+          <span v-if="varSizes[variant?.size].loading">Loading..</span>
+          <span v-if="varSizes[variant?.size]?.error && !varSizes[variant?.size]?.loading" class="err-input-msg">{{ varSizes[variant?.size]?.error }}</span>
+
+     
           </div>
             <label :for="variant?.size">Размер</label>
             <input
@@ -393,7 +432,6 @@
      {{  newCategory?.nameRu||'Выбрать категорию'  }}
     </span>
 
-    
     <img
       class="arrow"
       :class="{ rotated: isCategoryCreateOpen }"
@@ -401,8 +439,6 @@
       alt="open-arrow"
     />
   </div>
-
-
 
   <Transition name="slide-fade">
    <div>
@@ -425,7 +461,6 @@
     </button>
 
 </UIModal>
-
 
 <UIModal
 :show-modal="isSubDirCreateOpen"
@@ -465,7 +500,7 @@ title="Добавить подкатегорию"
 </Transition>
 </div>
 
-  <button type="button" @click='createNewProdCategory'>
+  <button type="button">
     Добавить
   </button>
 
@@ -640,7 +675,15 @@ const confirmCategoryDelete =()=>{
  const categoryIndex= categoryValues?.value.findIndex((item:CategorySys)=>item?.id===currentCategory?.value?.id)
  categoryValues.value.splice(categoryIndex,1);
  isDeleteCategoryOpen.value=false;
- editProduct()
+ editProduct();
+
+
+ if(categoryValues?.value?.length<1){
+setTimeout(()=>{
+  window.location.reload()
+},600)
+ }
+
 }
 
 
@@ -671,6 +714,9 @@ if(response.status===200){
       isCategoryCreateOpen.value=false
     }
   }
+  setTimeout(()=>{
+    window.location.reload()
+  },900)
 }
 
 const convertToBase64 = (file: any) => {
@@ -688,19 +734,23 @@ const variantImage = ref("");
 const handleNewVarImage = async (event: any) => {
   newVarImage.value = event.target.files[0];
   varSizes[currVarSize.value].loading=true;
+
+
+  console.log('currVarSize',currVarSize)
+  console.log('varSizes[currVarSize.value].loadin before',varSizes[currVarSize.value].loading)
   const result =await checkImgCompression(event);
 if(result?.size>targetSizeBytes){
   varSizes[currVarSize.value].error='Размер файла слишком большой';
   varSizes[currVarSize.value].loading=false
 }
 else if(result.size<targetSizeBytes && result && result!==undefined){
-  console.log('result is smaller and defined',result)
   varSizes[currVarSize.value].loading=false
+  varSizes[currVarSize.value].error=''
   const base64StringNewImage = await useConvertToBase64(result) as unknown as string
   variantImage.value = base64StringNewImage as unknown as string;
   varSizes[currVarSize.value].image = base64StringNewImage as unknown as string;
 }
-
+console.log('varSizes[currVarSize.value].loadin after',varSizes[currVarSize.value].loading)
 };
 
 const currVarSize = ref("");
@@ -815,7 +865,7 @@ const submitUpdate = async () => {
       shortDescriptionRu: inputs.value.shortDescriptionRu.value,
       shortDescriptionKg: inputs.value.shortDescriptionKg.value,
       price: inputs.value.price.value,
-      categoryIds: prodCategories || null,
+      categoryIds: prodCategories ||[newCategory?.value?.id]|| null,
      // subcategoryId: inputs.value.subcategoryId.value || null,
       brandId: inputs.value.brandId.value || null,
       subdirectoryId:subDirs || null,
@@ -830,6 +880,9 @@ const submitUpdate = async () => {
       variants: prodVariantes || null
     };
 
+    console.log('what is body in submotupdat',body);
+    console.log('submit dat newCategory',newCategory)
+    console.log('submit dat prodCategories',prodCategories)
     const response = await http.put(
       `/api/v1/Product/update-product/${id}`,
       body
@@ -841,6 +894,7 @@ const submitUpdate = async () => {
   } catch (err) {
     console.log(err);
   }
+  await productsStore.fetchProductById(id as string);
 };
 
 const editProduct = (type:string='') => {
@@ -856,10 +910,17 @@ const editProduct = (type:string='') => {
   );
   if (!hasError) {
     submitUpdate();
+    if(newCategory?.value?.id){
+    setTimeout(()=>{
+      createNewProdCategory();
+    },400)
+      console.log('efit produc newCategory is okt',newCategory )
+    }
     if(type==='form'){
      // router.push('/admin')
     }
   }
+  
 };
 
 
@@ -880,8 +941,13 @@ onMounted(async () => {
   selectedBrand.value=brandsStore.getBrand
 
   if (item?.value?.variants) {
-    variants.value = item.value.variants;
+    variants.value = item?.value?.variants.map((item)=>{
+      return {...item,loading:false}
+    })
   }
+
+
+
 
   console.log('item',item)
   categories.value = item?.value?.categories;
@@ -939,7 +1005,7 @@ catalogStore.getHelpersSubDirs()
   };
 });
 
-console.log('categories',categories)
+console.log('categoryValues',categoryValues)
 </script>
 
 <style scoped lang="scss">
@@ -1039,6 +1105,7 @@ button {
 }
 .variant .img-variant{
   width: 100%;
+  margin-bottom: 20px;
 }
 
 @media (max-width: 768px) {
