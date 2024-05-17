@@ -490,7 +490,8 @@ const openSubDir = ref(false);
 const isCategoryCreateOpen = ref(false);
 const isSubDirCreateOpen = ref(false);
 const newSubDir=ref()
-const isSubDirDeleteOpen=ref(false)
+const isSubDirDeleteOpen=ref(false);
+const targetSizeBytes = 150 * 1024;
 const isCategoryOpen=ref('');
 const selectedBrand =ref({} as Brands)
 const searchCategory =ref('')
@@ -568,7 +569,7 @@ const seachBrands =(value:string)=>{
 console.log(value);
 brandsStore.searchBrands(value)
 }
-const targetSizeBytes = 150 * 1024;
+
 const checkImgCompression=async(event:any)=>{
   let value = event.target.files[0];
   let options = {
@@ -636,7 +637,7 @@ const selectNewCategory =(item:CategorySys)=>{
 const createNewProdCategory =async()=>{
   if(newCategory?.value?.id){
     try{
-const response = await http.put(`/api/v1/Product/add-category/${item?.value?.id}?categoryId=${newCategory?.value?.id}`);
+const response = await http.post(`/api/v1/Product/add-category/${item?.value?.id}?categoryId=${newCategory?.value?.id}`);
 console.log('response new caegory',response);
 if(response.status===200){
   useNotif('success','Категория добавлена!','Успешно')
@@ -710,7 +711,7 @@ const addVariant = async () => {
         code: newVariants.value.code,
         size: newVariants.value.size,
         base:newVariants.value?.base,
-        image: base64String
+    //    image: base64String
       }
     ];
     const response = await http.put(`/api/v1/Product/add-variants/${id}`, body);
