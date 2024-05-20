@@ -50,7 +50,7 @@
     <Dialog
     v-model:visible="isDeleteOpen"
     modal
-    :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
+    :style="{padding: '20px 40px 50px 20px' }"
     header=" "
   >
     <ConfirmPay
