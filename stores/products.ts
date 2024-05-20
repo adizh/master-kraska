@@ -225,6 +225,7 @@ export const useProductsSstore = defineStore("productsStore", {
 this.filters.currentPage=page
     },
     async filterProducts (prodName?: string) {
+      console.log('prodName filter search,',prodName)
       this.areFiltersLoading = true;
       const subDirs =
         this.filters.subdirectoryIds?.length > 0
@@ -244,7 +245,7 @@ this.filters.currentPage=page
 
 
       const query = {
-        productName: this.filters.search || prodName,
+        productName: prodName || this.filters.search || '',
         categoriesId: categoriesId,
         subdirectoryIds: subDirs,
         minPrice: this.filters.minPrice || null,
@@ -261,8 +262,8 @@ this.filters.currentPage=page
           { params: query }
         );
 
-        console.log('query in filterProduct',query)
-        console.log("response filterProducts", response);
+        console.log('query in filterProduct ',query)
+
         if (response.status === 200) {
           this.filterProductTotal.totalItems = response.data.totalItems;
           this.filterProductTotal.totalPages = response.data.totalPages;

@@ -389,7 +389,6 @@ onMounted(async () => {
 }
 
   if (route?.query?.brandId) {
-    console.log('brandid in route query',route.query)
     brandIdQuery.value = route?.query?.brandId as string;
     isBrandOpen.value = true;
     productsStore?.filters.brandId.push(route?.query?.brandId as string);
@@ -400,7 +399,14 @@ onMounted(async () => {
     );
 
   }
-  await productsStore.filterProducts();
+  console.log('filters seatch',productsStore?.filters.search)
+  if(productsStore?.filters.search){
+    await productsStore.filterProducts(productsStore?.filters.search);
+
+  }else{
+    await productsStore.filterProducts();
+
+  }
 });
 
 

@@ -50,7 +50,11 @@ const firstCategoryItem = ref({} as Category);
 const router =useRouter()
 const handleSearch = (event: any) => {
   isSearchOpen.value = event.target?.value?.trim().length > 0;
-  productStore.filterProducts();
+
+  setTimeout(()=>{
+    productStore.filterProducts(event.target?.value);
+  },500)
+
 };
 
 watch(isSearchOpen, (value) => {

@@ -42,7 +42,7 @@
 const productStore = useProductsSstore();
 const changePage = (page: number) => {
   productStore.filters.currentPage = page;
-  productStore.filterProducts();
+ // productStore.filterProducts();
 };
 const props = defineProps<{
   visibleMethod: string;

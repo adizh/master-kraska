@@ -116,7 +116,7 @@ onMounted(() => {
   if(id?.value){
     productStore.setCategoryId(id.value as string);
   }
-  productStore.filterProducts();
+ //productStore.filterProducts();
 });
 </script>
 

@@ -169,6 +169,7 @@ const volumeBtn = ref("");
 const countToBuy = ref(1);
 const totalPrice = ref(0);
 const authStore = useAuthStore();
+const brandsStore=useBrandsStore()
 const productStore = useProductsSstore();
 const store = useCartStore();
 const productBrand = ref({} as Brands);
@@ -351,7 +352,7 @@ onMounted(async () => {
   isProductBookmarked.value = productStore.getProductBookmarked;
 
   if (getProduct && getProduct?.value?.product?.brandId) {
-    productBrand.value = await getBrandId(getProduct?.value?.product?.brandId);
+    productBrand.value = await brandsStore.fetchAllBrandId(getProduct?.value?.product?.brandId);
   }
   selectedProductPrice.value = getProduct.value?.product?.price;
   totalPrice.value = countToBuy.value * selectedProductPrice.value;
