@@ -1,5 +1,7 @@
 <template>
   <section>
+    <button @click="navigateTo('/admin')" class="btn-white-bg mb-4 mt-0"> Назад </button>
+    <h1 class="mb-3">Редактировать</h1>
     <form class="grid" @submit.prevent="editProduct('form')">
       <div class="lg:col-4 md:col-6 col-12 each-field">
         <label for="name">Имя</label>
@@ -498,7 +500,7 @@ title="Добавить подкатегорию"
 </Transition>
 </div>
 
-  <button type="button">
+  <button type="button" @click='addNewSubCategory'>
     Добавить
   </button>
 
@@ -548,12 +550,31 @@ const searchCategories =(value:string)=>{
 console.log('what is NEWSUBDIR',newSubDir)
 const selectNewSubDir=(item:SubDirHelper)=>{
   newSubDir.value=item;
-  console.log('newSubDir',newSubDir)
+  openSubDir.value=false
+}
+
+const addNewSubCategory =async()=>{
+ if(newSubDir?.value?.id){
+  try{
+const response = await http.post(`/api/v1/Product/add-subdirectory/${item?.value?.id}?subdirectoryId=${newSubDir?.value?.id}`);
+console.log('response create new sub category',response)
+if(response.status===200){
+  isSubDirCreateOpen.value=false;
+  useNotif('success','Подкатегория создана!','Успешно')
+  setTimeout(()=>{
+window.location.reload()
+  },600)
+}
+}catch(err){
+  console.log(err)
+}
+ }
 }
 
 const toggleSubDirCreate =()=>{
   openSubDir.value=!openSubDir.value
 }
+
 const newVariants = ref({
   size: "",
   price: "",
@@ -563,6 +584,7 @@ const newVariants = ref({
   imgLoading:false,
   imgError:''
 });
+
 const deleteSubDir =(value:SubDirHelper,mainValue:string)=>{
   isSubDirDeleteOpen.value=true;
   currentSubDir.value={...value, category:mainValue}

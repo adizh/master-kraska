@@ -321,7 +321,8 @@ span{
 overflow-x: hidden;
     line-height: 20px;
     margin-top: 10px;
-    height:80px
+    height:80px;
+    overflow-y: hidden;
   }
 
   &-info {

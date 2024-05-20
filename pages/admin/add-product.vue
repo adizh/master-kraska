@@ -1,6 +1,8 @@
 <template>
     <div>
-<h1>Добавить продукт</h1>
+<button @click="navigateTo('/admin')" class="btn-white-bg mb-4 mt-0"> Назад </button>
+
+<h1 class="mb-3">Добавить продукт</h1>
 <form class="grid" @submit.prevent="formAdd">
 <div v-for="item in Object.values(inputs)" :key="item?.field"  class="flex flex-column gap-2 lg:col-4 md:col-6 col-12">
 <template v-if="item?.key==='descriptionRu' || item?.key==='descriptionKg'">
