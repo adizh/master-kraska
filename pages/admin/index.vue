@@ -8,6 +8,7 @@
           <a href="/admin/add-product" target="_blank">Добавить продукт</a>
           <a href="#" @click.prevent="openModal" target="_blank">Создать категорию</a>
           <a href="#" @click.prevent="openNewsModal" target="_blank">Создать новость</a>
+          <a href="#" @click.prevent="openBrandModal" target="_blank">Создать бренд</a>
         </div>
 
       </div>
@@ -19,6 +20,8 @@
   <AdminCreateCategory :openCreateCategoryModal="openCreateCategoryModal" @closeModal="openCreateCategoryModal=false"/>
 
    <AdminCreateNews  :isOpen="openNews" @closeModal="openNews=false"/>
+
+   <AdminCreateBrand :isOpen="openBrand" @closeModal="openBrand=false"/>
   </section>
 </template>
 
@@ -26,6 +29,7 @@
 const authStore=useAuthStore()
 const visible=ref(false)
 const openNews=ref(false)
+const openBrand=ref(false)
 const router=useRouter();
 const openCreateCategoryModal =ref(false)
 const openModal =()=>{
@@ -34,6 +38,11 @@ const openModal =()=>{
 }
 const openNewsModal =()=>{
   openNews.value=true;
+  visible.value=false
+}
+
+const openBrandModal =()=>{
+  openBrand.value=true;
   visible.value=false
 }
 onMounted(()=>{

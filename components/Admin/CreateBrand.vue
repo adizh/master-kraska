@@ -1,44 +1,22 @@
 <template>
     <UIModal
     :show-modal="isOpen"
-    title="Добавить новость"
+    title="Добавить бренд"
     @close-modal="$emit('closeModal')"
   >
  
 <form class="mt-4 flex flex-column align-items-center" @submit.prevent="createNews">
 <div class="form-block">
     <label for="category">Название</label>
-    <input type="text" v-model="newsForm.nameRu" class="basic-input" required id="category">
+    <input type="text" v-model="newsForm.name" class="basic-input" required id="category">
 </div>
 
-   <div class="form-block">
-    <label for="categoryKg">Название (кырг)</label>
-    <input type="text" v-model="newsForm.nameKg" class="basic-input" required id="categoryKg">
-   </div>
-  
 
-   <div class="form-block">
-    <label for="categoryKg">Описание</label>
-    <input type="text"  v-model="newsForm.descriptionRu" class="basic-input" required id="categoryKg">
-   </div>
+<div class="form-block">
+    <label for="category">Колеровка</label>
+    <input type="checkbox" v-model="newsForm.tinting" class="basic-input"  id="category">
+</div>
 
-   <div class="form-block">
-    <label for="categoryKg">Описание (кырг)</label>
-    <textarea type="text"  v-model="newsForm.descriptionKg" class="basic-input" required id="categoryKg">
-    </textarea>
-   </div>
-
-   <div class="form-block">
-    <label for="categoryKg">Текст</label>
-    <textarea type="text" v-model="newsForm.textRu" class="basic-input" required id="categoryKg" >
-        </textarea>
-   </div>
-  
-
-   <div class="form-block">
-    <label for="categoryKg">Текст (кырг)</label>
-    <input type="text"  v-model="newsForm.textKg" class="basic-input" required id="categoryKg">
-   </div>
 
 
    <div class="form-block flex flex-column align-items-start">
@@ -79,12 +57,8 @@ const props=defineProps({
     }
 })
 const newsForm=ref({
-    nameKg:"",
-    nameRu:'',
-    descriptionKg:'',
-    descriptionRu:'',
-    textKg:"",
-    textRu:'',
+    name:"",
+  tinting:false,
     image:{
         value:'',error:"",loading:false
     }
@@ -98,8 +72,6 @@ const handleNewsImage=async(event:any)=>{
     newsForm.value.image.loading=true;
     newsForm.value.image.error=''
     newsForm.value.image.value=''
-
-    console.log('newsForm.value.image',newsForm.value.image)
   const result =await useCompressImage(event);
 if(result?.size>targetSizeBytes){
   newsForm.value.image.error='Размер файла слишком большой';
@@ -121,34 +93,31 @@ newsForm.value.image.value=base64StringNewImage
 }
 
 const createNews=async()=>{
-  if(newsForm.value.image?.value?.length>0 && !newsForm.value.image.error){
-    let inputs={} as any
+  if(newsForm.value.image.value?.length>0 && !newsForm.value.image.error){
 
-for (const key in newsForm.value){
-    if(key==='image') continue
-    inputs[key as keyof typeof newsForm.value]=newsForm.value[key as keyof typeof newsForm.value]
-}
 
 const body={
-...inputs,image:newsForm.value.image.value
+    "name": newsForm.value.name,
+  "logo": newsForm.value.image.value,
+  "tinting": newsForm.value.tinting
 }
 try{
-    const response = await http.post('/api/v1/News/create-news',body)
+    const response = await http.post('/api/v1/Brand/create-brand',body)
 
     console.log('response',response)
     if(response.status==200){
-        useNotif('success','Новость создана!','Успешно');
+        useNotif('success','Бренд создан!','Успешно');
 setTimeout(()=>{
     emit('closeModal');
 
 },600)
 
 setTimeout(()=>{
-    for (const key in body){
-    body[key as keyof typeof newsForm.value]=''
-
     newsForm.value.image.value=''
-}
+    newsForm.value.image.error=''
+    newsForm.value.name=''
+    newsForm.value.tinting=false
+
 },2000)
     }
 
