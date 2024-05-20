@@ -493,6 +493,7 @@ h2 {
 
 .news-list {
   @include flex(row, start, center);
+  flex-wrap: wrap;
 }
 
 // responsive start

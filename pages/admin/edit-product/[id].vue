@@ -226,7 +226,7 @@
         <label for="size">Объемы</label>
         <div class="all-variant">
           <div v-for="variant in variants" :key="variant?.id" class="variant">
-          <div class="img-variant ">
+          <div class="img-variant">
             <img
             :src="varSizes[variant?.size]?.image"
             alt="variant"
@@ -756,10 +756,6 @@ const variantImage = ref("");
 const handleNewVarImage = async (event: any) => {
   newVarImage.value = event.target.files[0];
   varSizes[currVarSize.value].loading=true;
-
-
-  console.log('currVarSize',currVarSize)
-  console.log('varSizes[currVarSize.value].loadin before',varSizes[currVarSize.value].loading)
   const result =await checkImgCompression(event);
 if(result?.size>targetSizeBytes){
   varSizes[currVarSize.value].error='Размер файла слишком большой';
@@ -772,7 +768,7 @@ else if(result.size<targetSizeBytes && result && result!==undefined){
   variantImage.value = base64StringNewImage as unknown as string;
   varSizes[currVarSize.value].image = base64StringNewImage as unknown as string;
 }
-console.log('varSizes[currVarSize.value].loadin after',varSizes[currVarSize.value].loading)
+
 };
 
 const currVarSize = ref("");

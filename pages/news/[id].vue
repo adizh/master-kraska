@@ -119,6 +119,7 @@ h1 {
 .active-section {
   @include flex(row, start, center);
   margin-left: -60px;
+  flex-wrap: wrap;
 }
 .text {
   font-size: 20px;

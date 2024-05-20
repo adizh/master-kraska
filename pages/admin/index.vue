@@ -7,6 +7,7 @@
         <div class="admin-links">
           <a href="/admin/add-product" target="_blank">Добавить продукт</a>
           <a href="#" @click.prevent="openModal" target="_blank">Создать категорию</a>
+          <a href="#" @click.prevent="openNewsModal" target="_blank">Создать новость</a>
         </div>
 
       </div>
@@ -17,25 +18,24 @@
 
   <AdminCreateCategory :openCreateCategoryModal="openCreateCategoryModal" @closeModal="openCreateCategoryModal=false"/>
 
-    <!-- <Dialog   v-model:visible="openCreateCategoryModal"
-    modal
-    :style="{padding: '20px 40px 50px 20px'}"
-    header="Создать категорию">
-<AdminCreateCategory/>
-    </Dialog> -->
+   <AdminCreateNews  :isOpen="openNews" @closeModal="openNews=false"/>
   </section>
 </template>
 
 <script setup lang="ts">
 const authStore=useAuthStore()
 const visible=ref(false)
+const openNews=ref(false)
 const router=useRouter();
 const openCreateCategoryModal =ref(false)
 const openModal =()=>{
   openCreateCategoryModal.value=true;
   visible.value=false
 }
-
+const openNewsModal =()=>{
+  openNews.value=true;
+  visible.value=false
+}
 onMounted(()=>{
 // if(authStore?.getRole!=='Admin'){
 //     router.push('/')
