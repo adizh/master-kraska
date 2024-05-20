@@ -36,12 +36,13 @@
           v-model="inputs.descriptionRu.value"
           class="basic-input col-12"
           type="text"
-          @input="validate('descriptionRu', 'string')"
+
         >
         <span v-if="inputs.descriptionRu.error" class="err-input-msg">{{
           inputs.descriptionRu.error
         }}</span>
       </div>
+
       <div class="lg:col-4 md:col-6 col-12 each-field">
         <label for="description">Описание (кырг)</label>
         <input
@@ -49,12 +50,13 @@
           v-model="inputs.descriptionKg.value"
           class="basic-input col-12"
           type="text"
-          @input="validate('descriptionKg', 'string')"
+
         >
         <span v-if="inputs.descriptionKg.error" class="err-input-msg">{{
           inputs.descriptionKg.error
         }}</span>
       </div>
+
       <div class="lg:col-4 md:col-6 col-12 each-field">
         <label for="description">Короткое описание</label>
         <input
@@ -62,12 +64,13 @@
           v-model="inputs.shortDescriptionRu.value"
           class="basic-input col-12"
           type="text"
-          @input="validate('shortDescriptionRu', 'string')"
+
         >
         <span v-if="inputs.shortDescriptionRu.error" class="err-input-msg">{{
           inputs.shortDescriptionRu.error
         }}</span>
       </div>
+
       <div class="lg:col-4 md:col-6 col-12 each-field">
         <label for="description">Короткое описание (кырг)</label>
         <input
@@ -75,7 +78,6 @@
           v-model="inputs.shortDescriptionKg.value"
           class="basic-input col-12"
           type="text"
-          @input="validate('shortDescriptionKg', 'string')"
         >
         <span v-if="inputs.shortDescriptionKg.error" class="err-input-msg">{{
           inputs.shortDescriptionKg.error
@@ -105,14 +107,14 @@
   />
       </div>
 
-  <div class="lg:col-4 md:col-6 col-6 each-field"  v-else>
+      <div class="lg:col-4 md:col-6 col-6 each-field"  v-else>
         <label for="categoryId">Категории</label>
         <div class="selected-option basic-input" @click="toggleCreateCategory">
           <span>
       
            {{  newCategory?.nameRu||'Выбрать категорию'  }}
           </span>
-      
+
           <img
             class="arrow"
             :class="{ rotated: isCategoryCreateOpen }"
@@ -138,9 +140,6 @@
       </div>
 
 
-
-
-
       <div class="lg:col-4 md:col-6 col-12 each-field">
         <label for="brandId">Бренд</label>
 <UISelect  :options="brandsStore?.getAllBrands" label="name" 
@@ -150,7 +149,6 @@
 />
       
       </div>
-
 
       <div class="lg:col-6 md:col-6 col-12 each-field">
         <label for="subcategoryId">Подкатегории (helpersMain)</label>
@@ -445,7 +443,7 @@
     <ul class="ui-options" v-if="openCategory">
         <input type="text" class="basic-input" v-model="searchCategory" @input="(event:any)=>searchCategories(event?.target?.value)"/>
       <li
-        v-for="(item,index) in catalogStore?.getLinkedCategories"
+        v-for="(item, index) in catalogStore?.getLinkedCategories"
         :key="item?.id" 
         @click='selectNewCategory(item)'
       >
@@ -505,6 +503,7 @@ title="Добавить подкатегорию"
   </button>
 
 </UIModal>
+
   </section>
 
 </template>
@@ -652,8 +651,8 @@ const selectValue =(newCategory:CategorySys,selectedValue:CategorySys)=>{
   categoryValues.value.splice(itemIndex,1,newCategory)
   isCategoryOpen.value='';
 }
-const variants = ref([] as Variant[]);
 
+const variants = ref([] as Variant[]);
 interface InputField {
   value:
     | string
@@ -663,7 +662,7 @@ interface InputField {
     | boolean
     | CategorySys[]
     | any[];
-  error: string;
+  error?: string;
   type?: string | any;
 }
 
@@ -695,6 +694,7 @@ const confirmSubDirDelete =()=>{
  isSubDirDeleteOpen.value=false
  editProduct()
 }
+
 const selectNewCategory =(item:CategorySys)=>{
   newCategory.value=item;
   openCategory.value=false;
@@ -770,6 +770,7 @@ const confirmDelete = () => {
   submitUpdate();
   isDeleteOpen.value = false;
 };
+
 const addVariant = async () => {
   if (!newVariants.value.image) {
     return;
@@ -802,23 +803,19 @@ const inputs = ref<Inputs>({
   nameKg: { value: item.value?.nameKg, error: "", type: "string" },
   descriptionRu: {
     value: item.value?.descriptionRu,
-    error: "",
-    type: "string"
+
   },
   descriptionKg: {
     value: item.value?.descriptionKg,
-    error: "",
-    type: "string"
+
   },
   shortDescriptionRu: {
     value: item.value?.shortDescriptionRu,
-    error: "",
-    type: "string"
+
   },
   shortDescriptionKg: {
     value: item.value?.shortDescriptionKg,
-    error: "",
-    type: "string"
+
   },
   price: { value: item?.value?.price, error: "", type: "number" },
   subcategoryId: { value: item?.value?.subcategoryId, error: "" },
@@ -851,8 +848,6 @@ const submitUpdate = async () => {
       return item;
     }
   });
-
-
 
   const subDirs=productHelpers?.value?.map((item)=>item?.id)
   console.log('subDirs',subDirs)
@@ -899,12 +894,22 @@ const submitUpdate = async () => {
 
 const editProduct = (type:string='') => {
   console.log('herlpersMain',productHelpers)
+  // for (const fieldName in inputs.value) {
+  //   if (Object.prototype.hasOwnProperty.call(inputs.value, fieldName)) {
+  //     const fieldType = inputs.value[fieldName].type;
+  //     handleValues(inputs.value, fieldName, fieldType);
+  //   }
+  // }
+
   for (const fieldName in inputs.value) {
-    if (Object.prototype.hasOwnProperty.call(inputs.value, fieldName)) {
-      const fieldType = inputs.value[fieldName].type;
-      handleValues(inputs.value, fieldName, fieldType);
-    }
+  if (
+    Object.prototype.hasOwnProperty.call(inputs.value, fieldName) &&
+    !inputs.value[fieldName].hasOwnProperty('type')
+  ) {
+    const fieldType = inputs.value[fieldName].type;
+    handleValues(inputs.value, fieldName, fieldType);
   }
+}
   const hasError = Object.values(inputs.value).some(
     (input) => input.error !== ""
   );
