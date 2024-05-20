@@ -294,15 +294,17 @@ return compressedFile
 
 
 const uploadImage =async(event:any)=>{
-isImageLoading.value=true
+  arrErrors.image.error=''
+isImageLoading.value=await true
 const result =await checkImgCompression(event);
 if(result?.size>targetSizeBytes){
   arrErrors.image.error='Размер слишком большой'
 }
 if(result && result!==undefined){
-  isImageLoading.value=false
+  isImageLoading.value=await false
   const base64StringNewImage = await useConvertToBase64(result) as unknown as string
   prodImages.value=[base64StringNewImage];
+  arrErrors.image.error=''
 }
 console.log('prodImages',prodImages)
 }
@@ -358,8 +360,8 @@ const fields=ref<Fields>({
   "dryingTime":  {value:'',field:'Высыхание'},
 
   "colorType": {value:'',error:'',type:'number',field:'Цвет'} ,
-  "descriptionRu":  {value:'',error:'',type:'string',field:'Описание'},
-  "descriptionKg":  {value:'',error:'',type:'string',field:'Описание (кырг)'},
+  "descriptionRu":  {value:'',field:'Описание'},
+  "descriptionKg":  {value:'',field:'Описание (кырг)'},
   "code": {value:'',error:'',type:'number',field:'Код'} ,
   "isPopular": false,
   "isFeatured": false,

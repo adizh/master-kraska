@@ -894,12 +894,7 @@ const submitUpdate = async () => {
 
 const editProduct = (type:string='') => {
   console.log('herlpersMain',productHelpers)
-  // for (const fieldName in inputs.value) {
-  //   if (Object.prototype.hasOwnProperty.call(inputs.value, fieldName)) {
-  //     const fieldType = inputs.value[fieldName].type;
-  //     handleValues(inputs.value, fieldName, fieldType);
-  //   }
-  // }
+  
 
   for (const fieldName in inputs.value) {
   if (
