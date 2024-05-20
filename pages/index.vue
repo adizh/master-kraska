@@ -5,7 +5,7 @@
       <div class="flex flex-row gap-4 search">
         <div class="input-block">
           <input
-            v-model="productStore.filters.search"
+          v-model="productStore.filters.search"
             type="text"
             class="main-header-input"
             :placeholder="$t('whichProSearch')"
@@ -50,10 +50,12 @@ const firstCategoryItem = ref({} as Category);
 const router =useRouter()
 const handleSearch = (event: any) => {
   isSearchOpen.value = event.target?.value?.trim().length > 0;
-
+   console.log('what is avalue in side',event.target?.value)
   setTimeout(()=>{
     productStore.filterProducts(event.target?.value);
-  },500)
+  },2000)
+
+
 
 };
 
@@ -73,7 +75,6 @@ const enableBodyScroll = () => {
 
 onMounted(async()=>{
   await catalogStore.fetchAllCategories();
- 
  firstCategoryItem.value = catalogStore?.getAllCategories[0];
 })
 

@@ -14,6 +14,7 @@ export const useProductsSstore = defineStore("productsStore", {
     },
     isProductBookmarked: false,
     areFiltersLoading: false,
+    areProdsReceived:false,
     product: {} as { product: Product; similarProducts: Product[] },
     filters: {
       search: "",
@@ -224,28 +225,15 @@ export const useProductsSstore = defineStore("productsStore", {
     setCurrentPage(page:number){
 this.filters.currentPage=page
     },
-    async filterProducts (prodName?: string) {
-      console.log('prodName filter search,',prodName)
+    async filterProducts(prodName?:string) {
       this.areFiltersLoading = true;
-      const subDirs =
-        this.filters.subdirectoryIds?.length > 0
-          ? this.filters.subdirectoryIds?.join(",")
-          : null;
-
-      const allBrands =
-        this.filters?.brandId !== null && this.filters?.brandId?.length > 0
-          ? this.filters.brandId?.join(",")
-          : null;
-
-      const categoriesId =
-        this.filters?.categoryId?.length > 0 &&
-        this.filters?.categoryId !== null
-          ? this.filters?.categoryId.join(',')
-          : null;
-
-
+      const subDirs = this.filters.subdirectoryIds?.length > 0 ? this.filters.subdirectoryIds.join(",") : null;
+      const allBrands = this.filters?.brandId?.length > 0 ? this.filters.brandId.join(",") : null;
+      const categoriesId = this.filters?.categoryId?.length > 0 ? this.filters.categoryId.join(',') : null;
+      const name = prodName || this.filters.search || '';
+      
       const query = {
-        productName: prodName || this.filters.search || '',
+        productName: name,
         categoriesId: categoriesId,
         subdirectoryIds: subDirs,
         minPrice: this.filters.minPrice || null,
@@ -253,21 +241,20 @@ this.filters.currentPage=page
         brandId: allBrands,
         page: this.filters.currentPage,
         pageSize: this.filters.pageSize,
-        colorType:null
+        colorType: null
       };
+      console.log('query',query)
+    
       const authStore = useAuthStore();
       try {
-        const response = await http.get(
-          "/api/v1/Product/get-all-products-pagination",
-          { params: query }
-        );
-
-        console.log('query in filterProduct ',query)
-
+        const response = await http.get("/api/v1/Product/get-all-products-pagination", { params: query });
+    
         if (response.status === 200) {
+          this.areProdsReceived = true;
           this.filterProductTotal.totalItems = response.data.totalItems;
           this.filterProductTotal.totalPages = response.data.totalPages;
-          const filtered = response.data.items?.map((item: Product) => {
+  console.log('response',response)
+          const filtered = response.data.items?.map((item:Product) => {
             if (authStore.getSelectedLang === "kg") {
               return {
                 ...item,
@@ -282,17 +269,22 @@ this.filters.currentPage=page
               };
             }
           });
-
+    
           this.filteredProducts = filtered;
-        }
+          console.log('this.filteredProducts is being assign',this.filteredProducts)
+          if(this.filteredProducts?.length>0){
+            console.log('this.filteredProducts ionside the if ',this.filteredProducts)
+        
+          }
+          setTimeout(()=>{
+            this.areFiltersLoading = false;
+          },800)
+        } 
       } catch (err) {
-        console.log(err);
-      } finally {
-        setTimeout(() => {
           this.areFiltersLoading = false;
-        }, 1000);
       }
-    },
+    }
+,    
     setCategoryId (categoryId: string) {
       this.filters.categoryId.push(categoryId);
       this.filterProducts();

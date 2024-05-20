@@ -186,6 +186,7 @@ import { Brands } from "~/types/Brands";
 import { CategorySys } from "~/types/Category";
 
 const route = useRoute();
+const router=useRouter()
 const productsStore = useProductsSstore();
 const catalogStore = useCatalogStore();
 const authStore = useAuthStore();
@@ -380,35 +381,48 @@ const getRemainingItemCount = (item: AllCatalog) => {
 };
 
 onMounted(async () => {
+
+  // if (localStorage.getItem('reloaded')) {
+  //       localStorage.removeItem('reloaded');
+  //   } else {
+  //       localStorage.setItem('reloaded', '1');
+  //       location.reload();
+  //   }
+
   await catalogStore.fetchAllCatalogs();
   await initializeCheckboxStates();
   brandsStore.fetchAllBrands();
 
   if(route?.query?.category){
   await catalogStore.fetchCategoryById(route?.query?.category as string);
+  await productsStore.filterProducts();
 }
 
   if (route?.query?.brandId) {
     brandIdQuery.value = route?.query?.brandId as string;
     isBrandOpen.value = true;
     productsStore?.filters.brandId.push(route?.query?.brandId as string);
+    await productsStore.filterProducts();
   }
   if (route?.query?.subCategory) {
     productsStore.filters.categoryId.push(
       route.query.subCategory as unknown as string,
     );
-
-  }
-  console.log('filters seatch',productsStore?.filters.search)
-  if(productsStore?.filters.search){
-    await productsStore.filterProducts(productsStore?.filters.search);
-
-  }else{
     await productsStore.filterProducts();
 
   }
+  await productsStore.filterProducts();
+  // if(productsStore?.filters.search){
+  //   await productsStore.filterProducts(productsStore?.filters.search);
+  // }
 });
 
+
+onUnmounted(()=>{
+  productsStore.filters.brandId=[];
+  productsStore.filters.categoryId=[]
+  productsStore.filters.search=''
+})
 
 
 
