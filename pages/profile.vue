@@ -272,7 +272,7 @@ const fetchUserBookmarks = async () => {
         } else {
           return {
             ...item,
-            name: item?.nameRu,
+            name: item?.nameRu
           };
         }
       });

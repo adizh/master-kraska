@@ -371,9 +371,12 @@ const submitOrder = async () => {
     );
 
     if (!hasError) {
-   
-      const address=orderStore.deliveryForm.address.value + orderStore.deliveryForm.houseNumber.value + orderStore.deliveryForm.blockNumber.value  + orderStore.deliveryForm.floorNumber.value 
-   console.log('address',address)
+      const address =
+        orderStore.deliveryForm.address.value +
+        orderStore.deliveryForm.houseNumber.value +
+        orderStore.deliveryForm.blockNumber.value +
+        orderStore.deliveryForm.floorNumber.value;
+      console.log("address", address);
       // const body = {
 
       //   orderId: route.params?.id,
@@ -403,8 +406,6 @@ onMounted(() => {
   authStore.fetchUser();
   orderStore?.fetchAllShops();
   getOrderId();
-
-  
 });
 
 watch(

@@ -116,7 +116,7 @@
 import { OrderItem, UserOrder } from "~/types/Order";
 import moment from "moment";
 import { User } from "~/types/User";
-const totalPages=ref(1)
+const totalPages = ref(1);
 const isPayOpen = ref(false);
 const formatDated = (date: string) => {
   return moment(date).format("D/MM/YY");
@@ -178,7 +178,7 @@ const toggleCatalog = (id: string) => {
 };
 const changePage = (page: number) => {
   currentPage.value = page;
-  getOrderByUser()
+  getOrderByUser();
 };
 
 const getOrderByUser = async () => {
@@ -188,7 +188,7 @@ const getOrderByUser = async () => {
     );
     if (response.status === 200) {
       console.log("get order by user", response);
-      totalPages.value=response.data?.totalPages
+      totalPages.value = response.data?.totalPages;
       userOrders.value = response.data?.items?.map((order: OrderItem) => {
         return {
           ...order,
@@ -196,12 +196,12 @@ const getOrderByUser = async () => {
             if (authStore.getSelectedLang === "kg") {
               return {
                 ...eachItem,
-                productName: eachItem?.productNameKg
+                productName: eachItem?.productNameKg,
               };
             } else {
               return {
                 ...eachItem,
-                productName: eachItem?.productNameRu
+                productName: eachItem?.productNameRu,
               };
             }
           }),

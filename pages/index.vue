@@ -5,7 +5,7 @@
       <div class="flex flex-row gap-4 search">
         <div class="input-block">
           <input
-          v-model="productStore.filters.search"
+            v-model="productStore.filters.search"
             type="text"
             class="main-header-input"
             :placeholder="$t('whichProSearch')"
@@ -18,9 +18,7 @@
           >
         </div>
         <div class="btn-block" @click.stop="router.push(`/catalog`)">
-
-          <button>{{ $t('find') }}</button>
-
+          <button>{{ $t("find") }}</button>
         </div>
       </div>
       <SearchOptions
@@ -40,23 +38,19 @@
 </template>
 
 <script setup lang="ts">
-
 import { Category } from "~/types/Category";
 
 const productStore = useProductsSstore();
-const catalogStore =useCatalogStore()
+const catalogStore = useCatalogStore();
 const isSearchOpen = ref(false);
 const firstCategoryItem = ref({} as Category);
-const router =useRouter()
+const router = useRouter();
 const handleSearch = (event: any) => {
   isSearchOpen.value = event.target?.value?.trim().length > 0;
-   console.log('what is avalue in side',event.target?.value)
-  setTimeout(()=>{
+  console.log("what is avalue in side", event.target?.value);
+  setTimeout(() => {
     productStore.filterProducts(event.target?.value);
-  },2000)
-
-
-
+  }, 2000);
 };
 
 watch(isSearchOpen, (value) => {
@@ -73,10 +67,10 @@ const enableBodyScroll = () => {
   document.body.style.overflow = "auto";
 };
 
-onMounted(async()=>{
+onMounted(async () => {
   await catalogStore.fetchAllCategories();
- firstCategoryItem.value = catalogStore?.getAllCategories[0];
-})
+  firstCategoryItem.value = catalogStore?.getAllCategories[0];
+});
 
 onUnmounted(() => {
   document.body.style.overflow = "auto";
@@ -84,10 +78,9 @@ onUnmounted(() => {
 </script>
 
 <style scoped lang="scss">
-section{
+section {
   margin-top: -2.6rem;
 }
-
 
 .search-place {
   position: relative;

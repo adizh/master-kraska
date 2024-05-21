@@ -80,8 +80,7 @@ onUnmounted(() => {
   margin-right: -10px;
 }
 
-
-:deep(.slider-wrapper){
-display: flex;
+:deep(.slider-wrapper) {
+  display: flex;
 }
 </style>

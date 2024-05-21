@@ -8,22 +8,20 @@
     <img src="../../assets/icons/icon=heart fill.svg" alt="heart icon" />
   </button>
 
-
   <Dialog
-  v-model:visible="isProfileOpen"
-  modal
-  :style="{ width: '450px', padding: '10px 40px 40px 40px' }"
->
-  <AuthModal @close-modal="() => (isProfileOpen = false)" />
-</Dialog>
-
+    v-model:visible="isProfileOpen"
+    modal
+    :style="{ width: '450px', padding: '10px 40px 40px 40px' }"
+  >
+    <AuthModal @close-modal="() => (isProfileOpen = false)" />
+  </Dialog>
 </template>
 
 <script setup lang="ts">
 import { Product } from "~/types/Product";
 const productsStore = useProductsSstore();
 const authStore = useAuthStore();
-const isProfileOpen =ref(false)
+const isProfileOpen = ref(false);
 const props = defineProps<{
   product: Product;
 }>();
@@ -32,8 +30,8 @@ const toggleBoomark = (id: string) => {
   if (authStore?.getUserId) {
     isProductBookmarked.value = !isProductBookmarked.value;
     productsStore.addToBookmarks(id);
-  }else{
-    isProfileOpen.value=true
+  } else {
+    isProfileOpen.value = true;
   }
 };
 onMounted(async () => {

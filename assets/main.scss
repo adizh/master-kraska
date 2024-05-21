@@ -29,7 +29,7 @@
     Arial, sans-serif;
   -webkit-font-family: "Avenir Next", "Avenir Next LT Pro", "Helvetica Neue",
     Helvetica, Arial, sans-serif;
-    padding: 0;
+  padding: 0;
 }
 
 button:hover {
@@ -565,13 +565,13 @@ h2 {
   }
 }
 
-.volume{
-  height:23px;
+.volume {
+  height: 23px;
   overflow: hidden;
   overflow-x: hidden;
 }
-.gap-10{
-  gap:10px
+.gap-10 {
+  gap: 10px;
 }
 .item-block-description {
   @include textFormat(14px, 20px, 600, $main-dark-grey);

@@ -29,7 +29,8 @@
   <div
     v-else-if="
       !productStore.getLoadingState &&
-      !productStore?.getFilteredProducts?.length"
+      !productStore?.getFilteredProducts?.length
+    "
   >
     {{ $t("noDataCatalogSearch") }}
   </div>
@@ -42,7 +43,7 @@
 const productStore = useProductsSstore();
 const changePage = (page: number) => {
   productStore.filters.currentPage = page;
- // productStore.filterProducts();
+  // productStore.filterProducts();
 };
 const props = defineProps<{
   visibleMethod: string;

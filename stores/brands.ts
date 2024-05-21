@@ -3,9 +3,10 @@ import { Brands, Seller } from "~/types/Brands";
 export const useBrandsStore = defineStore("brandsStore", {
   state: () => ({
     brands: [] as Brands[],
-allBrands:[] as Brands[],
+    allBrands: [] as Brands[],
     sellers: [] as Seller[],
-    brand:{} as Brands  }),
+    brand: {} as Brands
+  }),
 
   actions: {
     async fetchAllBrands () {
@@ -15,7 +16,6 @@ allBrands:[] as Brands[],
         if (response.status === 200) {
           this.brands = response.data;
           this.allBrands = response.data;
-        
         }
       } catch (err) {
         console.log(err);
@@ -44,16 +44,17 @@ allBrands:[] as Brands[],
         const response = await http(`/api/v1/Brand/get-brand/${brandId}`);
 
         if (response.status === 200) {
-
-          this.brand=response.data;
-     return response.data
+          this.brand = response.data;
+          return response.data;
         }
       } catch (err) {
         console.log(err);
       }
     },
-    searchBrands(value:string){
-this.brands=this.allBrands.filter((brand)=>brand?.name?.toLowerCase()?.includes(value?.toLowerCase()))
+    searchBrands (value: string) {
+      this.brands = this.allBrands.filter((brand) =>
+        brand?.name?.toLowerCase()?.includes(value?.toLowerCase())
+      );
     }
   },
   getters: {

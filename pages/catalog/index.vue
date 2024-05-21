@@ -41,7 +41,7 @@
           <span />
 
           <span />
-          
+
           <span />
         </p>
         <p v-else class="open-filters" @click="isFilterOpen = false">
@@ -79,14 +79,14 @@ type VisibleMethod = "vertical" | "horizontal";
 const visibleMethod = ref<VisibleMethod>("vertical");
 
 const route = useRoute();
-const id = ref(route.query?.category)
+const id = ref(route.query?.category);
 
-console.log('route',route)
+console.log("route", route);
 const authStore = useAuthStore();
-const catalogStore =useCatalogStore()
+const catalogStore = useCatalogStore();
 const { data: category } = useApi(
   `/api/v1/Category/get-category/${id?.value}`,
-  {watch:[id]}
+  { watch: [id] }
 ) as any;
 const isFilterOpen = ref(false);
 
@@ -98,25 +98,24 @@ const productStore = useProductsSstore();
 
 const productName = defineModel<string>();
 const handleSearch = (event: any) => {
-  productStore.setCurrentPage(1)
+  productStore.setCurrentPage(1);
   productStore.filterProducts(event.target.value);
 };
 
 watch(
   () => id?.value,
   async (newHeight) => {
-    console.log('is id being chanfs here????')
+    console.log("is id being chanfs here????");
     if (newHeight) {
-     
-      //await catalogStore.fetchCategoryById(id?.value as string);
+      // await catalogStore.fetchCategoryById(id?.value as string);
     }
   }
 );
 onMounted(() => {
-  if(id?.value){
+  if (id?.value) {
     productStore.setCategoryId(id.value as string);
   }
- //productStore.filterProducts();
+  // productStore.filterProducts();
 });
 </script>
 

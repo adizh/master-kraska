@@ -186,7 +186,7 @@ import { Brands } from "~/types/Brands";
 import { CategorySys } from "~/types/Category";
 
 const route = useRoute();
-const router=useRouter()
+const router = useRouter();
 const productsStore = useProductsSstore();
 const catalogStore = useCatalogStore();
 const authStore = useAuthStore();
@@ -381,7 +381,6 @@ const getRemainingItemCount = (item: AllCatalog) => {
 };
 
 onMounted(async () => {
-
   // if (localStorage.getItem('reloaded')) {
   //       localStorage.removeItem('reloaded');
   //   } else {
@@ -393,10 +392,10 @@ onMounted(async () => {
   await initializeCheckboxStates();
   brandsStore.fetchAllBrands();
 
-  if(route?.query?.category){
-  await catalogStore.fetchCategoryById(route?.query?.category as string);
-  await productsStore.filterProducts();
-}
+  if (route?.query?.category) {
+    await catalogStore.fetchCategoryById(route?.query?.category as string);
+    await productsStore.filterProducts();
+  }
 
   if (route?.query?.brandId) {
     brandIdQuery.value = route?.query?.brandId as string;
@@ -409,7 +408,6 @@ onMounted(async () => {
       route.query.subCategory as unknown as string,
     );
     await productsStore.filterProducts();
-
   }
   await productsStore.filterProducts();
   // if(productsStore?.filters.search){
@@ -417,15 +415,11 @@ onMounted(async () => {
   // }
 });
 
-
-onUnmounted(()=>{
-  productsStore.filters.brandId=[];
-  productsStore.filters.categoryId=[]
-  productsStore.filters.search=''
-})
-
-
-
+onUnmounted(() => {
+  productsStore.filters.brandId = [];
+  productsStore.filters.categoryId = [];
+  productsStore.filters.search = "";
+});
 </script>
 
 <style lang="scss" scoped>

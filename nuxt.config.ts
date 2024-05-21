@@ -77,12 +77,12 @@ export default defineNuxtConfig({
     "/": { prerender: true }
   },
   runtimeConfig: {
-    public:{
+    public: {
       YANDEX_API: process.env.YANDEX_API
     }
 
     // public: {
     //   apiBase: ''
     // }
-  },
+  }
 });

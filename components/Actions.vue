@@ -39,7 +39,6 @@
             "
           />
         </SwiperSlide>
-  
       </Swiper>
     </div>
   </div>

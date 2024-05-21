@@ -48,15 +48,14 @@ export const useAuthStore = defineStore("authStore", {
       }
     },
 
-
-    getRole(){
+    getRole () {
       if (process.client) {
         const role = localStorage.getItem("role");
         if (role) {
           return role;
         }
-      }else{
-        return;
+      } else {
+
       }
     },
     getSelectedLang (state) {

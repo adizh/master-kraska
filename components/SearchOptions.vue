@@ -1,47 +1,48 @@
 <template>
-  <div
-  class="search-options"
-  :class="{ open: isSearchOpen }"
->
-  <div v-if="productStore?.getLoadingState" class="text-center">
-    <ProgressSpinner />
+  <div class="search-options" :class="{ open: isSearchOpen }">
+    <div v-if="productStore?.getLoadingState" class="text-center">
+      <ProgressSpinner />
+    </div>
+
+    <ul
+      class="search-res-header"
+      v-else-if="
+        productStore?.getFilteredProducts?.length > 0 &&
+        !productStore?.getLoadingState &&
+        showNoData
+      "
+    >
+      <li
+        v-for="item in productStore.getFilteredProducts.slice(0, 3)"
+        :key="item?.id"
+        @click="goToProd(item?.id)"
+      >
+        <img :src="item?.images[0]" alt="img-product" class="prod-image" />
+        <span class="prod-search-name">{{ item?.name }}</span>
+      </li>
+    </ul>
+    <p v-else-if="showNoData">
+      {{ $t("noData") }}
+    </p>
+
+    <button
+      class="look-all-btn"
+      v-if="
+        productStore?.getFilteredProducts?.length > 0 &&
+        !productStore?.getLoadingState &&
+        showNoData
+      "
+      @click.stop="router.push('/catalog')"
+    >
+      <span>{{ $t("lookAll") }}</span>
+      <img src="../assets/icons/icon=components-more.svg" alt="more" />
+    </button>
   </div>
-
-  <ul
-  class="search-res-header"
-  v-else-if="productStore?.getFilteredProducts?.length>0 && !productStore?.getLoadingState && showNoData"
->
-  <li
-    v-for="item in productStore.getFilteredProducts.slice(0, 3)"
-    :key="item?.id"
-    @click="goToProd(item?.id)"
-  >
-    <img :src="item?.images[0]" alt="img-product" class="prod-image" />
-    <span class="prod-search-name">{{ item?.name }}</span>
-  </li>
-</ul>
-  <p v-else-if="showNoData">
-    {{ $t('noData') }}
-  </p>
-
-
-  <button
-    class="look-all-btn"
-    v-if="productStore?.getFilteredProducts?.length>0 && !productStore?.getLoadingState && showNoData"
-    @click.stop="router.push('/catalog')"
-  >
-    <span>{{ $t('lookAll') }}</span>
-    <img src="../assets/icons/icon=components-more.svg" alt="more" />
-  </button>
-</div>
-
-
-  
 </template>
 
 <script setup lang="ts">
 import { Category } from "~/types/Category";
-const showNoData=ref(false)
+const showNoData = ref(false);
 const props = defineProps<{
   isSearchOpen: boolean;
 }>();
@@ -64,16 +65,17 @@ const searchName = (name: string) => {
   }
 };
 onMounted(async () => {
-  showNoData.value=false
+  showNoData.value = false;
   await catalogStore.fetchAllCategories();
   firstCategoryItem.value = catalogStore?.getAllCategories[0];
 
-
-
-  if(!productStore?.filteredProducts?.length && !productStore?.getLoadingState){
-    setTimeout(()=>{
-      showNoData.value=true
-    }, 8000)
+  if (
+    !productStore?.filteredProducts?.length &&
+    !productStore?.getLoadingState
+  ) {
+    setTimeout(() => {
+      showNoData.value = true;
+    }, 8000);
   }
   // if (!productStore?.getLoadingState && productStore?.getFilteredProducts) {
   //   prodReceved.value = true;
@@ -86,7 +88,7 @@ onMounted(async () => {
   @include openedOptionsHeader(100%, 20px, 3.3rem);
   border: 1px solid $slider-border-color;
   border-radius: 10px;
-  z-index:4 !important;
+  z-index: 4 !important;
 }
 
 .open {

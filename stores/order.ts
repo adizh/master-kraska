@@ -10,9 +10,9 @@ export const useOrderStore = defineStore("orderStore", {
       city: { value: "", error: "", type: "string" },
       address: { value: "", error: "", type: "string" },
       comment: { value: "", error: "" },
-      houseNumber: { value: "", error: "",type:'string' },
+      houseNumber: { value: "", error: "", type: "string" },
       floorNumber: { value: "", error: "" },
-      blockNumber: { value: "", error: "" },
+      blockNumber: { value: "", error: "" }
     },
 
     shops: [] as AddressList[]
@@ -73,7 +73,7 @@ export const useOrderStore = defineStore("orderStore", {
         const response = await http.post("/api/v1/Order/order-delivery", body);
         console.log("send order response", response);
         if (response.data.code === 200 && deliveryType === 0) {
-          useNotifLocal("success", "orderSent!", 'success');
+          useNotifLocal("success", "orderSent!", "success");
         }
         return response;
       } catch (err) {
@@ -129,11 +129,11 @@ export const useOrderStore = defineStore("orderStore", {
         }
       }
     },
-    setOrderAddress(value:string){
-      this.delForm.address.value=value;
+    setOrderAddress (value: string) {
+      this.delForm.address.value = value;
     },
-    setOrderCity(value:string){
-      this.delForm.city.value=value
+    setOrderCity (value: string) {
+      this.delForm.city.value = value;
     }
   },
   getters: {

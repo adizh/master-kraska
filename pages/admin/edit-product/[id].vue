@@ -1,7 +1,11 @@
 <template>
   <section>
-    <button @click="navigateTo('/admin')" class="btn-white-bg mb-4 mt-0"> Назад </button>
-    <h1 class="mb-3">Редактировать</h1>
+    <button class="btn-white-bg mb-4 mt-0" @click="navigateTo('/admin')">
+      Назад
+    </button>
+    <h1 class="mb-3">
+      Редактировать
+    </h1>
     <form class="grid" @submit.prevent="editProduct('form')">
       <div class="lg:col-4 md:col-6 col-12 each-field">
         <label for="name">Имя</label>
@@ -38,7 +42,6 @@
           v-model="inputs.descriptionRu.value"
           class="basic-input col-12"
           type="text"
-
         >
         <span v-if="inputs.descriptionRu.error" class="err-input-msg">{{
           inputs.descriptionRu.error
@@ -52,7 +55,6 @@
           v-model="inputs.descriptionKg.value"
           class="basic-input col-12"
           type="text"
-
         >
         <span v-if="inputs.descriptionKg.error" class="err-input-msg">{{
           inputs.descriptionKg.error
@@ -66,7 +68,6 @@
           v-model="inputs.shortDescriptionRu.value"
           class="basic-input col-12"
           type="text"
-
         >
         <span v-if="inputs.shortDescriptionRu.error" class="err-input-msg">{{
           inputs.shortDescriptionRu.error
@@ -100,21 +101,31 @@
         }}</span>
       </div>
 
-      <div class="lg:col-4 md:col-6 col-12 each-field" v-if="categoryValues?.value?.length>0">
+      <div
+        v-if="categoryValues?.value?.length > 0"
+        class="lg:col-4 md:col-6 col-12 each-field"
+      >
         <label for="categoryId">Категории</label>
-  <UISelect v-for="item in categoryValues?.value" :key="item?.id" :options="catalogStore?.getLinkedCategories" label="nameRu" 
-  @selectValue="selectValue"
-  :isDropdownOpen="isCategoryOpen === item?.id" :selectedValue="item" @openDropdown="openDropdown" @deleteCategory="deleteCategory"
-  @searchCategories=searchCategories  type="category"
-  />
+        <UISelect
+          v-for="item in categoryValues?.value"
+          :key="item?.id"
+          :options="catalogStore?.getLinkedCategories"
+          label="nameRu"
+          :is-dropdown-open="isCategoryOpen === item?.id"
+          :selected-value="item"
+          type="category"
+          @select-value="selectValue"
+          @open-dropdown="openDropdown"
+          @delete-category="deleteCategory"
+          @search-categories="searchCategories"
+        />
       </div>
 
-      <div class="lg:col-4 md:col-6 col-6 each-field"  v-else>
+      <div v-else class="lg:col-4 md:col-6 col-6 each-field">
         <label for="categoryId">Категории</label>
         <div class="selected-option basic-input" @click="toggleCreateCategory">
           <span>
-      
-           {{  newCategory?.nameRu||'Выбрать категорию'  }}
+            {{ newCategory?.nameRu || "Выбрать категорию" }}
           </span>
 
           <img
@@ -122,45 +133,61 @@
             :class="{ rotated: isCategoryCreateOpen }"
             src="../../../assets/icons/icon=components-closed-arrow.svg"
             alt="open-arrow"
-          />
+          >
         </div>
-      
+
         <Transition name="slide-fade">
-         <div>
-          <ul class="ui-options" v-if="openCategory">
-              <input type="text" class="basic-input" v-model="searchCategory" @input="(event:any)=>searchCategories(event?.target?.value)"/>
-            <li
-              v-for="(item,index) in catalogStore?.getLinkedCategories"
-              :key="item?.id" 
-              @click='selectNewCategory(item)'
-            >
-              {{ item?.nameRu }}
-            </li>
-          </ul>
-         </div>
+          <div>
+            <ul v-if="openCategory" class="ui-options">
+              <input
+                v-model="searchCategory"
+                type="text"
+                class="basic-input"
+                @input="(event: any) => searchCategories(event?.target?.value)"
+              >
+              <li
+                v-for="(item, index) in catalogStore?.getLinkedCategories"
+                :key="item?.id"
+                @click="selectNewCategory(item)"
+              >
+                {{ item?.nameRu }}
+              </li>
+            </ul>
+          </div>
         </Transition>
       </div>
 
-
       <div class="lg:col-4 md:col-6 col-12 each-field">
         <label for="brandId">Бренд</label>
-<UISelect  :options="brandsStore?.getAllBrands" label="name" 
-@selectValue="selectBrand"
-:isDropdownOpen="isBrandOpen" :selectedValue="selectedBrand" @openDropdown="toggleBrand" 
-@searchCategories='seachBrands' type="brand"
-/>
-      
+        <UISelect
+          :options="brandsStore?.getAllBrands"
+          label="name"
+          :is-dropdown-open="isBrandOpen"
+          :selected-value="selectedBrand"
+          type="brand"
+          @select-value="selectBrand"
+          @open-dropdown="toggleBrand"
+          @search-categories="seachBrands"
+        />
       </div>
 
       <div class="lg:col-6 md:col-6 col-12 each-field">
         <label for="subcategoryId">Подкатегории (helpersMain)</label>
-        <UISelect v-for="helper in productHelpers" :key="helper?.id" :options="catalogStore.getHelperSubDirs" label="nameRu" 
-        @selectValue="selectSubDir" :isDropdownOpen="isHelperOpen === helper?.id" :selectedValue="helper" @openDropdown="toggleHelper" @deleteCategory="deleteSubDir"
-        @searchCategories='catalogStore.searchSubDirs'  type="subdir"
+        <UISelect
+          v-for="helper in productHelpers"
+          :key="helper?.id"
+          :options="catalogStore.getHelperSubDirs"
+          label="nameRu"
+          :is-dropdown-open="isHelperOpen === helper?.id"
+          :selected-value="helper"
+          type="subdir"
+          @select-value="selectSubDir"
+          @open-dropdown="toggleHelper"
+          @delete-category="deleteSubDir"
+          @search-categories="catalogStore.searchSubDirs"
         />
       </div>
 
-     
       <div class="lg:col-4 md:col-6 col-12 each-field">
         <label for="size" class="flex flex-row justify-content-between">
           <span> Размер </span>
@@ -226,27 +253,31 @@
         <label for="size">Объемы</label>
         <div class="all-variant">
           <div v-for="variant in variants" :key="variant?.id" class="variant">
-          <div class="img-variant">
-            <img
-            :src="varSizes[variant?.size]?.image"
-            alt="variant"
-            style="cursor: pointer"
-            @click="openFileInput(variant?.size)"
-          >
-          <input
-            id="fileInput"
-            ref="fileInput"
-            type="file"
-            style="display: none"
-            @change="(event) => handleNewVarImage(event)"
-          >
+            <div class="img-variant">
+              <img
+                :src="varSizes[variant?.size]?.image"
+                alt="variant"
+                style="cursor: pointer"
+                @click="openFileInput(variant?.size)"
+              >
+              <input
+                id="fileInput"
+                ref="fileInput"
+                type="file"
+                style="display: none"
+                @change="(event) => handleNewVarImage(event)"
+              >
 
-          <!-- <ProgressSpinner v-if="varSizes[variant?.size]?.loading"/> -->
-          <span v-if="varSizes[variant?.size].loading">Loading..</span>
-          <span v-if="varSizes[variant?.size]?.error && !varSizes[variant?.size]?.loading" class="err-input-msg">{{ varSizes[variant?.size]?.error }}</span>
-
-     
-          </div>
+              <!-- <ProgressSpinner v-if="varSizes[variant?.size]?.loading"/> -->
+              <span v-if="varSizes[variant?.size].loading">Loading..</span>
+              <span
+                v-if="
+                  varSizes[variant?.size]?.error &&
+                    !varSizes[variant?.size]?.loading
+                "
+                class="err-input-msg"
+              >{{ varSizes[variant?.size]?.error }}</span>
+            </div>
             <label :for="variant?.size">Размер</label>
             <input
               :id="variant?.size"
@@ -312,7 +343,6 @@
           class="basic-input col-12"
           type="checkbox"
         >
-      
       </div>
 
       <button type="submit">
@@ -324,10 +354,18 @@
       +Добавить объемы
     </button>
 
-    <button type="button" class="pink-button" @click="isCategoryCreateOpen = true">
+    <button
+      type="button"
+      class="pink-button"
+      @click="isCategoryCreateOpen = true"
+    >
       +Добавить категорию
     </button>
-    <button type="button" class="pink-button" @click="isSubDirCreateOpen = true">
+    <button
+      type="button"
+      class="pink-button"
+      @click="isSubDirCreateOpen = true"
+    >
       +Добавить подкатегорию
     </button>
     <UIModal
@@ -354,12 +392,12 @@
           class="basic-input"
         >
         <input
-        v-model="newVariants.base"
-        type="text"
-        placeholder="База"
-        required
-        class="basic-input"
-      >
+          v-model="newVariants.base"
+          type="text"
+          placeholder="База"
+          required
+          class="basic-input"
+        >
         <input
           v-model="newVariants.code"
           type="number"
@@ -369,7 +407,7 @@
         >
         <input type="file" @change="handleFileChange">
 
-        <ProgressSpinner v-if="newVariants?.imgLoading"/>
+        <ProgressSpinner v-if="newVariants?.imgLoading" />
 
         <span v-if="newVariants?.imgError" class="err-input-msg">{{
           newVariants?.imgError
@@ -395,284 +433,295 @@
     </Dialog>
 
     <Dialog
-    v-model:visible="isDeleteCategoryOpen"
-    modal
-    :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
-    header=" "
-  >
-    <ConfirmPay
-      :title="`Вы действительно хотите удалить категорию ${currentCategory?.nameRu}`"
-      @cancel="isDeleteCategoryOpen = false"
-      @confirm="confirmCategoryDelete"
-    />
-  </Dialog>
-
-  <Dialog
-  v-model:visible="isSubDirDeleteOpen"
-  modal
-  :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
-  header=" "
->
-  <ConfirmPay
-    :title="`Вы действительно хотите удалить подкатегорию  ${currentSubDir?.category}: ${currentSubDir?.nameRu}`"
-    @cancel="isSubDirDeleteOpen = false"
-    @confirm="confirmSubDirDelete"
-  />
-</Dialog>
-
-  <UIModal
-  :show-modal="isCategoryCreateOpen"
-  title="Добавить категорию"
-  @close-modal="isCategoryCreateOpen = false"
->
-<div class="ui-dropdown col-6">
-  <div class="selected-option basic-input" @click="toggleCreateCategory">
-    <span>
-
-     {{  newCategory?.nameRu||'Выбрать категорию'  }}
-    </span>
-
-    <img
-      class="arrow"
-      :class="{ rotated: isCategoryCreateOpen }"
-      src="../../../assets/icons/icon=components-closed-arrow.svg"
-      alt="open-arrow"
-    />
-  </div>
-
-  <Transition name="slide-fade">
-   <div>
-    <ul class="ui-options" v-if="openCategory">
-        <input type="text" class="basic-input" v-model="searchCategory" @input="(event:any)=>searchCategories(event?.target?.value)"/>
-      <li
-        v-for="(item, index) in catalogStore?.getLinkedCategories"
-        :key="item?.id" 
-        @click='selectNewCategory(item)'
-      >
-        {{ item?.nameRu }}
-      </li>
-    </ul>
-   </div>
-  </Transition>
-</div>
-
-    <button type="button" @click='createNewProdCategory'>
-      Добавить
-    </button>
-
-</UIModal>
-
-<UIModal
-:show-modal="isSubDirCreateOpen"
-title="Добавить подкатегорию"
-@close-modal="isSubDirCreateOpen = false"
->
-<div class="ui-dropdown col-6">
-<div class="selected-option basic-input" @click="toggleSubDirCreate">
-  <span v-if="newSubDir?.category && newSubDir?.nameRu">
-
-   {{ `${newSubDir?.category}: ${newSubDir?.nameRu}` }}
-  </span>
-  <span v-else>Выбрать подкатегорию</span>
-
-  
-  <img
-    class="arrow"
-    :class="{ rotated: openSubDir }"
-    src="../../../assets/icons/icon=components-closed-arrow.svg"
-    alt="open-arrow"
-  />
-</div>
-<Transition name="slide-fade">
- <div>
-  <ul class="ui-options" v-if="openSubDir">
-      <input type="text" class="basic-input" @input="(event:any)=>catalogStore.searchSubDirs(event?.target?.value)"/>
-    <li
-      v-for="(item,index) in catalogStore.getHelperSubDirs"
-      :key="item?.id" 
-      @click="selectNewSubDir(item)"
-   
+      v-model:visible="isDeleteCategoryOpen"
+      modal
+      :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
+      header=" "
     >
-     {{item?.category}}: {{ item?.nameRu }}
-    </li>
-  </ul>
- </div>
-</Transition>
-</div>
+      <ConfirmPay
+        :title="`Вы действительно хотите удалить категорию ${currentCategory?.nameRu}`"
+        @cancel="isDeleteCategoryOpen = false"
+        @confirm="confirmCategoryDelete"
+      />
+    </Dialog>
 
-  <button type="button" @click='addNewSubCategory'>
-    Добавить
-  </button>
+    <Dialog
+      v-model:visible="isSubDirDeleteOpen"
+      modal
+      :style="{ width: '550px', padding: '20px 40px 50px 20px' }"
+      header=" "
+    >
+      <ConfirmPay
+        :title="`Вы действительно хотите удалить подкатегорию  ${currentSubDir?.category}: ${currentSubDir?.nameRu}`"
+        @cancel="isSubDirDeleteOpen = false"
+        @confirm="confirmSubDirDelete"
+      />
+    </Dialog>
 
-</UIModal>
+    <UIModal
+      :show-modal="isCategoryCreateOpen"
+      title="Добавить категорию"
+      @close-modal="isCategoryCreateOpen = false"
+    >
+      <div class="ui-dropdown col-6">
+        <div class="selected-option basic-input" @click="toggleCreateCategory">
+          <span>
+            {{ newCategory?.nameRu || "Выбрать категорию" }}
+          </span>
 
+          <img
+            class="arrow"
+            :class="{ rotated: isCategoryCreateOpen }"
+            src="../../../assets/icons/icon=components-closed-arrow.svg"
+            alt="open-arrow"
+          >
+        </div>
+
+        <Transition name="slide-fade">
+          <div>
+            <ul v-if="openCategory" class="ui-options">
+              <input
+                v-model="searchCategory"
+                type="text"
+                class="basic-input"
+                @input="(event: any) => searchCategories(event?.target?.value)"
+              >
+              <li
+                v-for="(item, index) in catalogStore?.getLinkedCategories"
+                :key="item?.id"
+                @click="selectNewCategory(item)"
+              >
+                {{ item?.nameRu }}
+              </li>
+            </ul>
+          </div>
+        </Transition>
+      </div>
+
+      <button type="button" @click="createNewProdCategory">
+        Добавить
+      </button>
+    </UIModal>
+
+    <UIModal
+      :show-modal="isSubDirCreateOpen"
+      title="Добавить подкатегорию"
+      @close-modal="isSubDirCreateOpen = false"
+    >
+      <div class="ui-dropdown col-6">
+        <div class="selected-option basic-input" @click="toggleSubDirCreate">
+          <span v-if="newSubDir?.category && newSubDir?.nameRu">
+            {{ `${newSubDir?.category}: ${newSubDir?.nameRu}` }}
+          </span>
+          <span v-else>Выбрать подкатегорию</span>
+
+          <img
+            class="arrow"
+            :class="{ rotated: openSubDir }"
+            src="../../../assets/icons/icon=components-closed-arrow.svg"
+            alt="open-arrow"
+          >
+        </div>
+        <Transition name="slide-fade">
+          <div>
+            <ul v-if="openSubDir" class="ui-options">
+              <input
+                type="text"
+                class="basic-input"
+                @input="
+                  (event: any) =>
+                    catalogStore.searchSubDirs(event?.target?.value)
+                "
+              >
+              <li
+                v-for="(item, index) in catalogStore.getHelperSubDirs"
+                :key="item?.id"
+                @click="selectNewSubDir(item)"
+              >
+                {{ item?.category }}: {{ item?.nameRu }}
+              </li>
+            </ul>
+          </div>
+        </Transition>
+      </div>
+
+      <button type="button" @click="addNewSubCategory">
+        Добавить
+      </button>
+    </UIModal>
   </section>
-
 </template>
 
 <script setup lang="ts">
+import imageCompression from "browser-image-compression";
 import { Brands } from "~/types/Brands";
 import { Category, CategorySys } from "~/types/Category";
-import imageCompression from 'browser-image-compression';
 import { Product } from "~/types/Product";
 import { Variant } from "~/types/Variant";
-import {SubDirHelper} from '@/types/Catalog'
+import { SubDirHelper } from "@/types/Catalog";
 const { t } = useI18n();
 const route = useRoute();
 const id = route.params.id;
 const isVariantOpen = ref(false);
 const isDeleteCategoryOpen = ref(false);
 const item = ref({} as Product);
-const brandsStore=useBrandsStore()
-const currentCategory=ref({} as CategorySys)
+const brandsStore = useBrandsStore();
+const currentCategory = ref({} as CategorySys);
 const productsStore = useProductsSstore();
-const catalogStore=useCatalogStore()
-const isBrandOpen =ref(false)
+const catalogStore = useCatalogStore();
+const isBrandOpen = ref(false);
 const isDeleteOpen = ref(false);
 const openSubDir = ref(false);
 const isCategoryCreateOpen = ref(false);
 const isSubDirCreateOpen = ref(false);
-const newSubDir=ref()
-const isSubDirDeleteOpen=ref(false);
+const newSubDir = ref();
+const isSubDirDeleteOpen = ref(false);
 const targetSizeBytes = 150 * 1024;
-const isCategoryOpen=ref('');
-const selectedBrand =ref({} as Brands)
-const searchCategory =ref('')
-const newCategory=ref({} as CategorySys)
-const isHelperOpen=ref('')
-const productHelpers=ref([] as SubDirHelper[])
-const currentSubDir=ref({} as any)
-const searchCategories =(value:string)=>{
-  catalogStore.filterLinkedCategories(value)
-}
+const isCategoryOpen = ref("");
+const selectedBrand = ref({} as Brands);
+const searchCategory = ref("");
+const newCategory = ref({} as CategorySys);
+const isHelperOpen = ref("");
+const productHelpers = ref([] as SubDirHelper[]);
+const currentSubDir = ref({} as any);
+const searchCategories = (value: string) => {
+  catalogStore.filterLinkedCategories(value);
+};
 
+console.log("what is NEWSUBDIR", newSubDir);
+const selectNewSubDir = (item: SubDirHelper) => {
+  newSubDir.value = item;
+  openSubDir.value = false;
+};
 
-console.log('what is NEWSUBDIR',newSubDir)
-const selectNewSubDir=(item:SubDirHelper)=>{
-  newSubDir.value=item;
-  openSubDir.value=false
-}
+const addNewSubCategory = async () => {
+  if (newSubDir?.value?.id) {
+    try {
+      const response = await http.post(
+        `/api/v1/Product/add-subdirectory/${item?.value?.id}?subdirectoryId=${newSubDir?.value?.id}`
+      );
+      console.log("response create new sub category", response);
+      if (response.status === 200) {
+        isSubDirCreateOpen.value = false;
+        useNotif("success", "Подкатегория создана!", "Успешно");
+        setTimeout(() => {
+          window.location.reload();
+        }, 600);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+};
 
-const addNewSubCategory =async()=>{
- if(newSubDir?.value?.id){
-  try{
-const response = await http.post(`/api/v1/Product/add-subdirectory/${item?.value?.id}?subdirectoryId=${newSubDir?.value?.id}`);
-console.log('response create new sub category',response)
-if(response.status===200){
-  isSubDirCreateOpen.value=false;
-  useNotif('success','Подкатегория создана!','Успешно')
-  setTimeout(()=>{
-window.location.reload()
-  },600)
-}
-}catch(err){
-  console.log(err)
-}
- }
-}
-
-const toggleSubDirCreate =()=>{
-  openSubDir.value=!openSubDir.value
-}
+const toggleSubDirCreate = () => {
+  openSubDir.value = !openSubDir.value;
+};
 
 const newVariants = ref({
   size: "",
   price: "",
   code: "",
   image: "",
-  base:"",
-  imgLoading:false,
-  imgError:''
+  base: "",
+  imgLoading: false,
+  imgError: ""
 });
 
-const deleteSubDir =(value:SubDirHelper,mainValue:string)=>{
-  isSubDirDeleteOpen.value=true;
-  currentSubDir.value={...value, category:mainValue}
-  console.log('currentSubDir',currentSubDir)
-}
-
-const toggleHelper =(value:SubDirHelper)=>{
-  if(isHelperOpen.value===value?.id){
-    isHelperOpen.value=''
-  }else{
-    isHelperOpen.value=value?.id
-  }
-}
-
-const handleFileChange = async(event: any) => {
-  newVariants.value.imgLoading=true;
-  const result =await checkImgCompression(event);
-if(result?.size>targetSizeBytes){
-  newVariants.value.imgLoading=false;
-  newVariants.value.imgError='Размер файла слишком большой';
-  newVariants.value.image =''
-}
-else if(result.size<targetSizeBytes && result && result!==undefined){
-  newVariants.value.imgLoading=false;
-  const base64StringNewImage = await useConvertToBase64(result) as unknown as string
-  newVariants.value.image  = base64StringNewImage as unknown as string;
-  newVariants.value.imgError=''
-}
-
+const deleteSubDir = (value: SubDirHelper, mainValue: string) => {
+  isSubDirDeleteOpen.value = true;
+  currentSubDir.value = { ...value, category: mainValue };
+  console.log("currentSubDir", currentSubDir);
 };
 
-const selectBrand=(brand:Brands,{})=>{
-  inputs.value.brandId.value =brand?.id;
-  selectedBrand.value=brand;
-  isBrandOpen.value=false
-}
-
-const toggleBrand=()=>{
-  isBrandOpen.value=!isBrandOpen.value
-}
-const deleteCategory=(item:CategorySys)=>{
-  currentCategory.value=item;
-  isDeleteCategoryOpen.value=true
-}
-const openCategory=ref(false);
-
-const toggleCreateCategory =()=>{
-  openCategory.value=!  openCategory.value
-}
-
-const openDropdown =(value:CategorySys)=>{
-  if(  isCategoryOpen.value===value?.id){
-    isCategoryOpen.value='';
-    console.log('isCategoryOpen',isCategoryOpen)
-  }else{
-    isCategoryOpen.value=value?.id
+const toggleHelper = (value: SubDirHelper) => {
+  if (isHelperOpen.value === value?.id) {
+    isHelperOpen.value = "";
+  } else {
+    isHelperOpen.value = value?.id;
   }
-}
-
-const seachBrands =(value:string)=>{
-console.log(value);
-brandsStore.searchBrands(value)
-}
-
-const checkImgCompression=async(event:any)=>{
-  let value = event.target.files[0];
-  let options = {
-  maxSizeMB: 0.1465,     
-  useWebWorker: true,  
 };
-let compressedFile = value;
-if(value?.size > targetSizeBytes){
-  try {
-  compressedFile = await imageCompression(value, options);
-  console.log('Original file size:', (value.size / 1024).toFixed(2), 'KB');
-  console.log('Compressed file size:', (compressedFile.size / 1024).toFixed(2), 'KB');
-} catch (error) {
-  console.error('Compression error:', error);
-}
-}
-return compressedFile
-}
 
-const selectValue =(newCategory:CategorySys,selectedValue:CategorySys)=>{
- const itemIndex = categoryValues.value.findIndex((item:CategorySys)=>item?.id===selectedValue?.id);
-  categoryValues.value.splice(itemIndex,1,newCategory)
-  isCategoryOpen.value='';
-}
+const handleFileChange = async (event: any) => {
+  newVariants.value.imgLoading = true;
+  const result = await checkImgCompression(event);
+  if (result?.size > targetSizeBytes) {
+    newVariants.value.imgLoading = false;
+    newVariants.value.imgError = "Размер файла слишком большой";
+    newVariants.value.image = "";
+  } else if (result.size < targetSizeBytes && result && result !== undefined) {
+    newVariants.value.imgLoading = false;
+    const base64StringNewImage = (await useConvertToBase64(
+      result
+    )) as unknown as string;
+    newVariants.value.image = base64StringNewImage as unknown as string;
+    newVariants.value.imgError = "";
+  }
+};
+
+const selectBrand = (brand: Brands, {}) => {
+  inputs.value.brandId.value = brand?.id;
+  selectedBrand.value = brand;
+  isBrandOpen.value = false;
+};
+
+const toggleBrand = () => {
+  isBrandOpen.value = !isBrandOpen.value;
+};
+const deleteCategory = (item: CategorySys) => {
+  currentCategory.value = item;
+  isDeleteCategoryOpen.value = true;
+};
+const openCategory = ref(false);
+
+const toggleCreateCategory = () => {
+  openCategory.value = !openCategory.value;
+};
+
+const openDropdown = (value: CategorySys) => {
+  if (isCategoryOpen.value === value?.id) {
+    isCategoryOpen.value = "";
+    console.log("isCategoryOpen", isCategoryOpen);
+  } else {
+    isCategoryOpen.value = value?.id;
+  }
+};
+
+const seachBrands = (value: string) => {
+  console.log(value);
+  brandsStore.searchBrands(value);
+};
+
+const checkImgCompression = async (event: any) => {
+  const value = event.target.files[0];
+  const options = {
+    maxSizeMB: 0.1465,
+    useWebWorker: true
+  };
+  let compressedFile = value;
+  if (value?.size > targetSizeBytes) {
+    try {
+      compressedFile = await imageCompression(value, options);
+      console.log("Original file size:", (value.size / 1024).toFixed(2), "KB");
+      console.log(
+        "Compressed file size:",
+        (compressedFile.size / 1024).toFixed(2),
+        "KB"
+      );
+    } catch (error) {
+      console.error("Compression error:", error);
+    }
+  }
+  return compressedFile;
+};
+
+const selectValue = (newCategory: CategorySys, selectedValue: CategorySys) => {
+  const itemIndex = categoryValues.value.findIndex(
+    (item: CategorySys) => item?.id === selectedValue?.id
+  );
+  categoryValues.value.splice(itemIndex, 1, newCategory);
+  isCategoryOpen.value = "";
+};
 
 const variants = ref([] as Variant[]);
 interface InputField {
@@ -692,54 +741,56 @@ interface Inputs {
   [key: string]: InputField;
 }
 
-const confirmCategoryDelete =()=>{
- const categoryIndex= categoryValues?.value.findIndex((item:CategorySys)=>item?.id===currentCategory?.value?.id)
- categoryValues.value.splice(categoryIndex,1);
- isDeleteCategoryOpen.value=false;
- editProduct();
+const confirmCategoryDelete = () => {
+  const categoryIndex = categoryValues?.value.findIndex(
+    (item: CategorySys) => item?.id === currentCategory?.value?.id
+  );
+  categoryValues.value.splice(categoryIndex, 1);
+  isDeleteCategoryOpen.value = false;
+  editProduct();
 
+  if (categoryValues?.value?.length < 1) {
+    setTimeout(() => {
+      window.location.reload();
+    }, 600);
+  }
+};
 
- if(categoryValues?.value?.length<1){
-setTimeout(()=>{
-  window.location.reload()
-},600)
- }
+const confirmSubDirDelete = () => {
+  const index = productHelpers?.value.findIndex(
+    (item: SubDirHelper) => item?.id === currentSubDir?.value?.id
+  );
+  productHelpers.value.splice(index, 1);
 
-}
+  isSubDirDeleteOpen.value = false;
+  editProduct();
+};
 
+const selectNewCategory = (item: CategorySys) => {
+  newCategory.value = item;
+  openCategory.value = false;
+};
 
-const confirmSubDirDelete =()=>{
- const index= productHelpers?.value.findIndex((item:SubDirHelper)=>item?.id===currentSubDir?.value?.id)
- productHelpers.value.splice(index,1);
-
-
- isSubDirDeleteOpen.value=false
- editProduct()
-}
-
-const selectNewCategory =(item:CategorySys)=>{
-  newCategory.value=item;
-  openCategory.value=false;
-}
-
-const createNewProdCategory =async()=>{
-  if(newCategory?.value?.id){
-    try{
-const response = await http.post(`/api/v1/Product/add-category/${item?.value?.id}?categoryId=${newCategory?.value?.id}`);
-console.log('response new caegory',response);
-if(response.status===200){
-  useNotif('success','Категория добавлена!','Успешно')
-}
-    }catch(err){
-      console.log(err)
-    }finally{
-      isCategoryCreateOpen.value=false
+const createNewProdCategory = async () => {
+  if (newCategory?.value?.id) {
+    try {
+      const response = await http.post(
+        `/api/v1/Product/add-category/${item?.value?.id}?categoryId=${newCategory?.value?.id}`
+      );
+      console.log("response new caegory", response);
+      if (response.status === 200) {
+        useNotif("success", "Категория добавлена!", "Успешно");
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      isCategoryCreateOpen.value = false;
     }
   }
-  setTimeout(()=>{
-    window.location.reload()
-  },900)
-}
+  setTimeout(() => {
+    window.location.reload();
+  }, 900);
+};
 
 const convertToBase64 = (file: any) => {
   return new Promise((resolve, reject) => {
@@ -755,20 +806,21 @@ const variantImage = ref("");
 
 const handleNewVarImage = async (event: any) => {
   newVarImage.value = event.target.files[0];
-  varSizes[currVarSize.value].loading=true;
-  const result =await checkImgCompression(event);
-if(result?.size>targetSizeBytes){
-  varSizes[currVarSize.value].error='Размер файла слишком большой';
-  varSizes[currVarSize.value].loading=false
-}
-else if(result.size<targetSizeBytes && result && result!==undefined){
-  varSizes[currVarSize.value].loading=false
-  varSizes[currVarSize.value].error=''
-  const base64StringNewImage = await useConvertToBase64(result) as unknown as string
-  variantImage.value = base64StringNewImage as unknown as string;
-  varSizes[currVarSize.value].image = base64StringNewImage as unknown as string;
-}
-
+  varSizes[currVarSize.value].loading = true;
+  const result = await checkImgCompression(event);
+  if (result?.size > targetSizeBytes) {
+    varSizes[currVarSize.value].error = "Размер файла слишком большой";
+    varSizes[currVarSize.value].loading = false;
+  } else if (result.size < targetSizeBytes && result && result !== undefined) {
+    varSizes[currVarSize.value].loading = false;
+    varSizes[currVarSize.value].error = "";
+    const base64StringNewImage = (await useConvertToBase64(
+      result
+    )) as unknown as string;
+    variantImage.value = base64StringNewImage as unknown as string;
+    varSizes[currVarSize.value].image =
+      base64StringNewImage as unknown as string;
+  }
 };
 
 const currVarSize = ref("");
@@ -778,10 +830,12 @@ const openFileInput = (varSize: string) => {
   currVarSize.value = varSize;
 };
 
-const selectSubDir =(value:SubDirHelper,prevValue:SubDirHelper)=>{
-  const index= productHelpers.value.findIndex((item:SubDirHelper)=>item?.id===prevValue?.id)
-  productHelpers.value.splice(index,1,value)
-}
+const selectSubDir = (value: SubDirHelper, prevValue: SubDirHelper) => {
+  const index = productHelpers.value.findIndex(
+    (item: SubDirHelper) => item?.id === prevValue?.id
+  );
+  productHelpers.value.splice(index, 1, value);
+};
 
 const confirmDelete = () => {
   inputs.value.consumption.value = null as unknown as string;
@@ -799,8 +853,8 @@ const addVariant = async () => {
         price: newVariants.value.price,
         code: newVariants.value.code,
         size: newVariants.value.size,
-        base:newVariants.value?.base,
-     image: newVariants.value.image
+        base: newVariants.value?.base,
+        image: newVariants.value.image
       }
     ];
     const response = await http.put(`/api/v1/Product/add-variants/${id}`, body);
@@ -820,20 +874,16 @@ const inputs = ref<Inputs>({
   nameRu: { value: item.value?.nameRu, error: "", type: "string" },
   nameKg: { value: item.value?.nameKg, error: "", type: "string" },
   descriptionRu: {
-    value: item.value?.descriptionRu,
-
+    value: item.value?.descriptionRu
   },
   descriptionKg: {
-    value: item.value?.descriptionKg,
-
+    value: item.value?.descriptionKg
   },
   shortDescriptionRu: {
-    value: item.value?.shortDescriptionRu,
-
+    value: item.value?.shortDescriptionRu
   },
   shortDescriptionKg: {
-    value: item.value?.shortDescriptionKg,
-
+    value: item.value?.shortDescriptionKg
   },
   price: { value: item?.value?.price, error: "", type: "number" },
   subcategoryId: { value: item?.value?.subcategoryId, error: "" },
@@ -858,7 +908,9 @@ const validate = (field: string, type: string) => {
 };
 
 const submitUpdate = async () => {
-  const prodCategories = categoryValues.value.map((item:CategorySys)=>item?.id)
+  const prodCategories = categoryValues.value.map(
+    (item: CategorySys) => item?.id
+  );
   const prodVariantes = Object.values(varSizes).map((item: any) => {
     if (item?.image && item?.image?.startsWith("http")) {
       return { ...item, image: null };
@@ -867,8 +919,8 @@ const submitUpdate = async () => {
     }
   });
 
-  const subDirs=productHelpers?.value?.map((item)=>item?.id)
-  console.log('subDirs',subDirs)
+  const subDirs = productHelpers?.value?.map((item) => item?.id);
+  console.log("subDirs", subDirs);
   try {
     const body = {
       nameKg: inputs.value.nameKg.value,
@@ -878,10 +930,10 @@ const submitUpdate = async () => {
       shortDescriptionRu: inputs.value.shortDescriptionRu.value,
       shortDescriptionKg: inputs.value.shortDescriptionKg.value,
       price: inputs.value.price.value,
-      categoryIds: prodCategories ||[newCategory?.value?.id]|| null,
-     // subcategoryId: inputs.value.subcategoryId.value || null,
+      categoryIds: prodCategories || [newCategory?.value?.id] || null,
+      // subcategoryId: inputs.value.subcategoryId.value || null,
       brandId: inputs.value.brandId.value || null,
-      subdirectoryId:subDirs || null,
+      subdirectoryId: subDirs || null,
       size: inputs.value.size.value,
       colorType: inputs.value.color.value,
       isPopular: inputs.value.isPopular.value,
@@ -893,9 +945,9 @@ const submitUpdate = async () => {
       variants: prodVariantes || null
     };
 
-    console.log('what is body in submotupdat',body);
-    console.log('submit dat newCategory',newCategory)
-    console.log('submit dat prodCategories',prodCategories)
+    console.log("what is body in submotupdat", body);
+    console.log("submit dat newCategory", newCategory);
+    console.log("submit dat prodCategories", prodCategories);
     const response = await http.put(
       `/api/v1/Product/update-product/${id}`,
       body
@@ -910,75 +962,67 @@ const submitUpdate = async () => {
   await productsStore.fetchProductById(id as string);
 };
 
-const editProduct = (type:string='') => {
-  console.log('herlpersMain',productHelpers)
-  
+const editProduct = (type: string = "") => {
+  console.log("herlpersMain", productHelpers);
 
   for (const fieldName in inputs.value) {
-  if (
-    Object.prototype.hasOwnProperty.call(inputs.value, fieldName) &&
-    !inputs.value[fieldName].hasOwnProperty('type')
-  ) {
-    const fieldType = inputs.value[fieldName].type;
-    handleValues(inputs.value, fieldName, fieldType);
+    if (
+      Object.prototype.hasOwnProperty.call(inputs.value, fieldName) &&
+      !inputs.value[fieldName].hasOwnProperty("type")
+    ) {
+      const fieldType = inputs.value[fieldName].type;
+      handleValues(inputs.value, fieldName, fieldType);
+    }
   }
-}
   const hasError = Object.values(inputs.value).some(
     (input) => input.error !== ""
   );
   if (!hasError) {
     submitUpdate();
-    if(newCategory?.value?.id){
-    setTimeout(()=>{
-      createNewProdCategory();
-    },400)
-      console.log('efit produc newCategory is okt',newCategory )
+    if (newCategory?.value?.id) {
+      setTimeout(() => {
+        createNewProdCategory();
+      }, 400);
+      console.log("efit produc newCategory is okt", newCategory);
     }
-    if(type==='form'){
-     // router.push('/admin')
+    if (type === "form") {
+      // router.push('/admin')
     }
   }
-  
 };
 
-
-const router=useRouter()
+const router = useRouter();
 
 onMounted(async () => {
-//   if(authStore?.getRole!=='Admin'){
-//     router.push('/')
-// }
+  //   if(authStore?.getRole!=='Admin'){
+  //     router.push('/')
+  // }
   await productsStore.fetchProductById(id as string);
   catalogStore?.fetchAllCategoriesLinked();
 
-
   item.value = productsStore?.getProduct?.product;
 
-  await brandsStore.fetchAllBrandId(item?.value?.brandId)
+  await brandsStore.fetchAllBrandId(item?.value?.brandId);
   await brandsStore.fetchAllBrands();
-  selectedBrand.value=brandsStore.getBrand
+  selectedBrand.value = brandsStore.getBrand;
 
   if (item?.value?.variants) {
-    variants.value = item?.value?.variants.map((item)=>{
-      return {...item,loading:false}
-    })
+    variants.value = item?.value?.variants.map((item) => {
+      return { ...item, loading: false };
+    });
   }
 
-
-
-
-  console.log('item',item)
+  console.log("item", item);
   categories.value = item?.value?.categories;
 
-  categoryValues.value= item?.value?.categories;
+  categoryValues.value = item?.value?.categories;
 
-  productHelpers.value=item?.value?.helpersMain
- 
-catalogStore.getHelpersSubDirs()
+  productHelpers.value = item?.value?.helpersMain;
 
+  catalogStore.getHelpersSubDirs();
 
   item?.value?.variants?.map((variant: Variant) => {
-    varSizes[variant?.size] = { ...variant,error:'',loading:false };
+    varSizes[variant?.size] = { ...variant, error: "", loading: false };
     return varSizes;
   });
 
@@ -1023,7 +1067,7 @@ catalogStore.getHelpersSubDirs()
   };
 });
 
-console.log('categoryValues',categoryValues)
+console.log("categoryValues", categoryValues);
 </script>
 
 <style scoped lang="scss">
@@ -1039,7 +1083,7 @@ console.log('categoryValues',categoryValues)
   border: 1px solid $slider-border-color;
   border-radius: 8px;
   padding: 6px;
-  max-height:200px;
+  max-height: 200px;
   overflow-y: auto;
   @include textFormat(16px, 20px, 400, #000);
 
@@ -1121,7 +1165,7 @@ button {
     width: 20%;
   }
 }
-.variant .img-variant{
+.variant .img-variant {
   width: 100%;
   margin-bottom: 20px;
 }

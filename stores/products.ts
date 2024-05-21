@@ -14,7 +14,7 @@ export const useProductsSstore = defineStore("productsStore", {
     },
     isProductBookmarked: false,
     areFiltersLoading: false,
-    areProdsReceived:false,
+    areProdsReceived: false,
     product: {} as { product: Product; similarProducts: Product[] },
     filters: {
       search: "",
@@ -61,7 +61,7 @@ export const useProductsSstore = defineStore("productsStore", {
         const response = await http(
           `/api/v1/Product/get-popular-products?type=${type}`
         );
- 
+
         if (response.status === 200) {
           if (type === "popular") {
             this.popularProds = response.data?.popular?.map(
@@ -222,19 +222,28 @@ export const useProductsSstore = defineStore("productsStore", {
         this.filters.subdirectoryIds = [...ids];
       }
     },
-    setCurrentPage(page:number){
-this.filters.currentPage=page
+    setCurrentPage (page: number) {
+      this.filters.currentPage = page;
     },
-    async filterProducts(prodName?:string) {
+    async filterProducts (prodName?: string) {
       this.areFiltersLoading = true;
-      const subDirs = this.filters.subdirectoryIds?.length > 0 ? this.filters.subdirectoryIds.join(",") : null;
-      const allBrands = this.filters?.brandId?.length > 0 ? this.filters.brandId.join(",") : null;
-      const categoriesId = this.filters?.categoryId?.length > 0 ? this.filters.categoryId.join(',') : null;
-      const name = prodName || this.filters.search || '';
-      
+      const subDirs =
+        this.filters.subdirectoryIds?.length > 0
+          ? this.filters.subdirectoryIds.join(",")
+          : null;
+      const allBrands =
+        this.filters?.brandId?.length > 0
+          ? this.filters.brandId.join(",")
+          : null;
+      const categoriesId =
+        this.filters?.categoryId?.length > 0
+          ? this.filters.categoryId.join(",")
+          : null;
+      const name = prodName || this.filters.search || "";
+
       const query = {
         productName: name,
-        categoriesId: categoriesId,
+        categoriesId,
         subdirectoryIds: subDirs,
         minPrice: this.filters.minPrice || null,
         maxPrice: this.filters.maxPrice || null,
@@ -243,18 +252,21 @@ this.filters.currentPage=page
         pageSize: this.filters.pageSize,
         colorType: null
       };
-      console.log('query',query)
-    
+      console.log("query", query);
+
       const authStore = useAuthStore();
       try {
-        const response = await http.get("/api/v1/Product/get-all-products-pagination", { params: query });
-    
+        const response = await http.get(
+          "/api/v1/Product/get-all-products-pagination",
+          { params: query }
+        );
+
         if (response.status === 200) {
           this.areProdsReceived = true;
           this.filterProductTotal.totalItems = response.data.totalItems;
           this.filterProductTotal.totalPages = response.data.totalPages;
-  console.log('response',response)
-          const filtered = response.data.items?.map((item:Product) => {
+          console.log("response", response);
+          const filtered = response.data.items?.map((item: Product) => {
             if (authStore.getSelectedLang === "kg") {
               return {
                 ...item,
@@ -269,22 +281,26 @@ this.filters.currentPage=page
               };
             }
           });
-    
+
           this.filteredProducts = filtered;
-          console.log('this.filteredProducts is being assign',this.filteredProducts)
-          if(this.filteredProducts?.length>0){
-            console.log('this.filteredProducts ionside the if ',this.filteredProducts)
-        
+          console.log(
+            "this.filteredProducts is being assign",
+            this.filteredProducts
+          );
+          if (this.filteredProducts?.length > 0) {
+            console.log(
+              "this.filteredProducts ionside the if ",
+              this.filteredProducts
+            );
           }
-          setTimeout(()=>{
+          setTimeout(() => {
             this.areFiltersLoading = false;
-          },800)
-        } 
+          }, 800);
+        }
       } catch (err) {
-          this.areFiltersLoading = false;
+        this.areFiltersLoading = false;
       }
-    }
-,    
+    },
     setCategoryId (categoryId: string) {
       this.filters.categoryId.push(categoryId);
       this.filterProducts();
@@ -308,18 +324,19 @@ this.filters.currentPage=page
       }
     },
 
-    async deleteProduct(product:Product){
-      try{
-       const response = await http.delete(`/api/v1/Product/delete-product-by-id/${product?.id}`);
-if(response.status===200){
-  console.log('response delete product',response);
-  useNotif("success", "Продукт удален!", "Успешно");
-}
-       
-      }catch(err){
+    async deleteProduct (product: Product) {
+      try {
+        const response = await http.delete(
+          `/api/v1/Product/delete-product-by-id/${product?.id}`
+        );
+        if (response.status === 200) {
+          console.log("response delete product", response);
+          useNotif("success", "Продукт удален!", "Успешно");
+        }
+      } catch (err) {
         console.log(err);
-        
-       useNotif("error", "Ошибка при удалении продукта", "Ошибка");
+
+        useNotif("error", "Ошибка при удалении продукта", "Ошибка");
       }
     }
   },

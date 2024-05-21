@@ -23,25 +23,25 @@
             @click="toggleProdDesc"
             v-if="!isDescrOpen && isProdDesctLong"
           >
-            {{$t('more')}}
+            {{ $t("more") }}
           </button>
           <button
             class="read-all-btn"
             @click="toggleProdDesc"
             v-else-if="isDescrOpen"
           >
-            {{ $t('close') }}
+            {{ $t("close") }}
           </button>
         </p>
         <p v-else>{{ $t("noData") }}</p>
       </div>
       <div class="desc-part-info">
-        <span>{{ $t('layersNum') }}</span>
+        <span>{{ $t("layersNum") }}</span>
 
-        <p>{{ $t('noData') }}</p>
+        <p>{{ $t("noData") }}</p>
       </div>
       <div class="desc-part-info">
-        <span>{{ $t('surfacePrepare') }}</span>
+        <span>{{ $t("surfacePrepare") }}</span>
         <p>{{ $t("noData") }}</p>
         <!-- <p v-if="prodSurface">
           {{ prodSurface }}

@@ -37,7 +37,7 @@ export type Product = {
   reviews: Review[];
   price: number;
   categories: Category[];
-  helpersMain: SubDirHelper[],
+  helpersMain: SubDirHelper[];
   size: string;
   colorType: number;
   products: [];

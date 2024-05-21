@@ -44,7 +44,10 @@
               <button
                 v-for="(btn, index) in getProduct?.product?.variants"
                 :key="btn?.id"
-                :class="{ 'active-btn': volumeBtn === btn?.id || volumeBtn===btn?.size }"
+                :class="{
+                  'active-btn':
+                    volumeBtn === btn?.id || volumeBtn === btn?.size,
+                }"
                 class="volume-btn"
                 @click="selectVolumeSize(btn, index)"
               >
@@ -65,7 +68,7 @@
           <div class="middle-koler">
             <span class="each-block-info-col">{{ $t("baseTinting") }}</span>
             <button class="middle-koler-btn">
-      {{ selectedBase ?selectedBase :$t('noData')  }}
+              {{ selectedBase ? selectedBase : $t("noData") }}
               <!-- А (белая, {{ $t("lightTinting") }}) -->
             </button>
           </div>
@@ -169,12 +172,12 @@ const volumeBtn = ref("");
 const countToBuy = ref(1);
 const totalPrice = ref(0);
 const authStore = useAuthStore();
-const brandsStore=useBrandsStore()
+const brandsStore = useBrandsStore();
 const productStore = useProductsSstore();
 const store = useCartStore();
 const productBrand = ref({} as Brands);
 const selectedProductPrice = ref(0);
-const selectedBase=ref('')
+const selectedBase = ref("");
 const isProductBookmarked = ref(false);
 const isProfileOpen = ref(false);
 const { getProduct } = storeToRefs(productStore);
@@ -202,7 +205,7 @@ const selectVolumeSize = (value: any, index: number) => {
       selectedProductPrice.value =
         getProduct.value?.product?.variants[index].price;
 
-        selectedBase.value = value?.base
+      selectedBase.value = value?.base;
     }
   }
 };
@@ -213,7 +216,7 @@ const selectedDefaultVolume = (value: string) => {
   } else {
     volumeBtn.value = value;
     selectedProductPrice.value = getProduct.value?.product?.price;
-    selectedBase.value=''
+    selectedBase.value = "";
   }
 };
 
@@ -304,12 +307,6 @@ const addToCart = () => {
   store.addToCart(prodItem);
 };
 
-
-
-
-
-
-
 const isProductExistsInCart = computed(() => {
   const index = store.getAllCart?.findIndex(
     (item) => item?.id === getProduct.value?.product?.id,
@@ -325,8 +322,6 @@ const prodCart = computed(() => {
   );
 });
 
-
-
 if (prodCart.value && prodCart.value !== null) {
   countToBuy.value = prodCart?.value?.count;
 }
@@ -335,12 +330,8 @@ const removeVolume = () => {
   selectedProductPrice.value = getProduct.value?.product?.price;
   volumeBtn.value = "";
   productImage.value = getProduct?.value?.product?.images[0];
-  selectedBase.value=''
+  selectedBase.value = "";
 };
-
-
-
-
 
 onUnmounted(() => {
   leastSmallAmount.value = 0;
@@ -352,7 +343,9 @@ onMounted(async () => {
   isProductBookmarked.value = productStore.getProductBookmarked;
 
   if (getProduct && getProduct?.value?.product?.brandId) {
-    productBrand.value = await brandsStore.fetchAllBrandId(getProduct?.value?.product?.brandId);
+    productBrand.value = await brandsStore.fetchAllBrandId(
+      getProduct?.value?.product?.brandId,
+    );
   }
   selectedProductPrice.value = getProduct.value?.product?.price;
   totalPrice.value = countToBuy.value * selectedProductPrice.value;

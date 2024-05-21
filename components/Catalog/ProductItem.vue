@@ -20,19 +20,41 @@
     <div class="product-infomation">
       <span>{{ $t("consumption") }}: {{ product?.consumption }}</span>
       <span>{{ $t("dryingTime") }}: {{ product?.dryingTime }}</span>
-      <span class="volume">{{ $t("volume") }} (л): {{ product?.size }}
-        <span v-for="vars in product?.variants?.slice(0,2)" :key="vars?.id"> / {{ vars?.size?.split(' ')[0] }}</span>
-          </span>
+      <span class="volume"
+        >{{ $t("volume") }} (л): {{ product?.size }}
+        <span v-for="vars in product?.variants?.slice(0, 2)" :key="vars?.id">
+          / {{ vars?.size?.split(" ")[0] }}</span
+        >
+      </span>
     </div>
 
     <div class="item-add-btns">
-      <button @click.stop="removeCount">  <svg width="14" height="2" viewBox="0 0 14 2" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M14 1.998H0V-0.00199986H14V1.998Z" fill="#222222"/>
-        </svg></button>
+      <button @click.stop="removeCount">
+        <svg
+          width="14"
+          height="2"
+          viewBox="0 0 14 2"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M14 1.998H0V-0.00199986H14V1.998Z" fill="#222222" />
+        </svg>
+      </button>
       <span>{{ countToBuy }}</span>
-      <button @click.stop="increaseCount">   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M14 7.998H8V13.998H6V7.998H0V5.998H6V-0.00199986H8V5.998H14V7.998Z" fill="#222222"/>
-        </svg></button>
+      <button @click.stop="increaseCount">
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 14 14"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M14 7.998H8V13.998H6V7.998H0V5.998H6V-0.00199986H8V5.998H14V7.998Z"
+            fill="#222222"
+          />
+        </svg>
+      </button>
     </div>
     <button class="pink-button prod-price" @click.stop="addCart">
       {{
@@ -43,7 +65,6 @@
             : $t("addedToCart")
       }}
     </button>
-   
   </div>
 
   <div
@@ -60,25 +81,46 @@
         <div class="product-infomation">
           <span>{{ $t("consumption") }}: {{ product?.consumption }}</span>
           <span>{{ $t("dryingTime") }}: {{ product?.dryingTime }}</span>
-          <span class="volume">{{ $t("volume") }}: {{ product?.size }}л
-            <span v-for="vars in product?.variants?.slice(0,2)" :key="vars?.id"> - {{ vars?.size }}л</span>
-              </span>
+          <span class="volume"
+            >{{ $t("volume") }}: {{ product?.size }}л
+            <span
+              v-for="vars in product?.variants?.slice(0, 2)"
+              :key="vars?.id"
+            >
+              - {{ vars?.size }}л</span
+            >
+          </span>
         </div>
       </div>
     </div>
 
     <div class="item-add-btns">
       <button @click.stop="removeCount">
-        <svg width="14" height="2" viewBox="0 0 14 2" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M14 1.998H0V-0.00199986H14V1.998Z" fill="#222222"/>
+        <svg
+          width="14"
+          height="2"
+          viewBox="0 0 14 2"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M14 1.998H0V-0.00199986H14V1.998Z" fill="#222222" />
         </svg>
-        </button>
+      </button>
       <span>{{ countToBuy }}</span>
       <button @click.stop="increaseCount">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M14 7.998H8V13.998H6V7.998H0V5.998H6V-0.00199986H8V5.998H14V7.998Z" fill="#222222"/>
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 14 14"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M14 7.998H8V13.998H6V7.998H0V5.998H6V-0.00199986H8V5.998H14V7.998Z"
+            fill="#222222"
+          />
         </svg>
-        </button>
+      </button>
     </div>
     <div class="last-col">
       <button class="item-block-buy" @click.stop="addCart">
@@ -106,7 +148,6 @@ const router = useRouter();
 const countToBuy = ref(1);
 const { t } = useI18n();
 const cartStore = useCartStore();
-
 
 const prodBrand = ref("");
 
@@ -229,7 +270,6 @@ const productName = (name: string) => {
   }
 }
 
-
 @keyframes slideFromTopToBottom {
   from {
     transform: translateY(-100%);
@@ -240,7 +280,6 @@ const productName = (name: string) => {
     opacity: 1;
   }
 }
-
 
 .item-add {
   opacity: 0;
@@ -265,26 +304,25 @@ const productName = (name: string) => {
   color: $main-black;
   width: 100%;
   margin-top: 10px;
-span{
-  font-size: 16px;
-  line-height: 20px;
-}
+  span {
+    font-size: 16px;
+    line-height: 20px;
+  }
   button {
-    background: #F5F5F5;
+    background: #f5f5f5;
     border-radius: 50%;
 
     outline: none;
-    padding:  5px;
+    padding: 5px;
     border: none;
     font-size: 20px;
     line-height: 32px;
-    @include flex(row,center,center);
-    &:hover{
-      background: #DDDDDD;
-
+    @include flex(row, center, center);
+    &:hover {
+      background: #dddddd;
     }
-    &:first-child{
-      padding:11px 5px;
+    &:first-child {
+      padding: 11px 5px;
     }
   }
 }
@@ -308,7 +346,7 @@ span{
   img {
     width: 120px;
     height: 120px;
-    margin:0 auto;
+    margin: 0 auto;
   }
 
   &-name {
@@ -318,10 +356,10 @@ span{
     color: $main-black;
     width: 100%;
     display: block;
-overflow-x: hidden;
+    overflow-x: hidden;
     line-height: 20px;
     margin-top: 10px;
-    height:80px;
+    height: 80px;
     overflow-y: hidden;
   }
 

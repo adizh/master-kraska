@@ -56,7 +56,7 @@
 <script setup lang="ts">
 import { LoginInputs } from "@/types/Items";
 import http from "@/composables/http";
-const router=useRouter()
+const router = useRouter();
 const isPasswordOpen = ref(false);
 const isPasswordReset = ref(false);
 const { t } = useI18n();
@@ -112,9 +112,9 @@ const submitLogin = async () => {
         emit("closeLoginModal");
         localStorage.setItem("userId", response.data.userId);
         localStorage.setItem("token", response.data.token);
-        localStorage.setItem('role',response.data.role);
-        if(response.data.role==='Admin'){
-          router.push('/admin')
+        localStorage.setItem("role", response.data.role);
+        if (response.data.role === "Admin") {
+          router.push("/admin");
         }
         setTimeout(() => {
           window.location.reload();

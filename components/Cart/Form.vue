@@ -48,7 +48,7 @@
           :placeholder="$t('addressPlaceholder')"
           v-model="deliveryForm.address.value"
           required
-          @input='handleAddress'
+          @input="handleAddress"
         />
         <span v-if="deliveryForm.address.error" class="err-input-msg">{{
           $t(deliveryForm.address.error)
@@ -61,45 +61,45 @@
             v-for="item in suggestedAddress"
             :key="item?.value"
             @click="selectAddress(item)"
-
           >
             {{ item?.title?.text }},
-          
-            <span v-show="item?.subtitle?.text">{{ item?.subtitle?.text }}</span>
+
+            <span v-show="item?.subtitle?.text">{{
+              item?.subtitle?.text
+            }}</span>
           </li>
         </ul>
       </Transition>
-  <div class="address-form lg:w-30rem w-12 md:w-30rem">
-   <div class="flex flex-column gap-2 address-input">
-    <input
-    type="text"
-    class="basic-input"
-    :placeholder="$t('houseNumber')"
-    v-model="deliveryForm.houseNumber.value"
-    @input="handleDeliveryForm('houseNumber', 'string')"
-    required
-  />
-  <span v-if="deliveryForm.houseNumber.error" class="err-input-msg">{{
-    $t(deliveryForm.houseNumber.error)
-  }}</span>
-   </div>
+      <div class="address-form lg:w-30rem w-12 md:w-30rem">
+        <div class="flex flex-column gap-2 address-input">
+          <input
+            type="text"
+            class="basic-input"
+            :placeholder="$t('houseNumber')"
+            v-model="deliveryForm.houseNumber.value"
+            @input="handleDeliveryForm('houseNumber', 'string')"
+            required
+          />
+          <span v-if="deliveryForm.houseNumber.error" class="err-input-msg">{{
+            $t(deliveryForm.houseNumber.error)
+          }}</span>
+        </div>
 
-  <input
-  type="text"
-  class="basic-input address-input"
-  :placeholder="$t('blockNumber')"
-  v-model="deliveryForm.blockNumber.value"
-  required
-/>
-<input
-type="text"
-class="basic-input address-input"
-:placeholder="$t('floorNumber')"
-v-model="deliveryForm.floorNumber.value"
-required
-/>
-  </div>
-
+        <input
+          type="text"
+          class="basic-input address-input"
+          :placeholder="$t('blockNumber')"
+          v-model="deliveryForm.blockNumber.value"
+          required
+        />
+        <input
+          type="text"
+          class="basic-input address-input"
+          :placeholder="$t('floorNumber')"
+          v-model="deliveryForm.floorNumber.value"
+          required
+        />
+      </div>
     </div>
 
     <div class="cart-form-block">
@@ -186,7 +186,7 @@ required
 </template>
 
 <script setup lang="ts">
-import axios from 'axios'
+import axios from "axios";
 const isPayOpen = ref(false);
 const isDropdownOpen = ref(false);
 const orderStore = useOrderStore();
@@ -201,43 +201,41 @@ const handleDeliveryForm = (
   orderStore.handleValues(field, type);
 };
 
+const suggestedAddress = ref([] as any);
 
-const suggestedAddress=ref([] as any);
-
-
-const fetchRes=async(value:string)=>{
-  const response =await axios(`https://suggest-maps.yandex.ru/v1/suggest?apikey=${config?.public?.YANDEX_API}&text=${value}`);
-  if(response.status===200){
-  console.log('address response',response)
-    suggestedAddress.value=response.data.results
+const fetchRes = async (value: string) => {
+  const response = await axios(
+    `https://suggest-maps.yandex.ru/v1/suggest?apikey=${config?.public?.YANDEX_API}&text=${value}`,
+  );
+  if (response.status === 200) {
+    console.log("address response", response);
+    suggestedAddress.value = response.data.results;
   }
-}
+};
 
 const selectedPayMethod = ref("");
 
-const handleAddress =async(event:any)=>{
+const handleAddress = async (event: any) => {
   const value = event.target?.value;
   await fetchRes(value);
-  if(value?.length){
-    isDropdownOpen.value=true
-    orderStore.delForm.address.error=''
-  }else{
-    isDropdownOpen.value=false;
-    orderStore.delForm.address.error='requiredField'
+  if (value?.length) {
+    isDropdownOpen.value = true;
+    orderStore.delForm.address.error = "";
+  } else {
+    isDropdownOpen.value = false;
+    orderStore.delForm.address.error = "requiredField";
   }
+};
 
-
-}
-
-const selectAddress =(item:any)=>{
-  if(item?.subtitle?.text){
-    const address =item?.title?.text + ', ' + item?.subtitle?.text
-orderStore?.setOrderAddress(address);
-isDropdownOpen.value=false;
-orderStore?.setOrderCity(item?.subtitle?.text)
-orderStore.delForm.city.error=''
-  }  
-}
+const selectAddress = (item: any) => {
+  if (item?.subtitle?.text) {
+    const address = item?.title?.text + ", " + item?.subtitle?.text;
+    orderStore?.setOrderAddress(address);
+    isDropdownOpen.value = false;
+    orderStore?.setOrderCity(item?.subtitle?.text);
+    orderStore.delForm.city.error = "";
+  }
+};
 
 const choosePayMethod = (value: string) => {
   isPayOpen.value = true;
@@ -252,13 +250,12 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-.address-form{
-  @include flex(row,start,start);
+.address-form {
+  @include flex(row, start, start);
   margin-top: 10px;
-  .address-input{
+  .address-input {
     width: 34%;
   }
-
 }
 .cart-form {
   &-block {
@@ -305,8 +302,6 @@ onMounted(() => {
   animation: slideFromTop 0.5s forwards;
 }
 
-
-
 .slide-fade-enter-active {
   transition: all 0.3s ease-out;
 }
@@ -320,7 +315,6 @@ onMounted(() => {
   transform: translateY(-5%);
   opacity: 0;
 }
-
 
 @media (max-width: 480px) {
   .cart-form {

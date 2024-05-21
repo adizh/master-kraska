@@ -11,9 +11,6 @@
     <div v-else-if="selectedReg === 1">
       <AuthEmailRegister @closeModal="emit('closeModal')" />
     </div>
-
-
-    
   </div>
 </template>
 

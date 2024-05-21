@@ -15,7 +15,7 @@
           :class="{
             active: activeCategory.category?.id === item?.category?.id,
           }"
-          @click.stop.capture="()=>goToCatalog(item)"
+          @click.stop.capture="() => goToCatalog(item)"
         >
           <span> {{ formatName(item?.category?.name) }}</span>
           <span class="arrow-right">
@@ -80,36 +80,34 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-
-
-  
   closeCatalog: [];
 }>();
 const goToCatalog = (item: Category) => {
- console.log('goToCatalog item',item)
- router.push({
+  console.log("goToCatalog item", item);
+  router.push({
     path: `/catalog`,
     query: { category: item?.category?.id },
   });
   emit("closeCatalog");
-  activeCategory.value=item
+  activeCategory.value = item;
   closeCatalogOptions();
-  setTimeout(()=>{
-    window.location.reload()
-  },200)
-
+  setTimeout(() => {
+    window.location.reload();
+  }, 200);
 };
 const goToCatalogSub = (subItem: CategorySys) => {
   router.push({
     path: `/catalog`,
-    query: { subCategory: subItem?.id,category: activeCategory.value?.category?.id },
-    
+    query: {
+      subCategory: subItem?.id,
+      category: activeCategory.value?.category?.id,
+    },
   });
   emit("closeCatalog");
   closeCatalogOptions();
-  setTimeout(()=>{
-    window.location.reload()
-  },200)
+  setTimeout(() => {
+    window.location.reload();
+  }, 200);
 };
 
 const fromtTop = ref("0");

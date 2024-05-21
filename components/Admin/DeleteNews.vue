@@ -1,18 +1,18 @@
 <template>
   <UIModal
     :show-modal="isOpen"
-    title="Удалить бренд"
+    title="Удалить новость"
     @close-modal="$emit('closeModal')"
   >
-    <div class="ui-dropdown col-6">
+    <div class="ui-dropdown col-6 mt-4">
       <div class="selected-option basic-input" @click="toggleCreateCategory">
         <span>
-          {{ brandsTitle }}
+          {{ newsTitle }}
         </span>
 
         <img
           class="arrow"
-          :class="{ rotated: openBrand }"
+          :class="{ rotated: openNews }"
           src="../../assets/icons/icon=components-closed-arrow.svg"
           alt="open-arrow"
         />
@@ -20,27 +20,27 @@
 
       <Transition name="slide-fade">
         <div>
-          <ul class="ui-options" v-if="openBrand">
+          <ul class="ui-options" v-if="openNews">
             <input
               type="text"
               class="basic-input"
               @input="
-                (event: any) => brandsStore.searchBrands(event?.target?.value)
+                (event: any) => newsStore.filterNews(event?.target?.value)
               "
             />
             <li
-              v-for="(item, index) in brandsStore.getAllBrands"
+              v-for="(item, index) in newsStore.getAllNews"
               :key="item?.id"
-              @click="selectBrand(item)"
+              @click="selectNews(item)"
             >
-              {{ item?.name }}
+              {{ item?.nameRu }}
             </li>
           </ul>
         </div>
       </Transition>
     </div>
 
-    <button type="button" @click="deleteBrands" class="pink-button">
+    <button type="button" @click="deleteNews" class="pink-button">
       Удалить
     </button>
   </UIModal>
@@ -49,30 +49,30 @@
 <script setup lang="ts">
 import Id from "~/pages/news/[id].vue";
 import { Brands } from "~/types/Brands";
-const openBrand = ref(false);
+import { News } from "~/types/News";
+const openNews = ref(false);
 const isCategoryCreateOpen = ref(false);
 const brandsStore = useBrandsStore();
+const newsStore=useNewsStore()
 const props = defineProps({
   isOpen: Boolean,
 });
 
 const emit = defineEmits(["closeModal"]);
-const selectedBrands = ref([] as Brands[]);
-const deleteBrands = () => {
-  console.log("sekected brands", selectedBrands?.value);
-  selectedBrands.value?.forEach(async (brand) => {
-    console.log("id brands", brand?.id);
+const selectedNews = ref([] as News[]);
+const deleteNews = () => {
+  selectedNews.value?.forEach(async (news) => {
     try {
       const response = await http.delete(
-        `/api/v1/Brand/delete-brand-by-id/${brand?.id}`,
+        `/api/v1/News/delete-news-by-id/${news?.id}`,
       );
       if (response.status === 200) {
-        useNotif("success", "Бренд удален", "Успешно");
+        useNotif("success", "Новость удалена", "Успешно");
         setTimeout(() => {
-          openBrand.value = false;
+            openNews.value = false;
           emit("closeModal");
-          brandsStore.fetchAllBrands();
-          selectedBrands.value = [];
+          newsStore.fetchAllNews()
+          selectedNews.value = [];
         }, 800);
       }
     } catch (err) {
@@ -82,30 +82,32 @@ const deleteBrands = () => {
 };
 
 const toggleCreateCategory = () => {
-  openBrand.value = !openBrand.value;
+    openNews.value = !openNews.value;
 };
 
-const brandsTitle = computed(() => {
-  if (selectedBrands?.value?.length > 0) {
-    return selectedBrands?.value?.map((item) => item?.name)?.join(", ");
+const newsTitle = computed(() => {
+  if (selectedNews?.value?.length > 0) {
+    return selectedNews?.value?.map((item) => item?.nameRu)?.join(". ");
   } else {
-    return "Выбрать бренд";
+    return "Выбрать новость";
   }
 });
 
-const selectBrand = (item: Brands) => {
-  const index = selectedBrands.value.findIndex(
+const selectNews = (item: News) => {
+  const index = selectedNews.value.findIndex(
     (brand) => brand?.id === item?.id,
   );
   console.log("index", index);
   if (index === -1) {
-    selectedBrands.value.push(item);
+    selectedNews.value.push(item);
+  }else{
+    selectedNews.value.splice(index,1)
   }
-  console.log("selectedBrands", selectedBrands);
+  console.log("selectedBrands", selectedNews);
 };
 
 onMounted(() => {
-  brandsStore.fetchAllBrands();
+    newsStore.fetchAllNews()
   console.log("brandsStore.getAllBrands", brandsStore.getAllBrands);
 });
 </script>

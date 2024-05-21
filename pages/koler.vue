@@ -14,7 +14,8 @@
             :key="item?.id"
             class="koler-section-select-names"
             :class="{ active: item?.name === selectedBrand?.name }"
-            @click="chooseBrand(item)">
+            @click="chooseBrand(item)"
+          >
             {{ item?.name }}
           </p>
         </div>
@@ -144,9 +145,18 @@ const fetchAllData = async (ids: string[]) => {
     }
   }
 
-  const filteredOnes= results.filter((item: Brands) => Boolean(item));
-  const desiredOrder =['Tikkurila','Teknos','Sirca','Ярославские','Marshall','Dulux'];
-  filteredBrands.value=desiredOrder.map(name => filteredOnes.find(obj => obj.name === name));
+  const filteredOnes = results.filter((item: Brands) => Boolean(item));
+  const desiredOrder = [
+    "Tikkurila",
+    "Teknos",
+    "Sirca",
+    "Ярославские",
+    "Marshall",
+    "Dulux"
+  ];
+  filteredBrands.value = desiredOrder.map((name) =>
+    filteredOnes.find((obj) => obj.name === name)
+  );
   selectedBrand.value = filteredBrands.value[0];
   currentBrandsColors.value = allTingings.value?.filter(
     (item: Tinting) => item?.brandId === selectedBrand?.value.id

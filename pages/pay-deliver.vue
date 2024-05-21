@@ -127,8 +127,8 @@
 <script setup lang="ts"></script>
 
 <style scoped lang="scss">
-section{
-  padding:0 4rem;
+section {
+  padding: 0 4rem;
   margin-top: -30px;
 }
 %each-li {
@@ -142,7 +142,6 @@ section{
   margin: 0 !important;
 }
 
-
 .delivery-header-h1 {
   margin-top: 60px;
   margin-bottom: 20px;
@@ -153,12 +152,12 @@ section{
   @include textFormat(20px, 20px, 600, $main-black);
   margin-bottom: 20px;
   display: block;
-  text-transform: none; 
--webkit-font-smoothing: antialiased; 
--moz-osx-font-smoothing: grayscale; 
+  text-transform: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
-h1{
-  font-family: 'Avenir Next Medium';
+h1 {
+  font-family: "Avenir Next Medium";
 }
 .delivery-from {
   .delivery-info-header {
@@ -196,36 +195,35 @@ h1{
   }
 }
 
-
 .header {
   margin-bottom: 80px;
   background-image: url("/static/delivery.png");
   background-repeat: no-repeat;
   background-size: contain;
   border-radius: 10px;
-  margin:0 auto;
+  margin: 0 auto;
   background-position: center center;
   width: 100%;
   @include flex(column, center, start);
   padding: 0 0 150px 50px;
   margin-bottom: 80px;
-  height:520px;
+  height: 520px;
 
   h1 {
     margin: 20.9rem 0 50px 0;
     @include textFormat(74px !important, 101px, 600, #fff !important);
 
-    text-transform: none; 
--webkit-font-smoothing: antialiased; 
--moz-osx-font-smoothing: grayscale; 
+    text-transform: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   p {
     max-width: 625px;
     @include textFormat(20px !important, 27px, 500, #fff !important);
-    text-transform: none; 
--webkit-font-smoothing: antialiased; 
--moz-osx-font-smoothing: grayscale; 
+    text-transform: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
@@ -234,32 +232,31 @@ h1{
   padding-left: 20px;
 }
 
-@media (max-width:1200px){
-.header{
-  padding-bottom:250px
-}
+@media (max-width: 1200px) {
+  .header {
+    padding-bottom: 250px;
+  }
 }
 
-@media (max-width:1000px){
-  .header{
-    h1{
+@media (max-width: 1000px) {
+  .header {
+    h1 {
       display: none;
     }
-    p{
+    p {
       display: none;
     }
   }
 }
 
-@media (max-width:992px){
+@media (max-width: 992px) {
   .header {
     background-size: cover;
-    height:auto;
+    height: auto;
     padding-right: 40px;
   }
 }
 @media (max-width: 768px) {
-
   .header h1 {
     margin-top: 3rem !important;
   }
@@ -288,11 +285,13 @@ h1{
     padding-left: 10px;
     margin-top: 0;
   }
-  section{
-    padding:40px 20px;
+  section {
+    padding: 40px 20px;
   }
-  .list,.delivery-from .list,.delivery-from .delivery-info-header{
-    padding-left:0;
+  .list,
+  .delivery-from .list,
+  .delivery-from .delivery-info-header {
+    padding-left: 0;
   }
 }
 </style>
