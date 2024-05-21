@@ -22,7 +22,7 @@
     <Transition name="slide-fade">
      <div>
       <ul class="ui-options" v-if="openBrand">
-          <!-- <input type="text" class="basic-input" v-model="searchCategory" @input="(event:any)=>searchCategories(event?.target?.value)"/> -->
+          <input type="text" class="basic-input"  @input="(event:any)=>brandsStore.searchBrands(event?.target?.value)"/>
         <li
           v-for="(item, index) in brandsStore.getAllBrands"
           :key="item?.id" 

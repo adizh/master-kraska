@@ -8,7 +8,7 @@
             </div>
 
 <AdminDeleteBrand :isOpen="isBrandOpen" @closeModal="isBrandOpen=false"/>
-      
+      <AdminDeleteCategory :isOpen="isCategoryOpen" @closeModal="isCategoryOpen=false"/>
 </section>
 
 </template>
