@@ -20,6 +20,7 @@
             @click.prevent="openBrandModal"
           >Создать бренд</a>
           <a href="/admin/delete" target="_blank">Удаление</a>
+          <a href="/admin/update" target="_blank">Обновление</a>
         </div>
       </div>
     </Sidebar>
