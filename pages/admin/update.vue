@@ -18,6 +18,7 @@
 
         <AdminUpdateBrand :isOpen="brandOpen" @close-modal="brandOpen=false"/>
         <AdminUpdateNews :isOpen="newsOpen" @close-modal="newsOpen=false"/>
+        <AdminUpdateCategory :isOpen="categoryOpen" @close-modal="categoryOpen=false"/>
     </section>
 </template>
 

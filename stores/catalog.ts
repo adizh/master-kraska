@@ -8,7 +8,10 @@ export const useCatalogStore = defineStore("catalogStore", {
     allLinkedCategories: [] as CategorySys[],
     category: [] as Category[],
     allHelpersSubDir: [] as SubDirHelper[],
-    allHelpersSubDirFilter: [] as SubDirHelper[]
+    allHelpersSubDirFilter: [] as SubDirHelper[],
+    linkedCategory:{} as CategorySys,
+    topCategories:[] as CategorySys[],
+    allTopCategories:[] as CategorySys[]
   }),
   actions: {
     async fetchAllCatalogs () {
@@ -63,6 +66,16 @@ export const useCatalogStore = defineStore("catalogStore", {
       );
       console.log("value", value);
       console.log("linkedCategories", this.linkedCategories);
+    },
+    async fetchLinkedCategoryById(parentId:string){
+try{
+const response =await http(`/api/v1/Category/get-category/${parentId}`);
+if(response.status===200){
+this.linkedCategory=response.data
+}
+}catch(err){
+  console.log(err)
+}
     },
     async fetchCategoryById (categoryId: string) {
       const authStore = useAuthStore();
@@ -134,6 +147,8 @@ export const useCatalogStore = defineStore("catalogStore", {
       try {
         const response = await http("/api/v1/Category/get-all-top-categories");
 
+this.topCategories=response?.data?.map((item:Category)=>item?.category)
+this.allTopCategories=response?.data?.map((item:Category)=>item?.category)
         if (response.status === 200) {
           const filtered = response.data.map((item: Category) => {
             if (authStore.getSelectedLang === "kg") {
@@ -168,6 +183,11 @@ export const useCatalogStore = defineStore("catalogStore", {
     },
     searchSubDirs (value: string) {
       this.allHelpersSubDir = this.allHelpersSubDirFilter.filter((item) =>
+        item?.nameRu?.toLowerCase().includes(value?.toLowerCase())
+      );
+    },
+    filterTopCategories (value: string) {
+      this.topCategories = this.allTopCategories.filter((item) =>
         item?.nameRu?.toLowerCase().includes(value?.toLowerCase())
       );
     },
@@ -206,6 +226,12 @@ export const useCatalogStore = defineStore("catalogStore", {
     },
     getHelperSubDirs (state) {
       return state.allHelpersSubDir;
+    },
+    getLinkedCategory(state){
+      return state.linkedCategory
+    },
+    getTopCategories(state){
+      return state.topCategories
     }
   }
 });
