@@ -9,6 +9,7 @@
           <a href="#" @click.prevent="openModal" target="_blank">Создать категорию</a>
           <a href="#" @click.prevent="openNewsModal" target="_blank">Создать новость</a>
           <a href="#" @click.prevent="openBrandModal" target="_blank">Создать бренд</a>
+          <a href="/admin/delete"  target="_blank">Удаление</a>
         </div>
 
       </div>
