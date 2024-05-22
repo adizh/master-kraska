@@ -195,16 +195,6 @@ const handleNewVarImage = async (event: any) => {
     isFormOpen.value=true;
     openNews.value=false
 
-    // const index = selectedBrands.value.findIndex(
-    //   (brand) => brand?.id === item?.id,
-    // );
-    // console.log("index", index);
-    // if (index === -1) {
-    //   selectedBrands.value.push(item);
-    // }else{
-    //   selectedBrands.value.splice(index,1)
-    // }
-    // console.log("selectedBrands", selectedBrands);
   };
 
   const validate = (field: string, type: string) => {
@@ -224,30 +214,27 @@ const submitEdit =async()=>{
     body=body
  }
  console.log('body',body)
-//     try{
-//       const response = await http.put(`/api/v1/Brand/update-brand/${selectedNews?.value?.id}`,body)
-//       console.log('response',response)
-//       if(response.status===200){
-//         useNotif('success','Бренд обновлен!','Успешно');
+    try{
+      const response = await http.put(`/api/v1/News/update-news/${selectedNews?.value?.id}`,body)
+      console.log('response',response)
+      if(response.status===200){
+        useNotif('success','Новость обновлена!','Успешно');
 
-// setTimeout(()=>{
-//     emit('closeModal');
-//     for(const key in brandsInputs.value){
-//         brandsInputs.value[key as keyof typeof brandsInputs.value].value = ''
-//         brandsInputs.value[key as keyof typeof brandsInputs.value].error = ''
-//         brandsInputs.value[key as keyof typeof brandsInputs.value].type =''
-//         selectedNews.value={} as News
-//         brandsStore.fetchAllBrands();
-
-//         isFormOpen.value=false;
-
-
-//  }
-// },700)
-//       }  
-//     }catch(err){
-//         console.log(err)
-//     }
+setTimeout(()=>{
+    emit('closeModal');
+    for(const key in newsInputs.value){
+        newsInputs.value[key as keyof typeof newsInputs.value].value = ''
+        newsInputs.value[key as keyof typeof newsInputs.value].error = ''
+        newsInputs.value[key as keyof typeof newsInputs.value].type =''
+        selectedNews.value={} as News
+        newsStore.fetchAllNews()
+        isFormOpen.value=false;
+ }
+},700)
+      }  
+    }catch(err){
+        console.log(err)
+    }
 }
   const editBrand=()=>{
 
