@@ -264,9 +264,11 @@ setTimeout(()=>{
     
   });
   </script>
-  
-  <style scoped lang="scss">
-  @import '../../../assets/dropdown.scss';
+
+
+<style scoped lang="scss">
+
+@import '../../../assets/dropdown.scss';
 
   .admin-image{
     width: 50%;

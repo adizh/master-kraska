@@ -986,7 +986,7 @@ const editProduct = (type: string = "") => {
       console.log("efit produc newCategory is okt", newCategory);
     }
     if (type === "form") {
-      // router.push('/admin')
+     router.push('/admin')
     }
   }
 };
