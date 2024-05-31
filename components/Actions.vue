@@ -71,7 +71,7 @@ onMounted(async () => {
 }
 
 .brands-info {
-  margin-top: .4rem;
+  margin-top: 2.3rem;
   @include flex(column, center, center);
 }
 
@@ -81,8 +81,9 @@ onMounted(async () => {
 }
 
 .brands-pictures {
-  margin-top: 20px;
+  margin-bottom: 120px;
   padding: 20px;
+  margin-top: 20px;
   border-top: 1px solid $slider-border-color;
 
   img {
@@ -90,7 +91,7 @@ onMounted(async () => {
     max-height: 200px;
     height: 140px;
     object-fit: contain !important;
-    margin: 0 10px;
+    margin: 40px 10px 0 0;
   }
 }
 

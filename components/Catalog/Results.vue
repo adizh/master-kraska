@@ -1,7 +1,12 @@
 <template>
+
+  <div v-if="productStore.getLoadingState" class="text-center">
+    <img src="../../assets/texture-roller.gif" class='gif-img'></img>
+  </div>
+
   <div
     class="items"
-    v-if="
+    v-else-if="
       productStore?.getFilteredProducts?.length > 0 &&
       !productStore.getLoadingState
     "
@@ -26,22 +31,39 @@
     </div>
   </div>
 
-  <div
-    v-else-if="
-      !productStore.getLoadingState &&
-      !productStore?.getFilteredProducts?.length
-    "
-  >
+ 
 
+
+  <div
+  v-else-if="!productStore.getLoadingState && productStore?.getFilteredProducts?.length<1"
+>
 <img src="../../assets/texture-roller.gif" class='gif-img'></img>
-  </div>
-  <div v-else-if="productStore.getLoadingState" class="text-center">
-    <ProgressSpinner />
-  </div>
+</div>
 </template>
 
 <script setup lang="ts">
 const productStore = useProductsSstore();
+const elementExists=ref(false)
+const resultsClass = document?.querySelector('.results') as HTMLElement;
+
+console.log('resultsClass',resultsClass)
+if (resultsClass) {
+    elementExists.value = true;
+} else {
+    elementExists.value = false;
+}
+
+watch(productStore.getAllProducsts, (newValue, oldValue) => {
+    if (newValue) {
+      elementExists.value=true
+    } else {
+      elementExists.value=false
+    }
+});
+
+
+
+
 const changePage = (page: number) => {
   productStore.filters.currentPage = page;
    productStore.filterProducts();

@@ -64,15 +64,18 @@
         <li v-else-if="authStore?.getRole === 'Admin'">
           <a href="/admin">Админ</a>
         </li>
-        <li class="cart-li" @click="gotToPage('/cart')">
-          <img src="../assets/icons/icon=cart.svg" alt="cart">
-     
-          <span class="cart-li-num">{{ cartStore?.getAllCart?.length }}</span>
-        </li>
-        <li @click="toggleProfile">
+       
+        <div class="cart-block">
+          <li class="cart-li" @click="gotToPage('/cart')">
+            <img src="../assets/icons/icon=cart.svg" alt="cart">
+       
+            <span class="cart-li-num">{{ cartStore?.getAllCart?.length }}</span> 
+          </li>
+         <li @click="toggleProfile">
           <img src="../assets/icons/icon=user.svg" alt="">
           <span v-if="screenSize === 'large'">{{ $t("profile") }}</span>
-        </li>
+         </li>
+        </div>
         <li v-if="!isBurgerMenuOpen" class="burger-menu" @click="openBurger">
           <span />
           <span />
@@ -190,6 +193,11 @@ provide("closeProfileOpen", closeProfileOpen);
 <style scoped lang="scss">
 @import "../assets/tabs.scss";
 
+
+.cart-block{
+  @include flex(row,space-between,start);
+  width: 40%;
+}
 .logo-img {
   width: 100%;
 }
@@ -205,7 +213,6 @@ a {
 
 .cart-li {
   position: relative;
-
   &-num {
     position: absolute;
     top: -15px;
@@ -218,6 +225,7 @@ a {
     height: 16px;
     color: white;
     @include flex(row, center, center);
+   
   }
 }
 
@@ -350,6 +358,10 @@ a {
 @media (max-width: 1100px) {
   .burger-menu {
     display: flex !important;
+  }
+
+  .cart-block{
+    width: 19%;
   }
 
   .bottom {

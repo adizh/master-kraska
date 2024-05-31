@@ -24,6 +24,7 @@
   background-repeat: no-repeat;
   background-size: contain;
   height: 80vh;
+  margin-top: 50px;
   background-position: center center;
   width: 100%;
   @include flex(column, center, start);

@@ -28,6 +28,7 @@ import { advantagesOptions } from "@/assets/js/advantages";
 
 <style scoped lang="scss">
 .advan-block {
+  margin-top: 40px;
   background: url(../assets/images/advan-block-bg.png);
   background-repeat: no-repeat;
   width: 100%;
