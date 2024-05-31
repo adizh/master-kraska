@@ -31,10 +31,7 @@
     </div>
   </div>
 
- 
-
-
-  <div
+  <div class="flex flex-row justify-content-center"
   v-else-if="!productStore.getLoadingState && productStore?.getFilteredProducts?.length<1"
 >
 <img src="../../assets/texture-roller.gif" class='gif-img'></img>
@@ -43,25 +40,6 @@
 
 <script setup lang="ts">
 const productStore = useProductsSstore();
-const elementExists=ref(false)
-const resultsClass = document?.querySelector('.results') as HTMLElement;
-
-console.log('resultsClass',resultsClass)
-if (resultsClass) {
-    elementExists.value = true;
-} else {
-    elementExists.value = false;
-}
-
-watch(productStore.getAllProducsts, (newValue, oldValue) => {
-    if (newValue) {
-      elementExists.value=true
-    } else {
-      elementExists.value=false
-    }
-});
-
-
 
 
 const changePage = (page: number) => {
