@@ -6,6 +6,7 @@ export const useInputValidation = () => {
     inputs: any,
     fieldName: string,
     validationType: string | any
+
   ) => {
 
     const value = inputs[fieldName].value;
@@ -41,6 +42,8 @@ export const useInputValidation = () => {
               ? t("requiredField")
               : "";
     }
+
+    console.log('inputs',inputs)
   };
 
   return { handleValues };

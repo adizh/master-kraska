@@ -71,7 +71,7 @@ onMounted(async () => {
 }
 
 .brands-info {
-  margin-top: 3rem;
+  margin-top: .4rem;
   @include flex(column, center, center);
 }
 

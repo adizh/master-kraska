@@ -15,9 +15,9 @@
           </div>
         </div>
       </div>
-      <div class="right">
+      <!-- <div class="right">
         <img src="/advantage-img 1.png" format="webp" />
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -28,29 +28,21 @@ import { advantagesOptions } from "@/assets/js/advantages";
 
 <style scoped lang="scss">
 .advan-block {
-  background: $advan-bg;
+  background: url(../assets/images/advan-block-bg.png);
+  background-repeat: no-repeat;
   width: 100%;
-  position: relative;
-  color: white;
+  color: #222;
   padding: 80px 0 80px 2rem;
   border-radius: 20px;
-  @include flex(row, space-between, center);
+background-position: center center;
+  background-size: cover;
 }
 
-.right {
-  width: 35%;
-  position: absolute;
-  bottom: -5px;
-  right: 0;
-  img {
-    width: 100%;
-  }
-}
 
 .left {
   @include flex(row, space-between, center);
   flex-wrap: wrap;
-  width: 70%;
+  width: 100%;
   margin: 0;
 
   &-item {
@@ -81,13 +73,6 @@ import { advantagesOptions } from "@/assets/js/advantages";
     align-items: end;
     padding: 20px 20px 13rem 10px;
     position: relative;
-  }
-
-  .right {
-    position: absolute;
-    bottom: 0;
-    width: 60%;
-    right: 0;
   }
 
   .left {

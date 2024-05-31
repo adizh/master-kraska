@@ -112,10 +112,15 @@ $text-max-width: 600px;
 h1 {
   max-width: 640px;
 }
+
 .single-news {
   @include flex(column, start, start, 40px);
   margin-bottom: 60px;
+  img{
+    width:30%
+  }
 }
+
 .active-section {
   @include flex(row, start, center);
   margin-left: -60px;

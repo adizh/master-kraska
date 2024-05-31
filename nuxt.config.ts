@@ -27,6 +27,10 @@ export default defineNuxtConfig({
   app: {
     pageTransition: { name: "page", mode: "out-in" },
     head: {
+      script:[
+        { src: 'https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js' },
+
+      ],
       link: [
         {
           rel: "icon",
@@ -35,7 +39,8 @@ export default defineNuxtConfig({
           href: "/favicon.ico",
           sizes: "16x16"
         }
-      ]
+      ],
+    
     }
   },
 
@@ -80,9 +85,5 @@ export default defineNuxtConfig({
     public: {
       YANDEX_API: process.env.YANDEX_API
     }
-
-    // public: {
-    //   apiBase: ''
-    // }
   }
 });

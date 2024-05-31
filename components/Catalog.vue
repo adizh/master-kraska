@@ -58,7 +58,7 @@
         {{ $t("noData") }}
       </div>
 
-      <div class="close-catalog" @click="$emit('closeCatalog')">X</div>
+      <div class="close-catalog" @click="$emit('closeCatalog')">{{ $t('closeBlock') }} X</div>
     </div>
   </div>
 </template>
@@ -190,8 +190,11 @@ watch(
 }
 
 .close-catalog {
+  border-radius: 10px;
+  background: #F5F5F5;
+  padding:8px;
   position: absolute;
-  right: 8rem;
+  right: 3rem;
   color: $main-black;
 }
 

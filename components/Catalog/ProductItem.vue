@@ -68,15 +68,15 @@
   </div>
 
   <div
-    class="item-block horizontal"
+    class="item-block horizontal grid"
     @click="router.push(`/product/${product?.id}`)"
     v-else
     @mousemove="itemHover"
     @mouseleave="itemHoverLeave"
   >
-    <div class="first-col">
-      <img :src="product?.images[0]" format="webp" />
-      <div class="first-sub-col">
+    <div class="first-col col-6">
+      <img :src="product?.images[0]" format="webp" class="col-1" />
+      <div class="first-sub-col col-12">
         <span class="item-block-name">{{ product?.name }}</span>
         <div class="product-infomation">
           <span>{{ $t("consumption") }}: {{ product?.consumption }}</span>
@@ -94,7 +94,7 @@
       </div>
     </div>
 
-    <div class="item-add-btns">
+    <div class="item-add-btns col-1">
       <button @click.stop="removeCount">
         <svg
           width="14"
@@ -122,7 +122,7 @@
         </svg>
       </button>
     </div>
-    <div class="last-col">
+    <div class="last-col col-3">
       <button class="item-block-buy" @click.stop="addCart">
         {{
           !isItemHovered
@@ -303,7 +303,7 @@ const productName = (name: string) => {
   @include flex(row, center, center, 20px);
   color: $main-black;
   width: 100%;
-  margin-top: 10px;
+
   span {
     font-size: 16px;
     line-height: 20px;
@@ -328,7 +328,7 @@ const productName = (name: string) => {
 }
 .item-block {
   width: 31%;
-  padding: 20px 32px;
+  padding: 20px;
   overflow: hidden;
   &:hover {
     .item-add {
@@ -354,12 +354,13 @@ const productName = (name: string) => {
     font-size: 16px;
     font-weight: 600;
     color: $main-black;
+    height:42px !important;
     width: 100%;
     display: block;
     overflow-x: hidden;
     line-height: 20px;
     margin-top: 10px;
-    height: 80px;
+
     overflow-y: hidden;
   }
 
@@ -392,8 +393,7 @@ const productName = (name: string) => {
   @include flex(row, space-between, start);
 
   .first-col {
-    max-width: 65%;
-    @include flex(row, space-between, start, 50px);
+    @include flex(row, space-between, start);
   }
 
   .first-sub-col {
@@ -401,7 +401,7 @@ const productName = (name: string) => {
   }
 
   .last-col {
-    @include flex(column, start, start, 20px);
+    @include flex(column, start, flex-end, 20px);
   }
 
   .item-block-info {

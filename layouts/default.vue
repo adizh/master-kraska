@@ -66,7 +66,7 @@
         </li>
         <li class="cart-li" @click="gotToPage('/cart')">
           <img src="../assets/icons/icon=cart.svg" alt="cart">
-          <span v-if="screenSize === 'large'">{{ $t("cart") }}</span>
+     
           <span class="cart-li-num">{{ cartStore?.getAllCart?.length }}</span>
         </li>
         <li @click="toggleProfile">

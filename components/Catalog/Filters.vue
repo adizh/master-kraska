@@ -59,7 +59,7 @@
     <div
       class="brands"
       :class="{ 'each-filter-block open': isBrandOpen }"
-      v-if="brandsStore.getAllBrands?.length > 0"
+      v-if="brandsStore.getAllBrands?.length > 0 && !productsStore.getNoBrands"
     >
       <label for="price" class="filters-help">
         {{ $t("brands") }}

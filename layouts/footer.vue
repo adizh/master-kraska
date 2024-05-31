@@ -14,20 +14,22 @@
           <img src="../assets/icons/arrow-footer.svg" alt="arrow"></a></span>
         <span><a href="/contacts">{{ $t("contacts") }}
           <img src="../assets/icons/arrow-footer.svg" alt="arrow"></a></span>
-        <span><a href="/koler">{{ $t("tinting") }}
-          <img src="../assets/icons/arrow-footer.svg" alt="arrow"></a></span>
+     
       </div>
       <div class="third">
+        <span><a href="/koler">{{ $t("tinting") }}
+          <img src="../assets/icons/arrow-footer.svg" alt="arrow"></a></span>
         <span><a href="/parameters">{{ $t("searchByParams") }}
           <img src="../assets/icons/arrow-footer.svg" alt="arrow"></a></span>
         <span><a href="/brands">{{ $t("brands") }}
           <img src="../assets/icons/arrow-footer.svg" alt="arrow"></a></span>
+      
+      </div>
+      <div class="fourth">
         <span><a href="/certificates">{{ $t("certificates") }}
           <img src="../assets/icons/arrow-footer.svg" alt="arrow"></a></span>
         <span><a href="/about-us">{{ $t("aboutUs") }}
           <img src="../assets/icons/arrow-footer.svg" alt="arrow"></a></span>
-      </div>
-      <div class="fourth">
         <!-- <span><a href="/sellers">{{ $t('mobileConsultant') }}<img src="../assets/icons/arrow-footer.svg"
                             alt="arrow"></a></span> -->
         <!-- <span><a href="">{{ $t('mapPermanentCustomer') }} <img src="../assets/icons/arrow-footer.svg"

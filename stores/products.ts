@@ -8,6 +8,7 @@ export const useProductsSstore = defineStore("productsStore", {
     filteredProducts: [] as Product[],
     popularProds: [] as Product[],
     beneficialProds: [] as Product[],
+    noBrands:false,
     filterProductTotal: {
       totalPages: 0,
       totalItems: 0
@@ -265,7 +266,8 @@ export const useProductsSstore = defineStore("productsStore", {
           this.areProdsReceived = true;
           this.filterProductTotal.totalItems = response.data.totalItems;
           this.filterProductTotal.totalPages = response.data.totalPages;
-          console.log("response", response);
+          this.noBrands=response.data.noBrand
+          console.log("response filterProducts", response);
           const filtered = response.data.items?.map((item: Product) => {
             if (authStore.getSelectedLang === "kg") {
               return {
@@ -283,15 +285,9 @@ export const useProductsSstore = defineStore("productsStore", {
           });
 
           this.filteredProducts = filtered;
-          console.log(
-            "this.filteredProducts is being assign",
-            this.filteredProducts
-          );
+        
           if (this.filteredProducts?.length > 0) {
-            console.log(
-              "this.filteredProducts ionside the if ",
-              this.filteredProducts
-            );
+            
           }
           setTimeout(() => {
             this.areFiltersLoading = false;
@@ -367,6 +363,9 @@ export const useProductsSstore = defineStore("productsStore", {
     },
     getBenefProducts (state) {
       return state.beneficialProds;
+    },
+    getNoBrands(state){
+      return state.noBrands
     }
   }
 });

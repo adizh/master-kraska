@@ -32,7 +32,8 @@
       !productStore?.getFilteredProducts?.length
     "
   >
-    {{ $t("noDataCatalogSearch") }}
+
+<img src="../../assets/texture-roller.gif" class='gif-img'></img>
   </div>
   <div v-else-if="productStore.getLoadingState" class="text-center">
     <ProgressSpinner />
@@ -43,7 +44,7 @@
 const productStore = useProductsSstore();
 const changePage = (page: number) => {
   productStore.filters.currentPage = page;
-  // productStore.filterProducts();
+   productStore.filterProducts();
 };
 const props = defineProps<{
   visibleMethod: string;
@@ -53,6 +54,9 @@ const props = defineProps<{
 <style scoped lang="scss">
 .items {
   @include flex(column, start, start, 2rem);
+}
+.gif-img{
+width:200px;
 }
 
 .results {

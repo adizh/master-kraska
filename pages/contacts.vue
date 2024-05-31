@@ -1,8 +1,8 @@
 <template>
   <div>
+ 
     <AboutContacts
       class="contacts-section"
-      :address-list="addressList"
       type="contacts"
     />
   </div>

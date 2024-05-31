@@ -262,7 +262,6 @@ onMounted(async () => {
   }
 }
 .item-add-btns {
-  margin-top: 10px;
   opacity: 0;
   visibility: hidden;
   @include flex(row, center, center, 20px);
@@ -291,7 +290,7 @@ onMounted(async () => {
 }
 .item-block {
   width: 28%;
-  padding: 20px 32px;
+  padding: 20px;
   overflow: hidden;
   .prod-img {
     width: 120px;
@@ -302,6 +301,7 @@ onMounted(async () => {
   &-name {
     font-size: 16px;
     font-weight: 600;
+    height:42px !important;
     color: $main-black;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -312,7 +312,6 @@ onMounted(async () => {
     height: 100%;
     line-height: 20px;
     margin-bottom: 10px;
-    height: 80px;
     overflow-x: hidden;
   }
 
