@@ -6,7 +6,7 @@
         SwiperNavigation,
         SwiperEffectCreative,
         SwiperController,
-        SwiperAutoplay,
+        SwiperAutoplay
       ]"
       :navigation="true"
       :creative="true"
@@ -52,56 +52,42 @@
       <SwiperSlide>
         <div class="banner-block slider-wrapper">
           <img
-            src="../assets/images/1180x520.png"
+            src="../assets/images/banner1.png"
             format="webp"
             id="'banner-image"
             ref="bannerImage"
             @load="updateHeight"
+          
           />
         </div>
       </SwiperSlide>
 
       <SwiperSlide>
-        <div class="banner-block">
-          <img src="../assets/images/image001.png" format="webp" />
+        <div class="banner-block"  @click="
+        navigateTo({
+          path: `/catalog`,
+          query: { brandId:'8ce5266c-a2d0-48de-9a93-4ea72e0182d9' },
+        })
+      ">
+          <img src="../assets/images/banner2.png" format="webp"   />
         </div>
       </SwiperSlide>
 
       <SwiperSlide>
-        <div class="banner-block">
+        <div class="banner-block"  @click="
+        navigateTo({
+          path: `/catalog`,
+          query: { brandId:'8ce5266c-a2d0-48de-9a93-4ea72e0182d9' },
+        })
+      ">
           <img
-            src="../assets/images/Oikos_Banner_Kraska_1180x520.gif"
+            src="../assets/images/banner3.png"
             format="webp"
           />
         </div>
       </SwiperSlide>
 
-      <SwiperSlide>
-        <div class="banner-block">
-          <img
-            src="../assets/images/Oikos_Banner_Kraska_1180x520_Encanto.jpg"
-            format="webp"
-          />
-        </div>
-      </SwiperSlide>
-
-      <SwiperSlide>
-        <div class="banner-block">
-          <img
-            src="../assets/images/Oikos_Banner_Kraska_1180x520_MultidecorSkin.jpg"
-            format="webp"
-          />
-        </div>
-      </SwiperSlide>
-
-      <SwiperSlide>
-        <div class="banner-block">
-          <img
-            src="../assets/images/Oikos_Banner_Kraska_1180x520_Ottocento.jpg"
-            format="webp"
-          />
-        </div>
-      </SwiperSlide>
+ 
     </Swiper>
   </div>
 </template>
@@ -205,7 +191,7 @@ const prevSlide = () => {
   width: 100%;
   img {
     width: 100%;
-    height: 573px;
+    height: 300px;
   }
 }
 .slider-wrapper {
@@ -226,9 +212,12 @@ const prevSlide = () => {
 
 .right {
   width: 50%;
+  position:relative;
 
   img {
     width: 100%;
+    position: absolute;
+    right:0;
   }
 }
 
@@ -285,11 +274,42 @@ h1 {
   display: none;
 }
 
+
+
 @media (min-width: 1400px) {
   .carousel-slider {
     margin-top: -4.6rem !important;
     margin-left: -10rem !important;
     margin-right: -10rem !important;
+  }
+
+}
+
+@media (min-width:1160px){
+  .right{
+    width: 450px;
+img{
+  bottom:-123px;
+}
+
+  }
+}
+
+
+@media (max-width:1160px){
+  h1{
+    font-size: 50px !important;
+    line-height: 54px !important;
+  }
+  .right img{
+    width: 80%;
+
+      bottom:-123px;
+    
+  }
+  .sub-header{
+    font-size: 24px;
+    line-height: 30px;
   }
 }
 @media (max-width: 1100px) {
@@ -297,7 +317,11 @@ h1 {
     margin-top: -4rem;
   }
 }
-
+@media (max-width:896px){
+  .right img{
+    width: 100%;
+  }
+}
 @media (max-width: 786px) {
   .banner-block {
     img {

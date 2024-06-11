@@ -140,10 +140,7 @@ const handleScroll = (event: any) => {
       const itemPosition =
         item.offsetTop -
         (listContainer.value ? listContainer.value.offsetTop : 0);
-      // console.log(`Item ${item.textContent} position from top: ${itemPosition}px`);
-      // if(event.target.textContent===item.textContent){
-      //     currectItemTop=itemPosition
-      // }
+    
       const firstVisibleItem = Array.from(listItems).find((item) => {
         return item.getBoundingClientRect().top >= 50;
       });
