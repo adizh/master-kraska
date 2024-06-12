@@ -167,6 +167,7 @@ const prevSlide = () => {
   img {
     width: 100%;
     height: 300px;
+    margin-bottom: 40px;
   }
 }
 .slider-wrapper {

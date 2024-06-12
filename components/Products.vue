@@ -46,6 +46,11 @@
   }
 }
 
+@media (min-width:1400px){
+  .koler{
+    margin: -40px 0;
+  }
+}
 @media (min-width: 786px) and (max-width: 992px) {
   .koler {
     padding: 1rem 20px 1rem 20px;
