@@ -25,31 +25,6 @@
       :style="{ '--swiper-navigation-size': '23px' }"
     >
       <SwiperSlide>
-        <div class="slider-wrapper">
-          <div class="main-page-header" ref="targetElement">
-            <div class="left">
-              <h1>Мастер Краска</h1>
-              <div class="sub-header">{{ $t("officialRepres") }}</div>
-              <button class="pink-button" @click="navigateTo('/parameters')">
-                {{ $t("searchByParams") }}
-              </button>
-            </div>
-            <div class="right">
-              <img
-                src="../public/main-page.png"
-                class="large-image"
-                format="webp"
-              />
-              <img
-                src="../public/vertical-main.png"
-                format="webp"
-                class="small-image"
-              />
-            </div>
-          </div>
-        </div>
-      </SwiperSlide>
-      <SwiperSlide>
         <div class="banner-block slider-wrapper">
           <img
             src="../assets/images/banner1.png"

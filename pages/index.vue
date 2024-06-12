@@ -85,7 +85,7 @@ section {
 .search-place {
   position: relative;
   width: 100%;
-  margin-bottom: 80px;
+  margin-bottom: 40px;
 
   button {
     box-shadow: 0px 0px 0px 0.5px #0000000d;
