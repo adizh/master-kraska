@@ -394,6 +394,11 @@ a {
   .open-bottom-part {
     display: flex;
   }
+  .cart-li{
+    &-num{
+      right:-17px;
+    }
+  }
 }
 
 @media (max-width: 786px) {
@@ -443,6 +448,18 @@ a {
   .overlay {
     top: 23rem;
   }
+  .top-part{
+    gap:40px;
+  }
+  .cart-block{
+    gap:20px;
+  }
+  .cart-li{
+
+    &-num{
+      right:-15px;
+    }
+  }
 }
 
 @media (min-width: 320px) and (max-width: 468px) {
@@ -455,5 +472,6 @@ a {
   .top-part {
     justify-content: space-between;
   }
+ 
 }
 </style>
