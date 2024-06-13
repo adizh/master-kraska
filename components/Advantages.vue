@@ -72,7 +72,6 @@ background-position: center center;
 @media (min-width: 320px) and (max-width: 768px) {
   .advan-block {
     align-items: end;
-    padding: 20px 20px 13rem 10px;
     position: relative;
   }
 
@@ -103,13 +102,8 @@ background-position: center center;
 
 @media (max-width: 768px) {
   .advan-block {
-    padding: 20px 20px 16rem 10px;
+    padding: 20px;
   }
 }
 
-@media (max-width: 480px) {
-  .advan-block {
-    padding: 20px 20px 13rem 10px;
-  }
-}
 </style>
