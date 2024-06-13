@@ -335,7 +335,13 @@ onMounted(async () => {
 
 .item-block:hover {
   cursor: pointer;
-  box-shadow: 0px 6px 18px 0px #0000001f;
+  box-shadow: $item-block-shadow;
   transition: 0.3s ease all;
+}
+
+@media (max-width:576px){
+  .item-block{
+    box-shadow: $item-block-shadow;
+  }
 }
 </style>

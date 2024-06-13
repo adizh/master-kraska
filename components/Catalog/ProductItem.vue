@@ -457,6 +457,7 @@ const productName = (name: string) => {
 @media (max-width: 576px) {
   .item-block {
     width: 100%;
+    box-shadow: $item-block-shadow;
 
     img {
       width: 120px;
