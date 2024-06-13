@@ -310,4 +310,22 @@ li {
     padding-bottom: 24rem !important;
   }
 }
+
+@media (min-width:363px) and (max-width:576px){
+  .close-catalog{
+    top:-3rem
+  }
+}
+@media (max-width:363px){
+  .close-catalog{
+    top:-3rem;
+    right:1rem
+  }
+}
+@media (min-width:576px) and (max-width:1240px){
+  .close-catalog{
+    top:-2rem
+  }
+}
+
 </style>
