@@ -86,6 +86,7 @@ section {
   position: relative;
   width: 100%;
   margin-bottom: 40px;
+  margin-top: 40px;
 
   button {
     box-shadow: 0px 0px 0px 0.5px #0000000d;

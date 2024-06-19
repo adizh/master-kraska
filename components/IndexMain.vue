@@ -7,9 +7,12 @@
         SwiperEffectCreative,
         SwiperController,
         SwiperAutoplay
+
       ]"
       :navigation="true"
       :creative="true"
+      :loop="true"
+
       :autoplay="{
         delay: 5000,
       }"
@@ -22,12 +25,12 @@
           translate: ['100%', 0, 0],
         },
       }"
-      :style="{ '--swiper-navigation-size': '23px' }"
+
     >
       <SwiperSlide>
         <div class="banner-block slider-wrapper">
           <img
-            src="../assets/images/banner1.png"
+            src="../assets/images/banner3.png"
             format="webp"
             id="'banner-image"
             ref="bannerImage"
@@ -56,7 +59,7 @@
         })
       ">
           <img
-            src="../assets/images/banner3.png"
+            src="../assets/images/banner1.png"
             format="webp"
           />
         </div>
@@ -157,17 +160,22 @@ const prevSlide = () => {
 </script>
 
 <style scoped lang="scss">
+
 .carousel-slider {
   margin-left: -2rem !important;
   margin-right: -2rem !important;
+}
+
+:deep(.swiper-button-next:after), :deep(.swiper-button-prev:after){
+  font-size: 23px;
 }
 
 .banner-block {
   width: 100%;
   img {
     width: 100%;
-    height: 300px;
-    margin-bottom: 40px;
+    height: 100%;
+
   }
 }
 .slider-wrapper {
@@ -292,18 +300,32 @@ img{
   .carousel-slider {
     margin-top: -4rem;
   }
+
+
+  :deep(.swiper-wrapper){
+    height: 170px;
+  }
 }
 @media (max-width:896px){
   .right img{
     width: 100%;
   }
+
+
+  :deep(.swiper-wrapper){
+    height: 150px;
+  }
+}
+@media (max-width: 790px) {
+  .main-page-header {
+    padding: 10px 10px 20px 10px;
+  }
+  .pink-button {
+    margin-top: 40px;
+  }
 }
 @media (max-width: 786px) {
-  .banner-block {
-    img {
-      height: auto;
-    }
-  }
+ 
   .sub-header {
     font-size: 18px !important;
     max-width: 340px !important;
@@ -325,7 +347,14 @@ img{
   .right {
     display: none;
   }
+  .carousel-slider{
+    margin-top: -3.4rem;
+  }
+  :deep(.swiper-button-next:after), :deep(.swiper-button-prev:after){
+    font-size: 16px;
+  }
 }
+
 
 @media (max-width: 700px) {
   h1 {
@@ -340,16 +369,14 @@ img{
     font-size: 16px;
     max-width: 440px;
   }
+
+
+  :deep(.swiper-wrapper){
+    height: 95px;
+  }
 }
 
-@media (max-width: 790px) {
-  .main-page-header {
-    padding: 10px 10px 20px 10px;
-  }
-  .pink-button {
-    margin-top: 40px;
-  }
-}
+
 
 @media (max-width: 576px) {
   .pink-button {
@@ -370,11 +397,14 @@ img{
   .sub-header {
     line-height: 33px !important;
   }
+  .carousel-slider{
+    margin-top: -3rem;
+  }
 }
 
 @media (max-width: 480px) {
   .carousel-slider {
-    margin-top: -7.3rem !important;
+   margin-top: -7.7rem !important;
   }
   .sub-header {
     line-height: 28px !important;
@@ -396,10 +426,19 @@ img{
   .small-image {
     display: block;
   }
+  :deep(.swiper-button-next:after), :deep(.swiper-button-prev:after){
+    font-size: 13px;
+  }
+
+
+  :deep(.swiper-wrapper){
+    height: 80px;
+  }
 }
-@media (max-width: 468px) {
-  .carousel-slider {
-    margin-top: -0.3rem !important;
+@media (max-width: 469px){
+  .carousel-slider{
+    margin-top: 0.56rem !important;
+
   }
 }
 @media (max-width: 430px) {
@@ -420,6 +459,17 @@ img{
   }
 }
 
+@media (max-width:420px){
+  .carousel-slider{
+    margin-top: -1.3rem !important;
+
+  }
+
+
+:deep(.swiper-wrapper){
+  height: 70px;
+}
+}
 @media (max-width: 360px) {
   .main-page-header {
     padding-top: 5px !important;
@@ -429,6 +479,9 @@ img{
   }
   .sub-header {
     line-height: 18px;
+  }
+  .carousel-slider{
+    margin-top: -2.3rem;
   }
 }
 </style>
