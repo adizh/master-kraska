@@ -58,6 +58,10 @@
       </ul>
       <ul class="top-part">
         <li v-if="authStore?.getRole !== 'Admin'" class="phone">
+
+
+
+          
           <img src="../assets/icons/icon=phone loight.svg" alt="phone">
           <a href="tel:+996 550 910 148"> +996 550 910 148</a>
         </li>
