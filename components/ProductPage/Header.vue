@@ -9,7 +9,8 @@
           <div class="middle-header">
             {{ getProduct?.product?.name }}
           </div>
-          <div>
+
+          <div v-if="productBrand?.logo">
             <p
               class="each-block-info-col flex flex-column align-items-start gap-2"
             >
@@ -19,6 +20,7 @@
               <img :src="productBrand?.logo" alt="brand" class="brand-logo" />
             </p>
           </div>
+          
           <div class="middle-review">
             <span class="each-block-info-col">{{ $t("rating") }}</span>
             <div class="middle-rating">
@@ -69,7 +71,6 @@
             <span class="each-block-info-col">{{ $t("baseTinting") }}</span>
             <button class="middle-koler-btn">
               {{ selectedBase ? selectedBase : $t("noData") }}
-              <!-- А (белая, {{ $t("lightTinting") }}) -->
             </button>
           </div>
           <div>
@@ -339,13 +340,10 @@ onUnmounted(() => {
 
 onMounted(async () => {
   productStore.fetchProductById(props?.productId);
-
   if(authStore.getUserId){
     productStore.getBookmarks(getProduct.value?.product?.id);
   }
-
   isProductBookmarked.value = productStore.getProductBookmarked;
-
   if (getProduct && getProduct?.value?.product?.brandId) {
     productBrand.value = await brandsStore.fetchAllBrandId(
       getProduct?.value?.product?.brandId,
