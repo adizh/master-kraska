@@ -12,7 +12,6 @@ export const useNotif = (type: string, text: string, header: string) => {
 export const useNotifLocal = (type: string, text: string, header: string) => {
   const { $i18n } = useNuxtApp();
   const { t } = $i18n;
-  console.log(useNuxtApp());
   return VsToast.show({
     title: t(header),
     message: t(text),

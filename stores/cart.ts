@@ -10,7 +10,6 @@ export const useCartStore = defineStore("cartStore", {
   actions: {
     addToCart (prod: ExtendedProduct) {
       const prodIndex = this.cart.findIndex((el) => el?.id === prod?.id);
-
       if (prodIndex === -1) {
         this.cart.push(prod);
         localStorage.setItem("cart", JSON.stringify(this.cart));
@@ -24,12 +23,12 @@ export const useCartStore = defineStore("cartStore", {
         localStorage.setItem("cart", JSON.stringify(this.cart));
       }
     },
+
     decreaseCount (item: ExtendedProduct) {
       if (item.count > 1) {
         const updatedItem = { ...item };
         updatedItem.count--;
         updatedItem.totalProdSum = updatedItem.count * updatedItem.initPrice;
-
         console.log("decreaseCount updatedItem", updatedItem);
         this.updateCartItem(updatedItem);
       }
@@ -37,7 +36,6 @@ export const useCartStore = defineStore("cartStore", {
 
     getTotalItemCount (count: number) {
       this.countToBuy = count;
-
       return count;
     },
 

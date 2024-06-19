@@ -56,6 +56,9 @@ export default defineNuxtConfig({
     "@nuxtjs/seo",
     "@vueuse/nuxt"
   ],
+  site: {
+    url: 'https://test',
+  },
   seo: {
     automaticDefaults: true,
     splash: true
@@ -68,6 +71,15 @@ export default defineNuxtConfig({
     right: true,
     duration: 5000
   },
+
+  routeRules: {
+    "/": { prerender: true }
+  },
+  runtimeConfig: {
+    public: {
+      YANDEX_API: process.env.YANDEX_API
+    }
+  },
   $development: {
     image: {
       dir: "assets/images"
@@ -78,12 +90,4 @@ export default defineNuxtConfig({
       provider: "ipx"
     }
   },
-  routeRules: {
-    "/": { prerender: true }
-  },
-  runtimeConfig: {
-    public: {
-      YANDEX_API: process.env.YANDEX_API
-    }
-  }
 });

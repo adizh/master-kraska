@@ -5,6 +5,7 @@
         <div class="flex flex-column align-items-start" style="flex: 1">
           <div class="flex align-items-center gap-2">
             <Avatar
+            
               image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png"
               shape="circle"
             />
