@@ -35,7 +35,10 @@ const toggleBoomark = (id: string) => {
   }
 };
 onMounted(async () => {
+if(authStore.getUserId){
   await productsStore.getBookmarks(props?.product?.id);
+}
+
   isProductBookmarked.value = productsStore.getProductBookmarked;
   console.log("getProductBookmarked", productsStore.getProductBookmarked);
 });

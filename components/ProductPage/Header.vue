@@ -339,7 +339,11 @@ onUnmounted(() => {
 
 onMounted(async () => {
   productStore.fetchProductById(props?.productId);
-  productStore.getBookmarks(getProduct.value?.product?.id);
+
+  if(authStore.getUserId){
+    productStore.getBookmarks(getProduct.value?.product?.id);
+  }
+
   isProductBookmarked.value = productStore.getProductBookmarked;
 
   if (getProduct && getProduct?.value?.product?.brandId) {

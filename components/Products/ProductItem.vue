@@ -93,6 +93,7 @@ const props = defineProps<{
 const { t } = useI18n();
 const cartStore = useCartStore();
 const productsStore = useProductsSstore();
+const authStore=useAuthStore()
 const prodBrand = ref("");
 const countToBuy = ref(1);
 const isProductExistsInCart = computed(() => {
@@ -196,8 +197,10 @@ if (prodCart.value && prodCart.value !== null) {
 }
 onMounted(async () => {
   prodBrand.value = await getBrandId(props?.product?.brandId as string);
+if(authStore.getUserId){
   await productsStore.getBookmarks(props?.product?.id);
-
+}
+  
   isProductBookmarked.value = productsStore?.getProductBookmarked;
 });
 </script>
