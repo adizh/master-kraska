@@ -17,14 +17,14 @@
     <img
       src="../../assets/icons/icon=heart.svg"
       alt="heart"
-      v-if="!isProductBookmarked"
+      v-if="!isProductBookmarked && authStore.getUserId"
       @click.stop="toggleBoomark"
       class="bookmark-item"
     />
     <img
       src="../../assets/icons/icon=heart fill.svg"
       alt="heart icon"
-      v-else
+      v-else-if="isProductBookmarked &&  authStore.getUserId"
       @click.stop="toggleBoomark"
       class="bookmark-item"
     />
@@ -81,6 +81,8 @@
             : $t("addedToCart")
       }}
     </button>
+
+  
   </div>
 </template>
 
@@ -91,6 +93,7 @@ const props = defineProps<{
   product: Product;
 }>();
 const { t } = useI18n();
+
 const cartStore = useCartStore();
 const productsStore = useProductsSstore();
 const authStore=useAuthStore()
@@ -141,8 +144,11 @@ const removeCount = () => {
   }
 };
 const toggleBoomark = () => {
-  isProductBookmarked.value = !isProductBookmarked.value;
+  if(authStore.getUserId){
+    isProductBookmarked.value = !isProductBookmarked.value;
   productsStore.addToBookmarks(props?.product?.id);
+  }
+
 };
 const increaseCount = () => {
   countToBuy.value = countToBuy.value + 1;
@@ -206,6 +212,8 @@ if(authStore.getUserId){
 </script>
 
 <style scoped lang="scss">
+
+
 @keyframes slideFromBottomToTop {
   0% {
     transform: translateY(100%);

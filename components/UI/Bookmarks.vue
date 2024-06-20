@@ -18,6 +18,7 @@
 </template>
 
 <script setup lang="ts">
+
 import { Product } from "~/types/Product";
 const productsStore = useProductsSstore();
 const authStore = useAuthStore();
@@ -41,7 +42,9 @@ if(authStore.getUserId){
   isProductBookmarked.value = productsStore.getProductBookmarked;
   console.log("getProductBookmarked", productsStore.getProductBookmarked);
 });
+
 </script>
+
 
 <style scoped lang="scss">
 @import "../../assets/tabs.scss";
