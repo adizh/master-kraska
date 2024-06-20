@@ -30,7 +30,7 @@
       <SwiperSlide>
         <div class="banner-block slider-wrapper">
           <img
-            src="../assets/images/banner3.png"
+            src="../assets/images/3.png"
             format="webp"
             id="'banner-image"
             ref="bannerImage"
@@ -47,7 +47,7 @@
           query: { brandId:'8ce5266c-a2d0-48de-9a93-4ea72e0182d9' },
         })
       ">
-          <img src="../assets/images/banner2.png" format="webp"   />
+          <img src="../assets/images/2.png" format="webp"   />
         </div>
       </SwiperSlide>
 
@@ -59,7 +59,7 @@
         })
       ">
           <img
-            src="../assets/images/banner1.png"
+            src="../assets/images/1.png"
             format="webp"
           />
         </div>
