@@ -82,24 +82,7 @@
           @input="handleAddress($event)"
         />
 
-        <Transition name="slide-fade">
-          <ul
-            class="ui-options lg:w-30rem w-12 md:w-30rem"
-            v-if="isAddressOpen"
-          >
-            <li
-              v-for="item in suggestedAddress"
-              :key="item?.value"
-              @click="selectAddress(item)"
-            >
-              {{ item?.title?.text }}
-
-              <span v-show="item?.subtitle?.text"
-                >, {{ item?.subtitle?.text }}</span
-              >
-            </li>
-          </ul>
-        </Transition>
+       
         <span class="err-input-msg"> {{ inputs.address.error }}</span>
       </div>
 
@@ -151,7 +134,6 @@ const isAddressOpen = ref(false);
 const config = useRuntimeConfig();
 const { locale, setLocale } = useI18n();
 import { LanguageOptions } from "@/types/Items";
-const suggestedAddress = ref([] as any);
 const store = useAuthStore();
 const userLogo = ref("");
 const initLan = ref({
@@ -204,15 +186,7 @@ const validate = (field: string, type: string) => {
   handleValues(inputs.value, field, type);
 };
 
-const selectAddress = (item: any) => {
-  const address = item?.subtitle?.text
-    ? item?.title?.text + ", " + item?.subtitle?.text
-    : item?.title?.text;
-  console.log(address);
 
-  inputs.value.address.value = address;
-  isAddressOpen.value = false;
-};
 
 const handleAddress = async (event: any) => {
   const value = event.target?.value;
@@ -222,18 +196,9 @@ const handleAddress = async (event: any) => {
     isAddressOpen.value = false;
   }
 
-  await fetchRes(value);
 };
 
-const fetchRes = async (value: string) => {
-  const response = await axios(
-    `https://suggest-maps.yandex.ru/v1/suggest?apikey=${config?.public?.YANDEX_API}&text=${value}`,
-  );
-  if (response.status === 200) {
-    console.log("address response", response);
-    suggestedAddress.value = response.data.results;
-  }
-};
+
 const editUser = async () => {
   const validationTypes: any = {
     firstName: "string",
@@ -254,6 +219,7 @@ const editUser = async () => {
     (input) => input.error !== "",
   );
   if (!hasError) {
+    const checkUserImage = inputs.value.image.value?.includes('http') ? null : inputs.value.image.value
     try {
       const body = {
         userId: store.getUserId,
@@ -261,7 +227,7 @@ const editUser = async () => {
         lastName: inputs.value.lastName.value,
         address: inputs.value.address.value,
         phoneNumber: inputs.value.phone.value,
-        image: inputs.value.image.value,
+        image: checkUserImage,
       };
       const response = await http.put("/api/v1/User/edit-user", body);
       if (response.status === 200) {

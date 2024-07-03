@@ -55,21 +55,7 @@
         }}</span>
       </div>
 
-      <Transition name="slide-fade">
-        <ul class="ui-options lg:w-30rem w-12 md:w-30rem" v-if="isDropdownOpen">
-          <li
-            v-for="item in suggestedAddress"
-            :key="item?.value"
-            @click="selectAddress(item)"
-          >
-            {{ item?.title?.text }},
-
-            <span v-show="item?.subtitle?.text">{{
-              item?.subtitle?.text
-            }}</span>
-          </li>
-        </ul>
-      </Transition>
+  
       <div class="address-form lg:w-30rem w-12 md:w-30rem">
         <div class="flex flex-column gap-2 address-input">
           <input
@@ -188,7 +174,6 @@
 <script setup lang="ts">
 import axios from "axios";
 const isPayOpen = ref(false);
-const isDropdownOpen = ref(false);
 const orderStore = useOrderStore();
 const authStore = useAuthStore();
 const { deliveryForm } = storeToRefs(orderStore);
@@ -201,41 +186,20 @@ const handleDeliveryForm = (
   orderStore.handleValues(field, type);
 };
 
-const suggestedAddress = ref([] as any);
-
-const fetchRes = async (value: string) => {
-  const response = await axios(
-    `https://suggest-maps.yandex.ru/v1/suggest?apikey=${config?.public?.YANDEX_API}&text=${value}`,
-  );
-  if (response.status === 200) {
-    console.log("address response", response);
-    suggestedAddress.value = response.data.results;
-  }
-};
 
 const selectedPayMethod = ref("");
 
 const handleAddress = async (event: any) => {
   const value = event.target?.value;
-  await fetchRes(value);
+
   if (value?.length) {
-    isDropdownOpen.value = true;
     orderStore.delForm.address.error = "";
   } else {
-    isDropdownOpen.value = false;
     orderStore.delForm.address.error = "requiredField";
   }
 };
 
-const selectAddress = (item: any) => {
-  if (item?.subtitle?.text) {
-    const address = item?.title?.text + ", " + item?.subtitle?.text;
-    orderStore?.setOrderAddress(address);
-    isDropdownOpen.value = false;
-    orderStore?.setOrderCity(item?.subtitle?.text);
-    orderStore.delForm.city.error = "";
-  }
-};
+
 
 const choosePayMethod = (value: string) => {
   isPayOpen.value = true;

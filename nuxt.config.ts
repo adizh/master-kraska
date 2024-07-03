@@ -77,7 +77,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      YANDEX_API: process.env.YANDEX_API
+     
     }
   },
   $development: {
