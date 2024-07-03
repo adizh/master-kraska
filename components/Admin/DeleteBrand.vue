@@ -100,8 +100,8 @@ const selectBrand = (item: Brands) => {
   console.log("index", index);
   if (index === -1) {
     selectedBrands.value.push(item);
-  }else{
-    selectedBrands.value.splice(index,1)
+  } else {
+    selectedBrands.value.splice(index, 1);
   }
   console.log("selectedBrands", selectedBrands);
 };

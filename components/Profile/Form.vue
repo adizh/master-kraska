@@ -82,7 +82,6 @@
           @input="handleAddress($event)"
         />
 
-       
         <span class="err-input-msg"> {{ inputs.address.error }}</span>
       </div>
 
@@ -186,8 +185,6 @@ const validate = (field: string, type: string) => {
   handleValues(inputs.value, field, type);
 };
 
-
-
 const handleAddress = async (event: any) => {
   const value = event.target?.value;
   if (value) {
@@ -195,9 +192,7 @@ const handleAddress = async (event: any) => {
   } else {
     isAddressOpen.value = false;
   }
-
 };
-
 
 const editUser = async () => {
   const validationTypes: any = {
@@ -219,7 +214,9 @@ const editUser = async () => {
     (input) => input.error !== "",
   );
   if (!hasError) {
-    const checkUserImage = inputs.value.image.value?.includes('http') ? null : inputs.value.image.value
+    const checkUserImage = inputs.value.image.value?.includes("http")
+      ? null
+      : inputs.value.image.value;
     try {
       const body = {
         userId: store.getUserId,

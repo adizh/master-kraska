@@ -1,35 +1,40 @@
 <template>
   <section>
-    <button class="btn-white-bg mt-0 mb-4 " @click="navigateTo('/admin')">
+    <button class="btn-white-bg mt-0 mb-4" @click="navigateTo('/admin')">
       Назад
     </button>
     <div class="admin-delete">
-      <button class="pink-button" @click="isBrandOpen=true">
+      <button class="pink-button" @click="isBrandOpen = true">
         Удалить бренд
       </button>
-      <button class="pink-button" @click="isCategoryOpen=true">
+      <button class="pink-button" @click="isCategoryOpen = true">
         Удалить категорию
       </button>
-      <button class="pink-button" @click="isNewsOpen=true">
+      <button class="pink-button" @click="isNewsOpen = true">
         Удалить новость
       </button>
     </div>
 
-    <AdminDeleteBrand :is-open="isBrandOpen" @close-modal="isBrandOpen=false" />
-    <AdminDeleteCategory :is-open="isCategoryOpen" @close-modal="isCategoryOpen=false" />
-    <AdminDeleteNews :is-open="isNewsOpen" @close-modal="isNewsOpen=false" />
+    <AdminDeleteBrand
+      :is-open="isBrandOpen"
+      @close-modal="isBrandOpen = false"
+    />
+    <AdminDeleteCategory
+      :is-open="isCategoryOpen"
+      @close-modal="isCategoryOpen = false"
+    />
+    <AdminDeleteNews :is-open="isNewsOpen" @close-modal="isNewsOpen = false" />
   </section>
 </template>
 
 <script setup lang="ts">
-const isBrandOpen = ref(false)
-const isCategoryOpen = ref(false)
-const isNewsOpen = ref(false)
-
+const isBrandOpen = ref(false);
+const isCategoryOpen = ref(false);
+const isNewsOpen = ref(false);
 </script>
 
 <style scoped lang="scss">
-.admin-delete{
-    @include flex(row,start,center)
+.admin-delete {
+  @include flex(row, start, center);
 }
 </style>

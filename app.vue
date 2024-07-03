@@ -14,7 +14,7 @@
 import "primevue/resources/themes/aura-light-green/theme.css";
 useHead({
   title: "Master Kraska",
-  meta: [{ name: "Master Kraska" }]
+  meta: [{ name: "Master Kraska" }],
 });
 
 const nuxtApp = useNuxtApp();

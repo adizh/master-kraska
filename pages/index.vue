@@ -10,12 +10,12 @@
             class="main-header-input"
             :placeholder="$t('whichProSearch')"
             @input="handleSearch"
-          >
+          />
           <img
             src="../assets/icons/icon=search.svg"
             alt="search"
             class="search-icon"
-          >
+          />
         </div>
         <div class="btn-block" @click.stop="router.push(`/catalog`)">
           <button>{{ $t("find") }}</button>

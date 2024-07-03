@@ -5,10 +5,8 @@ export const useInputValidation = () => {
   const handleValues = (
     inputs: any,
     fieldName: string,
-    validationType: string | any
-
+    validationType: string | any,
   ) => {
-
     const value = inputs[fieldName].value;
 
     inputs[fieldName].value = value;
@@ -39,11 +37,11 @@ export const useInputValidation = () => {
         value !== inputs.password.value
           ? t("passwordSync")
           : !value
-              ? t("requiredField")
-              : "";
+            ? t("requiredField")
+            : "";
     }
 
-    console.log('inputs',inputs)
+    console.log("inputs", inputs);
   };
 
   return { handleValues };

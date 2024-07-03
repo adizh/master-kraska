@@ -35,10 +35,9 @@ import { advantagesOptions } from "@/assets/js/advantages";
   color: #222;
   padding: 80px 0 80px 2rem;
   border-radius: 20px;
-background-position: center center;
+  background-position: center center;
   background-size: cover;
 }
-
 
 .left {
   @include flex(row, space-between, center);
@@ -105,5 +104,4 @@ background-position: center center;
     padding: 20px;
   }
 }
-
 </style>

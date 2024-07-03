@@ -12,16 +12,16 @@ export const useOrderStore = defineStore("orderStore", {
       comment: { value: "", error: "" },
       houseNumber: { value: "", error: "", type: "string" },
       floorNumber: { value: "", error: "" },
-      blockNumber: { value: "", error: "" }
+      blockNumber: { value: "", error: "" },
     },
 
-    shops: [] as AddressList[]
+    shops: [] as AddressList[],
   }),
   actions: {
-    handleValues (
+    handleValues(
       fieldName: keyof typeof this.delForm,
 
-      validationType: string | any
+      validationType: string | any,
     ) {
       const value = this.delForm[fieldName].value;
       this.delForm[fieldName].value = value;
@@ -44,7 +44,7 @@ export const useOrderStore = defineStore("orderStore", {
       }
     },
 
-    async fetchAllShops () {
+    async fetchAllShops() {
       const authStore = useAuthStore();
       try {
         const response = await http("/api/v1/Order/get-all-shops");
@@ -61,14 +61,14 @@ export const useOrderStore = defineStore("orderStore", {
         console.log(err);
       }
     },
-    setInitUser (user: any) {
+    setInitUser(user: any) {
       this.delForm.name.value = user?.firstName;
       this.delForm.lastName.value = user?.lastName;
       this.delForm.address.value = user?.address;
       this.delForm.email.value = user?.email;
       this.delForm.phone.value = user?.phone;
     },
-    async sendOrder (body: any, deliveryType: number) {
+    async sendOrder(body: any, deliveryType: number) {
       try {
         const response = await http.post("/api/v1/Order/order-delivery", body);
         console.log("send order response", response);
@@ -81,7 +81,7 @@ export const useOrderStore = defineStore("orderStore", {
       }
     },
 
-    async fetchOrderById (id: string) {
+    async fetchOrderById(id: string) {
       const cartStore = useCartStore();
       try {
         const response = await http.get(`/api/v1/Order/get-order-id/${id}`);
@@ -94,7 +94,7 @@ export const useOrderStore = defineStore("orderStore", {
       }
     },
 
-    async createOrder () {
+    async createOrder() {
       const cartStore = useCartStore();
       const authStore = useAuthStore();
       // isConfirmOpen.value = false;
@@ -105,13 +105,13 @@ export const useOrderStore = defineStore("orderStore", {
           productId: item?.id,
           productName: item?.name,
           price: item?.initPrice,
-          quantity: item?.count
+          quantity: item?.count,
         });
       }
       try {
         const response = await http.post(
           "/api/v1/Order/create-order",
-          allOrderItems
+          allOrderItems,
         );
         console.log("response create order", response);
         if (response.status === 200) {
@@ -129,19 +129,19 @@ export const useOrderStore = defineStore("orderStore", {
         }
       }
     },
-    setOrderAddress (value: string) {
+    setOrderAddress(value: string) {
       this.delForm.address.value = value;
     },
-    setOrderCity (value: string) {
+    setOrderCity(value: string) {
       this.delForm.city.value = value;
-    }
+    },
   },
   getters: {
-    deliveryForm (state) {
+    deliveryForm(state) {
       return state.delForm;
     },
-    getShops (state) {
+    getShops(state) {
       return state.shops;
-    }
-  }
+    },
+  },
 });

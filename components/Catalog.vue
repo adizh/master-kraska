@@ -58,7 +58,9 @@
         {{ $t("noData") }}
       </div>
 
-      <div class="close-catalog" @click="$emit('closeCatalog')">{{ $t('closeBlock') }} X</div>
+      <div class="close-catalog" @click="$emit('closeCatalog')">
+        {{ $t("closeBlock") }} X
+      </div>
     </div>
   </div>
 </template>
@@ -140,7 +142,7 @@ const handleScroll = (event: any) => {
       const itemPosition =
         item.offsetTop -
         (listContainer.value ? listContainer.value.offsetTop : 0);
-    
+
       const firstVisibleItem = Array.from(listItems).find((item) => {
         return item.getBoundingClientRect().top >= 50;
       });
@@ -188,8 +190,8 @@ watch(
 
 .close-catalog {
   border-radius: 10px;
-  background: #F5F5F5;
-  padding:8px;
+  background: #f5f5f5;
+  padding: 8px;
   position: absolute;
   right: 3rem;
   color: $main-black;
@@ -311,21 +313,20 @@ li {
   }
 }
 
-@media (min-width:363px) and (max-width:576px){
-  .close-catalog{
-    top:-3rem
+@media (min-width: 363px) and (max-width: 576px) {
+  .close-catalog {
+    top: -3rem;
   }
 }
-@media (max-width:363px){
-  .close-catalog{
-    top:-3rem;
-    right:1rem
+@media (max-width: 363px) {
+  .close-catalog {
+    top: -3rem;
+    right: 1rem;
   }
 }
-@media (min-width:576px) and (max-width:1240px){
-  .close-catalog{
-    top:-2rem
+@media (min-width: 576px) and (max-width: 1240px) {
+  .close-catalog {
+    top: -2rem;
   }
 }
-
 </style>

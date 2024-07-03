@@ -6,13 +6,11 @@
         SwiperNavigation,
         SwiperEffectCreative,
         SwiperController,
-        SwiperAutoplay
-
+        SwiperAutoplay,
       ]"
       :navigation="true"
       :creative="true"
       :loop="true"
-
       :autoplay="{
         delay: 5000,
       }"
@@ -25,7 +23,6 @@
           translate: ['100%', 0, 0],
         },
       }"
-
     >
       <SwiperSlide>
         <div class="banner-block slider-wrapper">
@@ -35,37 +32,37 @@
             id="'banner-image"
             ref="bannerImage"
             @load="updateHeight"
-          
           />
         </div>
       </SwiperSlide>
 
       <SwiperSlide>
-        <div class="banner-block"  @click="
-        navigateTo({
-          path: `/catalog`,
-          query: { brandId:'8ce5266c-a2d0-48de-9a93-4ea72e0182d9' },
-        })
-      ">
-          <img src="../assets/images/2.png" format="webp"   />
+        <div
+          class="banner-block"
+          @click="
+            navigateTo({
+              path: `/catalog`,
+              query: { brandId: '8ce5266c-a2d0-48de-9a93-4ea72e0182d9' },
+            })
+          "
+        >
+          <img src="../assets/images/2.png" format="webp" />
         </div>
       </SwiperSlide>
 
       <SwiperSlide>
-        <div class="banner-block"  @click="
-        navigateTo({
-          path: `/catalog`,
-          query: { brandId:'8ce5266c-a2d0-48de-9a93-4ea72e0182d9' },
-        })
-      ">
-          <img
-            src="../assets/images/1.png"
-            format="webp"
-          />
+        <div
+          class="banner-block"
+          @click="
+            navigateTo({
+              path: `/catalog`,
+              query: { brandId: '8ce5266c-a2d0-48de-9a93-4ea72e0182d9' },
+            })
+          "
+        >
+          <img src="../assets/images/1.png" format="webp" />
         </div>
       </SwiperSlide>
-
- 
     </Swiper>
   </div>
 </template>
@@ -160,13 +157,13 @@ const prevSlide = () => {
 </script>
 
 <style scoped lang="scss">
-
 .carousel-slider {
   margin-left: -2rem !important;
   margin-right: -2rem !important;
 }
 
-:deep(.swiper-button-next:after), :deep(.swiper-button-prev:after){
+:deep(.swiper-button-next:after),
+:deep(.swiper-button-prev:after) {
   font-size: 23px;
 }
 
@@ -175,7 +172,6 @@ const prevSlide = () => {
   img {
     width: 100%;
     height: 100%;
-
   }
 }
 .slider-wrapper {
@@ -196,12 +192,12 @@ const prevSlide = () => {
 
 .right {
   width: 50%;
-  position:relative;
+  position: relative;
 
   img {
     width: 100%;
     position: absolute;
-    right:0;
+    right: 0;
   }
 }
 
@@ -258,40 +254,34 @@ h1 {
   display: none;
 }
 
-
-
 @media (min-width: 1400px) {
   .carousel-slider {
     margin-top: -4.6rem !important;
     margin-left: -10rem !important;
     margin-right: -10rem !important;
   }
-
 }
 
-@media (min-width:1160px){
-  .right{
+@media (min-width: 1160px) {
+  .right {
     width: 450px;
-img{
-  bottom:-123px;
-}
-
+    img {
+      bottom: -123px;
+    }
   }
 }
 
-
-@media (max-width:1160px){
-  h1{
+@media (max-width: 1160px) {
+  h1 {
     font-size: 50px !important;
     line-height: 54px !important;
   }
-  .right img{
+  .right img {
     width: 80%;
 
-      bottom:-123px;
-    
+    bottom: -123px;
   }
-  .sub-header{
+  .sub-header {
     font-size: 24px;
     line-height: 30px;
   }
@@ -301,18 +291,16 @@ img{
     margin-top: -4rem;
   }
 
-
-  :deep(.swiper-wrapper){
+  :deep(.swiper-wrapper) {
     height: 170px;
   }
 }
-@media (max-width:896px){
-  .right img{
+@media (max-width: 896px) {
+  .right img {
     width: 100%;
   }
 
-
-  :deep(.swiper-wrapper){
+  :deep(.swiper-wrapper) {
     height: 150px;
   }
 }
@@ -325,7 +313,6 @@ img{
   }
 }
 @media (max-width: 786px) {
- 
   .sub-header {
     font-size: 18px !important;
     max-width: 340px !important;
@@ -347,14 +334,14 @@ img{
   .right {
     display: none;
   }
-  .carousel-slider{
+  .carousel-slider {
     margin-top: -3.4rem;
   }
-  :deep(.swiper-button-next:after), :deep(.swiper-button-prev:after){
+  :deep(.swiper-button-next:after),
+  :deep(.swiper-button-prev:after) {
     font-size: 16px;
   }
 }
-
 
 @media (max-width: 700px) {
   h1 {
@@ -370,13 +357,10 @@ img{
     max-width: 440px;
   }
 
-
-  :deep(.swiper-wrapper){
+  :deep(.swiper-wrapper) {
     height: 95px;
   }
 }
-
-
 
 @media (max-width: 576px) {
   .pink-button {
@@ -397,14 +381,14 @@ img{
   .sub-header {
     line-height: 33px !important;
   }
-  .carousel-slider{
+  .carousel-slider {
     margin-top: -3rem;
   }
 }
 
 @media (max-width: 480px) {
   .carousel-slider {
-   margin-top: -7.7rem !important;
+    margin-top: -7.7rem !important;
   }
   .sub-header {
     line-height: 28px !important;
@@ -426,19 +410,18 @@ img{
   .small-image {
     display: block;
   }
-  :deep(.swiper-button-next:after), :deep(.swiper-button-prev:after){
+  :deep(.swiper-button-next:after),
+  :deep(.swiper-button-prev:after) {
     font-size: 13px;
   }
 
-
-  :deep(.swiper-wrapper){
+  :deep(.swiper-wrapper) {
     height: 80px;
   }
 }
-@media (max-width: 469px){
-  .carousel-slider{
+@media (max-width: 469px) {
+  .carousel-slider {
     margin-top: 0.56rem !important;
-
   }
 }
 @media (max-width: 430px) {
@@ -459,16 +442,14 @@ img{
   }
 }
 
-@media (max-width:420px){
-  .carousel-slider{
+@media (max-width: 420px) {
+  .carousel-slider {
     margin-top: -1.3rem !important;
-
   }
 
-
-:deep(.swiper-wrapper){
-  height: 70px;
-}
+  :deep(.swiper-wrapper) {
+    height: 70px;
+  }
 }
 @media (max-width: 360px) {
   .main-page-header {
@@ -480,7 +461,7 @@ img{
   .sub-header {
     line-height: 18px;
   }
-  .carousel-slider{
+  .carousel-slider {
     margin-top: -2.3rem;
   }
 }

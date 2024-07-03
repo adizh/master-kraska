@@ -1,10 +1,6 @@
 <template>
   <div>
- 
-    <AboutContacts
-      class="contacts-section"
-      type="contacts"
-    />
+    <AboutContacts class="contacts-section" type="contacts" />
   </div>
 </template>
 

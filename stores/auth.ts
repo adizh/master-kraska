@@ -9,16 +9,16 @@ export const useAuthStore = defineStore("authStore", {
       phone: "",
       email: "",
       image: "",
-      isNotificationsAllowed: false
+      isNotificationsAllowed: false,
     },
-    selectedLanguage: "ru"
+    selectedLanguage: "ru",
   }),
   actions: {
-    async fetchUser () {
+    async fetchUser() {
       if (this.getUserId) {
         try {
           const response = await http(
-            `/api/v1/User/get-user-by-id/${this.getUserId}`
+            `/api/v1/User/get-user-by-id/${this.getUserId}`,
           );
           console.log("response fetchUser", response);
           this.user.firstName = response.data.firstName;
@@ -35,9 +35,9 @@ export const useAuthStore = defineStore("authStore", {
       }
     },
 
-    setLang (lang: string) {
+    setLang(lang: string) {
       this.selectedLanguage = lang;
-    }
+    },
   },
   getters: {
     getUserId: () => {
@@ -48,17 +48,16 @@ export const useAuthStore = defineStore("authStore", {
       }
     },
 
-    getRole () {
+    getRole() {
       if (process.client) {
         const role = localStorage.getItem("role");
         if (role) {
           return role;
         }
       } else {
-
       }
     },
-    getSelectedLang (state) {
+    getSelectedLang(state) {
       if (process.client) {
         const localLan = localStorage.getItem("selectedLanguage");
         if (localLan) {
@@ -69,6 +68,6 @@ export const useAuthStore = defineStore("authStore", {
     },
     getUser: (state) => {
       return state.user;
-    }
-  }
+    },
+  },
 });

@@ -102,8 +102,8 @@ const selectCategory = (item: CategorySys) => {
 
   if (index === -1) {
     selectedCategories.value.push(item);
-  }else{
-    selectedCategories.value.splice(index,1)
+  } else {
+    selectedCategories.value.splice(index, 1);
   }
 };
 

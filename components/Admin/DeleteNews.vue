@@ -53,7 +53,7 @@ import { News } from "~/types/News";
 const openNews = ref(false);
 const isCategoryCreateOpen = ref(false);
 const brandsStore = useBrandsStore();
-const newsStore=useNewsStore()
+const newsStore = useNewsStore();
 const props = defineProps({
   isOpen: Boolean,
 });
@@ -69,9 +69,9 @@ const deleteNews = () => {
       if (response.status === 200) {
         useNotif("success", "Новость удалена", "Успешно");
         setTimeout(() => {
-            openNews.value = false;
+          openNews.value = false;
           emit("closeModal");
-          newsStore.fetchAllNews()
+          newsStore.fetchAllNews();
           selectedNews.value = [];
         }, 800);
       }
@@ -82,7 +82,7 @@ const deleteNews = () => {
 };
 
 const toggleCreateCategory = () => {
-    openNews.value = !openNews.value;
+  openNews.value = !openNews.value;
 };
 
 const newsTitle = computed(() => {
@@ -94,20 +94,18 @@ const newsTitle = computed(() => {
 });
 
 const selectNews = (item: News) => {
-  const index = selectedNews.value.findIndex(
-    (brand) => brand?.id === item?.id,
-  );
+  const index = selectedNews.value.findIndex((brand) => brand?.id === item?.id);
   console.log("index", index);
   if (index === -1) {
     selectedNews.value.push(item);
-  }else{
-    selectedNews.value.splice(index,1)
+  } else {
+    selectedNews.value.splice(index, 1);
   }
   console.log("selectedBrands", selectedNews);
 };
 
 onMounted(() => {
-    newsStore.fetchAllNews()
+  newsStore.fetchAllNews();
   console.log("brandsStore.getAllBrands", brandsStore.getAllBrands);
 });
 </script>

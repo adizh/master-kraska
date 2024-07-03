@@ -20,7 +20,7 @@
               <img :src="productBrand?.logo" alt="brand" class="brand-logo" />
             </p>
           </div>
-          
+
           <div class="middle-review">
             <span class="each-block-info-col">{{ $t("rating") }}</span>
             <div class="middle-rating">
@@ -340,7 +340,7 @@ onUnmounted(() => {
 
 onMounted(async () => {
   productStore.fetchProductById(props?.productId);
-  if(authStore.getUserId){
+  if (authStore.getUserId) {
     productStore.getBookmarks(getProduct.value?.product?.id);
   }
   isProductBookmarked.value = productStore.getProductBookmarked;

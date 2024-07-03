@@ -354,7 +354,7 @@ const productName = (name: string) => {
     font-size: 16px;
     font-weight: 600;
     color: $main-black;
-    height:42px !important;
+    height: 42px !important;
     width: 100%;
     display: block;
     overflow-x: hidden;

@@ -55,7 +55,6 @@
         }}</span>
       </div>
 
-  
       <div class="address-form lg:w-30rem w-12 md:w-30rem">
         <div class="flex flex-column gap-2 address-input">
           <input
@@ -186,7 +185,6 @@ const handleDeliveryForm = (
   orderStore.handleValues(field, type);
 };
 
-
 const selectedPayMethod = ref("");
 
 const handleAddress = async (event: any) => {
@@ -198,8 +196,6 @@ const handleAddress = async (event: any) => {
     orderStore.delForm.address.error = "requiredField";
   }
 };
-
-
 
 const choosePayMethod = (value: string) => {
   isPayOpen.value = true;

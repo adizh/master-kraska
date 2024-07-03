@@ -4,9 +4,8 @@ import axios, { AxiosInstance, AxiosError } from "axios";
 //const url = "https://mc.mydatacoin.io";
 const url = "http://195.38.165.82:5073";
 
-
 const http: AxiosInstance = axios.create({
-  baseURL: url
+  baseURL: url,
 });
 
 http.interceptors.request.use((config) => {
@@ -28,7 +27,7 @@ http.interceptors.response.use(
       console.error("Error:", error.message);
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 export default http;

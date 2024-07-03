@@ -5,10 +5,10 @@ export const useCartStore = defineStore("cartStore", {
   state: () => ({
     cart: [] as ExtendedProduct[],
     countToBuy: 1,
-    currentOrder: {} as OrderItem
+    currentOrder: {} as OrderItem,
   }),
   actions: {
-    addToCart (prod: ExtendedProduct) {
+    addToCart(prod: ExtendedProduct) {
       const prodIndex = this.cart.findIndex((el) => el?.id === prod?.id);
       if (prodIndex === -1) {
         this.cart.push(prod);
@@ -16,7 +16,7 @@ export const useCartStore = defineStore("cartStore", {
       }
     },
 
-    updateCartItem (updatedItem: ExtendedProduct) {
+    updateCartItem(updatedItem: ExtendedProduct) {
       const index = this.cart.findIndex((item) => item.id === updatedItem.id);
       if (index !== -1) {
         this.cart.splice(index, 1, updatedItem);
@@ -24,7 +24,7 @@ export const useCartStore = defineStore("cartStore", {
       }
     },
 
-    decreaseCount (item: ExtendedProduct) {
+    decreaseCount(item: ExtendedProduct) {
       if (item.count > 1) {
         const updatedItem = { ...item };
         updatedItem.count--;
@@ -34,33 +34,33 @@ export const useCartStore = defineStore("cartStore", {
       }
     },
 
-    getTotalItemCount (count: number) {
+    getTotalItemCount(count: number) {
       this.countToBuy = count;
       return count;
     },
 
-    increaseCount (item: ExtendedProduct) {
+    increaseCount(item: ExtendedProduct) {
       const updatedItem = { ...item };
       updatedItem.count++;
       updatedItem.totalProdSum = updatedItem.count * updatedItem.initPrice;
       this.updateCartItem(updatedItem);
     },
 
-    removeFromCart (item: ExtendedProduct) {
+    removeFromCart(item: ExtendedProduct) {
       this.cart = this.cart.filter((value) => value.id !== item.id);
       localStorage.setItem("cart", JSON.stringify(this.cart));
     },
-    saveNewCart () {
+    saveNewCart() {
       localStorage.setItem("cart", JSON.stringify(this.cart));
       useNotifLocal("success", "changesSaved", "success");
     },
 
-    setCurrentOrder (item: OrderItem) {
+    setCurrentOrder(item: OrderItem) {
       this.currentOrder = item;
-    }
+    },
   },
   getters: {
-    getAllCart (state) {
+    getAllCart(state) {
       if (process.client) {
         const items = localStorage.getItem("cart");
         if (items) {
@@ -69,19 +69,19 @@ export const useCartStore = defineStore("cartStore", {
       }
       return state.cart;
     },
-    getCurrentOrder (state) {
+    getCurrentOrder(state) {
       return state.currentOrder;
     },
 
-    numberOfProds (state) {
+    numberOfProds(state) {
       return state.cart?.length;
     },
 
-    totalOfTotalSum (state) {
+    totalOfTotalSum(state) {
       return state.cart.reduce(
         (acc: number, item: ExtendedProduct) => acc + item.totalProdSum,
-        0
+        0,
       );
-    }
-  }
+    },
+  },
 });

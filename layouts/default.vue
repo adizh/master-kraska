@@ -1,7 +1,7 @@
 <template>
   <div class="main-header">
     <div class="left" @click="backHome">
-      <img src="/logo-master.png" class="logo-img">
+      <img src="/logo-master.png" class="logo-img" />
     </div>
 
     <ul class="bottom">
@@ -18,7 +18,7 @@
             :class="{ rotated: isCatalogOpen }"
             src="../assets/icons/icon=components-closed-arrow.svg"
             alt="open-arrow"
-          >
+          />
           <Catalog
             :is-catalog-open="isCatalogOpen"
             @close-catalog="closeCatalog"
@@ -36,7 +36,7 @@
             :class="{ rotated: isCatalogOpen }"
             src="../assets/icons/icon=components-closed-arrow.svg"
             alt="open-arrow"
-          >
+          />
           <Catalog
             :is-catalog-open="isCatalogOpen"
             @close-catalog="closeCatalog"
@@ -58,27 +58,23 @@
       </ul>
       <ul class="top-part">
         <li v-if="authStore?.getRole !== 'Admin'" class="phone">
-
-
-
-          
-          <img src="../assets/icons/icon=phone loight.svg" alt="phone">
+          <img src="../assets/icons/icon=phone loight.svg" alt="phone" />
           <a href="tel:+996 550 910 148"> +996 550 910 148</a>
         </li>
         <li v-else-if="authStore?.getRole === 'Admin'">
           <a href="/admin">Админ</a>
         </li>
-       
+
         <div class="cart-block">
           <li class="cart-li" @click="gotToPage('/cart')">
-            <img src="../assets/icons/icon=cart.svg" alt="cart">
-       
-            <span class="cart-li-num">{{ cartStore?.getAllCart?.length }}</span> 
+            <img src="../assets/icons/icon=cart.svg" alt="cart" />
+
+            <span class="cart-li-num">{{ cartStore?.getAllCart?.length }}</span>
           </li>
-         <li @click="toggleProfile">
-          <img src="../assets/icons/icon=user.svg" alt="">
-          <span v-if="screenSize === 'large'">{{ $t("profile") }}</span>
-         </li>
+          <li @click="toggleProfile">
+            <img src="../assets/icons/icon=user.svg" alt="" />
+            <span v-if="screenSize === 'large'">{{ $t("profile") }}</span>
+          </li>
         </div>
         <li v-if="!isBurgerMenuOpen" class="burger-menu" @click="openBurger">
           <span />
@@ -197,9 +193,8 @@ provide("closeProfileOpen", closeProfileOpen);
 <style scoped lang="scss">
 @import "../assets/tabs.scss";
 
-
-.cart-block{
-  @include flex(row,space-between,start);
+.cart-block {
+  @include flex(row, space-between, start);
   width: 40%;
 }
 .logo-img {
@@ -229,7 +224,6 @@ a {
     height: 16px;
     color: white;
     @include flex(row, center, center);
-   
   }
 }
 
@@ -364,7 +358,7 @@ a {
     display: flex !important;
   }
 
-  .cart-block{
+  .cart-block {
     width: 19%;
   }
 
@@ -398,9 +392,9 @@ a {
   .open-bottom-part {
     display: flex;
   }
-  .cart-li{
-    &-num{
-      right:-17px;
+  .cart-li {
+    &-num {
+      right: -17px;
     }
   }
 }
@@ -452,16 +446,15 @@ a {
   .overlay {
     top: 23rem;
   }
-  .top-part{
-    gap:40px;
+  .top-part {
+    gap: 40px;
   }
-  .cart-block{
-    gap:20px;
+  .cart-block {
+    gap: 20px;
   }
-  .cart-li{
-
-    &-num{
-      right:-15px;
+  .cart-li {
+    &-num {
+      right: -15px;
     }
   }
 }
@@ -476,6 +469,5 @@ a {
   .top-part {
     justify-content: space-between;
   }
- 
 }
 </style>

@@ -4,21 +4,15 @@
       <div class="mt-5">
         <div class="admin-links">
           <a href="/admin/add-product" target="_blank">Добавить продукт</a>
-          <a
-            href="#"
-            target="_blank"
-            @click.prevent="openModal"
-          >Создать категорию</a>
-          <a
-            href="#"
-            target="_blank"
-            @click.prevent="openNewsModal"
-          >Создать новость</a>
-          <a
-            href="#"
-            target="_blank"
-            @click.prevent="openBrandModal"
-          >Создать бренд</a>
+          <a href="#" target="_blank" @click.prevent="openModal"
+            >Создать категорию</a
+          >
+          <a href="#" target="_blank" @click.prevent="openNewsModal"
+            >Создать новость</a
+          >
+          <a href="#" target="_blank" @click.prevent="openBrandModal"
+            >Создать бренд</a
+          >
           <a href="/admin/delete" target="_blank">Удаление</a>
           <a href="/admin/update" target="_blank">Обновление</a>
         </div>

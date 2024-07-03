@@ -46,8 +46,8 @@
   }
 }
 
-@media (min-width:1400px){
-  .koler{
+@media (min-width: 1400px) {
+  .koler {
     margin: -40px 0;
   }
 }

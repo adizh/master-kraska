@@ -26,15 +26,17 @@
           </button>
           <div class="cart-main-info-price-block">
             <div class="first">
-              <span>{{ $t("all") }}: {{ totalOfProdTotals }}
-                {{ $t("product") }}</span>
+              <span
+                >{{ $t("all") }}: {{ totalOfProdTotals }}
+                {{ $t("product") }}</span
+              >
               <span>{{ store.totalOfTotalSum }} сом</span>
             </div>
             <div class="second">
               <span>{{ $t("accountPiece") }}</span>
               <span>0%</span>
             </div>
-            <input class="basic-input" placeholder="Промокод" disabled>
+            <input class="basic-input" placeholder="Промокод" disabled />
             <div class="last">
               <span>{{ $t("inTotal") }}</span>
               <span>{{ store.totalOfTotalSum }} сом</span>

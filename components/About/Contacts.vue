@@ -42,41 +42,53 @@
       </div>
     </div>
 
+    <div class="contact-form" v-if="type === 'contacts'">
+      <h5 class="each-section-header">{{ $t("contactUs") }}</h5>
+      <form @submit.prevent="requestContact">
+        <div class="contact-form-block">
+          <div class="flex flex-column start gap-2">
+            <input
+              type="text"
+              class="basic-input contact-form-input"
+              :placeholder="$t('FirstName')"
+              v-model="contactForm.name.value"
+              @input="validate('name', 'string')"
+            />
+            <span v-if="contactForm.name.error" class="err-input-msg">{{
+              contactForm.name.error
+            }}</span>
+          </div>
+          <div class="flex flex-column start gap-2">
+            <InputMask
+              id="phone"
+              mask="+999 999 99 99 99"
+              placeholder="+996 777 66 55 44"
+              v-model="contactForm.phone.value"
+              @update:modelValue="validate('phone', 'string')"
+              :class="{ 'err-contact-input': contactForm.phone.error }"
+            />
+            <span v-if="contactForm.phone.error" class="err-input-msg">{{
+              contactForm.phone.error
+            }}</span>
+          </div>
+        </div>
 
-<div class="contact-form" v-if="type==='contacts'">
-  <h5 class="each-section-header">{{ $t("contactUs") }}</h5>
-  <form @submit.prevent="requestContact">
-<div class="contact-form-block">
- <div class="flex flex-column start gap-2">
-  <input type="text" class="basic-input contact-form-input" :placeholder="$t('FirstName')" v-model="contactForm.name.value"
-  @input="validate('name','string')" 
-  >
-  <span v-if="contactForm.name.error" class="err-input-msg">{{ contactForm.name.error }}</span>
- </div>
- <div class="flex flex-column start gap-2">
-  <InputMask
-  id="phone"
-  mask="+999 999 99 99 99"
-  placeholder="+996 777 66 55 44"
-  v-model="contactForm.phone.value"
-  @update:modelValue="validate('phone','string')"
-  :class="{'err-contact-input':contactForm.phone.error}"
-/>
-<span v-if="contactForm.phone.error" class="err-input-msg">{{ contactForm.phone.error }}</span>
- </div>
-</div>
+        <div class="contact-form-bottom">
+          <input
+            type="text"
+            class="basic-input"
+            :placeholder="$t('comments')"
+            v-model="contactForm.comments.value"
+          />
+        </div>
 
- <div class="contact-form-bottom">
-  <input type="text" class="basic-input" :placeholder="$t('comments')" v-model="contactForm.comments.value">
- </div>
-
-
- <div>
-  <button type="submit" class="pink-button">{{ $t('submitData') }}</button>
- </div>
-  </form>
-</div>
-
+        <div>
+          <button type="submit" class="pink-button">
+            {{ $t("submitData") }}
+          </button>
+        </div>
+      </form>
+    </div>
 
     <div class="maps-address margin-top-40">
       <div class="section-header-links">
@@ -145,15 +157,15 @@ import { AddressList } from "@/types/Items";
 const orderStore = useOrderStore();
 const authStore = useAuthStore();
 const { handleValues } = useInputValidation();
-const {t} =useI18n()
+const { t } = useI18n();
 const props = defineProps<{
   type: string;
 }>();
-const contactForm=ref({
-  name:{value:"",type:'string',error:""},
-  comments:{value:'',type:'',error:''},
-  phone:{value:'',type:'string',error:''}
-})
+const contactForm = ref({
+  name: { value: "", type: "string", error: "" },
+  comments: { value: "", type: "", error: "" },
+  phone: { value: "", type: "string", error: "" },
+});
 const validate = (field: string, type: string) => {
   handleValues(contactForm.value, field, type);
 };
@@ -165,32 +177,33 @@ const computedShops = computed(() => {
     : orderStore?.getShops?.slice(0, 2);
 });
 
-
-const sendContact=async()=>{
-
-try{
-  const body={
-    "name": contactForm.value?.name?.value,
-  "phone": contactForm.value?.phone?.value,
-  "message": contactForm.value?.comments?.value
+const sendContact = async () => {
+  try {
+    const body = {
+      name: contactForm.value?.name?.value,
+      phone: contactForm.value?.phone?.value,
+      message: contactForm.value?.comments?.value,
+    };
+    const response = await http.post(
+      "/api/v1/User/send-message-from-contact-form",
+      body,
+    );
+    if (response.status === 200) {
+      useNotif("success", t("requestSent"), t("success"));
+      setTimeout(() => {
+        window.location.reload();
+      }, 1200);
+    }
+  } catch (err) {
+    console.log(err);
   }
-const response = await http.post('/api/v1/User/send-message-from-contact-form',body)
-if(response.status===200){
-  useNotif('success',t('requestSent'),t('success'));
-setTimeout(()=>{
-window.location.reload()
-},1200)
+};
 
-}
-}catch(err){
-  console.log(err)
-}
-}
-
-const requestContact =()=>{
+const requestContact = () => {
   for (const fieldName in contactForm.value) {
     if (Object.prototype.hasOwnProperty.call(contactForm.value, fieldName)) {
-      const fieldType = contactForm.value[fieldName as keyof typeof contactForm.value]?.type;
+      const fieldType =
+        contactForm.value[fieldName as keyof typeof contactForm.value]?.type;
       handleValues(contactForm.value, fieldName, fieldType);
     }
   }
@@ -199,10 +212,10 @@ const requestContact =()=>{
     (input) => input.error !== "",
   );
 
-  if(!hasError){
-sendContact()
+  if (!hasError) {
+    sendContact();
   }
-}
+};
 const mainShop = computed(() => {
   return orderStore?.getShops?.find((shop: AddressList) => {
     return shop.mainShop;
@@ -220,14 +233,12 @@ watch(
 </script>
 
 <style scoped lang="scss">
-
 :deep(input#phone.p-inputtext) {
   padding: 18px 20px;
   border: 1px solid #dddddd;
   border-radius: 8px;
   margin-bottom: 5px !important;
 }
-
 
 .contacts-header {
   @extend %border-bottoms;
@@ -263,41 +274,38 @@ watch(
     }
   }
 }
-.contact-form{
-  div{
-    :last-child{
+.contact-form {
+  div {
+    :last-child {
       width: 50%;
     }
   }
-  input{
+  input {
     border-radius: 8px;
   }
-  form{
+  form {
     width: 100%;
-    border:1px solid #DDD;
+    border: 1px solid #ddd;
     padding: 20px;
     border-radius: 12px;
-    .contact-form-block{
-      div{
+    .contact-form-block {
+      div {
         width: 50%;
       }
-      input{
+      input {
         width: 100%;
       }
-        @include flex(row,start,start);
-     
+      @include flex(row, start, start);
     }
   }
 }
 
-.contact-form-bottom{
+.contact-form-bottom {
   margin-top: 24px;
-  input{
+  input {
     width: 100%;
-
   }
 }
-
 
 .marker {
   position: relative;

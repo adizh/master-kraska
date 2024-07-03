@@ -18,7 +18,6 @@
 </template>
 
 <script setup lang="ts">
-
 import { Product } from "~/types/Product";
 const productsStore = useProductsSstore();
 const authStore = useAuthStore();
@@ -36,15 +35,13 @@ const toggleBoomark = (id: string) => {
   }
 };
 onMounted(async () => {
-if(authStore.getUserId){
-  await productsStore.getBookmarks(props?.product?.id);
-}
+  if (authStore.getUserId) {
+    await productsStore.getBookmarks(props?.product?.id);
+  }
   isProductBookmarked.value = productsStore.getProductBookmarked;
   console.log("getProductBookmarked", productsStore.getProductBookmarked);
 });
-
 </script>
-
 
 <style scoped lang="scss">
 @import "../../assets/tabs.scss";

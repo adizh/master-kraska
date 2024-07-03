@@ -24,7 +24,7 @@
     <img
       src="../../assets/icons/icon=heart fill.svg"
       alt="heart icon"
-      v-else-if="isProductBookmarked &&  authStore.getUserId"
+      v-else-if="isProductBookmarked && authStore.getUserId"
       @click.stop="toggleBoomark"
       class="bookmark-item"
     />
@@ -81,8 +81,6 @@
             : $t("addedToCart")
       }}
     </button>
-
-  
   </div>
 </template>
 
@@ -96,7 +94,7 @@ const { t } = useI18n();
 
 const cartStore = useCartStore();
 const productsStore = useProductsSstore();
-const authStore=useAuthStore()
+const authStore = useAuthStore();
 const prodBrand = ref("");
 const countToBuy = ref(1);
 const isProductExistsInCart = computed(() => {
@@ -144,11 +142,10 @@ const removeCount = () => {
   }
 };
 const toggleBoomark = () => {
-  if(authStore.getUserId){
+  if (authStore.getUserId) {
     isProductBookmarked.value = !isProductBookmarked.value;
-  productsStore.addToBookmarks(props?.product?.id);
+    productsStore.addToBookmarks(props?.product?.id);
   }
-
 };
 const increaseCount = () => {
   countToBuy.value = countToBuy.value + 1;
@@ -203,17 +200,15 @@ if (prodCart.value && prodCart.value !== null) {
 }
 onMounted(async () => {
   prodBrand.value = await getBrandId(props?.product?.brandId as string);
-if(authStore.getUserId){
-  await productsStore.getBookmarks(props?.product?.id);
-}
-  
+  if (authStore.getUserId) {
+    await productsStore.getBookmarks(props?.product?.id);
+  }
+
   isProductBookmarked.value = productsStore?.getProductBookmarked;
 });
 </script>
 
 <style scoped lang="scss">
-
-
 @keyframes slideFromBottomToTop {
   0% {
     transform: translateY(100%);
@@ -312,7 +307,7 @@ if(authStore.getUserId){
   &-name {
     font-size: 16px;
     font-weight: 600;
-    height:42px !important;
+    height: 42px !important;
     color: $main-black;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -350,8 +345,8 @@ if(authStore.getUserId){
   transition: 0.3s ease all;
 }
 
-@media (max-width:576px){
-  .item-block{
+@media (max-width: 576px) {
+  .item-block {
     box-shadow: $item-block-shadow;
   }
 }

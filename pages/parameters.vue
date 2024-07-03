@@ -26,7 +26,7 @@
             v-if="typeOfWork === btn.id"
             src="../assets/icons/carbon_checkmark-filled (1).svg"
             alt="carbon"
-          >
+          />
         </button>
       </div>
     </div>
@@ -55,7 +55,7 @@
                 :value="sub.id"
                 :checked="isChecked(item.id, sub.id)"
                 @change="updateCheckboxState(item.id, sub.id, $event)"
-              >
+              />
               <span class="black-checkbox-span">{{ sub?.name }}</span>
             </label>
           </p>
@@ -73,7 +73,7 @@
             class="arrow"
             :class="{ rotated: opensIncludes(item.id) }"
             src="/static/icons/arrow-down-blue.svg"
-          >
+          />
         </p>
       </div>
     </div>
@@ -102,7 +102,7 @@
                 :value="sub.id"
                 :checked="isChecked(item.id, sub.id)"
                 @change="updateCheckboxState(item.id, sub.id, $event)"
-              >
+              />
               <span class="black-checkbox-span">{{ sub?.name }}</span>
             </label>
           </p>
@@ -121,7 +121,7 @@
             class="arrow"
             :class="{ rotated: opensIncludes(item.id) }"
             src="/static/icons/arrow-down-blue.svg"
-          >
+          />
         </p>
       </div>
     </div>
@@ -138,13 +138,13 @@
           type="text"
           :placeholder="$t('from')"
           class="basic-input"
-        >
+        />
         <input
           v-model="maxPrice"
           type="text"
           :placeholder="$t('to')"
           class="basic-input"
-        >
+        />
       </div>
       <button class="bg-white-btn" @click="filterProductParams">
         {{ $t("applyFilter") }}
@@ -161,7 +161,7 @@
       <div
         v-else-if="
           productsStore.getFilteredProducts?.length > 0 &&
-            !productsStore.getLoadingState
+          !productsStore.getLoadingState
         "
         class="params-result-prod"
       >
@@ -192,24 +192,24 @@ const isProdReceived = ref(false);
 const items = [
   {
     id: "d12f4dfb-6f54-4a37-9cd3-1d6d5423e084",
-    name: "ТИП РАБОТ"
+    name: "ТИП РАБОТ",
   },
   {
     id: "c8409cbf-4b89-492d-bbb6-fce1813815d3",
-    name: "ТИП ЛКМ"
+    name: "ТИП ЛКМ",
   },
   {
     id: "5ff5e6eb-884b-4e64-ae7b-d99bede77b9b",
-    name: "МАТЕРИАЛ РАБОЧЕЙ ПОВЕРХНОСТИ"
+    name: "МАТЕРИАЛ РАБОЧЕЙ ПОВЕРХНОСТИ",
   },
   {
     id: "d637e138-5784-4d3d-bb91-77a7a185469e",
-    name: "ТИП ОБЪЕКТА"
+    name: "ТИП ОБЪЕКТА",
   },
   {
     id: "4b5d79cb-b7fd-4646-8dc2-6fafd0d3fd3e",
-    name: "РАЗБАВИТЕЛЬ"
-  }
+    name: "РАЗБАВИТЕЛЬ",
+  },
 ];
 
 const filteredCatalogs = computed(() => {
@@ -227,7 +227,7 @@ const firstBlock = computed(() => {
 const secondOptions = [
   "МАТЕРИАЛ РАБОЧЕЙ ПОВЕРХНОСТИ",
   "ТИП ОБЪЕКТА",
-  "РАЗБАВИТЕЛЬ"
+  "РАЗБАВИТЕЛЬ",
 ];
 const secondBlock = computed(() => {
   return filteredCatalogs.value.filter((item) => {
@@ -237,14 +237,14 @@ const secondBlock = computed(() => {
 
 const thirdBlock = computed(() => {
   return filteredCatalogs.value.filter(
-    (item) => item?.name?.toLocaleLowerCase() === "ТИП ЛКМ".toLocaleLowerCase()
+    (item) => item?.name?.toLocaleLowerCase() === "ТИП ЛКМ".toLocaleLowerCase(),
   );
 });
 
 const setOpenBlock = (id: string) => {
   if (openedBlockFilters.value?.includes(id)) {
     openedBlockFilters.value = openedBlockFilters.value.filter(
-      (itemId: string) => itemId !== id
+      (itemId: string) => itemId !== id,
     );
   } else {
     openedBlockFilters.value.push(id);
@@ -253,7 +253,7 @@ const setOpenBlock = (id: string) => {
 const isChecked = (itemId: string, subId: string) => {
   return (
     checkboxStates?.value[itemId]?.values?.find(
-      (val: { id: string }) => val.id === subId
+      (val: { id: string }) => val.id === subId,
     )?.value || false
   );
 };
@@ -265,8 +265,8 @@ const initializeCheckboxStates = () => {
       values: item.subdirectory.map((sub) => ({
         id: sub.id,
         value: false,
-        name: sub?.name
-      }))
+        name: sub?.name,
+      })),
     };
     return checkboxStates;
   });
@@ -283,14 +283,14 @@ watch(
   async () => {
     await catalogStore.fetchAllCatalogs();
     initializeCheckboxStates();
-  }
+  },
 );
 
 const openedBlockFilters = ref<string[]>([]);
 
 const updateCheckboxState = (itemId: string, subId: string, event: any) => {
   const subIndex = checkboxStates?.value[itemId]?.values?.findIndex(
-    (val: { id: string }) => val.id === subId
+    (val: { id: string }) => val.id === subId,
   );
   if (event === "select-btn" && subIndex !== -1) {
     if (checkboxStates.value[itemId]?.values) {
@@ -300,7 +300,7 @@ const updateCheckboxState = (itemId: string, subId: string, event: any) => {
           if (val.id !== subId) {
             val.value = false;
           }
-        }
+        },
       );
       typeOfWork.value = subId;
     }
@@ -316,7 +316,7 @@ const updateCheckboxState = (itemId: string, subId: string, event: any) => {
   const valuesArray = Object.values(checkboxStates.value);
 
   const filteredValues = valuesArray.flatMap((item) =>
-    item.values?.filter((sub: { value: boolean }) => sub.value === true)
+    item.values?.filter((sub: { value: boolean }) => sub.value === true),
   );
   if (!filteredValues?.length) {
     productsStore.setSubDirectories(null);
