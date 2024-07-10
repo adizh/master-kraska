@@ -56,10 +56,11 @@
         />
       </div>
     </div>
+
     <div
       class="brands"
       :class="{ 'each-filter-block open': isBrandOpen }"
-      v-if="brandsStore.getAllBrands?.length > 0 && !productsStore.getNoBrands"
+      v-if="brandsStore.getAllBrands?.length > 0"
     >
       <label for="price" class="filters-help">
         {{ $t("brands") }}
@@ -309,7 +310,7 @@ const isChecked = (itemId: string, subId: string) => {
   );
 };
 
-const updateBrandsInputs = (brand: Brands, event: any) => {
+const updateBrandsInputs =async (brand: Brands, event: any) => {
   if (brand?.id === brandIdQuery.value) {
     route.query.brandId = "";
   }
@@ -325,9 +326,11 @@ const updateBrandsInputs = (brand: Brands, event: any) => {
     }
   }
 
-  productsStore.filterProducts();
 
-  window.scrollTo(0, 0);
+ await productsStore.filterProducts();
+
+window.scrollTo(0, 0);
+
 };
 
 const updateCheckboxState = (itemId: string, subId: string, event: any) => {

@@ -9,6 +9,7 @@ export const useBrandsStore = defineStore("brandsStore", {
   }),
 
   actions: {
+    
     async fetchAllBrands() {
       try {
         const response = await http("/api/v1/Brand/get-all-brands");
@@ -21,6 +22,7 @@ export const useBrandsStore = defineStore("brandsStore", {
         console.log(err);
       }
     },
+
     async fetchAllSellers() {
       const authStore = useAuthStore();
       try {
@@ -39,6 +41,7 @@ export const useBrandsStore = defineStore("brandsStore", {
         console.log(err);
       }
     },
+
     async fetchAllBrandId(brandId: string) {
       try {
         const response = await http(`/api/v1/Brand/get-brand/${brandId}`);
@@ -51,11 +54,13 @@ export const useBrandsStore = defineStore("brandsStore", {
         console.log(err);
       }
     },
+
     searchBrands(value: string) {
       this.brands = this.allBrands.filter((brand) =>
         brand?.name?.toLowerCase()?.includes(value?.toLowerCase()),
       );
     },
+
   },
   getters: {
     getAllBrands(state) {

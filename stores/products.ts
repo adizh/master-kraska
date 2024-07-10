@@ -14,7 +14,7 @@ export const useProductsSstore = defineStore("productsStore", {
       totalItems: 0,
     },
     isProductBookmarked: false,
-    areFiltersLoading: false,
+    areFiltersLoading: true,
     areProdsReceived: false,
     product: {} as { product: Product; similarProducts: Product[] },
     filters: {
@@ -243,7 +243,7 @@ export const useProductsSstore = defineStore("productsStore", {
       const name = prodName || this.filters.search || "";
 
       const query = {
-        productName: name,
+        productName: name || null,
         categoriesId,
         subdirectoryIds: subDirs,
         minPrice: this.filters.minPrice || null,
@@ -261,13 +261,12 @@ export const useProductsSstore = defineStore("productsStore", {
           "/api/v1/Product/get-all-products-pagination",
           { params: query },
         );
-
+        console.log("response filterProducts", response);
         if (response.status === 200) {
           this.areProdsReceived = true;
           this.filterProductTotal.totalItems = response.data.totalItems;
           this.filterProductTotal.totalPages = response.data.totalPages;
           this.noBrands = response.data.noBrand;
-          console.log("response filterProducts", response);
           const filtered = response.data.items?.map((item: Product) => {
             if (authStore.getSelectedLang === "kg") {
               return {
@@ -286,20 +285,23 @@ export const useProductsSstore = defineStore("productsStore", {
 
           this.filteredProducts = filtered;
 
-          if (this.filteredProducts?.length > 0) {
-          }
+
+         
+         
           setTimeout(() => {
             this.areFiltersLoading = false;
-          }, 800);
+          }, 1000);
         }
       } catch (err) {
         this.areFiltersLoading = false;
       }
     },
+
     setCategoryId(categoryId: string) {
       this.filters.categoryId.push(categoryId);
       this.filterProducts();
     },
+
     async getBookmarks(productId: string) {
       const authStore = useAuthStore();
 

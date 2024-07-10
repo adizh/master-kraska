@@ -2,9 +2,27 @@
   <div class="each-section">
     <ProductsPopular />
 
-    <!-- <ProductsUseful />
+  <div class="parameters-block grid">
+   <div class="parameters-block-info sm:col-12 lg:col-10">
+    <div class="parameters-block-heading">
+      <p>{{ $t('quickFindProduct') }}</p>
+      <span>{{ $t('quiclFindProductText') }}</span>
+    </div>
 
-    <ProductsRecommended /> -->
+
+    <button class="pink-button" @click="navigateTo('/parameters')">
+      {{ $t('searchByParams') }}
+    </button>
+   </div>
+
+
+   <div class="parameters-block-img sm-col-3 lg:col-2">
+    <img src="/params.png" alt="params-info" class="hidden md:block md:w-8 lg:block lg:w-10">
+   </div>
+
+
+  </div>
+
 
     <div class="koler">
       <h5 class="koler-header">{{ $t("tinting") }}</h5>
@@ -19,6 +37,28 @@
 <script setup lang="ts"></script>
 
 <style scoped lang="scss">
+.parameters-block{
+  background: #F5F5F5;
+  padding:36px 40px 36px 40px;
+  border-radius: 20px;
+  margin-bottom: 40px;
+  margin-top: 60px;
+  &-heading{
+    margin-bottom: 24px;
+p{
+  color:#33587D;
+  font-size: 32px;
+  line-height: 36px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+span{
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+}
+  }
+}
 .koler {
   background-image: url("/static/sofa.png");
   background-repeat: no-repeat;
@@ -66,9 +106,23 @@
       max-width: 100%;
     }
   }
+
+  .parameters-block-heading p{
+    font-size: 28px;
+    line-height: 30px;
+  }
 }
 
 @media (min-width: 468px) and (max-width: 786px) {
+
+  .parameters-block-heading p{
+    font-size: 23px;
+    line-height: 25px;
+  }
+  .parameters-block-heading span{
+    font-size: 16px;
+    line-height: 20px;
+  }
   .koler {
     background-size: cover;
     height: 100%;
@@ -87,6 +141,14 @@
 }
 
 @media (min-width: 320px) and (max-width: 468px) {
+  .parameters-block-heading p{
+    font-size: 22px;
+    line-height: 23px;
+  }
+  .parameters-block-heading span{
+    font-size: 13px;
+    line-height: 16px;
+  }
   .koler {
     background-size: cover;
     height: 100%;
@@ -108,4 +170,5 @@
     }
   }
 }
+
 </style>

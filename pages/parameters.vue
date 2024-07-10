@@ -220,10 +220,11 @@ const filteredCatalogs = computed(() => {
 
 const firstBlock = computed(() => {
   return filteredCatalogs.value?.filter((item: AllCatalog) => {
-    return item?.name.toLowerCase() === "ТИП РАБОТ".toLocaleLowerCase();
+    return item?.nameRu.toLowerCase() === "ТИП РАБОТ".toLocaleLowerCase();
   });
 });
 
+console.log('filteredCatalogs',filteredCatalogs)
 const secondOptions = [
   "МАТЕРИАЛ РАБОЧЕЙ ПОВЕРХНОСТИ",
   "ТИП ОБЪЕКТА",
@@ -231,13 +232,13 @@ const secondOptions = [
 ];
 const secondBlock = computed(() => {
   return filteredCatalogs.value.filter((item) => {
-    return secondOptions?.includes(item?.name?.toUpperCase());
+    return secondOptions?.includes(item?.nameRu?.toUpperCase());
   });
 });
-
+console.log('secondBlock',secondBlock)
 const thirdBlock = computed(() => {
   return filteredCatalogs.value.filter(
-    (item) => item?.name?.toLocaleLowerCase() === "ТИП ЛКМ".toLocaleLowerCase(),
+    (item) => item?.nameRu?.toLocaleLowerCase() === "ТИП ЛКМ".toLocaleLowerCase(),
   );
 });
 

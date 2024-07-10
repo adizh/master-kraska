@@ -11,9 +11,6 @@
     "@nuxtjs/eslint-config-typescript",
     "plugin:eslint-plugin-vue/essential",
     "plugin:eslint-plugin-vue/recommended"
-    // "eslint:recommended",
-    // "plugin:@typescript-eslint/eslint-recommended",
-    // "plugin:@typescript-eslint/recommended"
   ],
   "rules": {
     //"prettier/prettier": ["error"],

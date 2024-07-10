@@ -32,9 +32,10 @@
   </div>
 
   <div class="flex flex-row justify-content-center"
-  v-else-if="!productStore.getLoadingState && productStore?.getFilteredProducts?.length<1"
+  v-else
 >
-<img src="../../assets/texture-roller.gif" class='gif-img'></img>
+{{ $t("noDataCatalogSearch") }}
+
 </div>
 </template>
 
