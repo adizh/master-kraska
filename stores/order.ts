@@ -20,8 +20,9 @@ export const useOrderStore = defineStore("orderStore", {
     orders:{  "page": 1,
     "pageSize": 0,
     "totalItems": 0,
+    orderNumber:'',
     "totalPages": 0,
-    "items": []} as {page:number,pageSize:number, totalItems:number, totalPages:number, items:OrderItem[]}
+    "items": []} as {page:number,pageSize:number, totalItems:number, totalPages:number, items:OrderItem[],orderNumber:string}
   }),
   actions: {
     handleValues(
@@ -155,16 +156,24 @@ this.selectedStatus= value;
 console.log('updateStatus value',value)
 this.fetchOrders()
     },
+    updateOrderNumber(value:string){
+      this.orders.orderNumber=value;
+      console.log('value',value)
+      this.fetchOrders()
+    },
 
     async fetchOrders(){
       try{
-        let params:{page:number,pageSize:number,statusType?:string}={
+        let params:{page:number,pageSize:number,statusType?:string,orderNumber?:string}={
             page:this.orders.page,
             pageSize:10
         }
 
         if(this.selectedStatus?.length>0){
           params['statusType']=this.selectedStatus
+        }
+        if(this.orders.orderNumber?.length>0){
+          params['orderNumber']=this.orders.orderNumber
         }
         const response = await http({
           method:'GET',

@@ -1,13 +1,12 @@
 <template>
     <div>
-
+        <button class="btn-white-bg mb-4 mt-0" @click="navigateTo('/admin')">
+            Назад
+          </button>
         <div class="admin-order-heading grid  flex flex-row justify-content-between align-items-center">
 
             <h1 class="col-2">Заказы</h1>
-
 <div class="flex flex-row gap-3 align-items-center col-10"><p>Фильтровать по</p>
-
-
 <div class='lg:col-3'>
     <UIDropdown
     :isDropdownOpen="isUIDropdownOpen"
@@ -17,6 +16,10 @@
     @selectValue="selectState"
     label="name"
   />
+</div>
+
+<div>
+    <input class="basic-input" placeholder="Поиск по номеру заказа" type="text" @input="filterOrdernumber"/>
 </div>
 </div>
         </div>
@@ -55,10 +58,22 @@ const toggleDropdownUI =()=>{
 const selectState=(event:{name:string,value:string})=>{
 selectedStatus.value =event;
 isUIDropdownOpen.value =false;
-
 orderStore.updateStatus(event?.value)
-
 }
+
+const filterOrdernumber = (event: Event) => {
+  const target = event.target as HTMLInputElement;
+  const currentValue = target.value;
+  const char = (event as InputEvent).data ?? ''; 
+  const isNumber = /^\d*$/.test(char);
+  if (isNumber) {
+    orderStore.updateOrderNumber(currentValue);
+  } else {
+    return;
+  }
+};
+
+
 onMounted(()=>{
     orderStore.fetchOrders()
     console.log('orderSrore',orderStore?.getAllOrders)
