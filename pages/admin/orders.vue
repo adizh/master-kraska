@@ -24,6 +24,13 @@
         <div class="orders-section grid">
 <AdminOrdersItem v-for="item in orderStore.getAllOrders" :key="item?.id" :item="item"/>
         </div>
+
+
+        <UIPagination
+        :total="orderStore.getAllOrdersPages?.totalPages"
+        :currentActive="orderStore.getAllOrdersPages.page"
+        @changePage="orderStore.updatePage"
+      />
     </div>
 </template>
 
@@ -48,7 +55,9 @@ const toggleDropdownUI =()=>{
 const selectState=(event:{name:string,value:string})=>{
 selectedStatus.value =event;
 isUIDropdownOpen.value =false;
+
 orderStore.updateStatus(event?.value)
+
 }
 onMounted(()=>{
     orderStore.fetchOrders()
@@ -61,6 +70,7 @@ onMounted(()=>{
 <style scoped lang='scss'>
 .orders-section{
     margin-top: 20px;
+    margin-bottom: 30px;
     @include flex(row, start,center);
     gap:25px;
     flex-wrap: wrap;

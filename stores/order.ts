@@ -17,7 +17,7 @@ export const useOrderStore = defineStore("orderStore", {
 
     selectedStatus:'',
     shops: [] as AddressList[],
-    orders:{  "page": 0,
+    orders:{  "page": 1,
     "pageSize": 0,
     "totalItems": 0,
     "totalPages": 0,
@@ -142,7 +142,15 @@ export const useOrderStore = defineStore("orderStore", {
       this.delForm.city.value = value;
     },
 
+
+    updatePage(page:number){
+this.orders.page=page;
+this.fetchOrders();
+window.scrollTo(0,0)
+
+    },
     updateStatus(value:string){
+      this.orders.page=1
 this.selectedStatus= value;
 console.log('updateStatus value',value)
 this.fetchOrders()
@@ -151,7 +159,7 @@ this.fetchOrders()
     async fetchOrders(){
       try{
         let params:{page:number,pageSize:number,statusType?:string}={
-            page:1,
+            page:this.orders.page,
             pageSize:10
         }
 
@@ -164,7 +172,9 @@ this.fetchOrders()
         params:params
         });
         if(response.status===200){
-this.orders.items= response.data.items
+this.orders.items= response.data.items;
+this.orders.totalPages=response.data.totalPages
+
 console.log('response data',response.data)
         }
       }catch(err){
@@ -181,6 +191,10 @@ console.log('response data',response.data)
     },
     getAllOrders(state){
       return state.orders.items
+    },
+    getAllOrdersPages(state){
+      return state.orders
     }
+
   },
 });
