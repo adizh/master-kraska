@@ -44,9 +44,15 @@ const props = defineProps<{
   isDropdownOpen: boolean;
   label: string;
 }>();
+
 </script>
 
 <style scoped lang="scss">
+.ui-dropdown {
+  width: 100%;
+  position: relative; /* Ensure the dropdown is positioned relative to this container */
+}
+
 .selected-option {
   @include flex(row, space-between, center);
 
@@ -56,10 +62,16 @@ const props = defineProps<{
 }
 
 .ui-options {
+  position: absolute; /* Absolute positioning */
+  top: 100%; /* Position below the selected option */
+right:0;
+
+  z-index: 10; /* Ensure it's on top of other elements */
   border: 1px solid $slider-border-color;
   border-radius: 8px;
   padding: 6px;
   @include textFormat(16px, 20px, 400, #000);
+  background-color: white; /* Ensure the background is not transparent */
 
   li {
     padding: 16px;
@@ -72,16 +84,6 @@ const props = defineProps<{
       transition: 0.3s ease all;
     }
   }
-}
-
-.open-options {
-  visibility: visible;
-  opacity: 1;
-  animation: slideFromTop 0.5s forwards;
-}
-
-.ui-dropdown {
-  width: 100%;
 }
 
 .slide-fade-enter-active {

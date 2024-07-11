@@ -4,6 +4,7 @@
       <div class="mt-5">
         <div class="admin-links">
           <a href="/admin/add-product" target="_blank">Добавить продукт</a>
+          <a href="/admin/orders" target="_blank">Заказы</a>
           <a href="#" target="_blank" @click.prevent="openModal"
             >Создать категорию</a
           >
@@ -32,7 +33,6 @@
     />
 
     <AdminCreateNews :is-open="openNews" @close-modal="openNews = false" />
-
     <AdminCreateBrand :is-open="openBrand" @close-modal="openBrand = false" />
   </section>
 </template>
@@ -44,10 +44,12 @@ const openNews = ref(false);
 const openBrand = ref(false);
 const router = useRouter();
 const openCreateCategoryModal = ref(false);
+
 const openModal = () => {
   openCreateCategoryModal.value = true;
   visible.value = false;
 };
+
 const openNewsModal = () => {
   openNews.value = true;
   visible.value = false;

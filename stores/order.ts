@@ -1,5 +1,5 @@
 import { AddressList } from "@/types/Items";
-import { Order } from "~/types/Order";
+import { Order, OrderItem, UserOrder } from "~/types/Order";
 export const useOrderStore = defineStore("orderStore", {
   state: () => ({
     delForm: {
@@ -15,7 +15,13 @@ export const useOrderStore = defineStore("orderStore", {
       blockNumber: { value: "", error: "" },
     },
 
+    selectedStatus:'',
     shops: [] as AddressList[],
+    orders:{  "page": 0,
+    "pageSize": 0,
+    "totalItems": 0,
+    "totalPages": 0,
+    "items": []} as {page:number,pageSize:number, totalItems:number, totalPages:number, items:OrderItem[]}
   }),
   actions: {
     handleValues(
@@ -135,6 +141,36 @@ export const useOrderStore = defineStore("orderStore", {
     setOrderCity(value: string) {
       this.delForm.city.value = value;
     },
+
+    updateStatus(value:string){
+this.selectedStatus= value;
+console.log('updateStatus value',value)
+this.fetchOrders()
+    },
+
+    async fetchOrders(){
+      try{
+        let params:{page:number,pageSize:number,statusType?:string}={
+            page:1,
+            pageSize:10
+        }
+
+        if(this.selectedStatus?.length>0){
+          params['statusType']=this.selectedStatus
+        }
+        const response = await http({
+          method:'GET',
+          url:'api/v1/Order/get-all-orders',
+        params:params
+        });
+        if(response.status===200){
+this.orders.items= response.data.items
+console.log('response data',response.data)
+        }
+      }catch(err){
+        console.log(err)
+      }
+    }
   },
   getters: {
     deliveryForm(state) {
@@ -143,5 +179,8 @@ export const useOrderStore = defineStore("orderStore", {
     getShops(state) {
       return state.shops;
     },
+    getAllOrders(state){
+      return state.orders.items
+    }
   },
 });

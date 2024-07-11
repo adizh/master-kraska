@@ -15,6 +15,7 @@ export type UserOrder = {
   orderId: string;
   phoneNumber: string;
   price: number;
+  status:string,
   productId: string;
   productName: string;
   productNameKg: string;
@@ -32,6 +33,7 @@ export type OrderItem = {
   items: UserOrder[];
   orderNumber: string;
   payDate: null;
+  status:string,
   payId: null;
   total: number;
   userId: string;
