@@ -174,9 +174,7 @@
       <button class="pink-button" @click="() => emit('applyFilter')">
         {{ $t("applyFilter") }}
       </button>
-      <button class="bg-white-btn reset-filters" @click="resetFilters">
-        {{ $t("reset") }}
-      </button>
+    
     </div>
   </div>
 </template>
@@ -329,7 +327,7 @@ const updateBrandsInputs =async (brand: Brands, event: any) => {
 
  await productsStore.filterProducts();
 
-window.scrollTo(0, 0);
+
 
 };
 
@@ -354,7 +352,7 @@ const updateCheckboxState = (itemId: string, subId: string, event: any) => {
   productsStore.setSubDirectories(filteredValues);
 
   productsStore.filterProducts();
-  window.scrollTo(0, 0);
+
 };
 
 const opensIncludes = (id: string) => {
@@ -384,12 +382,6 @@ const getRemainingItemCount = (item: AllCatalog) => {
 };
 
 onMounted(async () => {
-  // if (localStorage.getItem('reloaded')) {
-  //       localStorage.removeItem('reloaded');
-  //   } else {
-  //       localStorage.setItem('reloaded', '1');
-  //       location.reload();
-  //   }
 
   await catalogStore.fetchAllCatalogs();
   await initializeCheckboxStates();
@@ -413,9 +405,7 @@ onMounted(async () => {
     await productsStore.filterProducts();
   }
   await productsStore.filterProducts();
-  // if(productsStore?.filters.search){
-  //   await productsStore.filterProducts(productsStore?.filters.search);
-  // }
+
 });
 
 onUnmounted(() => {
@@ -443,10 +433,14 @@ onUnmounted(() => {
 .reset-filters {
   box-shadow: 0px 0px 0px 0.5px #0000000d;
   box-shadow: 0px 0.5px 2.5px 0px #0000004d;
+  font-size: 18px !important;
 }
 
 .apply-filters {
   display: none;
+  button{
+    font-size: 18px !important;
+  }
 }
 
 .each-filter-block.open {
