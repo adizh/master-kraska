@@ -17,7 +17,7 @@ export const useAuthStore = defineStore("authStore", {
     async fetchUser() {
       if (this.getUserId) {
         try {
-          const response = await http(
+          const response = await httpAuth(
             `/api/v1/User/get-user-by-id/${this.getUserId}`,
           );
           console.log("response fetchUser", response);
@@ -34,7 +34,7 @@ export const useAuthStore = defineStore("authStore", {
         }
       }
     },
-
+    
     setLang(lang: string) {
       this.selectedLanguage = lang;
     },

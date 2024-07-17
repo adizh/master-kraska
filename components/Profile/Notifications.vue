@@ -29,11 +29,12 @@ if (process.client) {
 const setUserStatus = async () => {
   console.log("checked", checked);
   try {
-    const response = await http({
+    const response = await httpAuth({
       method: "get",
       url: `/api/v1/User/set-notifications-allowance/${authStore?.getUserId}/${!checked.value}`,
     });
     console.log("response setUserStatus", response);
+    useNotif("success", t("userStatusUpdated"), t("success"));
   } catch (err) {
     useNotif("error", t("errOccurred"), t("error"));
     console.log(err);

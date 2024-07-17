@@ -31,3 +31,46 @@ http.interceptors.response.use(
 );
 
 export default http;
+
+
+
+let userToken 
+if(process.client){
+  const tokenLocal =localStorage.getItem('token')
+
+if(tokenLocal){
+  userToken=tokenLocal
+}else{
+  userToken=null
+}
+
+}
+ const httpAuth: AxiosInstance = axios.create({
+  baseURL: url,
+  headers:{
+    Authorization:`Bearer ${userToken}`
+  }
+});
+httpAuth.interceptors.request.use((config) => {
+  config.params = { ...config.params };
+  return config;
+});
+
+httpAuth.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error: AxiosError) => {
+    if (error.response) {
+      console.error("Response Error:", error.response.data);
+      console.error("Response Status:", error.response.status);
+    } else if (error.request) {
+      console.error("Request Error:", error.request);
+    } else {
+      console.error("Error:", error.message);
+    }
+    return Promise.reject(error);
+  },
+);
+
+export {httpAuth}

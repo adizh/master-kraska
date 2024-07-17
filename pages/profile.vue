@@ -284,7 +284,12 @@ const fetchUserBookmarks = async () => {
 };
 
 const addItemToBookmarks = (objectId: string) => {
-  productsStore.addToBookmarks(objectId);
+  //productsStore.addToBookmarks(objectId);
+
+console.log('addItemToBookmarks')
+
+
+
 };
 
 const confirmDelete = (prop: ExtendedProduct) => {

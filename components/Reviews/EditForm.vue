@@ -21,7 +21,7 @@
 <script setup lang="ts">
 import { Review } from "~/types/Review";
 const authStore = useAuthStore();
-
+const router=useRouter()
 const props = defineProps<{
   item: Review;
 }>();
@@ -70,6 +70,10 @@ const createReview = async () => {
 
         inputs.value.ratingValue.value = 0;
         useNotif("success", t("reviewAdded"), t("success"));
+        setTimeout(()=>{
+ window.location.reload()
+        },1000)
+
       }
       console.log("response update review", response);
     } catch (err) {

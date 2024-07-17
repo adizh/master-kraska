@@ -117,6 +117,7 @@ const formattedPhone = computed(() => {
 @media (max-width: 576px) {
   .bottom-list {
     flex-direction: column;
+    align-items: start;
     p {
       width: 100% !important;
     }

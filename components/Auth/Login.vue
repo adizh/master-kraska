@@ -110,6 +110,7 @@ const submitLogin = async () => {
       });
       if (response.status === 200) {
         emit("closeLoginModal");
+        console.log('response login',response)
         localStorage.setItem("userId", response.data.userId);
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("role", response.data.role);

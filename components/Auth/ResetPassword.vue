@@ -182,7 +182,7 @@ const changePassword = async () => {
         newPassword: inputs.value.password.value,
         confirmPassword: inputs.value.passwordRepeat.value,
       };
-      const response = await http.post("/api/v1/User/reset-password", body);
+      const response = await httpAuth.post("/api/v1/User/reset-password", body);
       console.log("response resetPassword", response);
       if (response.status === 200) {
         useNotif("success", t("passwordReset"), t("success"));

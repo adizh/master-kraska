@@ -380,7 +380,13 @@ body {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width:1200px){
+  .koler-change {
+    width: 66%;
+
+  }
+}
+@media (max-width: 900px) {
   .koler-part {
     flex-direction: column;
   }
@@ -409,7 +415,14 @@ body {
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width:756px){
+  .koler-change {
+    width: 80%;
+
+  }
+}
+
+@media (max-width: 620px) {
   .second-block,
   .koler-change {
     width: 100% !important;

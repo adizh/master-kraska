@@ -60,9 +60,9 @@ const openBrandModal = () => {
   visible.value = false;
 };
 onMounted(() => {
-  // if(authStore?.getRole!=='Admin'){
-  //     router.push('/')
-  // }
+  if(authStore?.getRole!=='Admin'){
+      router.push('/')
+  }
 });
 </script>
 

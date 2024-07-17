@@ -251,7 +251,7 @@ const changePassword = async () => {
         newPassword: inputs.value.password.value,
         confirmPassword: inputs.value.passwordRepeat.value,
       };
-      const response = await http.post("/api/v1/User/change-password", body);
+      const response = await httpAuth.post("/api/v1/User/change-password", body);
       console.log("response changePassword", response);
       if (response.status === 200) {
         useNotif("success", t("passwordUpdated"), t("success"));

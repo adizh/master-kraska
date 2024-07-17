@@ -192,8 +192,9 @@ const submitRegister = async () => {
       const response = await http.post("/api/v1/User/registration", body);
       if (response.status === 200) {
         localStorage.setItem("userId", response.data.userId);
-        localStorage.setItem("token", response.data.token);
-
+        localStorage.setItem("token", response.data?.tokens?.access_Token);
+        localStorage.setItem("refresh_Token", response.data?.tokens?.refresh_Token);
+console.log('response registration',response)
         useNotif("success", t("successRegister"), t("registration"));
         setTimeout(() => {
           emit("closeModal");

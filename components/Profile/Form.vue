@@ -226,7 +226,7 @@ const editUser = async () => {
         phoneNumber: inputs.value.phone.value,
         image: checkUserImage,
       };
-      const response = await http.put("/api/v1/User/edit-user", body);
+      const response = await httpAuth.put("/api/v1/User/edit-user", body);
       if (response.status === 200) {
         useNotif("success", t("successEdited"), t("success"));
       }

@@ -146,6 +146,9 @@ const toggleBoomark = () => {
   if (authStore.getUserId) {
     isProductBookmarked.value = !isProductBookmarked.value;
     productsStore.addToBookmarks(props?.product?.id);
+   setTimeout(()=>{
+    window.location.reload()
+   },1000)
   }
 };
 const increaseCount = () => {
