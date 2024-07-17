@@ -274,12 +274,12 @@ watch(
     }
   }
 }
+
+.contact-form-bottom input{
+  width: 50%;
+}
 .contact-form {
-  div {
-    :last-child {
-      width: 50%;
-    }
-  }
+
   input {
     border-radius: 8px;
   }
@@ -356,5 +356,19 @@ watch(
   .maps-address .each-section-header {
     font-size: 20px;
   }
+
+  .contact-form-block{
+    flex-wrap: wrap !important;
+  }
+  .contact-form form .contact-form-block{
+  div{
+    width:100%
+  }
+  .contact-form-bottom input{
+    width: 100%;
+  }
+    
+ 
+ }
 }
 </style>

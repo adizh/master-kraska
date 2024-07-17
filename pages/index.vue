@@ -46,9 +46,12 @@ const isSearchOpen = ref(false);
 const firstCategoryItem = ref({} as Category);
 const router = useRouter();
 const handleSearch = (event: any) => {
-  isSearchOpen.value = event.target?.value?.trim().length > 0;
+  setTimeout(()=>{
+    isSearchOpen.value = event.target?.value?.trim().length > 0;
 productStore.filters.search=event.target?.value
     productStore.filterProducts(event.target?.value);
+  },2000)
+
 };
 
 watch(isSearchOpen, (value) => {

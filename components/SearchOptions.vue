@@ -28,8 +28,7 @@
       class="look-all-btn"
       v-if="
         productStore?.getFilteredProducts?.length > 0 &&
-        !productStore?.getLoadingState &&
-        showNoData
+        !productStore?.getLoadingState 
       "
       @click.stop="router.push('/catalog')"
     >
@@ -41,12 +40,11 @@
 
 <script setup lang="ts">
 import { Category } from "~/types/Category";
-const showNoData = ref(false);
 const props = defineProps<{
   isSearchOpen: boolean;
 }>();
 
-const prodReceved = ref(false);
+
 const catalogStore = useCatalogStore();
 const router = useRouter();
 const emit = defineEmits(["closeSearch"]);
@@ -56,28 +54,15 @@ const goToProd = (id: string) => {
 };
 const firstCategoryItem = ref({} as Category);
 const productStore = useProductsSstore();
-const searchName = (name: string) => {
-  if (name?.length > 10) {
-    return name.slice(0, 10) + "...";
-  } else {
-    return name;
-  }
-};
+
 
 console.log('productStore.getFilteredProducts in Searchoptions',productStore.getFilteredProducts)
 onMounted(async () => {
-  showNoData.value = false;
+
   await catalogStore.fetchAllCategories();
   firstCategoryItem.value = catalogStore?.getAllCategories[0];
 
-  if (
-    !productStore?.filteredProducts?.length &&
-    !productStore?.getLoadingState
-  ) {
-    setTimeout(() => {
-      showNoData.value = true;
-    }, 8000);
-  }
+
  
 });
 </script>
