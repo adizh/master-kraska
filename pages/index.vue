@@ -47,7 +47,7 @@ const firstCategoryItem = ref({} as Category);
 const router = useRouter();
 const handleSearch = (event: any) => {
   isSearchOpen.value = event.target?.value?.trim().length > 0;
-  console.log("what is avalue in side", event.target?.value);
+productStore.filters.search=event.target?.value
     productStore.filterProducts(event.target?.value);
 };
 

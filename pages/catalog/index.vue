@@ -10,7 +10,7 @@
       </h1>
       <div class="header-help-icons">
         <input
-          v-model="productName"
+          v-model="productStore.filters.search"
           type="text"
           :placeholder="$t('searchPaint')"
           class="main-header-input"
@@ -81,9 +81,9 @@ const visibleMethod = ref<VisibleMethod>("vertical");
 const route = useRoute();
 const id = ref(route.query?.category);
 
-console.log("route", route);
+
 const authStore = useAuthStore();
-const catalogStore = useCatalogStore();
+
 const { data: category } = useApi(
   `/api/v1/Category/get-category/${id?.value}`,
   { watch: [id] },
@@ -96,7 +96,7 @@ const applyFilter = () => {
 
 const productStore = useProductsSstore();
 
-const productName = defineModel<string>();
+
 const handleSearch = (event: any) => {
   productStore.setCurrentPage(1);
   productStore.filterProducts(event.target.value);
