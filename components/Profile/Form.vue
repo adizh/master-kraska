@@ -225,6 +225,7 @@ const editUser = async () => {
         address: inputs.value.address.value,
         phoneNumber: inputs.value.phone.value,
         image: checkUserImage,
+        extension:'png'
       };
       const response = await httpAuth.put("/api/v1/User/edit-user", body);
       if (response.status === 200) {

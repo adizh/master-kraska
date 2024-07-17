@@ -38,6 +38,22 @@ export const useAuthStore = defineStore("authStore", {
     setLang(lang: string) {
       this.selectedLanguage = lang;
     },
+
+  async  refreshToken(){
+    const accessToken = localStorage.getItem('token')
+    const refreshToken = localStorage.getItem('refresh_Token')
+    if(accessToken &&refreshToken ){
+      try{
+const response = await http.post('/api/v1/User/refresh',{
+  "access_Token": accessToken,
+  "refresh_Token": refreshToken
+})
+console.log('response refreshToken',response)
+      }catch(err){
+        console.log(err)
+      }
+    }
+  }
   },
   getters: {
     getUserId: () => {

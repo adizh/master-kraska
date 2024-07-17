@@ -166,7 +166,7 @@ onUnmounted(() => {
 });
 
 const screenSize = computed(() => {
-  if (screenWidth.value >= 768) {
+  if (screenWidth.value >= 868) {
     return "large";
   }
 });
@@ -215,7 +215,7 @@ a {
   &-num {
     position: absolute;
     top: -15px;
-    right: -23px;
+    right: -18px;
     display: inline-block;
     background: #eb5757;
     border-radius: 100%;

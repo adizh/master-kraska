@@ -9,8 +9,8 @@
         <h3 v-if="item?.name">{{ item?.name }}</h3>
         <h3 v-else-if="item?.productName">{{ item?.productName }}</h3>
         <div class="product-infomation">
-          <span>{{ $t("consumption") }}: {{ item?.consumption }}</span>
-          <span>{{ $t("dryingTime") }}: {{ item?.dryingTime }}</span>
+          <span>{{ $t("consumption") }}: {{ item?.consumption || $t('noData') }}</span>
+          <span>{{ $t("dryingTime") }}: {{ item?.dryingTime || $t('noData')  }}</span>
           <span class="volume"
             >{{ $t("volume") }} (л): {{ item?.size }}
             <span v-for="vars in item?.variants?.slice(0, 2)" :key="vars?.id">

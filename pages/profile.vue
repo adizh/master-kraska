@@ -136,6 +136,7 @@
               v-for="item in userBookmarks"
               :key="item.id"
               :product="item"
+              from="bookmarks"
               @add-item-to-bookmarks="addItemToBookmarks"
             />
           </div>
@@ -318,12 +319,15 @@ onUnmounted(() => {
 });
 
 onMounted(() => {
-  store.fetchUser();
-  fetchUserBookmarks();
+
 
   if (!store.getUserId) {
     navigateTo("/");
   }
+
+  store.refreshToken()
+  store.fetchUser();
+  fetchUserBookmarks();
 });
 onBeforeRouteLeave(() => {
   localStorage.removeItem("selectedTab");
@@ -331,6 +335,10 @@ onBeforeRouteLeave(() => {
 </script>
 
 <style scoped lang="scss">
+
+:deep(.p-dialog .p-dialog-content){
+  overflow-y: hidden;
+}
 .right-side {
   padding: 20px 40px;
 }

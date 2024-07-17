@@ -112,7 +112,8 @@ const submitLogin = async () => {
         emit("closeLoginModal");
         console.log('response login',response)
         localStorage.setItem("userId", response.data.userId);
-        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("token", response.data?.accessToken);
+        localStorage.setItem("refresh_Token", response.data?.refreshToken);
         localStorage.setItem("role", response.data.role);
         if (response.data.role === "Admin") {
           router.push("/admin");

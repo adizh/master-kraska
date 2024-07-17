@@ -516,6 +516,8 @@ const addProduct = async () => {
     images: prodImages?.value,
     categoryIds: categories,
     variants: filteredVariants,
+
+    extension:'png'
   };
 
   const result = { ...body, ...remaining };

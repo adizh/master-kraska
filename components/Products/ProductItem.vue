@@ -8,7 +8,7 @@
     <div
       v-if="type === 'bookmark'"
       class="bookmark-icon-heart"
-      @click.stop="emit('addItemToBookmarks', product?.id as string)"
+      
     >
       <img src="../../assets/icons/icon=heart fill.svg" alt="heart icon" />
     </div>
@@ -90,6 +90,7 @@ import { ExtendedProduct, Product } from "@/types/Product";
 const props = defineProps<{
   type?: string;
   product: Product;
+  from?:'bookmarks'
 }>();
 const { t } = useI18n();
 
@@ -146,9 +147,13 @@ const toggleBoomark = () => {
   if (authStore.getUserId) {
     isProductBookmarked.value = !isProductBookmarked.value;
     productsStore.addToBookmarks(props?.product?.id);
-   setTimeout(()=>{
-    window.location.reload()
-   },1000)
+if(props?.from==='bookmarks'){
+  setTimeout(()=>{
+window.location.reload()
+  },1000)
+}
+
+ 
   }
 };
 const increaseCount = () => {
@@ -188,7 +193,7 @@ const addCart = () => {
 
 const router = useRouter();
 const emit = defineEmits<{
-  addItemToBookmarks: [string];
+  //addItemToBookmarks: [string];
 }>();
 
 const isProductBookmarked = ref(false);

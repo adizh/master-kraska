@@ -182,7 +182,7 @@ export const useProductsSstore = defineStore("productsStore", {
         console.log(err);
       }
     },
-
+    
     async addToBookmarks(objectId: string) {
       const authStore = useAuthStore();
       try {

@@ -846,6 +846,7 @@ const addVariant = async () => {
         size: newVariants.value.size,
         base: newVariants.value?.base,
         image: newVariants.value.image,
+        extension:'png'
       },
     ];
     const response = await http.put(`/api/v1/Product/add-variants/${id}`, body);
@@ -934,6 +935,7 @@ const submitUpdate = async () => {
       dryingTime: inputs?.value?.dryingTime?.value,
       images: null,
       variants: prodVariantes || null,
+      extension:'png'
     };
 
     console.log("what is body in submotupdat", body);

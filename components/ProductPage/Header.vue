@@ -77,7 +77,7 @@
             <span class="each-block-info-col">
               {{ $t("consumption") }}
             </span>
-            <p>{{ getProduct?.product?.consumption }}</p>
+            <p>{{ getProduct?.product?.consumption  || $t('noData') }}</p>
           </div>
           <div>
             <span class="each-block-info-col">{{ $t("parameters") }} </span>
