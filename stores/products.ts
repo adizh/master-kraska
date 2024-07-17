@@ -241,7 +241,6 @@ export const useProductsSstore = defineStore("productsStore", {
           ? this.filters.categoryId.join(",")
           : null;
       const name = prodName || this.filters.search || "";
-
       const query = {
         productName: name || null,
         categoriesId,

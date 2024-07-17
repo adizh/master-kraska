@@ -8,8 +8,7 @@
       class="search-res-header"
       v-else-if="
         productStore?.getFilteredProducts?.length > 0 &&
-        !productStore?.getLoadingState &&
-        showNoData
+        !productStore?.getLoadingState 
       "
     >
       <li
@@ -21,7 +20,7 @@
         <span class="prod-search-name">{{ item?.name }}</span>
       </li>
     </ul>
-    <p v-else-if="showNoData">
+    <p v-else>
       {{ $t("noData") }}
     </p>
 
@@ -64,6 +63,8 @@ const searchName = (name: string) => {
     return name;
   }
 };
+
+console.log('productStore.getFilteredProducts in Searchoptions',productStore.getFilteredProducts)
 onMounted(async () => {
   showNoData.value = false;
   await catalogStore.fetchAllCategories();
@@ -77,9 +78,7 @@ onMounted(async () => {
       showNoData.value = true;
     }, 8000);
   }
-  // if (!productStore?.getLoadingState && productStore?.getFilteredProducts) {
-  //   prodReceved.value = true;
-  // }
+ 
 });
 </script>
 

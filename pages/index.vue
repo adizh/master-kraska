@@ -48,9 +48,7 @@ const router = useRouter();
 const handleSearch = (event: any) => {
   isSearchOpen.value = event.target?.value?.trim().length > 0;
   console.log("what is avalue in side", event.target?.value);
-  setTimeout(() => {
     productStore.filterProducts(event.target?.value);
-  }, 2000);
 };
 
 watch(isSearchOpen, (value) => {
