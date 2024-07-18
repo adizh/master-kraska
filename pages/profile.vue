@@ -319,13 +319,9 @@ onUnmounted(() => {
 });
 
 onMounted(() => {
-
-
   if (!store.getUserId) {
     navigateTo("/");
   }
-
-  store.refreshToken()
   store.fetchUser();
   fetchUserBookmarks();
 });

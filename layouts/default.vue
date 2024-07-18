@@ -335,6 +335,8 @@ a {
   @extend %header-nav;
 }
 
+
+
 .bottom li.burger-menu {
   @include flex(column, center, center, 4px !important);
   display: none;
@@ -354,6 +356,9 @@ a {
 }
 
 @media (max-width: 1100px) {
+  .bottom li{
+    position:relative;
+  }
   .burger-menu {
     display: flex !important;
   }

@@ -61,9 +61,13 @@ httpAuth.interceptors.response.use(
     return response;
   },
   (error: AxiosError) => {
+    const authStore =useAuthStore()
     if (error.response) {
       console.error("Response Error:", error.response.data);
       console.error("Response Status:", error.response.status);
+      if(error.response.status===401){
+        authStore.refreshToken()
+      }
     } else if (error.request) {
       console.error("Request Error:", error.request);
     } else {

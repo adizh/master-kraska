@@ -44,12 +44,23 @@ export const useAuthStore = defineStore("authStore", {
     const refreshToken = localStorage.getItem('refresh_Token')
     if(accessToken &&refreshToken ){
       try{
-const response = await http.post('/api/v1/User/refresh',{
-  "access_Token": accessToken,
-  "refresh_Token": refreshToken
-})
-console.log('response refreshToken',response)
-      }catch(err){
+    const response = await http.post('/api/v1/User/refresh',{
+     "access_Token": accessToken,
+     "refresh_Token": refreshToken
+    })
+    console.log('response refreshToken',response)
+
+    if(response.status===200){
+     console.log('access_Token',response.data?.tokens?.access_Token)
+     console.log('refresh_Token',response.data?.tokens?.refresh_Token)
+     localStorage.setItem('token',response.data.tokens.access_Token)
+     localStorage.setItem('refresh_Token',response.data.tokens.refresh_Token)
+     setTimeout(()=>{ 
+       window.location.reload()
+     },1000)
+    }
+      }
+      catch(err){
         console.log(err)
       }
     }
