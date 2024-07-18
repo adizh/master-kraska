@@ -52,30 +52,60 @@
     </div>
 
     <div class="grid form" v-else>
-      <div class="col-12 each-field">
+      <div class="col-12 each-field password-block-input">
         <label for="password">{{ $t("newPassword") }}</label>
         <input
-          class="col-12 basic-input"
-          type="text"
+          class="col-12 basic-input "
+          :type="passwordsVisibility ? 'text' : 'password'"
           id="password"
           :placeholder="$t('newPassword')"
           v-model="inputs.password.value"
           @input="handleInput('password', 'password')"
         />
+        <img
+        src="../../assets/icons/black/ri-eye-open.svg"
+        alt="open"
+        v-if="passwordsVisibility"
+        @click="passwordsVisibility = false"
+        class="password-icon"
+      />
+      <img
+        src="../../assets/icons/black/ri_eye-off-line.svg"
+        alt="close"
+        v-else
+        @click="passwordsVisibility = true"
+        class="password-icon"
+      />
         <span v-if="inputs.password.error" class="err-input-msg">{{
           inputs.password.error
         }}</span>
       </div>
-      <div class="col-12 each-field">
+      <div class="col-12 each-field password-block-input">
         <label for="passwordRepeat">{{ $t("repeatPassword") }}</label>
         <input
           class="col-12 basic-input"
-          type="text"
+          :type="NewPasswordsVisibility ? 'text' : 'password'"
           id="passwordRepeat"
           :placeholder="$t('repeatPassword')"
           v-model="inputs.passwordRepeat.value"
           @input="handleInput('passwordRepeat', 'passwordRepeat')"
         />
+
+
+        <img
+        src="../../assets/icons/black/ri-eye-open.svg"
+        alt="open"
+        v-if="NewPasswordsVisibility"
+        @click="NewPasswordsVisibility = false"
+        class="password-icon"
+      />
+      <img
+        src="../../assets/icons/black/ri_eye-off-line.svg"
+        alt="close"
+        v-else
+        @click="NewPasswordsVisibility = true"
+        class="password-icon"
+      />
         <span v-if="inputs.passwordRepeat.error" class="err-input-msg">{{
           inputs.passwordRepeat.error
         }}</span>
@@ -102,6 +132,9 @@ const { handleValues } = useInputValidation();
 const handleInput = (field: string, type: string) => {
   handleValues(inputs.value, field, type);
 };
+
+const passwordsVisibility=ref(false)
+const NewPasswordsVisibility=ref(false)
 const { t } = useI18n();
 const authStore=useAuthStore()
 const sendEmail = async () => {
@@ -184,11 +217,7 @@ const changePassword = async () => {
         newPassword: inputs.value.password.value,
         confirmPassword: inputs.value.passwordRepeat.value,
       };
-      const response = await http.post("/api/v1/User/reset-password", body,{
-        headers:{
-          Authorization:`Bearer ${token}`
-        }
-      });
+      const response = await http.post("/api/v1/User/reset-password", body);
       console.log("response resetPassword", response);
 
       if((response.status===401)){
@@ -286,5 +315,9 @@ input {
     @include textFormat(20px, 32px, 500, #fff);
     margin-top: 46px;
   }
+}
+
+.password-block-input .password-icon {
+  top: 60px;
 }
 </style>
