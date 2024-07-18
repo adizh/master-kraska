@@ -10,15 +10,21 @@ export const useAuthStore = defineStore("authStore", {
       email: "",
       image: "",
       isNotificationsAllowed: false,
+      accessToken:''
     },
+    isRefreshTokenSuccess:false,
     selectedLanguage: "ru",
   }),
   actions: {
     async fetchUser() {
+      const accessToken = localStorage.getItem('token')
       if (this.getUserId) {
         try {
-          const response = await httpAuth(
+          const response = await http(
             `/api/v1/User/get-user-by-id/${this.getUserId}`,
+            {headers:{
+              Authorization:`Bearer ${accessToken}`
+            }}
           );
           console.log("response fetchUser", response);
           this.user.firstName = response.data.firstName;
@@ -29,8 +35,11 @@ export const useAuthStore = defineStore("authStore", {
           this.user.image = response.data.image;
           this.user.isNotificationsAllowed =
             response.data.isNotificationsAllowed;
-        } catch (err) {
+        } catch (err:any) {
           console.log(err);
+          if(err.response.status===401){
+            this.refreshToken('static')
+          }
         }
       }
     },
@@ -39,7 +48,7 @@ export const useAuthStore = defineStore("authStore", {
       this.selectedLanguage = lang;
     },
 
-  async  refreshToken(){
+  async  refreshToken(type?:'static'){
     const accessToken = localStorage.getItem('token')
     const refreshToken = localStorage.getItem('refresh_Token')
     if(accessToken &&refreshToken ){
@@ -51,17 +60,30 @@ export const useAuthStore = defineStore("authStore", {
     console.log('response refreshToken',response)
 
     if(response.status===200){
+      this.isRefreshTokenSuccess=true
+
      console.log('access_Token',response.data?.tokens?.access_Token)
      console.log('refresh_Token',response.data?.tokens?.refresh_Token)
      localStorage.setItem('token',response.data.tokens.access_Token)
      localStorage.setItem('refresh_Token',response.data.tokens.refresh_Token)
-     setTimeout(()=>{ 
-       window.location.reload()
-     },1000)
+     this.user.accessToken=response.data?.tokens?.access_Token
+     if(type!=='static'){
+      useNotifLocal("success", "sendAgaingRequest", "success");
+     }
+  
+     if(type==='static'){
+      setTimeout(()=>{ 
+         window.location.reload()
+       },1000)
+     }
+  
+    }else{
+      this.isRefreshTokenSuccess=false
     }
       }
       catch(err){
         console.log(err)
+        this.isRefreshTokenSuccess=false
       }
     }
   }
@@ -74,6 +96,9 @@ export const useAuthStore = defineStore("authStore", {
           : "";
       }
     },
+    getAccessToken(state){
+return state.user.accessToken
+    },
 
     getRole() {
       if (process.client) {
@@ -83,6 +108,9 @@ export const useAuthStore = defineStore("authStore", {
         }
       } else {
       }
+    },
+    getRegreshTokenStatus(state){
+return state.isRefreshTokenSuccess
     },
     getSelectedLang(state) {
       if (process.client) {

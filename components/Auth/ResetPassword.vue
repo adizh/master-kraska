@@ -103,7 +103,7 @@ const handleInput = (field: string, type: string) => {
   handleValues(inputs.value, field, type);
 };
 const { t } = useI18n();
-
+const authStore=useAuthStore()
 const sendEmail = async () => {
   handleValues(inputs.value, "email", "email");
 
@@ -158,6 +158,8 @@ const sendCode = async () => {
 };
 
 const changePassword = async () => {
+  const tokenLocal = localStorage.getItem('token')
+  let token= tokenLocal && tokenLocal!==undefined ? tokenLocal :null
   const validationTypes: any = {
     code: "string",
     email: "email",
@@ -182,15 +184,25 @@ const changePassword = async () => {
         newPassword: inputs.value.password.value,
         confirmPassword: inputs.value.passwordRepeat.value,
       };
-      const response = await httpAuth.post("/api/v1/User/reset-password", body);
+      const response = await http.post("/api/v1/User/reset-password", body,{
+        headers:{
+          Authorization:`Bearer ${token}`
+        }
+      });
       console.log("response resetPassword", response);
+
+      if((response.status===401)){
+        authStore.refreshToken()
+      }
       if (response.status === 200) {
         useNotif("success", t("passwordReset"), t("success"));
         setTimeout(() => {
           window.location.reload();
         }, 800);
-      }
+      } 
+        
     } catch (err) {
+      authStore.refreshToken()
       console.log(err, "Error changing the password");
     }
   }

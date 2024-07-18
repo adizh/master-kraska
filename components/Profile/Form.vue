@@ -195,6 +195,8 @@ const handleAddress = async (event: any) => {
 };
 
 const editUser = async () => {
+  const tokenLocal = localStorage.getItem('token')
+  let token= tokenLocal && tokenLocal!==undefined ? tokenLocal :null
   const validationTypes: any = {
     firstName: "string",
     lastName: "string",
@@ -205,6 +207,7 @@ const editUser = async () => {
 
   for (const fieldName in inputs.value) {
     if (Object.prototype.hasOwnProperty.call(inputs.value, fieldName)) {
+
       const validationType = validationTypes[fieldName];
       handleValues(inputs.value, fieldName, validationType);
     }
@@ -227,13 +230,22 @@ const editUser = async () => {
         image: checkUserImage,
         extension:'png'
       };
-      const response = await httpAuth.put("/api/v1/User/edit-user", body);
+      const response = await http.put("/api/v1/User/edit-user", body,{
+        headers:{
+          Authorization:`Bearer ${token}`
+        }
+      }
+      
+      );
       if (response.status === 200) {
         useNotif("success", t("successEdited"), t("success"));
       }
       console.log("response", response);
-    } catch (err) {
+    } catch (err:any) {
       console.log(err);
+      if(err.response.status===401){
+        store.refreshToken()
+      }
     }
   }
 };

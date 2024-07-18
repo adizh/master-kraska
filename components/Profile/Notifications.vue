@@ -27,17 +27,29 @@ if (process.client) {
 }
 
 const setUserStatus = async () => {
+  const tokenLocal = localStorage.getItem('token')
+  let token= tokenLocal && tokenLocal!==undefined ? tokenLocal :null
+  
   console.log("checked", checked);
   try {
-    const response = await httpAuth({
+    const response = await http({
       method: "get",
       url: `/api/v1/User/set-notifications-allowance/${authStore?.getUserId}/${!checked.value}`,
+      headers:{
+        Authorization:`Bearer ${token}`
+      }
     });
+    if(response.status===401){
+      authStore.refreshToken()
+    }
     console.log("response setUserStatus", response);
     useNotif("success", t("userStatusUpdated"), t("success"));
-  } catch (err) {
+  } catch (err:any) {
     useNotif("error", t("errOccurred"), t("error"));
     console.log(err);
+    if(err.response.status===401){
+      authStore.refreshToken()
+    }
   }
 };
 

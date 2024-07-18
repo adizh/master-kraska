@@ -45,6 +45,8 @@ if(tokenLocal){
 }
 
 }
+
+console.log('userToken',userToken)
  const httpAuth: AxiosInstance = axios.create({
   baseURL: url,
   headers:{
@@ -78,3 +80,10 @@ httpAuth.interceptors.response.use(
 );
 
 export {httpAuth}
+
+// /api/v1/User/edit-user
+// /api/v1/User/get-user-by-id/{userId}
+// /api/v1/User/change-password
+// /api/v1/User/reset-password
+// /api/v1/User/delete-user-by-id/{userId}
+// /api/v1/User/set-notifications-allowance/{userId}/{status}
