@@ -95,9 +95,10 @@
           {{ $t("changePassword") }}
         </button>
       </div>
-      <div class="col-6 each-field">
+      <div class="col-6 each-field language">
         <label for="password">{{ $t("language") }}</label>
         <UIDropdown
+
           :isDropdownOpen="isUIDropdownOpen"
           :selectedValue="initLan"
           :options="lanOptions"
@@ -264,11 +265,12 @@ const uploadLogo = (event: any) => {
 </script>
 
 <style scoped lang="scss">
-.ui-options {
+.language .ui-options {
   border: 1px solid $slider-border-color;
   border-radius: 8px;
   padding: 6px;
   @include textFormat(16px, 20px, 400, #000);
+
 
   li {
     padding: 16px;

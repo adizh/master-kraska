@@ -1,9 +1,11 @@
 <template>
+  <NuxtLayout name="admin">
   <div>
+
     <button class="btn-white-bg mb-4 mt-0" @click="navigateTo('/admin')">
       Назад
     </button>
-
+    
     <h1 class="mb-3">Добавить продукт</h1>
     <form class="grid" @submit.prevent="formAdd">
       <div
@@ -275,9 +277,11 @@
       </div>
     </form>
   </div>
+</NuxtLayout>
 </template>
 
 <script setup lang="ts">
+
 import imageCompression from "browser-image-compression";
 import { Brands } from "~/types/Brands";
 import { CategorySys } from "~/types/Category";

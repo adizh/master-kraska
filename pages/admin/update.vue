@@ -1,5 +1,7 @@
 <template>
+  <NuxtLayout name="admin">
   <section>
+
     <button class="btn-white-bg mt-0 mb-4" @click="navigateTo('/admin')">
       Назад
     </button>
@@ -23,6 +25,7 @@
       @close-modal="categoryOpen = false"
     />
   </section>
+</NuxtLayout>
 </template>
 
 <script setup lang="ts">

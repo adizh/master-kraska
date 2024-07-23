@@ -305,7 +305,12 @@ const deleteOrder = async () => {
       useNotif("success", t("orderCancelled"), t("success"));
       isWarningOpen.value = false;
       isPaymentOpen.value = false;
-      return navigateTo("/");
+      setTimeout(()=>{
+window.location.reload()
+return navigateTo("/");
+      },700)
+
+    
     }
   } catch (err) {
     console.log(err);

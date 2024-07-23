@@ -72,6 +72,10 @@ right:0;
   padding: 6px;
   @include textFormat(16px, 20px, 400, #000);
   background-color: white; /* Ensure the background is not transparent */
+  width: 95%  !important;
+  left:0 !important;
+  right:0 !important;
+  margin:0 auto !important;
 
   li {
     padding: 16px;

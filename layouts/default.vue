@@ -81,7 +81,7 @@
           <span />
           <span />
         </li>
-        <li v-else @click="isBurgerMenuOpen = false">
+        <li v-else @click="isBurgerMenuOpen = false" class="close-burger">
           <svg
             width="24"
             height="24"
@@ -258,7 +258,7 @@ a {
 }
 
 .bottom-part {
-  width: 61%;
+  width: 75%;
   @include flex(row, space-between, center);
 }
 
@@ -356,8 +356,8 @@ a {
 }
 
 @media (max-width: 1100px) {
-  .bottom li{
-    position:relative;
+.close-burger{
+position:relative;
   }
   .burger-menu {
     display: flex !important;

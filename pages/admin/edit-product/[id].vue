@@ -1,5 +1,8 @@
 <template>
+  <NuxtLayout name="admin">
+
   <section>
+
     <button class="btn-white-bg mb-4 mt-0" @click="navigateTo('/admin')">
       Назад
     </button>
@@ -541,6 +544,7 @@
       <button type="button" @click="addNewSubCategory">Добавить</button>
     </UIModal>
   </section>
+</NuxtLayout>
 </template>
 
 <script setup lang="ts">

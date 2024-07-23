@@ -80,7 +80,7 @@ export const useOrderStore = defineStore("orderStore", {
         const response = await http.post("/api/v1/Order/order-delivery", body);
         console.log("send order response", response);
         if (response.data.code === 200 && deliveryType === 0) {
-          useNotifLocal("success", "orderSent!", "success");
+          useNotifLocal("success", "orderSent", "success");
         }
         return response;
       } catch (err) {

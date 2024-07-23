@@ -1,5 +1,7 @@
 <template>
+  <NuxtLayout name="admin">
     <div>
+
         <button class="btn-white-bg mb-4 mt-0" @click="navigateTo('/admin')">
             Назад
           </button>
@@ -35,6 +37,7 @@
         @changePage="orderStore.updatePage"
       />
     </div>
+  </NuxtLayout>
 </template>
 
 <script setup lang="ts">

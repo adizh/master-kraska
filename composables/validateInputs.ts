@@ -1,5 +1,4 @@
 // handleValues.ts
-
 export const useInputValidation = () => {
   const { t } = useI18n();
   const handleValues = (
@@ -8,11 +7,8 @@ export const useInputValidation = () => {
     validationType: string | any,
   ) => {
     const value = inputs[fieldName].value;
-
     inputs[fieldName].value = value;
-
     inputs[fieldName].error = "";
-
     if (validationType === "string") {
       if (value === "") {
         inputs[fieldName].error = t("requiredField");

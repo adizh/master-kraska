@@ -1,5 +1,7 @@
 <template>
+  <NuxtLayout name="admin">
   <section>
+
     <button class="btn-white-bg mt-0 mb-4" @click="navigateTo('/admin')">
       Назад
     </button>
@@ -25,6 +27,8 @@
     />
     <AdminDeleteNews :is-open="isNewsOpen" @close-modal="isNewsOpen = false" />
   </section>
+  </NuxtLayout>
+  
 </template>
 
 <script setup lang="ts">

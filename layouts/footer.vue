@@ -3,9 +3,7 @@
     <div class="top">
       <div class="first">
         <img src="/white-logo.png" format="webp" class="white-logo" />
-        <a class="callback-btn" href="tel:+996 550 910 148">{{
-          $t("callBack")
-        }}</a>
+   
       </div>
       <div class="second">
         <span

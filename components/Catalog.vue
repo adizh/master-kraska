@@ -59,7 +59,7 @@
       </div>
 
       <div class="close-catalog" @click="$emit('closeCatalog')">
-        {{ $t("closeBlock") }} X
+        {{ $t("closeBlock") }}
       </div>
     </div>
   </div>

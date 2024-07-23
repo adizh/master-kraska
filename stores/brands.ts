@@ -17,6 +17,10 @@ export const useBrandsStore = defineStore("brandsStore", {
         if (response.status === 200) {
           this.brands = response.data;
           this.allBrands = response.data;
+          console.log('all brands???',response.data);
+      
+
+
         }
       } catch (err) {
         console.log(err);
