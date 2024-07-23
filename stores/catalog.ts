@@ -11,10 +11,10 @@ export const useCatalogStore = defineStore("catalogStore", {
     allHelpersSubDirFilter: [] as SubDirHelper[],
     linkedCategory: {} as CategorySys,
     topCategories: [] as CategorySys[],
-    allTopCategories: [] as CategorySys[],
+    allTopCategories: [] as CategorySys[]
   }),
   actions: {
-    async fetchAllCatalogs() {
+    async fetchAllCatalogs () {
       const authStore = useAuthStore();
       try {
         const response = await http("/api/v1/Helpers/get-all-catalogs");
@@ -37,7 +37,7 @@ export const useCatalogStore = defineStore("catalogStore", {
               }
 
               return { ...item, subdirectory, name: itemName };
-            },
+            }
           );
           this.allCatalogs = filteredCatalogByLang;
         }
@@ -46,7 +46,7 @@ export const useCatalogStore = defineStore("catalogStore", {
       }
     },
 
-    async fetchAllCategoriesLinked() {
+    async fetchAllCategoriesLinked () {
       try {
         const response = await http("/api/v1/Category/get-all-categories");
 
@@ -58,19 +58,19 @@ export const useCatalogStore = defineStore("catalogStore", {
         console.log(err);
       }
     },
-    filterLinkedCategories(value: string) {
+    filterLinkedCategories (value: string) {
       console.log("allLinkedCategories", this.allLinkedCategories);
       this.linkedCategories = this.allLinkedCategories.filter(
         (item: CategorySys) =>
-          item?.nameRu?.toLowerCase().includes(value?.toLowerCase()),
+          item?.nameRu?.toLowerCase().includes(value?.toLowerCase())
       );
       console.log("value", value);
       console.log("linkedCategories", this.linkedCategories);
     },
-    async fetchLinkedCategoryById(parentId: string) {
+    async fetchLinkedCategoryById (parentId: string) {
       try {
         const response = await http(
-          `/api/v1/Category/get-category/${parentId}`,
+          `/api/v1/Category/get-category/${parentId}`
         );
         if (response.status === 200) {
           this.linkedCategory = response.data;
@@ -79,11 +79,11 @@ export const useCatalogStore = defineStore("catalogStore", {
         console.log(err);
       }
     },
-    async fetchCategoryById(categoryId: string) {
+    async fetchCategoryById (categoryId: string) {
       const authStore = useAuthStore();
       try {
         const response = await http(
-          `/api/v1/Category/get-top-category-by-id?id=${categoryId}`,
+          `/api/v1/Category/get-top-category-by-id?id=${categoryId}`
         );
         if (response.status === 200) {
           console.log("respons get top category byif", response);
@@ -95,9 +95,9 @@ export const useCatalogStore = defineStore("catalogStore", {
                 subcategories: response.data[0].subcategories?.map(
                   (subItem: CategorySys) => ({
                     ...subItem,
-                    name: subItem?.nameKg,
-                  }),
-                ),
+                    name: subItem?.nameKg
+                  })
+                )
               };
             } else {
               return {
@@ -106,9 +106,9 @@ export const useCatalogStore = defineStore("catalogStore", {
                 subcategories: response.data[0].subcategories?.map(
                   (subItem: CategorySys) => ({
                     ...subItem,
-                    name: subItem?.nameRu,
-                  }),
-                ),
+                    name: subItem?.nameRu
+                  })
+                )
               };
             }
           });
@@ -120,7 +120,7 @@ export const useCatalogStore = defineStore("catalogStore", {
       }
     },
 
-    async getCatalogId(cagalogId: string) {
+    async getCatalogId (cagalogId: string) {
       try {
         const response = await http(`/api/v1/Helpers/get-catalog/${cagalogId}`);
         console.log("response getCatalogId", response);
@@ -132,10 +132,10 @@ export const useCatalogStore = defineStore("catalogStore", {
       }
     },
 
-    async fetchSubCatalogs(catalogId: string) {
+    async fetchSubCatalogs (catalogId: string) {
       try {
         const response = await http(
-          `/api/v1/Helpers/get-all-subdirectories-by-directoryId?id=${catalogId}`,
+          `/api/v1/Helpers/get-all-subdirectories-by-directoryId?id=${catalogId}`
         );
         console.log("response fetchSubCatalogs", response);
         // return response.data;
@@ -144,28 +144,28 @@ export const useCatalogStore = defineStore("catalogStore", {
       }
     },
 
-    async fetchAllCategories() {
+    async fetchAllCategories () {
       const authStore = useAuthStore();
       try {
         const response = await http("/api/v1/Category/get-all-top-categories");
 
         this.topCategories = response?.data?.map(
-          (item: Category) => item?.category,
+          (item: Category) => item?.category
         );
         this.allTopCategories = response?.data?.map(
-          (item: Category) => item?.category,
+          (item: Category) => item?.category
         );
         if (response.status === 200) {
           const filtered = response.data.map((item: Category) => {
             if (authStore.getSelectedLang === "kg") {
               return {
                 ...item,
-                category: { ...item?.category, name: item?.category?.nameKg },
+                category: { ...item?.category, name: item?.category?.nameKg }
               };
             } else {
               return {
                 ...item,
-                category: { ...item?.category, name: item?.category?.nameRu },
+                category: { ...item?.category, name: item?.category?.nameRu }
               };
             }
           });
@@ -175,10 +175,10 @@ export const useCatalogStore = defineStore("catalogStore", {
         console.log(err);
       }
     },
-    async fetchCatalog(categoryId: string) {
+    async fetchCatalog (categoryId: string) {
       try {
         const response = await http(
-          `/api/v1/Helpers/get-catalog/${categoryId}`,
+          `/api/v1/Helpers/get-catalog/${categoryId}`
         );
         if (response.status === 200) {
           return response.data;
@@ -187,17 +187,17 @@ export const useCatalogStore = defineStore("catalogStore", {
         console.log(err);
       }
     },
-    searchSubDirs(value: string) {
+    searchSubDirs (value: string) {
       this.allHelpersSubDir = this.allHelpersSubDirFilter.filter((item) =>
-        item?.nameRu?.toLowerCase().includes(value?.toLowerCase()),
+        item?.nameRu?.toLowerCase().includes(value?.toLowerCase())
       );
     },
-    filterTopCategories(value: string) {
+    filterTopCategories (value: string) {
       this.topCategories = this.allTopCategories.filter((item) =>
-        item?.nameRu?.toLowerCase().includes(value?.toLowerCase()),
+        item?.nameRu?.toLowerCase().includes(value?.toLowerCase())
       );
     },
-    async getHelpersSubDirs() {
+    async getHelpersSubDirs () {
       try {
         const response = await http("/api/v1/Helpers/get-all-subdirectories");
         if (response.status === 200) {
@@ -205,7 +205,7 @@ export const useCatalogStore = defineStore("catalogStore", {
             response.data.map(async (helper: SubDirHelper) => {
               const result = await this.fetchCatalog(helper?.categoryId);
               return { ...helper, category: await result?.nameRu };
-            }),
+            })
           );
 
           this.allHelpersSubDir = results;
@@ -215,29 +215,29 @@ export const useCatalogStore = defineStore("catalogStore", {
       } catch (error) {
         console.error("Error fetching helpers subdirectories:", error);
       }
-    },
+    }
   },
   getters: {
-    getAllCatalogs(state) {
+    getAllCatalogs (state) {
       return state.allCatalogs;
     },
-    getAllCategories(state) {
+    getAllCategories (state) {
       return state.allCategories;
     },
-    getCategory(state) {
+    getCategory (state) {
       return state.category;
     },
-    getLinkedCategories(state) {
+    getLinkedCategories (state) {
       return state.linkedCategories;
     },
-    getHelperSubDirs(state) {
+    getHelperSubDirs (state) {
       return state.allHelpersSubDir;
     },
-    getLinkedCategory(state) {
+    getLinkedCategory (state) {
       return state.linkedCategory;
     },
-    getTopCategories(state) {
+    getTopCategories (state) {
       return state.topCategories;
-    },
-  },
+    }
+  }
 });

@@ -5,11 +5,7 @@
     @mouseover="itemHover"
     @mouseleave="itemHoverLeave"
   >
-    <div
-      v-if="type === 'bookmark'"
-      class="bookmark-icon-heart"
-      
-    >
+    <div v-if="type === 'bookmark'" class="bookmark-icon-heart">
       <img src="../../assets/icons/icon=heart fill.svg" alt="heart icon" />
     </div>
     <slot name="edit-items"></slot>
@@ -34,8 +30,13 @@
     <span class="item-block-name">{{ product?.name }}</span>
 
     <div class="product-infomation">
-      <span>{{ $t("consumption") }}: {{ product?.consumption || $t('noData')}}</span>
-      <span>{{ $t("dryingTime") }}: {{ product?.dryingTime || $t('noData')}}</span>
+      <span
+        >{{ $t("consumption") }}:
+        {{ product?.consumption || $t("noData") }}</span
+      >
+      <span
+        >{{ $t("dryingTime") }}: {{ product?.dryingTime || $t("noData") }}</span
+      >
 
       <span class="volume"
         >{{ $t("volume") }} (л): {{ product?.size }}
@@ -90,7 +91,7 @@ import { ExtendedProduct, Product } from "@/types/Product";
 const props = defineProps<{
   type?: string;
   product: Product;
-  from?:'bookmarks'
+  from?: "bookmarks";
 }>();
 const { t } = useI18n();
 
@@ -147,13 +148,11 @@ const toggleBoomark = () => {
   if (authStore.getUserId) {
     isProductBookmarked.value = !isProductBookmarked.value;
     productsStore.addToBookmarks(props?.product?.id);
-if(props?.from==='bookmarks'){
-  setTimeout(()=>{
-window.location.reload()
-  },1000)
-}
-
- 
+    if (props?.from === "bookmarks") {
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    }
   }
 };
 const increaseCount = () => {

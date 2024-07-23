@@ -144,7 +144,7 @@
       </div>
       <div class="change-password">
         <button @click="changePassword" class="register-auth-btn">
-          {{ !responseLoading? $t("change") :$t('loading') }}
+          {{ !responseLoading ? $t("change") : $t("loading") }}
         </button>
       </div>
     </div>
@@ -164,10 +164,10 @@ const isOldPasswordOpen = ref(false);
 const isPasswordOpen = ref(false);
 const isNewPasswordOpen = ref(false);
 const { t } = useI18n();
-const responseLoading=ref(false)
+const responseLoading = ref(false);
 const isOTPOpen = ref(false);
 const isPasswordsOpen = ref(false);
-const authStore=useAuthStore()
+const authStore = useAuthStore();
 const { handleValues } = useInputValidation();
 const handleInput = (field: string, type: string) => {
   handleValues(inputs.value, field, type);
@@ -227,8 +227,8 @@ const sendCode = async () => {
 };
 
 const changePassword = async () => {
-  const tokenLocal = localStorage.getItem('token')
-  let token= tokenLocal && tokenLocal!==undefined ? tokenLocal :null
+  const tokenLocal = localStorage.getItem("token");
+  let token = tokenLocal && tokenLocal !== undefined ? tokenLocal : null;
 
   const validationTypes: any = {
     code: "string",
@@ -256,16 +256,18 @@ const changePassword = async () => {
         newPassword: inputs.value.password.value,
         confirmPassword: inputs.value.passwordRepeat.value,
       };
-   const response =await http.post("/api/v1/User/change-password", body,{headers:{
-    Authorization:`Bearer ${token}`
-   }})
-   if(response.status==401){
-    responseLoading.value=true
-        authStore.refreshToken()
+      const response = await http.post("/api/v1/User/change-password", body, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.status == 401) {
+        responseLoading.value = true;
+        authStore.refreshToken();
       }
       console.log("response changePassword", response);
       if (response.status === 200) {
-        responseLoading.value=false
+        responseLoading.value = false;
         useNotif("success", t("passwordUpdated"), t("success"));
         setTimeout(() => {
           window.location.reload();
@@ -279,11 +281,11 @@ const changePassword = async () => {
         inputs.value.oldPassword.error = t("oldErroPassword");
       }
       console.log(err, "Error changing the password");
-      if(err.response.status==401){
-        authStore.refreshToken()
+      if (err.response.status == 401) {
+        authStore.refreshToken();
       }
-    }finally{
-      responseLoading.value=false
+    } finally {
+      responseLoading.value = false;
     }
   }
 };

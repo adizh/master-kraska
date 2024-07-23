@@ -55,7 +55,7 @@
       <div class="col-12 each-field password-block-input">
         <label for="password">{{ $t("newPassword") }}</label>
         <input
-          class="col-12 basic-input "
+          class="col-12 basic-input"
           :type="passwordsVisibility ? 'text' : 'password'"
           id="password"
           :placeholder="$t('newPassword')"
@@ -63,19 +63,19 @@
           @input="handleInput('password', 'password')"
         />
         <img
-        src="../../assets/icons/black/ri-eye-open.svg"
-        alt="open"
-        v-if="passwordsVisibility"
-        @click="passwordsVisibility = false"
-        class="password-icon"
-      />
-      <img
-        src="../../assets/icons/black/ri_eye-off-line.svg"
-        alt="close"
-        v-else
-        @click="passwordsVisibility = true"
-        class="password-icon"
-      />
+          src="../../assets/icons/black/ri-eye-open.svg"
+          alt="open"
+          v-if="passwordsVisibility"
+          @click="passwordsVisibility = false"
+          class="password-icon"
+        />
+        <img
+          src="../../assets/icons/black/ri_eye-off-line.svg"
+          alt="close"
+          v-else
+          @click="passwordsVisibility = true"
+          class="password-icon"
+        />
         <span v-if="inputs.password.error" class="err-input-msg">{{
           inputs.password.error
         }}</span>
@@ -91,21 +91,20 @@
           @input="handleInput('passwordRepeat', 'passwordRepeat')"
         />
 
-
         <img
-        src="../../assets/icons/black/ri-eye-open.svg"
-        alt="open"
-        v-if="NewPasswordsVisibility"
-        @click="NewPasswordsVisibility = false"
-        class="password-icon"
-      />
-      <img
-        src="../../assets/icons/black/ri_eye-off-line.svg"
-        alt="close"
-        v-else
-        @click="NewPasswordsVisibility = true"
-        class="password-icon"
-      />
+          src="../../assets/icons/black/ri-eye-open.svg"
+          alt="open"
+          v-if="NewPasswordsVisibility"
+          @click="NewPasswordsVisibility = false"
+          class="password-icon"
+        />
+        <img
+          src="../../assets/icons/black/ri_eye-off-line.svg"
+          alt="close"
+          v-else
+          @click="NewPasswordsVisibility = true"
+          class="password-icon"
+        />
         <span v-if="inputs.passwordRepeat.error" class="err-input-msg">{{
           inputs.passwordRepeat.error
         }}</span>
@@ -133,10 +132,10 @@ const handleInput = (field: string, type: string) => {
   handleValues(inputs.value, field, type);
 };
 
-const passwordsVisibility=ref(false)
-const NewPasswordsVisibility=ref(false)
+const passwordsVisibility = ref(false);
+const NewPasswordsVisibility = ref(false);
 const { t } = useI18n();
-const authStore=useAuthStore()
+const authStore = useAuthStore();
 const sendEmail = async () => {
   handleValues(inputs.value, "email", "email");
 
@@ -191,8 +190,8 @@ const sendCode = async () => {
 };
 
 const changePassword = async () => {
-  const tokenLocal = localStorage.getItem('token')
-  let token= tokenLocal && tokenLocal!==undefined ? tokenLocal :null
+  const tokenLocal = localStorage.getItem("token");
+  let token = tokenLocal && tokenLocal !== undefined ? tokenLocal : null;
   const validationTypes: any = {
     code: "string",
     email: "email",
@@ -220,18 +219,17 @@ const changePassword = async () => {
       const response = await http.post("/api/v1/User/reset-password", body);
       console.log("response resetPassword", response);
 
-      if((response.status===401)){
-        authStore.refreshToken()
+      if (response.status === 401) {
+        authStore.refreshToken();
       }
       if (response.status === 200) {
         useNotif("success", t("passwordReset"), t("success"));
         setTimeout(() => {
           window.location.reload();
         }, 800);
-      } 
-        
+      }
     } catch (err) {
-      authStore.refreshToken()
+      authStore.refreshToken();
       console.log(err, "Error changing the password");
     }
   }

@@ -7,12 +7,12 @@ const dayAbbreviations = {
   Пятница: "Пт",
   Суббота: "Сб",
   Среда: "Ср",
-  Четверг: "Чт",
+  Четверг: "Чт"
 };
 
 export const formatHours = (hours: string) => {
   return hours.replace(
     openHoursRegex,
-    (match) => dayAbbreviations[match as keyof typeof dayAbbreviations],
+    (match) => dayAbbreviations[match as keyof typeof dayAbbreviations]
   );
 };

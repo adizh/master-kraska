@@ -10,12 +10,12 @@
             class="main-header-input"
             :placeholder="$t('whichProSearch')"
             @input="handleSearch"
-          />
+          >
           <img
             src="../assets/icons/icon=search.svg"
             alt="search"
             class="search-icon"
-          />
+          >
         </div>
         <div class="btn-block" @click.stop="router.push(`/catalog`)">
           <button>{{ $t("find") }}</button>
@@ -46,12 +46,11 @@ const isSearchOpen = ref(false);
 const firstCategoryItem = ref({} as Category);
 const router = useRouter();
 const handleSearch = (event: any) => {
-  setTimeout(()=>{
+  setTimeout(() => {
     isSearchOpen.value = event.target?.value?.trim().length > 0;
-productStore.filters.search=event.target?.value
+    productStore.filters.search = event.target?.value;
     productStore.filterProducts(event.target?.value);
-  },2000)
-
+  }, 2000);
 };
 
 watch(isSearchOpen, (value) => {

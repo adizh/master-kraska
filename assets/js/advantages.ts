@@ -3,22 +3,22 @@ export const advantagesOptions = [
   {
     number: 2,
     header: "bigExperience",
-    text: "professionalExperience",
+    text: "professionalExperience"
   },
   {
     number: 3,
     header: "modernTech",
-    text: "modernTechnics",
+    text: "modernTechnics"
   },
   { number: 4, header: "big", text: "storesWeb" },
   {
     number: 5,
     header: "richSelection",
-    text: "mostWideProducts",
+    text: "mostWideProducts"
   },
   {
     number: 6,
     header: "natureEcology",
-    text: "ecoSafeProducts",
-  },
+    text: "ecoSafeProducts"
+  }
 ];

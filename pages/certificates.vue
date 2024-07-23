@@ -6,7 +6,7 @@
       :src="img?.image"
       :alt="img?.descriptionRu"
       :class="{ 'page-class': type === 'page' }"
-    />
+    >
   </div>
 </template>
 
@@ -16,8 +16,8 @@ const certificates = ref([] as Certificate[]);
 const props = defineProps({
   type: {
     type: String,
-    default: "",
-  },
+    default: ""
+  }
 });
 
 const computedCertificates = computed(() => {

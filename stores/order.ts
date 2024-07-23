@@ -12,23 +12,32 @@ export const useOrderStore = defineStore("orderStore", {
       comment: { value: "", error: "" },
       houseNumber: { value: "", error: "", type: "string" },
       floorNumber: { value: "", error: "" },
-      blockNumber: { value: "", error: "" },
+      blockNumber: { value: "", error: "" }
     },
 
-    selectedStatus:'',
+    selectedStatus: "",
     shops: [] as AddressList[],
-    orders:{  "page": 1,
-    "pageSize": 0,
-    "totalItems": 0,
-    orderNumber:'',
-    "totalPages": 0,
-    "items": []} as {page:number,pageSize:number, totalItems:number, totalPages:number, items:OrderItem[],orderNumber:string}
+    orders: {
+      page: 1,
+      pageSize: 0,
+      totalItems: 0,
+      orderNumber: "",
+      totalPages: 0,
+      items: []
+    } as {
+      page: number;
+      pageSize: number;
+      totalItems: number;
+      totalPages: number;
+      items: OrderItem[];
+      orderNumber: string;
+    }
   }),
   actions: {
-    handleValues(
+    handleValues (
       fieldName: keyof typeof this.delForm,
 
-      validationType: string | any,
+      validationType: string | any
     ) {
       const value = this.delForm[fieldName].value;
       this.delForm[fieldName].value = value;
@@ -51,7 +60,7 @@ export const useOrderStore = defineStore("orderStore", {
       }
     },
 
-    async fetchAllShops() {
+    async fetchAllShops () {
       const authStore = useAuthStore();
       try {
         const response = await http("/api/v1/Order/get-all-shops");
@@ -68,18 +77,18 @@ export const useOrderStore = defineStore("orderStore", {
         console.log(err);
       }
     },
-    setInitUser(user: any) {
+    setInitUser (user: any) {
       this.delForm.name.value = user?.firstName;
       this.delForm.lastName.value = user?.lastName;
       this.delForm.address.value = user?.address;
       this.delForm.email.value = user?.email;
       this.delForm.phone.value = user?.phone;
     },
-    async sendOrder(body: any, deliveryType: number) {
+    async sendOrder (body: any, deliveryType: number) {
       try {
         const response = await http.post("/api/v1/Order/order-delivery", body);
         console.log("send order response", response);
-        if (response.data.code === 200 && deliveryType === 0) {
+        if (response.data.code === 200) {
           useNotifLocal("success", "orderSent", "success");
         }
         return response;
@@ -88,7 +97,7 @@ export const useOrderStore = defineStore("orderStore", {
       }
     },
 
-    async fetchOrderById(id: string) {
+    async fetchOrderById (id: string) {
       const cartStore = useCartStore();
       try {
         const response = await http.get(`/api/v1/Order/get-order-id/${id}`);
@@ -101,7 +110,7 @@ export const useOrderStore = defineStore("orderStore", {
       }
     },
 
-    async createOrder() {
+    async createOrder () {
       const cartStore = useCartStore();
       const authStore = useAuthStore();
       // isConfirmOpen.value = false;
@@ -112,13 +121,13 @@ export const useOrderStore = defineStore("orderStore", {
           productId: item?.id,
           productName: item?.name,
           price: item?.initPrice,
-          quantity: item?.count,
+          quantity: item?.count
         });
       }
       try {
         const response = await http.post(
           "/api/v1/Order/create-order",
-          allOrderItems,
+          allOrderItems
         );
         console.log("response create order", response);
         if (response.status === 200) {
@@ -136,74 +145,76 @@ export const useOrderStore = defineStore("orderStore", {
         }
       }
     },
-    setOrderAddress(value: string) {
+    setOrderAddress (value: string) {
       this.delForm.address.value = value;
     },
-    setOrderCity(value: string) {
+    setOrderCity (value: string) {
       this.delForm.city.value = value;
     },
 
-
-    updatePage(page:number){
-this.orders.page=page;
-this.fetchOrders();
-window.scrollTo(0,0)
-
+    updatePage (page: number) {
+      this.orders.page = page;
+      this.fetchOrders();
+      window.scrollTo(0, 0);
     },
-    updateStatus(value:string){
-      this.orders.page=1
-this.selectedStatus= value;
-console.log('updateStatus value',value)
-this.fetchOrders()
+    updateStatus (value: string) {
+      this.orders.page = 1;
+      this.selectedStatus = value;
+      console.log("updateStatus value", value);
+      this.fetchOrders();
     },
-    updateOrderNumber(value:string){
-      this.orders.orderNumber=value;
-      console.log('value',value)
-      this.fetchOrders()
+    updateOrderNumber (value: string) {
+      this.orders.orderNumber = value;
+      console.log("value", value);
+      this.fetchOrders();
     },
 
-    async fetchOrders(){
-      try{
-        let params:{page:number,pageSize:number,statusType?:string,orderNumber?:string}={
-            page:this.orders.page,
-            pageSize:10
+    async fetchOrders () {
+      try {
+        const params: {
+          page: number;
+          pageSize: number;
+          statusType?: string;
+          orderNumber?: string;
+        } = {
+          page: this.orders.page,
+          pageSize: 10
+        };
+
+        if (this.selectedStatus?.length > 0) {
+          params.statusType = this.selectedStatus;
         }
-
-        if(this.selectedStatus?.length>0){
-          params['statusType']=this.selectedStatus
-        }
-        if(this.orders.orderNumber?.length>0){
-          params['orderNumber']=this.orders.orderNumber
+        if (this.orders.orderNumber?.length > 0) {
+          params.orderNumber = this.orders.orderNumber;
         }
         const response = await http({
-          method:'GET',
-          url:'api/v1/Order/get-all-orders',
-        params:params
+          method: "GET",
+          url: "api/v1/Order/get-all-orders",
+          params
         });
-        if(response.status===200){
-this.orders.items= response.data.items;
-this.orders.totalPages=response.data.totalPages
+        if (response.status === 200) {
+          this.orders.items = response.data.items;
+          this.orders.totalPages = response.data.totalPages;
 
-console.log('response data',response.data)
+          console.log("response data", response.data);
         }
-      }catch(err){
-        console.log(err)
+      } catch (err) {
+        console.log(err);
       }
     }
   },
   getters: {
-    deliveryForm(state) {
+    deliveryForm (state) {
       return state.delForm;
     },
-    getShops(state) {
+    getShops (state) {
       return state.shops;
     },
-    getAllOrders(state){
-      return state.orders.items
+    getAllOrders (state) {
+      return state.orders.items;
     },
-    getAllOrdersPages(state){
-      return state.orders
+    getAllOrdersPages (state) {
+      return state.orders;
     }
-
-  },
+  }
 });

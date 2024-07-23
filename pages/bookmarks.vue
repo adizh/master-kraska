@@ -14,7 +14,7 @@
           src="../assets/icons/icon=heart.svg"
           alt="heart"
           class="no-content-img"
-        />
+        >
       </template>
     </NoContent>
   </section>

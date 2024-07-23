@@ -1,31 +1,30 @@
 <template>
   <NuxtLayout name="admin">
-  <section>
-
-    <button class="btn-white-bg mt-0 mb-4" @click="navigateTo('/admin')">
-      Назад
-    </button>
-
-    <div class="admin-delete">
-      <button class="pink-button" @click="brandOpen = true">
-        Обновить бренд
+    <section>
+      <button class="btn-white-bg mt-0 mb-4" @click="navigateToAdmin">
+        Назад
       </button>
-      <button class="pink-button" @click="categoryOpen = true">
-        Обновить категорию
-      </button>
-      <button class="pink-button" @click="newsOpen = true">
-        Обновить новость
-      </button>
-    </div>
 
-    <AdminUpdateBrand :isOpen="brandOpen" @close-modal="brandOpen = false" />
-    <AdminUpdateNews :isOpen="newsOpen" @close-modal="newsOpen = false" />
-    <AdminUpdateCategory
-      :isOpen="categoryOpen"
-      @close-modal="categoryOpen = false"
-    />
-  </section>
-</NuxtLayout>
+      <div class="admin-delete">
+        <button class="pink-button" @click="brandOpen = true">
+          Обновить бренд
+        </button>
+        <button class="pink-button" @click="categoryOpen = true">
+          Обновить категорию
+        </button>
+        <button class="pink-button" @click="newsOpen = true">
+          Обновить новость
+        </button>
+      </div>
+
+      <AdminUpdateBrand :is-open="brandOpen" @close-modal="brandOpen = false" />
+      <AdminUpdateNews :is-open="newsOpen" @close-modal="newsOpen = false" />
+      <AdminUpdateCategory
+        :is-open="categoryOpen"
+        @close-modal="categoryOpen = false"
+      />
+    </section>
+  </NuxtLayout>
 </template>
 
 <script setup lang="ts">

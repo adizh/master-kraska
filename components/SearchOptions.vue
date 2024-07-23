@@ -8,7 +8,7 @@
       class="search-res-header"
       v-else-if="
         productStore?.getFilteredProducts?.length > 0 &&
-        !productStore?.getLoadingState 
+        !productStore?.getLoadingState
       "
     >
       <li
@@ -28,7 +28,7 @@
       class="look-all-btn"
       v-if="
         productStore?.getFilteredProducts?.length > 0 &&
-        !productStore?.getLoadingState 
+        !productStore?.getLoadingState
       "
       @click.stop="router.push('/catalog')"
     >
@@ -44,7 +44,6 @@ const props = defineProps<{
   isSearchOpen: boolean;
 }>();
 
-
 const catalogStore = useCatalogStore();
 const router = useRouter();
 const emit = defineEmits(["closeSearch"]);
@@ -55,15 +54,13 @@ const goToProd = (id: string) => {
 const firstCategoryItem = ref({} as Category);
 const productStore = useProductsSstore();
 
-
-console.log('productStore.getFilteredProducts in Searchoptions',productStore.getFilteredProducts)
+console.log(
+  "productStore.getFilteredProducts in Searchoptions",
+  productStore.getFilteredProducts,
+);
 onMounted(async () => {
-
   await catalogStore.fetchAllCategories();
   firstCategoryItem.value = catalogStore?.getAllCategories[0];
-
-
- 
 });
 </script>
 

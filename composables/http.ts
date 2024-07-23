@@ -1,11 +1,11 @@
 // http.js
 import axios, { AxiosInstance, AxiosError } from "axios";
 
-//const url = "https://mc.mydatacoin.io";
-const url = 'https://api.masterkraska.kg/'
+// const url = "https://mc.mydatacoin.io";
+const url = "https://api.masterkraska.kg/";
 
 const http: AxiosInstance = axios.create({
-  baseURL: url,
+  baseURL: url
 });
 
 http.interceptors.request.use((config) => {
@@ -27,30 +27,27 @@ http.interceptors.response.use(
       console.error("Error:", error.message);
     }
     return Promise.reject(error);
-  },
+  }
 );
 
 export default http;
 
+let userToken;
+if (process.client) {
+  const tokenLocal = localStorage.getItem("token");
 
-
-let userToken 
-if(process.client){
-  const tokenLocal =localStorage.getItem('token')
-
-if(tokenLocal){
-  userToken=tokenLocal
-}else{
-  userToken=null
+  if (tokenLocal) {
+    userToken = tokenLocal;
+  } else {
+    userToken = null;
+  }
 }
 
-}
-
-console.log('userToken',userToken)
- const httpAuth: AxiosInstance = axios.create({
+console.log("userToken", userToken);
+const httpAuth: AxiosInstance = axios.create({
   baseURL: url,
-  headers:{
-    Authorization:`Bearer ${userToken}`
+  headers: {
+    Authorization: `Bearer ${userToken}`
   }
 });
 httpAuth.interceptors.request.use((config) => {
@@ -63,12 +60,12 @@ httpAuth.interceptors.response.use(
     return response;
   },
   (error: AxiosError) => {
-    const authStore =useAuthStore()
+    const authStore = useAuthStore();
     if (error.response) {
       console.error("Response Error:", error.response.data);
       console.error("Response Status:", error.response.status);
-      if(error.response.status===401){
-        authStore.refreshToken()
+      if (error.response.status === 401) {
+        authStore.refreshToken();
       }
     } else if (error.request) {
       console.error("Request Error:", error.request);
@@ -76,10 +73,10 @@ httpAuth.interceptors.response.use(
       console.error("Error:", error.message);
     }
     return Promise.reject(error);
-  },
+  }
 );
 
-export {httpAuth}
+export { httpAuth };
 
 // /api/v1/User/edit-user
 // /api/v1/User/get-user-by-id/{userId}

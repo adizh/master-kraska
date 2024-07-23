@@ -2,7 +2,7 @@
   <div class="single-news-section">
     <div class="single-news">
       <h1>{{ singleNew?.name }}</h1>
-      <img :src="singleNew?.image" :alt="singleNew?.text" />
+      <img :src="singleNew?.image" :alt="singleNew?.text">
       <div class="text">
         {{ singleNew?.description }}
       </div>
@@ -23,7 +23,7 @@
         @click="navigateTo(`/news/${item?.id}`)"
       >
         <div class="image">
-          <img :src="item?.image" :alt="item?.name" />
+          <img :src="item?.image" :alt="item?.name">
         </div>
         <div class="info">
           <div class="news-header">
@@ -32,7 +32,7 @@
           <span class="date">
             {{ formatDate(item?.createdDate) }}
           </span>
-          <br />
+          <br>
         </div>
       </div>
     </div>
@@ -56,14 +56,14 @@ const fetchNew = async () => {
           ...response.data,
           name: response.data?.nameKg,
           text: response.data?.textKg,
-          description: response.data?.descriptionKg,
+          description: response.data?.descriptionKg
         };
       } else {
         singleNew.value = {
           ...response.data,
           name: response.data?.nameRu,
           text: response.data?.textRu,
-          description: response.data?.descriptionRu,
+          description: response.data?.descriptionRu
         };
       }
     }
@@ -82,14 +82,14 @@ const fetchActiveNews = async () => {
             ...news,
             name: news?.nameKg,
             description: news?.descriptionKg,
-            text: news?.textKg,
+            text: news?.textKg
           };
         } else {
           return {
             ...news,
             name: news?.nameRu,
             description: news?.descriptionRu,
-            text: news?.textRu,
+            text: news?.textRu
           };
         }
       });

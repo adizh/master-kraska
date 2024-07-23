@@ -98,7 +98,6 @@
       <div class="col-6 each-field language">
         <label for="password">{{ $t("language") }}</label>
         <UIDropdown
-
           :isDropdownOpen="isUIDropdownOpen"
           :selectedValue="initLan"
           :options="lanOptions"
@@ -196,8 +195,8 @@ const handleAddress = async (event: any) => {
 };
 
 const editUser = async () => {
-  const tokenLocal = localStorage.getItem('token')
-  let token= tokenLocal && tokenLocal!==undefined ? tokenLocal :null
+  const tokenLocal = localStorage.getItem("token");
+  let token = tokenLocal && tokenLocal !== undefined ? tokenLocal : null;
   const validationTypes: any = {
     firstName: "string",
     lastName: "string",
@@ -208,7 +207,6 @@ const editUser = async () => {
 
   for (const fieldName in inputs.value) {
     if (Object.prototype.hasOwnProperty.call(inputs.value, fieldName)) {
-
       const validationType = validationTypes[fieldName];
       handleValues(inputs.value, fieldName, validationType);
     }
@@ -229,23 +227,21 @@ const editUser = async () => {
         address: inputs.value.address.value,
         phoneNumber: inputs.value.phone.value,
         image: checkUserImage,
-        extension:'png'
+        extension: "png",
       };
-      const response = await http.put("/api/v1/User/edit-user", body,{
-        headers:{
-          Authorization:`Bearer ${token}`
-        }
-      }
-      
-      );
+      const response = await http.put("/api/v1/User/edit-user", body, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (response.status === 200) {
         useNotif("success", t("successEdited"), t("success"));
       }
       console.log("response", response);
-    } catch (err:any) {
+    } catch (err: any) {
       console.log(err);
-      if(err.response.status===401){
-        store.refreshToken()
+      if (err.response.status === 401) {
+        store.refreshToken();
       }
     }
   }
@@ -270,7 +266,6 @@ const uploadLogo = (event: any) => {
   border-radius: 8px;
   padding: 6px;
   @include textFormat(16px, 20px, 400, #000);
-
 
   li {
     padding: 16px;

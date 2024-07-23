@@ -109,7 +109,7 @@ const createNews = async () => {
       name: newsForm.value.name,
       logo: newsForm.value.image.value,
       tinting: newsForm.value.tinting,
-      extension:'png'
+      extension: "png",
     };
     try {
       const response = await http.post("/api/v1/Brand/create-brand", body);

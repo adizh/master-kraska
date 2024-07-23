@@ -1,7 +1,6 @@
 <template>
-
   <div v-if="productStore.getLoadingState" class="text-center">
-    <img src="../../assets/texture-roller.gif" class='gif-img'></img>
+    <img src="../../assets/texture-roller.gif" class="gif-img" />
   </div>
 
   <div
@@ -31,21 +30,17 @@
     </div>
   </div>
 
-  <div class="flex flex-row justify-content-center"
-  v-else
->
-{{ $t("noDataCatalogSearch") }}
-
-</div>
+  <div class="flex flex-row justify-content-center" v-else>
+    {{ $t("noDataCatalogSearch") }}
+  </div>
 </template>
 
 <script setup lang="ts">
 const productStore = useProductsSstore();
 
-
 const changePage = (page: number) => {
   productStore.filters.currentPage = page;
-   productStore.filterProducts();
+  productStore.filterProducts();
 };
 const props = defineProps<{
   visibleMethod: string;
@@ -56,8 +51,8 @@ const props = defineProps<{
 .items {
   @include flex(column, start, start, 2rem);
 }
-.gif-img{
-width:200px;
+.gif-img {
+  width: 200px;
 }
 
 .results {

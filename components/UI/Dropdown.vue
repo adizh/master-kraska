@@ -44,7 +44,6 @@ const props = defineProps<{
   isDropdownOpen: boolean;
   label: string;
 }>();
-
 </script>
 
 <style scoped lang="scss">
@@ -64,7 +63,7 @@ const props = defineProps<{
 .ui-options {
   position: absolute; /* Absolute positioning */
   top: 100%; /* Position below the selected option */
-right:0;
+  right: 0;
 
   z-index: 10; /* Ensure it's on top of other elements */
   border: 1px solid $slider-border-color;
@@ -72,10 +71,10 @@ right:0;
   padding: 6px;
   @include textFormat(16px, 20px, 400, #000);
   background-color: white; /* Ensure the background is not transparent */
-  width: 95%  !important;
-  left:0 !important;
-  right:0 !important;
-  margin:0 auto !important;
+  width: 95% !important;
+  left: 0 !important;
+  right: 0 !important;
+  margin: 0 auto !important;
 
   li {
     padding: 16px;

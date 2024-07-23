@@ -174,7 +174,6 @@
       <button class="pink-button" @click="() => emit('applyFilter')">
         {{ $t("applyFilter") }}
       </button>
-    
     </div>
   </div>
 </template>
@@ -308,7 +307,7 @@ const isChecked = (itemId: string, subId: string) => {
   );
 };
 
-const updateBrandsInputs =async (brand: Brands, event: any) => {
+const updateBrandsInputs = async (brand: Brands, event: any) => {
   if (brand?.id === brandIdQuery.value) {
     route.query.brandId = "";
   }
@@ -324,11 +323,7 @@ const updateBrandsInputs =async (brand: Brands, event: any) => {
     }
   }
 
-
- await productsStore.filterProducts();
-
-
-
+  await productsStore.filterProducts();
 };
 
 const updateCheckboxState = (itemId: string, subId: string, event: any) => {
@@ -352,7 +347,6 @@ const updateCheckboxState = (itemId: string, subId: string, event: any) => {
   productsStore.setSubDirectories(filteredValues);
 
   productsStore.filterProducts();
-
 };
 
 const opensIncludes = (id: string) => {
@@ -382,7 +376,6 @@ const getRemainingItemCount = (item: AllCatalog) => {
 };
 
 onMounted(async () => {
-
   await catalogStore.fetchAllCatalogs();
   await initializeCheckboxStates();
   brandsStore.fetchAllBrands();
@@ -405,7 +398,6 @@ onMounted(async () => {
     await productsStore.filterProducts();
   }
   await productsStore.filterProducts();
-
 });
 
 onUnmounted(() => {
@@ -438,7 +430,7 @@ onUnmounted(() => {
 
 .apply-filters {
   display: none;
-  button{
+  button {
     font-size: 18px !important;
   }
 }

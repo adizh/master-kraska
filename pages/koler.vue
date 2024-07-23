@@ -29,7 +29,7 @@
             :placeholder="$t('colorCode')"
             class="basic-input"
             @input="handleSearch"
-          />
+          >
           <div class="danger-text">
             {{ $t("kolerWarning") }}
           </div>
@@ -52,7 +52,7 @@
                       src="../assets/icons/carbon_checkmark-filled (1).svg"
                       alt="carbon"
                       class="carbon"
-                    />
+                    >
                   </p>
                 </div>
               </div>
@@ -65,7 +65,7 @@
             </div>
 
             <div class="koler-change">
-              <img id="img" src="/koler.png" format="webp" />
+              <img id="img" src="/koler.png" format="webp">
               <div
                 id="bg"
                 :style="{ background: '#' + selectedColor?.rgb || 'white' }"
@@ -108,7 +108,7 @@ const selectColor = (item: Tinting) => {
 onMounted(async () => {
   await fetchAllTintings();
   currentBrandsColors.value = allTingings.value?.filter(
-    (item: Tinting) => item?.brandId === selectedBrand?.value.id,
+    (item: Tinting) => item?.brandId === selectedBrand?.value.id
   );
 });
 
@@ -134,7 +134,7 @@ const fetchBrandsId = async (id: string) => {
 const fetchAllData = async (ids: string[]) => {
   const idsNull = [
     "902dea30-e9a6-4d6c-accf-97d4590d9852",
-    "8b9f00af-1ff0-400e-be67-3f4753c89970",
+    "8b9f00af-1ff0-400e-be67-3f4753c89970"
   ];
   const filtered = ids.filter((item) => !idsNull.includes(item));
   const results = [];
@@ -152,14 +152,14 @@ const fetchAllData = async (ids: string[]) => {
     "Sirca",
     "Ярославские",
     "Marshall",
-    "Dulux",
+    "Dulux"
   ];
   filteredBrands.value = desiredOrder.map((name) =>
-    filteredOnes.find((obj) => obj.name === name),
+    filteredOnes.find((obj) => obj.name === name)
   );
   selectedBrand.value = filteredBrands.value[0];
   currentBrandsColors.value = allTingings.value?.filter(
-    (item: Tinting) => item?.brandId === selectedBrand?.value.id,
+    (item: Tinting) => item?.brandId === selectedBrand?.value.id
   );
   fetchTintingsByBrand(selectedBrand.value);
   return [];
@@ -168,7 +168,7 @@ const fetchAllData = async (ids: string[]) => {
 const fetchTintingsByBrand = async (brand: Brands) => {
   try {
     const response = await http(
-      `/api/v1/Tinting/get-all-tintings-pagination?page=${currentPage.value}&pageSize=${pageSize?.value}&brandId=${brand?.id}&code=${tintingSearch?.value}`,
+      `/api/v1/Tinting/get-all-tintings-pagination?page=${currentPage.value}&pageSize=${pageSize?.value}&brandId=${brand?.id}&code=${tintingSearch?.value}`
     );
     console.log("response fetchTintingsByBrand", response);
     if (response.status === 200) {
@@ -205,7 +205,7 @@ const fetchAllTintings = async () => {
 const chooseBrand = (value: Brands) => {
   selectedBrand.value = value;
   currentBrandsColors.value = allTingings.value?.filter(
-    (item: Tinting) => item?.brandId === selectedBrand?.value.id,
+    (item: Tinting) => item?.brandId === selectedBrand?.value.id
   );
   tintingSearch.value = "";
   fetchTintingsByBrand(selectedBrand.value);
@@ -380,10 +380,9 @@ body {
   }
 }
 
-@media (max-width:1200px){
+@media (max-width: 1200px) {
   .koler-change {
     width: 66%;
-
   }
 }
 @media (max-width: 900px) {
@@ -415,10 +414,9 @@ body {
   }
 }
 
-@media (max-width:756px){
+@media (max-width: 756px) {
   .koler-change {
     width: 80%;
-
   }
 }
 

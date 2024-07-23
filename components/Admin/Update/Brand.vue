@@ -198,9 +198,9 @@ const submitEdit = async () => {
   }
 
   if (body.logo?.startsWith("http")) {
-    body = { ...body, logo: null,      extension:'png' };
+    body = { ...body, logo: null, extension: "png" };
   } else {
-    body = {...body,  extension:'png'};
+    body = { ...body, extension: "png" };
   }
   console.log("body", body);
   try {

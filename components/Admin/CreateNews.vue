@@ -169,7 +169,7 @@ const createNews = async () => {
     const body = {
       ...inputs,
       image: newsForm.value.image.value,
-      extension:'png'
+      extension: "png",
     };
     try {
       const response = await http.post("/api/v1/News/create-news", body);

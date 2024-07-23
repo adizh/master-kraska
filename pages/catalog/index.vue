@@ -15,18 +15,18 @@
           :placeholder="$t('searchPaint')"
           class="main-header-input"
           @input="handleSearch"
-        />
+        >
         <div class="block-style-select">
           <img
             src="../../assets/icons/ep_menu.svg"
             alt="ep menu"
             @click="visibleMethod = 'vertical'"
-          />
+          >
           <img
             src="../../assets/icons/f7_menu.svg"
             alt="menu"
             @click="visibleMethod = 'horizontal'"
-          />
+          >
         </div>
       </div>
     </div>
@@ -81,12 +81,11 @@ const visibleMethod = ref<VisibleMethod>("vertical");
 const route = useRoute();
 const id = ref(route.query?.category);
 
-
 const authStore = useAuthStore();
 
 const { data: category } = useApi(
   `/api/v1/Category/get-category/${id?.value}`,
-  { watch: [id] },
+  { watch: [id] }
 ) as any;
 const isFilterOpen = ref(false);
 
@@ -95,7 +94,6 @@ const applyFilter = () => {
 };
 
 const productStore = useProductsSstore();
-
 
 const handleSearch = (event: any) => {
   productStore.setCurrentPage(1);
@@ -109,7 +107,7 @@ watch(
     if (newHeight) {
       // await catalogStore.fetchCategoryById(id?.value as string);
     }
-  },
+  }
 );
 onMounted(() => {
   if (id?.value) {

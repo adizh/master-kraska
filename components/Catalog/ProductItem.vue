@@ -18,8 +18,13 @@
     <span class="item-block-name">{{ product?.name }}</span>
 
     <div class="product-infomation">
-      <span>{{ $t("consumption") }}: {{ product?.consumption || $t('noData') }}</span>
-      <span>{{ $t("dryingTime") }}: {{ product?.dryingTime || $t('noData') }}</span>
+      <span
+        >{{ $t("consumption") }}:
+        {{ product?.consumption || $t("noData") }}</span
+      >
+      <span
+        >{{ $t("dryingTime") }}: {{ product?.dryingTime || $t("noData") }}</span
+      >
       <span class="volume"
         >{{ $t("volume") }} (л): {{ product?.size }}
         <span v-for="vars in product?.variants?.slice(0, 2)" :key="vars?.id">
@@ -79,8 +84,14 @@
       <div class="first-sub-col col-12">
         <span class="item-block-name">{{ product?.name }}</span>
         <div class="product-infomation">
-          <span>{{ $t("consumption") }}: {{ product?.consumption || $t('noData') }}</span>
-          <span>{{ $t("dryingTime") }}: {{ product?.dryingTime || $t('noData') }}</span>
+          <span
+            >{{ $t("consumption") }}:
+            {{ product?.consumption || $t("noData") }}</span
+          >
+          <span
+            >{{ $t("dryingTime") }}:
+            {{ product?.dryingTime || $t("noData") }}</span
+          >
           <span class="volume"
             >{{ $t("volume") }}: {{ product?.size }}л
             <span

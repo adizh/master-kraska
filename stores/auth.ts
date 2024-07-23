@@ -10,21 +10,23 @@ export const useAuthStore = defineStore("authStore", {
       email: "",
       image: "",
       isNotificationsAllowed: false,
-      accessToken:''
+      accessToken: ""
     },
-    isRefreshTokenSuccess:false,
-    selectedLanguage: "ru",
+    isRefreshTokenSuccess: false,
+    selectedLanguage: "ru"
   }),
   actions: {
-    async fetchUser() {
-      const accessToken = localStorage.getItem('token')
+    async fetchUser () {
+      const accessToken = localStorage.getItem("token");
       if (this.getUserId) {
         try {
           const response = await http(
             `/api/v1/User/get-user-by-id/${this.getUserId}`,
-            {headers:{
-              Authorization:`Bearer ${accessToken}`
-            }}
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`
+              }
+            }
           );
           console.log("response fetchUser", response);
           this.user.firstName = response.data.firstName;
@@ -35,58 +37,59 @@ export const useAuthStore = defineStore("authStore", {
           this.user.image = response.data.image;
           this.user.isNotificationsAllowed =
             response.data.isNotificationsAllowed;
-        } catch (err:any) {
+        } catch (err: any) {
           console.log(err);
-          if(err.response.status===401){
-            this.refreshToken('static')
+          if (err.response.status === 401) {
+            this.refreshToken("static");
           }
         }
       }
     },
-    
-    setLang(lang: string) {
+
+    setLang (lang: string) {
       this.selectedLanguage = lang;
     },
 
-  async  refreshToken(type?:'static'){
-    const accessToken = localStorage.getItem('token')
-    const refreshToken = localStorage.getItem('refresh_Token')
-    if(accessToken &&refreshToken ){
-      try{
-    const response = await http.post('/api/v1/User/refresh',{
-     "access_Token": accessToken,
-     "refresh_Token": refreshToken
-    })
-    console.log('response refreshToken',response)
+    async refreshToken (type?: "static") {
+      const accessToken = localStorage.getItem("token");
+      const refreshToken = localStorage.getItem("refresh_Token");
+      if (accessToken && refreshToken) {
+        try {
+          const response = await http.post("/api/v1/User/refresh", {
+            access_Token: accessToken,
+            refresh_Token: refreshToken
+          });
+          console.log("response refreshToken", response);
 
-    if(response.status===200){
-      this.isRefreshTokenSuccess=true
+          if (response.status === 200) {
+            this.isRefreshTokenSuccess = true;
 
-     console.log('access_Token',response.data?.tokens?.access_Token)
-     console.log('refresh_Token',response.data?.tokens?.refresh_Token)
-     localStorage.setItem('token',response.data.tokens.access_Token)
-     localStorage.setItem('refresh_Token',response.data.tokens.refresh_Token)
-     this.user.accessToken=response.data?.tokens?.access_Token
-     if(type!=='static'){
-      useNotifLocal("success", "sendAgaingRequest", "success");
-     }
-  
-     if(type==='static'){
-      setTimeout(()=>{ 
-         window.location.reload()
-       },1000)
-     }
-  
-    }else{
-      this.isRefreshTokenSuccess=false
-    }
+            console.log("access_Token", response.data?.tokens?.access_Token);
+            console.log("refresh_Token", response.data?.tokens?.refresh_Token);
+            localStorage.setItem("token", response.data.tokens.access_Token);
+            localStorage.setItem(
+              "refresh_Token",
+              response.data.tokens.refresh_Token
+            );
+            this.user.accessToken = response.data?.tokens?.access_Token;
+            if (type !== "static") {
+              useNotifLocal("success", "sendAgaingRequest", "success");
+            }
+
+            if (type === "static") {
+              setTimeout(() => {
+                window.location.reload();
+              }, 1000);
+            }
+          } else {
+            this.isRefreshTokenSuccess = false;
+          }
+        } catch (err) {
+          console.log(err);
+          this.isRefreshTokenSuccess = false;
+        }
       }
-      catch(err){
-        console.log(err)
-        this.isRefreshTokenSuccess=false
-      }
     }
-  }
   },
   getters: {
     getUserId: () => {
@@ -96,11 +99,11 @@ export const useAuthStore = defineStore("authStore", {
           : "";
       }
     },
-    getAccessToken(state){
-return state.user.accessToken
+    getAccessToken (state) {
+      return state.user.accessToken;
     },
 
-    getRole() {
+    getRole () {
       if (process.client) {
         const role = localStorage.getItem("role");
         if (role) {
@@ -109,10 +112,10 @@ return state.user.accessToken
       } else {
       }
     },
-    getRegreshTokenStatus(state){
-return state.isRefreshTokenSuccess
+    getRegreshTokenStatus (state) {
+      return state.isRefreshTokenSuccess;
     },
-    getSelectedLang(state) {
+    getSelectedLang (state) {
       if (process.client) {
         const localLan = localStorage.getItem("selectedLanguage");
         if (localLan) {
@@ -123,6 +126,6 @@ return state.isRefreshTokenSuccess
     },
     getUser: (state) => {
       return state.user;
-    },
-  },
+    }
+  }
 });

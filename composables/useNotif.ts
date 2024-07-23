@@ -5,7 +5,7 @@ export const useNotif = (type: string, text: string, header: string) => {
     title: header,
     message: text,
     variant: type,
-    position: "bottom-right",
+    position: "bottom-right"
   });
 };
 
@@ -16,6 +16,6 @@ export const useNotifLocal = (type: string, text: string, header: string) => {
     title: t(header),
     message: t(text),
     variant: type,
-    position: "bottom-right",
+    position: "bottom-right"
   });
 };

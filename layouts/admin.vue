@@ -1,36 +1,41 @@
 <template>
-
-
+  <section>
     <div class="admin-links">
-        <a href="/admin/add-product" target="_blank">Добавить продукт</a>
-        <a href="/admin/orders" target="_blank">Заказы</a>
-        <a href="#" target="_blank" @click.prevent="openModal"
-          >Создать категорию</a
-        >
-        <a href="#" target="_blank" @click.prevent="openNewsModal"
-          >Создать новость</a
-        >
-        <a href="#" target="_blank" @click.prevent="openBrandModal"
-          >Создать бренд</a
-        >
-        <a href="/admin/delete" target="_blank">Удаление</a>
-        <a href="/admin/update" target="_blank">Обновление</a>
-      </div>
+      <a href="/admin/add-product" target="_blank">Добавить продукт</a>
+      <a href="/admin/orders" target="_blank">Заказы</a>
+      <a
+        href="#"
+        target="_blank"
+        @click.prevent="openModal"
+      >Создать категорию</a>
+      <a
+        href="#"
+        target="_blank"
+        @click.prevent="openNewsModal"
+      >Создать новость</a>
+      <a
+        href="#"
+        target="_blank"
+        @click.prevent="openBrandModal"
+      >Создать бренд</a>
 
-<div style="margin-left:190px">
-  <slot/>
-</div>
-   
+      <a href="/admin/delete" target="_blank">Удаление</a>
+      <a href="/admin/update" target="_blank">Обновление</a>
+      
+    </div>
 
-      <AdminCreateCategory
-        :open-create-category-modal="openCreateCategoryModal"
-        @close-modal="openCreateCategoryModal = false"
-      />
+    <div class="slot-sidebar">
+      <slot />
+    </div>
 
-      <AdminCreateNews :is-open="openNews" @close-modal="openNews = false" />
-      <AdminCreateBrand :is-open="openBrand" @close-modal="openBrand = false" />
+    <AdminCreateCategory
+      :open-create-category-modal="openCreateCategoryModal"
+      @close-modal="openCreateCategoryModal = false"
+    />
 
-
+    <AdminCreateNews :is-open="openNews" @close-modal="openNews = false" />
+    <AdminCreateBrand :is-open="openBrand" @close-modal="openBrand = false" />
+  </section>
 </template>
 
 <script setup lang="ts">
@@ -59,12 +64,13 @@ const openBrandModal = () => {
 
 <style scoped lang="scss">
 .admin-links {
-  position: fixed;
-  top:100px;
+  position: absolute;
+  top: 100px;
   background: white;
-  left:0;
+  left: 0;
   margin-right: 40px;
-  z-index:1;
+  z-index: 1;
+
   @include flex(column, start, start);
   a {
     border: 1px solid #ddd;
@@ -74,4 +80,11 @@ const openBrandModal = () => {
     width: 100%;
   }
 }
+
+.slot-sidebar {
+  margin-left: 190px;
+  max-height: calc(100vh - 100px); 
+  overflow-y: auto; ;
+}
+
 </style>

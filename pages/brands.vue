@@ -14,7 +14,7 @@
               query: { brandId: item?.id },
             })
           "
-        />
+        >
       </div>
     </div>
   </section>

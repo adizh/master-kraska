@@ -60,17 +60,15 @@
                 </button>
                 <div class="cart-main-info-price-block">
                   <div class="first">
-                    <span
-                      >{{ $t("all") }}: {{ totalOfProdTotals }}
-                      {{ $t("product") }}</span
-                    >
+                    <span>{{ $t("all") }}: {{ totalOfProdTotals }}
+                      {{ $t("product") }}</span>
                     <span>{{ cartStore.totalOfTotalSum }} сом</span>
                   </div>
                   <div class="second">
                     <span>{{ $t("accountPiece") }}</span>
                     <span>0%</span>
                   </div>
-                  <input class="basic-input" placeholder="Промокод" />
+                  <input class="basic-input" placeholder="Промокод">
                   <div class="last">
                     <span>{{ $t("inTotal") }}</span>
                     <span>{{ cartStore.totalOfTotalSum }} сом</span>
@@ -147,7 +145,7 @@
                 src="../assets/icons/icon=heart.svg"
                 alt="heart"
                 class="no-content-img"
-              />
+              >
             </template>
           </NoContent>
         </div>
@@ -165,7 +163,9 @@
         <template #closeicon>
           <span class="close-icon-modal">X</span>
         </template>
-        <div class="modal-header">{{ $t("logoutWarningText") }}?</div>
+        <div class="modal-header">
+          {{ $t("logoutWarningText") }}?
+        </div>
         <div class="modal-btns">
           <button @click="isLogoutOpen = false">
             {{ $t("cancel") }}
@@ -208,7 +208,7 @@ const tabsOptions = [
   t("cart"),
   t("myReviews"),
   t("notificationSettings"),
-  t("boormarksProfile"),
+  t("boormarksProfile")
 ];
 const store = useAuthStore();
 const productsStore = useProductsSstore();
@@ -226,7 +226,7 @@ if (process.client) {
     localStorage.getItem("selectedTab") !== null
   ) {
     selectedTab = ref<number>(
-      parseInt(localStorage.getItem("selectedTab") as string),
+      parseInt(localStorage.getItem("selectedTab") as string)
     );
   } else {
     selectedTab = ref<number>(1);
@@ -260,7 +260,7 @@ const selectTab = (tab: number) => {
 const fetchUserBookmarks = async () => {
   try {
     const response = await http.get(
-      `/api/v1/Bookmark/get-bookmark-by-user-id/${store.getUserId}`,
+      `/api/v1/Bookmark/get-bookmark-by-user-id/${store.getUserId}`
     );
     console.log("response fetchUserBookmarks", response);
     if (response.status === 200) {
@@ -268,12 +268,12 @@ const fetchUserBookmarks = async () => {
         if (store.getSelectedLang === "kg") {
           return {
             ...item,
-            name: item?.nameKg,
+            name: item?.nameKg
           };
         } else {
           return {
             ...item,
-            name: item?.nameRu,
+            name: item?.nameRu
           };
         }
       });
@@ -285,12 +285,8 @@ const fetchUserBookmarks = async () => {
 };
 
 const addItemToBookmarks = (objectId: string) => {
-  //productsStore.addToBookmarks(objectId);
-
-console.log('addItemToBookmarks')
-
-
-
+  // productsStore.addToBookmarks(objectId);
+  console.log("addItemToBookmarks");
 };
 
 const confirmDelete = (prop: ExtendedProduct) => {
@@ -331,8 +327,7 @@ onBeforeRouteLeave(() => {
 </script>
 
 <style scoped lang="scss">
-
-:deep(.p-dialog .p-dialog-content){
+:deep(.p-dialog .p-dialog-content) {
   overflow-y: hidden;
 }
 .right-side {

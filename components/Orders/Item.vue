@@ -50,9 +50,11 @@
                   <span>{{ item?.productName }}</span>
                 </div>
               </div>
+
               <div class="col-5 md:col-3 lg:col-2">
-                <p>{{ $t("piece") }}</p>
+                <p>{{ item?.quantity }}</p>
               </div>
+
               <div class="col-12 md:col-3 lg:col-2">
                 <p>{{ item?.price * item?.quantity }} сом</p>
               </div>
