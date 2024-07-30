@@ -31,7 +31,7 @@ export interface Inputs {
 }
 
 export interface LoginInputs {
-  email: InputProperties;
+  phone: InputProperties;
   password: InputProperties;
 }
 

@@ -2,16 +2,27 @@
   <div class="register-auth">
     <p class="register-auth-header">{{ $t("typeDataLogin") }}</p>
     <div class="register-auth-options">
-      <input
-        type="text"
-        class="basic-input"
-        :placeholder="$t('email')"
-        v-model.trim="inputs.email.value"
-        @input="handleValues('email', 'email')"
-      />
-      <span class="err-input-msg" v-if="inputs.email.error">{{
-        inputs.email.error
-      }}</span>
+
+      <!-- <input
+      type="text"
+      class="basic-input"
+      :placeholder="$t('email')"
+      v-model.trim="inputs.phone.value"
+      @input="handleValues('phone', 'email')"
+
+    /> -->
+    <InputMask
+    id="basic"
+    v-model="inputs.phone.value"
+    mask="+999 999 99 99 99"
+    placeholder="+996 777 66 55 44"
+    @update:modelValue="handleValues('phone', 'number')"
+  />
+
+    <span class="err-input-msg" v-if="inputs.phone.error">{{
+      inputs.phone.error
+    }}</span>
+
       <div class="password-block-input">
         <input
           :type="isPasswordOpen ? 'text' : 'password'"
@@ -67,19 +78,21 @@ const emit = defineEmits<{
   closeLoginModal: [];
 }>();
 const inputs = ref<LoginInputs>({
-  email: { value: "", error: "" },
+  phone: { value: "", error: "" },
   password: { value: "", error: "" },
 });
 
 const handleValues = (fieldName: keyof LoginInputs, validationType: string) => {
   const value = inputs.value[fieldName].value;
   inputs.value[fieldName].error = "";
-  if (validationType === "email") {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(value)) {
-      inputs.value[fieldName].error = t("incorrectEmail");
+   if (validationType === "number") {
+    if (value === "") {
+      inputs.value[fieldName].error = t("requiredField");
+    } else if (!value.startsWith("+996")) {
+      inputs.value[fieldName].error = t("incorrectPhone");
     }
-  } else if (validationType === "password") {
+  }
+  else if (validationType === "password") {
     inputs.value[fieldName].error =
       value?.length < 1 ? t("passwordRequire") : "";
   }
@@ -87,7 +100,7 @@ const handleValues = (fieldName: keyof LoginInputs, validationType: string) => {
 
 const submitLogin = async () => {
   const validationTypes: Record<keyof LoginInputs, string> = {
-    email: "email",
+    phone: "number",
     password: "password",
   };
   for (const fieldName in inputs.value) {
@@ -104,7 +117,7 @@ const submitLogin = async () => {
     try {
       const response = await http.post(`/api/v1/User/login`, null, {
         params: {
-          email: inputs.value.email.value,
+          phoneNumber: inputs.value.phone.value,
           password: inputs.value.password.value,
         },
       });
@@ -131,7 +144,7 @@ const submitLogin = async () => {
         inputs.value.password.error = t("incorrectPassword") || t("error");
       }
       if (err?.response?.data?.code === 404) {
-        inputs.value.email.error = t("userNotFound") || t("error");
+        inputs.value.phone.error = t("userNotFound") || t("error");
       }
     }
   }
@@ -165,5 +178,13 @@ const submitLogin = async () => {
   &:hover {
     cursor: pointer;
   }
+}
+
+:deep(input#basic.p-inputtext) {
+  padding: 16px 13px;
+  width: 100%;
+  border: 1px solid #dddddd;
+  border-radius: 10px;
+  margin-bottom: 5px !important;
 }
 </style>

@@ -174,8 +174,11 @@ const submitRegister = async () => {
 
   for (const fieldName in inputs.value) {
   if (fieldName !== 'email' && Object.prototype.hasOwnProperty.call(inputs.value, fieldName)) {
+
     const validationType = validationTypes[fieldName as keyof typeof validationTypes];
+
     handleValues(fieldName as keyof Inputs, validationType);
+
   }
 }
 
@@ -257,7 +260,7 @@ input:not(.password) {
 }
 
 :deep(input#basic.p-inputtext) {
-  padding: 9px 13px;
+  padding: 16px 13px;
   width: 100%;
   border: 1px solid #dddddd;
   border-radius: 10px;
