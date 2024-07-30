@@ -2,15 +2,6 @@
   <div class="register-auth">
     <p class="register-auth-header">{{ $t("typeDataLogin") }}</p>
     <div class="register-auth-options">
-
-      <!-- <input
-      type="text"
-      class="basic-input"
-      :placeholder="$t('email')"
-      v-model.trim="inputs.phone.value"
-      @input="handleValues('phone', 'email')"
-
-    /> -->
     <InputMask
     id="basic"
     v-model="inputs.phone.value"
@@ -113,11 +104,15 @@ const submitLogin = async () => {
   const hasError = Object.values(inputs.value).some(
     (input) => input.error !== "",
   );
+  const formattedNumber = inputs.value.phone?.value?.replace(/\s+/g, '').replace('+', '');
+
+console.log('formattedNumber',formattedNumber)
+
   if (!hasError) {
     try {
       const response = await http.post(`/api/v1/User/login`, null, {
         params: {
-          phoneNumber: inputs.value.phone.value,
+          phoneNumber: formattedNumber,
           password: inputs.value.password.value,
         },
       });

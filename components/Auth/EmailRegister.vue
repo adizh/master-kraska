@@ -187,12 +187,13 @@ const hasError = Object.entries(inputs.value).some(
 );
   if (!hasError) {
     try {
+      const formattedNumber = inputs.value.phone?.value?.replace(/\s+/g, '').replace('+', '');
       const body = {
         firstName: inputs.value.name.value,
         lastName: inputs.value.surname.value,
         password: inputs.value.password.value,
         email: inputs.value.email.value,
-        phoneNumber: inputs.value.phone.value,
+        phoneNumber: formattedNumber,
       };
       const response = await http.post("/api/v1/User/registration", body);
       if (response.status === 200) {
