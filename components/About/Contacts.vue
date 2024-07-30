@@ -42,6 +42,40 @@
       </div>
     </div>
 
+    <div class="maps-address margin-top-40">
+      <div class="section-header-links">
+        <h5 class="each-section-header">{{ $t("allOurMarkets") }}</h5>
+        <slot name="look-all-btn"></slot>
+      </div>
+
+      <div class="maps-address-list" v-if="type === 'about-us'">
+        <AddressItem
+          v-for="item in orderStore?.getShops?.slice(0, 2)"
+          :key="item.name"
+          :name="item?.name"
+          :phone="item?.phoneNumber"
+          :email="item.email"
+          :openHours="item?.openHours"
+          :address="item?.address"
+        />
+      </div>
+    </div>
+
+
+   
+
+    <div class="maps-address-list" v-if="type === 'contacts'">
+      <AddressItem
+        v-for="item in orderStore?.getShops"
+        :key="item.name"
+        :name="item?.name"
+        :phone="item?.phoneNumber"
+        :email="item?.email"
+        :address="item?.address"
+        :openHours="item?.openHours"
+      />
+    </div>
+
     <div class="contact-form" v-if="type === 'contacts'">
       <h5 class="each-section-header">{{ $t("contactUs") }}</h5>
       <form @submit.prevent="requestContact">
@@ -90,24 +124,6 @@
       </form>
     </div>
 
-    <div class="maps-address margin-top-40">
-      <div class="section-header-links">
-        <h5 class="each-section-header">{{ $t("allOurMarkets") }}</h5>
-        <slot name="look-all-btn"></slot>
-      </div>
-
-      <div class="maps-address-list" v-if="type === 'about-us'">
-        <AddressItem
-          v-for="item in orderStore?.getShops?.slice(0, 2)"
-          :key="item.name"
-          :name="item?.name"
-          :phone="item?.phoneNumber"
-          :email="item.email"
-          :openHours="item?.openHours"
-          :address="item?.address"
-        />
-      </div>
-    </div>
 
     <div class="margin-top-40 margin-bottom-40" id="map">
       <LMap
@@ -136,18 +152,6 @@
           }}</LTooltip>
         </LMarker>
       </LMap>
-    </div>
-
-    <div class="maps-address-list" v-if="type === 'contacts'">
-      <AddressItem
-        v-for="item in orderStore?.getShops"
-        :key="item.name"
-        :name="item?.name"
-        :phone="item?.phoneNumber"
-        :email="item?.email"
-        :address="item?.address"
-        :openHours="item?.openHours"
-      />
     </div>
   </div>
 </template>
