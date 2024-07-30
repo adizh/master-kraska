@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="submitRegister">
+  <div class="form" >
     <p class="register-auth-header margin-bottom-40 margin-top-30">
       {{ $t("email") }}
     </p>
@@ -28,6 +28,7 @@
       <div class="col-12 flex flex-column col-password">
         <input
           type="email"
+          :required="false"
           class="basic-input col-12 password"
           :placeholder="$t('email')"
           v-model="inputs.email.value"
@@ -96,11 +97,11 @@
         <span class="err-input-msg"> {{ inputs.passwordRepeat.error }}</span>
       </div>
 
-      <button class="col-12 register-auth-btn" type="submit">
+      <button class="col-12 register-auth-btn" type="button" @click="submitRegister">
         {{ $t("register") }}
       </button>
     </div>
-  </form>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -126,9 +127,11 @@ const emit = defineEmits<{
 const togglePassword = (value: boolean) => {
   isPasswordOpen.value = value;
 };
+
 const togglePasswordRepeat = (value: boolean) => {
   isPasswordRepeatOpen.value = value;
 };
+
 const handleValues = (fieldName: keyof Inputs, validationType: string) => {
   const value = inputs.value[fieldName].value;
   inputs.value[fieldName].error = "";
@@ -161,25 +164,24 @@ const handleValues = (fieldName: keyof Inputs, validationType: string) => {
 };
 
 const submitRegister = async () => {
-  const validationTypes: Record<keyof Inputs, string> = {
+  const validationTypes: Record<any, string> = {
     name: "string",
     surname: "string",
-    email: "email",
     phone: "string",
     password: "password",
     passwordRepeat: "passwordRepeat",
   };
 
   for (const fieldName in inputs.value) {
-    if (Object.prototype.hasOwnProperty.call(inputs.value, fieldName)) {
-      const validationType = validationTypes[fieldName as keyof Inputs];
-      handleValues(fieldName as keyof Inputs, validationType);
-    }
+  if (fieldName !== 'email' && Object.prototype.hasOwnProperty.call(inputs.value, fieldName)) {
+    const validationType = validationTypes[fieldName as keyof typeof validationTypes];
+    handleValues(fieldName as keyof Inputs, validationType);
   }
+}
 
-  const hasError = Object.values(inputs.value).some(
-    (input) => input.error !== "",
-  );
+const hasError = Object.entries(inputs.value).some(
+  ([key, input]) => key !== 'email' && input.error !== ""
+);
   if (!hasError) {
     try {
       const body = {
@@ -208,19 +210,24 @@ const submitRegister = async () => {
       console.log("response", response);
     } catch (err: any) {
       console.log("errr", err);
-
-      if (err.status === 400 || err.response.data.includes("email")) {
+      if (err.response.data.includes("email")) {
         inputs.value.email.error = t("emailError");
       }
+      if (err.response.data?.includes('This phone number is used! Please use a different one')){
+        inputs.value.phone.error=t('phoneUsed')
+      }
     }
-  } else {
+  } 
+
+  else {
     console.log("still some errroe");
   }
+
 };
 </script>
 
 <style scoped lang="scss">
-form {
+.form {
   margin: 10px;
 }
 

@@ -29,6 +29,7 @@ export interface Inputs {
   passwordRepeat: InputProperties;
   phone: InputProperties;
 }
+
 export interface LoginInputs {
   email: InputProperties;
   password: InputProperties;
