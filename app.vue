@@ -4,18 +4,28 @@
     <NuxtLayout />
     <section class="main-section-site">
       <NuxtPage />
+     
       <NuxtSnackbar />
     </section>
     <NuxtLayout name="footer" />
+<ScrollToTop/>
   </div>
 </template>
 
 <script setup lang="ts">
 import "primevue/resources/themes/aura-light-green/theme.css";
+import 'primeicons/primeicons.css'
+
+
+ 
+
 useHead({
   title: "Master Kraska",
   meta: [{ name: "Master Kraska" }]
 });
+
+
+
 
 const nuxtApp = useNuxtApp();
 const loading = ref(false);
@@ -29,6 +39,7 @@ nuxtApp.hook("page:finish", () => {
 </script>
 
 <style lang="scss">
+
 @import url(./assets/main.scss);
 @import "primeflex/primeflex.scss";
 
@@ -36,6 +47,8 @@ nuxtApp.hook("page:finish", () => {
 .page-leave-active {
   transition: all 0.4s;
 }
+
+
 
 .page-enter-from,
 .page-leave-to {

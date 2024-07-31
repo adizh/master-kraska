@@ -61,16 +61,16 @@ const props = defineProps<{
 }
 
 .ui-options {
-  position: absolute; /* Absolute positioning */
-  top: 100%; /* Position below the selected option */
+  position: absolute; 
+  top: 100%; 
   right: 0;
 
-  z-index: 10; /* Ensure it's on top of other elements */
+  z-index: 10;
   border: 1px solid $slider-border-color;
   border-radius: 8px;
   padding: 6px;
   @include textFormat(16px, 20px, 400, #000);
-  background-color: white; /* Ensure the background is not transparent */
+  background-color: white;
   width: 95% !important;
   left: 0 !important;
   right: 0 !important;

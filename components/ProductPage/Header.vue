@@ -43,27 +43,16 @@
           <div class="middle-volume">
             <span class="each-block-info-col">{{ $t("volume") }}</span>
             <div class="middle-volume-buttons">
-              <button
-                v-for="(btn, index) in getProduct?.product?.variants"
-                :key="btn?.id"
-                :class="{
-                  'active-btn':
-                    volumeBtn === btn?.id || volumeBtn === btn?.size,
-                }"
-                class="volume-btn"
-                @click="selectVolumeSize(btn, index)"
-              >
-                {{ btn?.size }}
-              </button>
-              <button
-                class="volume-btn"
-                :class="{
-                  'active-btn': volumeBtn === getProduct?.product?.id,
-                }"
-                @click="selectedDefaultVolume(getProduct?.product?.id)"
-              >
-                {{ getProduct?.product?.size }}
-              </button>
+               <UIDropdown
+          :isDropdownOpen="isVolumeOpen"
+          :selectedValue="selectedVolume"
+          :options="volumeOptions as any"
+          @toggleDropdownUI="toggleVolume"
+          @selectValue="selectVolume"
+          label="name"
+        />
+
+
             </div>
           </div>
 
@@ -182,12 +171,30 @@ const selectedBase = ref("");
 const isProductBookmarked = ref(false);
 const isProfileOpen = ref(false);
 const { getProduct } = storeToRefs(productStore);
+const isVolumeOpen =ref(false)
+const selectedVolume = ref({name:'Выберите объем',value:''})
 
 const { t } = useI18n();
 
 const toggle = (event: any) => {
   countOverlay.value.toggle(event);
 };
+const toggleVolume=()=>{
+  isVolumeOpen.value = !isVolumeOpen.value
+}
+
+
+const selectVolume=(value:{name:string,value:string})=>{
+  selectedVolume.value = value
+  isVolumeOpen.value=false
+  const variantItem =  getProduct.value?.product?.variants?.find((item)=>item?.size===value?.value)
+  const variantIndex =  getProduct.value?.product?.variants?.findIndex((item)=>item?.size===value?.value);
+if(variantIndex){
+
+  selectVolumeSize(variantItem,variantIndex)
+}
+}
+
 const productImage = ref("");
 productImage.value = getProduct.value.product?.images[0];
 ratingValue.value = getProduct.value?.product?.rating;
@@ -205,7 +212,6 @@ const selectVolumeSize = (value: any, index: number) => {
       }
       selectedProductPrice.value =
         getProduct.value?.product?.variants[index].price;
-
       selectedBase.value = value?.base;
     }
   }
@@ -220,6 +226,17 @@ const selectedDefaultVolume = (value: string) => {
     selectedBase.value = "";
   }
 };
+
+
+const volumeOptions = getProduct?.value.product?.variants
+  ?.filter(variant => variant?.size !== undefined) 
+  ?.sort((a, b) => parseFloat(a.size) - parseFloat(b.size))
+  ?.map((variant) => {
+    return {
+      name: variant.size,
+      value: variant.size
+    };
+  });
 
 const decreaseCount = () => {
   if (countToBuy.value > 1) {
@@ -550,6 +567,8 @@ onMounted(async () => {
 
 .middle-volume {
   &-buttons {
+    width:40%;
+    margin-left: -10px;
     button.active-btn {
       @include items-button(8px 20px 8px 20px, white, $main-blue, none, 16px);
       margin-right: 10px;
