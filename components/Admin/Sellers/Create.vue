@@ -57,17 +57,8 @@
 </template>
 
 <script setup lang="ts">
-const image = ref({
-  value: "",
-  error: "",
-  loading: false,
-});
-
-const certificateImage = ref({
-  value: "",
-  error: "",
-  loading: false,
-});
+import {createSellerForm,image,certificateImage, isCreateModalOpen} from '@/helpers/admin/sellers'
+const brandsStore=useBrandsStore()
 const targetSizeBytes = 150 * 1024;
 
 const createSellerRequest = async () => {
@@ -86,10 +77,8 @@ const createSellerRequest = async () => {
     const response = await http.post("/api/v1/Seller/create-seller", body);
     if (response.status === 200) {
       useNotif("success", "Продавец добавлен", "Успешно");
-
-      setTimeout(() => {
-        window.location.reload();
-      }, 700);
+isCreateModalOpen.value=false
+      brandsStore.fetchAllSellers()
     }
   } catch (err) {
     console.log(err);
@@ -122,44 +111,7 @@ const createSeller = () => {
   }
 };
 
-const createSellerForm = ref([
-  { name: "name", placeholder: "ФИО", value: "", error: "", type: "text" },
-  {
-    name: "descriptionRu",
-    placeholder: "Описание",
-    value: "",
-    error: "",
-    type: "textarea",
-  },
-  {
-    name: "descriptionKg",
-    placeholder: "Описание (кырг)",
-    value: "",
-    error: "",
-    type: "textarea",
-  },
-  {
-    name: "imageExtension",
-    placeholder: "",
-    value: "png",
-    error: "",
-    type: "",
-  },
-  {
-    name: "certificateImageExtension",
-    placeholder: "",
-    value: "png",
-    error: "",
-    type: "",
-  },
-  {
-    name: "isActive",
-    placeholder: "Активный",
-    value: false,
-    error: "",
-    type: "checkbox",
-  },
-]);
+
 
 const handleImage = async (event: any) => {
   image.value.loading = true;

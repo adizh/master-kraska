@@ -15,6 +15,7 @@
         :key="seller?.id"
         :seller="seller"
         @open-edit="openEdit"
+        @deleteSeller="deleteSeller"
       />
     </div>
 
@@ -25,16 +26,57 @@
     >
       <AdminSellersCreate />
     </UIModal>
+
+
+    <UIModal     :show-modal="isDeleteSellerOpen"
+    title="Удалить продавца"
+    @close-modal="isDeleteSellerOpen = false">
+
+    <ConfirmPay
+    @cancel="isDeleteSellerOpen = false"
+    @confirm="confirmDeleteSeller"
+    title="Вы действительно хотите удалить этого продавца"
+  />
+</UIModal>
   </NuxtLayout>
 </template>
 
 <script setup lang="ts">
-import { isCreateModalOpen } from "@/helpers/admin/sellers";
+import { isCreateModalOpen,isDeleteSellerOpen } from "@/helpers/admin/sellers";
 
 import { Seller } from "~/types/Brands";
 const brandsStore = useBrandsStore();
 
 const openEdit = (currentSeller: Seller) => {};
+
+const currentSeller=ref({} as Seller)
+const deleteSeller=(seller:Seller)=>{
+    isDeleteSellerOpen.value = !isDeleteSellerOpen.value
+    currentSeller.value=seller
+}
+
+const confirmDeleteSeller=async()=>{
+    try{
+        const response = await http.delete(`/api/v1/Seller/delete-seller-by-id/${currentSeller.value?.id}`)
+        if(response.status===200){
+            useNotif(
+      "success",
+      "Продавец удален",
+      "Успешно",
+    );
+
+    brandsStore.fetchAllSellers();
+    isDeleteSellerOpen.value=false
+        }
+    }catch(err){
+        console.log(err)
+        useNotif(
+      "error",
+      "Произошла ошибка",
+      "Ошибка",
+    );
+    }
+}
 
 onMounted(() => {
   brandsStore.fetchAllSellers();

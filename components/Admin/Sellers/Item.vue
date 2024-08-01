@@ -4,7 +4,7 @@
       <div @click="openEdit">
         <img src="../../../assets/icons/tdesign_edit.svg" alt="edit" />
       </div>
-      <div>
+      <div @click="$emit('deleteSeller',props?.seller)">
         <img src="../../../assets/icons/icon=trash.svg" alt="trash" />
       </div>
     </div>
@@ -53,6 +53,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   openEdit: [Seller];
+  deleteSeller: [Seller];
 }>();
 
 const editSeller = () => {
@@ -111,6 +112,7 @@ input {
 .seller-block {
   padding: 10px 14px;
   border-radius: 10px;
+  max-width: 70%;
   box-shadow: 0px 6px 18px 0px rgba(0, 0, 0, 0.1215686275);
   &-images {
     @include flex(row, start, start);
@@ -119,6 +121,7 @@ input {
     img {
       &:first-child {
         width: 40%;
+        border-radius: 50%;
       }
       &:last-child {
         width: 40%;
