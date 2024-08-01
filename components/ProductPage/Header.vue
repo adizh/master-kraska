@@ -119,17 +119,17 @@
 
     <OverlayPanel ref="countOverlay" class="countOverlay">
       <div class="count-overlay">
-        
+
         <span class="header">{{ $t("count") }}</span>
 
         <div class="calculator">
 <span class="calculate-md-text">
-  Введите размеры
+ {{ $t('typeVolume') }}
 </span>
 <div class="form-calculate">
   <div  class="form-calculate-block">
     <input type="number" class="basic-input" id="liter" placeholder="л" v-model="literValue" @input="handleLiter">
-    <label for="liter" class="calculate-sm-text">Квадратный метр</label>
+    <label for="liter" class="calculate-sm-text">{{ $t('meterNum') }}</label>
     </div>
     <span>=</span>
     <div class="form-calculate-block">
@@ -144,21 +144,17 @@
 
 
         <div class="recommended-num">
-          <span class="calculate-md-text">Рекомендуемое количество краски:</span>
-          <span>2 слоя</span>
+          <span class="calculate-md-text">{{$t('recommendedLiters')}}:</span>
+          <span>{{ $t('twoLayers') }}</span>
         </div>
         
         <div class="recommended-num">
-          <span class="calculate-md-text">Вам нужно:</span>
-          <span class="calculate-md-text">{{ literValue  || 0}} литров</span>
+          <span class="calculate-md-text">{{ $t('youNeedLiters') }}:</span>
+          <span class="calculate-md-text">{{ resultLiter  || 0}} {{ $t('litres') }}</span>
         </div>
 
 
-        <span class="calculate-sm-text calculate-info">1 литр краски хватает примерно на 4-5 квадратных метров в 2 слоя</span>
-
-
-
-      
+        <span class="calculate-sm-text calculate-info">{{$t('howMuchInOneLiter')}}</span>
       </div>
     </OverlayPanel>
     <Dialog
