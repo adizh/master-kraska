@@ -33,7 +33,7 @@
       </span>
     </div>
 
-    <div class="item-add-btns">
+    <!-- <div class="item-add-btns">
       <button @click.stop="removeCount">
         <svg
           width="14"
@@ -60,14 +60,14 @@
           />
         </svg>
       </button>
-    </div>
-    <button class="pink-button prod-price" @click.stop="addCart">
+    </div> -->
+    <button class="pink-button prod-price"     @click.stop="router.push(`/product/${product?.id}`)">
       {{
         !isItemHovered
           ? product?.price + "сом"
-          : isItemHovered && isProductExistsInCart
-            ? $t("toCart")
-            : $t("addedToCart")
+          : isItemHovered
+            ? $t("toProduct")
+            : ''
       }}
     </button>
   </div>
@@ -104,7 +104,7 @@
         </div>
       </div>
     </div>
-
+<!-- 
     <div class="item-add-btns col-1">
       <button @click.stop="removeCount">
         <svg
@@ -132,15 +132,15 @@
           />
         </svg>
       </button>
-    </div>
+    </div> -->
     <div class="last-col col-3">
-      <button class="item-block-buy" @click.stop="addCart">
+      <button class="item-block-buy"  @click.stop="router.push(`/product/${product?.id}`)">
         {{
           !isItemHovered
             ? product?.price + "сом"
             : isItemHovered && isProductExistsInCart
-              ? $t("toCart")
-              : $t("addedToCart")
+              ? $t("toProduct")
+              : ''
         }}
       </button>
       <UIBookmarks :product="product" />
