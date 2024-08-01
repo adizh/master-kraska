@@ -138,7 +138,6 @@ export const useCatalogStore = defineStore("catalogStore", {
           `/api/v1/Helpers/get-all-subdirectories-by-directoryId?id=${catalogId}`
         );
         console.log("response fetchSubCatalogs", response);
-        // return response.data;
       } catch (err) {
         console.log(err);
       }
@@ -148,7 +147,6 @@ export const useCatalogStore = defineStore("catalogStore", {
       const authStore = useAuthStore();
       try {
         const response = await http("/api/v1/Category/get-all-top-categories");
-
         this.topCategories = response?.data?.map(
           (item: Category) => item?.category
         );

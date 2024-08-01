@@ -43,24 +43,7 @@
       <div class="desc-part-info">
         <span>{{ $t("surfacePrepare") }}</span>
         <p>{{ $t("noData") }}</p>
-        <!-- <p v-if="prodSurface">
-          {{ prodSurface }}
-          <button
-            class="read-all-btn"
-            @click="toggleProdSurface"
-            v-if="!isSurfaceOpen && isSurfaceLong"
-          >
-            Читать все
-          </button>
-          <button
-            class="read-all-btn"
-            @click="toggleProdSurface"
-            v-else-if="isSurfaceOpen"
-          >
-            Закрыть
-          </button>
-        </p> -->
-        <!-- <p v-else>{{ $t("noData") }}</p> -->
+     
       </div>
     </div>
     <div class="certificate-part" v-else>{{ $t("certificates") }}</div>

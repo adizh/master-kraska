@@ -119,10 +119,46 @@
 
     <OverlayPanel ref="countOverlay" class="countOverlay">
       <div class="count-overlay">
+        
         <span class="header">{{ $t("count") }}</span>
-        <p class="count-overlay-info">
-          {{ $t("productCountInfo") }}
-        </p>
+
+        <div class="calculator">
+<span class="calculate-md-text">
+  Введите размеры
+</span>
+<div class="form-calculate">
+  <div  class="form-calculate-block">
+    <input type="number" class="basic-input" id="liter" placeholder="л" v-model="literValue" @input="handleLiter">
+    <label for="liter" class="calculate-sm-text">Квадратный метр</label>
+    </div>
+    <span>=</span>
+    <div class="form-calculate-block">
+      <input type="text" class="basic-input" id="meter" disabled placeholder="кв м" v-model="resultLiter">
+      <label for="meter" class="calculate-sm-text">Литр</label>
+      </div>
+</div>
+
+
+
+        </div>
+
+
+        <div class="recommended-num">
+          <span class="calculate-md-text">Рекомендуемое количество краски:</span>
+          <span>2 слоя</span>
+        </div>
+        
+        <div class="recommended-num">
+          <span class="calculate-md-text">Вам нужно:</span>
+          <span class="calculate-md-text">{{ literValue  || 0}} литров</span>
+        </div>
+
+
+        <span class="calculate-sm-text calculate-info">1 литр краски хватает примерно на 4-5 квадратных метров в 2 слоя</span>
+
+
+
+      
       </div>
     </OverlayPanel>
     <Dialog
@@ -173,7 +209,15 @@ const isProfileOpen = ref(false);
 const { getProduct } = storeToRefs(productStore);
 const isVolumeOpen =ref(false)
 const selectedVolume = ref({name:'Выберите объем',value:''})
+const literValue=ref(0)
 
+const resultLiter = ref(0)
+
+const handleLiter =()=>{
+  if(typeof literValue.value ==='number'){
+    resultLiter.value = +(literValue.value / 4).toFixed(2)
+  }
+}
 const { t } = useI18n();
 
 const toggle = (event: any) => {
@@ -375,6 +419,47 @@ onMounted(async () => {
 <style scoped lang="scss">
 @import "../../assets/tabs.scss";
 
+.calculator{
+  margin:16px 0;
+}
+
+.calculate-info{
+  max-width: 375px;
+}
+
+.calculate-md-text{
+font-size: 16px;
+line-height: 24px;
+color:#999999;
+font-weight:400;
+}
+.form-calculate{
+  margin-top:12px;
+  @include flex(row,start,center);
+  gap:8px;
+  input{
+    width:140px;
+    &::placeholder{
+      color:#999999;
+      font-size: 16px;
+line-height: 24px;
+
+    }
+  }
+  &-block{
+    @include flex(column,start,start,2px);
+  }
+}
+.recommended-num{
+  @include flex(column,start,start);
+  margin-bottom:16px;
+}
+.calculate-sm-text{
+  font-size: 12px;
+  line-height: 18px;
+  color:#666666;
+  font-weight:400;
+  }
 .count-overlay-info {
   max-width: 256px;
   width: 100%;
