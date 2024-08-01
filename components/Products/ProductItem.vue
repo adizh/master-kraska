@@ -46,7 +46,7 @@
       </span>
     </div>
 
-    <div class="item-add-btns">
+    <!-- <div class="item-add-btns">
       <button @click.stop="removeCount">
         <svg
           width="14"
@@ -73,14 +73,14 @@
           />
         </svg>
       </button>
-    </div>
-    <button class="pink-button prod-price" @click.stop="addCart">
+    </div> -->
+    <button class="pink-button prod-price"     @click.stop="router.push(`/product/${product?.id}`)">
       {{
         !isItemHovered
           ? product?.price + "сом"
-          : isItemHovered && isProductExistsInCart
-            ? $t("toCart")
-            : $t("addedToCart")
+          : isItemHovered
+            ? $t("toProduct") :''
+            
       }}
     </button>
   </div>
