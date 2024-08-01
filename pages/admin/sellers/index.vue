@@ -16,29 +16,31 @@
         :seller="seller"
         @open-edit="openEdit"
         @deleteSeller="deleteSeller"
+        :currentSellers="currentSellers"
       />
     </div>
 
-    <UIModal
-      :show-modal="isCreateModalOpen"
-      title="Добавить продавца"
-      @close-modal="isCreateModalOpen = false"
-    >
-      <AdminSellersCreate />
-    </UIModal>
-
-
-    <UIModal     :show-modal="isDeleteSellerOpen"
-    title="Удалить продавца"
-    @close-modal="isDeleteSellerOpen = false">
-
-    <ConfirmPay
-    @cancel="isDeleteSellerOpen = false"
-    @confirm="confirmDeleteSeller"
-    title="Вы действительно хотите удалить этого продавца"
-  />
-</UIModal>
+   
   </NuxtLayout>
+  <UIModal
+  :show-modal="isCreateModalOpen"
+  title="Добавить продавца"
+  @close-modal="isCreateModalOpen = false"
+>
+  <AdminSellersCreate />
+</UIModal>
+
+
+<UIModal     :show-modal="isDeleteSellerOpen"
+title="Удалить продавца"
+@close-modal="isDeleteSellerOpen = false">
+
+<ConfirmPay
+@cancel="isDeleteSellerOpen = false"
+@confirm="confirmDeleteSeller"
+title="Вы действительно хотите удалить этого продавца"
+/>
+</UIModal>
 </template>
 
 <script setup lang="ts">
@@ -46,8 +48,13 @@ import { isCreateModalOpen,isDeleteSellerOpen } from "@/helpers/admin/sellers";
 
 import { Seller } from "~/types/Brands";
 const brandsStore = useBrandsStore();
+const currentSellers=ref([] as Seller[])
 
-const openEdit = (currentSeller: Seller) => {};
+
+const openEdit = (currentSeller: Seller) => {
+    currentSellers.value.push(currentSeller)
+
+};
 
 const currentSeller=ref({} as Seller)
 const deleteSeller=(seller:Seller)=>{
