@@ -61,9 +61,6 @@
       </div>
     </div>
 
-
-   
-
     <div class="maps-address-list" v-if="type === 'contacts'">
       <AddressItem
         v-for="item in orderStore?.getShops"
@@ -123,7 +120,6 @@
         </div>
       </form>
     </div>
-
 
     <div class="margin-top-40 margin-bottom-40" id="map">
       <LMap

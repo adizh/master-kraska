@@ -3,6 +3,7 @@
     <div class="admin-links">
       <a href="/admin/add-product" target="_blank">Добавить продукт</a>
       <a href="/admin/orders" target="_blank">Заказы</a>
+      <a href="/admin/sellers" target="_blank">Продавцы</a>
       <a
         href="#"
         target="_blank"
@@ -21,7 +22,6 @@
 
       <a href="/admin/delete" target="_blank">Удаление</a>
       <a href="/admin/update" target="_blank">Обновление</a>
-      
     </div>
 
     <div class="slot-sidebar">
@@ -83,8 +83,7 @@ const openBrandModal = () => {
 
 .slot-sidebar {
   margin-left: 190px;
-  max-height: calc(100vh - 100px); 
-  overflow-y: auto; ;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
 }
-
 </style>

@@ -61,8 +61,8 @@ const props = defineProps<{
 }
 
 .ui-options {
-  position: absolute; 
-  top: 100%; 
+  position: absolute;
+  top: 100%;
   right: 0;
 
   z-index: 10;

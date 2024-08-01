@@ -38,9 +38,8 @@ const isCategoryOpen = ref(false);
 const isNewsOpen = ref(false);
 </script>
 
-<style  lang="scss">
+<style lang="scss">
 .admin-delete {
   @include flex(row, start, center);
 }
-
 </style>

@@ -7,21 +7,18 @@
 </template>
 
 <script setup lang="ts">
-
-
 const authStore = useAuthStore();
 const router = useRouter();
 
 onMounted(() => {
   if (authStore?.getRole !== "Admin") {
-    router.push("/");
+    // router.push("/");
   }
 });
 </script>
 
-<style  lang="scss">
-
-.footer-section{
+<style lang="scss">
+.footer-section {
   display: none;
 }
 </style>

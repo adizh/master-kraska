@@ -88,21 +88,6 @@ onMounted(() => {
   flex-wrap: wrap;
 }
 
-.admin-icons {
-  @include flex(row, start, center, 20px);
-  div {
-    width: 34px;
-    height: 34px;
-    background: #f5f5f5;
-    border-radius: 50%;
-    padding: 11px;
-    @include flex(row, center, center);
-    &:hover {
-      background: #dddddd;
-    }
-  }
-}
-
 @media (max-width: 1100px) {
   .item-block {
     width: 33%;

@@ -35,6 +35,8 @@ export const useBrandsStore = defineStore("brandsStore", {
               return { ...seller, sellerInfo: seller?.descriptionKg };
             }
           });
+
+          console.log("response fetch sellers", response);
           this.sellers = filtered;
         }
       } catch (err) {

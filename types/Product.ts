@@ -1,5 +1,5 @@
 import { SubDirHelper } from "./Catalog";
-import { Category } from "./Category";
+import { Category, CategorySys } from "./Category";
 import { Review } from "./Review";
 import { Variant } from "./Variant";
 
@@ -21,6 +21,7 @@ export type Product = {
   brandName: string;
 
   rating: number;
+
   isPopular: boolean;
   isFeatured: boolean;
   isBeneficial: boolean;
@@ -36,7 +37,7 @@ export type Product = {
   images: string[];
   reviews: Review[];
   price: number;
-  categories: Category[];
+  categories: CategorySys[];
   helpersMain: SubDirHelper[];
   size: string;
   colorType: number;

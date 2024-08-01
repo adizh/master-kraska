@@ -43,7 +43,6 @@
       <div class="desc-part-info">
         <span>{{ $t("surfacePrepare") }}</span>
         <p>{{ $t("noData") }}</p>
-     
       </div>
     </div>
     <div class="certificate-part" v-else>{{ $t("certificates") }}</div>

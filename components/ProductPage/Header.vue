@@ -43,16 +43,14 @@
           <div class="middle-volume">
             <span class="each-block-info-col">{{ $t("volume") }}</span>
             <div class="middle-volume-buttons">
-               <UIDropdown
-          :isDropdownOpen="isVolumeOpen"
-          :selectedValue="selectedVolume"
-          :options="volumeOptions as any"
-          @toggleDropdownUI="toggleVolume"
-          @selectValue="selectVolume"
-          label="name"
-        />
-
-
+              <UIDropdown
+                :isDropdownOpen="isVolumeOpen"
+                :selectedValue="selectedVolume"
+                :options="volumeOptions as any"
+                @toggleDropdownUI="toggleVolume"
+                @selectValue="selectVolume"
+                label="name"
+              />
             </div>
           </div>
 
@@ -119,42 +117,55 @@
 
     <OverlayPanel ref="countOverlay" class="countOverlay">
       <div class="count-overlay">
-
         <span class="header">{{ $t("count") }}</span>
 
         <div class="calculator">
-<span class="calculate-md-text">
- {{ $t('typeVolume') }}
-</span>
-<div class="form-calculate">
-  <div  class="form-calculate-block">
-    <input type="number" class="basic-input" id="liter" placeholder="л" v-model="literValue" @input="handleLiter">
-    <label for="liter" class="calculate-sm-text">{{ $t('meterNum') }}</label>
-    </div>
-    <span>=</span>
-    <div class="form-calculate-block">
-      <input type="text" class="basic-input" id="meter" disabled placeholder="кв м" v-model="resultLiter">
-      <label for="meter" class="calculate-sm-text">Литр</label>
-      </div>
-</div>
-
-
-
+          <span class="calculate-md-text">
+            {{ $t("typeVolume") }}
+          </span>
+          <div class="form-calculate">
+            <div class="form-calculate-block">
+              <input
+                type="number"
+                class="basic-input"
+                id="liter"
+                placeholder="л"
+                v-model="literValue"
+                @input="handleLiter"
+              />
+              <label for="liter" class="calculate-sm-text">{{
+                $t("meterNum")
+              }}</label>
+            </div>
+            <span>=</span>
+            <div class="form-calculate-block">
+              <input
+                type="text"
+                class="basic-input"
+                id="meter"
+                disabled
+                placeholder="кв м"
+                v-model="resultLiter"
+              />
+              <label for="meter" class="calculate-sm-text">Литр</label>
+            </div>
+          </div>
         </div>
-
+        <div class="recommended-num">
+          <span class="calculate-md-text">{{ $t("recommendedLiters") }}:</span>
+          <span>{{ $t("twoLayers") }}</span>
+        </div>
 
         <div class="recommended-num">
-          <span class="calculate-md-text">{{$t('recommendedLiters')}}:</span>
-          <span>{{ $t('twoLayers') }}</span>
-        </div>
-        
-        <div class="recommended-num">
-          <span class="calculate-md-text">{{ $t('youNeedLiters') }}:</span>
-          <span class="calculate-md-text">{{ resultLiter  || 0}} {{ $t('litres') }}</span>
+          <span class="calculate-md-text">{{ $t("youNeedLiters") }}:</span>
+          <span class="calculate-md-text"
+            >{{ resultLiter || 0 }} {{ $t("litres") }}</span
+          >
         </div>
 
-
-        <span class="calculate-sm-text calculate-info">{{$t('howMuchInOneLiter')}}</span>
+        <span class="calculate-sm-text calculate-info">{{
+          $t("howMuchInOneLiter")
+        }}</span>
       </div>
     </OverlayPanel>
     <Dialog
@@ -184,6 +195,7 @@ import Rating from "primevue/rating";
 import { ExtendedProduct } from "@/types/Product";
 import { Brands } from "~/types/Brands";
 import { Variant } from "~/types/Variant";
+import { catalogItemsToCheck } from "@/helpers/product-page";
 const isConfirmOpen = ref(false);
 const props = defineProps<{
   productId: string;
@@ -194,6 +206,7 @@ const volumeBtn = ref("");
 const countToBuy = ref(1);
 const totalPrice = ref(0);
 const authStore = useAuthStore();
+const { t } = useI18n();
 const brandsStore = useBrandsStore();
 const productStore = useProductsSstore();
 const store = useCartStore();
@@ -203,37 +216,45 @@ const selectedBase = ref("");
 const isProductBookmarked = ref(false);
 const isProfileOpen = ref(false);
 const { getProduct } = storeToRefs(productStore);
-const isVolumeOpen =ref(false)
-const selectedVolume = ref({name:'Выберите объем',value:''})
-const literValue=ref(0)
+const isVolumeOpen = ref(false);
 
-const resultLiter = ref(0)
+const selectedVolume = ref({ name: t("selectVolume"), value: "" });
+const literValue = ref(0);
 
-const handleLiter =()=>{
-  if(typeof literValue.value ==='number'){
-    resultLiter.value = +(literValue.value / 4).toFixed(2)
+const resultLiter = ref(0);
+
+const handleLiter = () => {
+  if (typeof literValue.value === "number") {
+    resultLiter.value = +(literValue.value / 4).toFixed(2);
   }
-}
-const { t } = useI18n();
+};
+
+const isCatalogHasItemCategory = computed(() => {
+  const categoryIds =
+    getProduct.value?.product?.categories?.map((item) => item?.id) || [];
+  return categoryIds.some((id) => catalogItemsToCheck.includes(id));
+});
 
 const toggle = (event: any) => {
   countOverlay.value.toggle(event);
 };
-const toggleVolume=()=>{
-  isVolumeOpen.value = !isVolumeOpen.value
-}
+const toggleVolume = () => {
+  isVolumeOpen.value = !isVolumeOpen.value;
+};
 
-
-const selectVolume=(value:{name:string,value:string})=>{
-  selectedVolume.value = value
-  isVolumeOpen.value=false
-  const variantItem =  getProduct.value?.product?.variants?.find((item)=>item?.size===value?.value)
-  const variantIndex =  getProduct.value?.product?.variants?.findIndex((item)=>item?.size===value?.value);
-if(variantIndex){
-
-  selectVolumeSize(variantItem,variantIndex)
-}
-}
+const selectVolume = (value: { name: string; value: string }) => {
+  selectedVolume.value = value;
+  isVolumeOpen.value = false;
+  const variantItem = getProduct.value?.product?.variants?.find(
+    (item) => item?.size === value?.value,
+  );
+  const variantIndex = getProduct.value?.product?.variants?.findIndex(
+    (item) => item?.size === value?.value,
+  );
+  if (variantIndex !== undefined) {
+    selectVolumeSize(variantItem, variantIndex);
+  }
+};
 
 const productImage = ref("");
 productImage.value = getProduct.value.product?.images[0];
@@ -267,14 +288,13 @@ const selectedDefaultVolume = (value: string) => {
   }
 };
 
-
 const volumeOptions = getProduct?.value.product?.variants
-  ?.filter(variant => variant?.size !== undefined) 
+  ?.filter((variant) => variant?.size !== undefined)
   ?.sort((a, b) => parseFloat(a.size) - parseFloat(b.size))
   ?.map((variant) => {
     return {
       name: variant.size,
-      value: variant.size
+      value: variant.size,
     };
   });
 
@@ -314,7 +334,6 @@ const increaseCount = () => {
         initPrice: +getProduct.value?.product?.price,
       };
       if (updatedItem) {
-        console.log("updatedItem", updatedItem);
         store.updateCartItem(updatedItem);
         useNotif("success", t("successEdited"), t("success"));
       }
@@ -348,7 +367,6 @@ const confirmCreatePay = async () => {
 };
 const buyNow = () => {
   if (authStore.getUserId) {
-    console.log("buy now");
     isConfirmOpen.value = true;
   } else {
     isProfileOpen.value = true;
@@ -356,13 +374,18 @@ const buyNow = () => {
 };
 
 const addToCart = () => {
-  const prodItem = {
-    ...getProduct.value?.product,
-    count: countToBuy.value,
-    totalProdSum: totalPrice.value,
-    initPrice: selectedProductPrice.value,
-  };
-  store.addToCart(prodItem);
+  console.log("selected volume", selectedVolume);
+  if (!selectedVolume?.value?.value?.length) {
+    useNotif("error", t("selectVolume"), t("error"));
+  }
+
+  // const prodItem = {
+  //   ...getProduct.value?.product,
+  //   count: countToBuy.value,
+  //   totalProdSum: totalPrice.value,
+  //   initPrice: selectedProductPrice.value,
+  // };
+  // store.addToCart(prodItem);
 };
 
 const isProductExistsInCart = computed(() => {
@@ -415,47 +438,46 @@ onMounted(async () => {
 <style scoped lang="scss">
 @import "../../assets/tabs.scss";
 
-.calculator{
-  margin:16px 0;
+.calculator {
+  margin: 16px 0;
 }
 
-.calculate-info{
+.calculate-info {
   max-width: 375px;
 }
 
-.calculate-md-text{
-font-size: 16px;
-line-height: 24px;
-color:#999999;
-font-weight:400;
+.calculate-md-text {
+  font-size: 16px;
+  line-height: 24px;
+  color: #999999;
+  font-weight: 400;
 }
-.form-calculate{
-  margin-top:12px;
-  @include flex(row,start,center);
-  gap:8px;
-  input{
-    width:140px;
-    &::placeholder{
-      color:#999999;
+.form-calculate {
+  margin-top: 12px;
+  @include flex(row, start, center);
+  gap: 8px;
+  input {
+    width: 140px;
+    &::placeholder {
+      color: #999999;
       font-size: 16px;
-line-height: 24px;
-
+      line-height: 24px;
     }
   }
-  &-block{
-    @include flex(column,start,start,2px);
+  &-block {
+    @include flex(column, start, start, 2px);
   }
 }
-.recommended-num{
-  @include flex(column,start,start);
-  margin-bottom:16px;
+.recommended-num {
+  @include flex(column, start, start);
+  margin-bottom: 16px;
 }
-.calculate-sm-text{
+.calculate-sm-text {
   font-size: 12px;
   line-height: 18px;
-  color:#666666;
-  font-weight:400;
-  }
+  color: #666666;
+  font-weight: 400;
+}
 .count-overlay-info {
   max-width: 256px;
   width: 100%;
@@ -648,7 +670,7 @@ line-height: 24px;
 
 .middle-volume {
   &-buttons {
-    width:40%;
+    width: 40%;
     margin-left: -10px;
     button.active-btn {
       @include items-button(8px 20px 8px 20px, white, $main-blue, none, 16px);

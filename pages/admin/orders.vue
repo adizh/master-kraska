@@ -87,7 +87,6 @@ const filterOrdernumber = (event: Event) => {
   if (isNumber) {
     orderStore.updateOrderNumber(currentValue);
   } else {
-
   }
 };
 

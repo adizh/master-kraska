@@ -2,17 +2,17 @@
   <div class="register-auth">
     <p class="register-auth-header">{{ $t("typeDataLogin") }}</p>
     <div class="register-auth-options">
-    <InputMask
-    id="basic"
-    v-model="inputs.phone.value"
-    mask="+999 999 99 99 99"
-    placeholder="+996 777 66 55 44"
-    @update:modelValue="handleValues('phone', 'number')"
-  />
+      <InputMask
+        id="basic"
+        v-model="inputs.phone.value"
+        mask="+999 999 99 99 99"
+        placeholder="+996 777 66 55 44"
+        @update:modelValue="handleValues('phone', 'number')"
+      />
 
-    <span class="err-input-msg" v-if="inputs.phone.error">{{
-      inputs.phone.error
-    }}</span>
+      <span class="err-input-msg" v-if="inputs.phone.error">{{
+        inputs.phone.error
+      }}</span>
 
       <div class="password-block-input">
         <input
@@ -76,14 +76,13 @@ const inputs = ref<LoginInputs>({
 const handleValues = (fieldName: keyof LoginInputs, validationType: string) => {
   const value = inputs.value[fieldName].value;
   inputs.value[fieldName].error = "";
-   if (validationType === "number") {
+  if (validationType === "number") {
     if (value === "") {
       inputs.value[fieldName].error = t("requiredField");
     } else if (!value.startsWith("+996")) {
       inputs.value[fieldName].error = t("incorrectPhone");
     }
-  }
-  else if (validationType === "password") {
+  } else if (validationType === "password") {
     inputs.value[fieldName].error =
       value?.length < 1 ? t("passwordRequire") : "";
   }
@@ -104,9 +103,11 @@ const submitLogin = async () => {
   const hasError = Object.values(inputs.value).some(
     (input) => input.error !== "",
   );
-  const formattedNumber = inputs.value.phone?.value?.replace(/\s+/g, '').replace('+', '');
+  const formattedNumber = inputs.value.phone?.value
+    ?.replace(/\s+/g, "")
+    .replace("+", "");
 
-console.log('formattedNumber',formattedNumber)
+  console.log("formattedNumber", formattedNumber);
 
   if (!hasError) {
     try {

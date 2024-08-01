@@ -1,11 +1,16 @@
 <template>
-    <button v-if="showScrollButton" ref="scrollTopButton" @click="handleScroll" class="scroll-btn">
-        <span class="pi pi-arrow-circle-up"></span>
-       </button>
+  <button
+    v-if="showScrollButton"
+    ref="scrollTopButton"
+    @click="handleScroll"
+    class="scroll-btn"
+  >
+    <span class="pi pi-arrow-circle-up"></span>
+  </button>
 </template>
 
 <script setup lang="ts">
-  const showScrollButton = ref(false);
+const showScrollButton = ref(false);
 
 const easeInOutQuad = (t: number): number => {
   return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
@@ -39,31 +44,30 @@ const checkScroll = () => {
 };
 
 onMounted(() => {
-  window.addEventListener('scroll', checkScroll);
+  window.addEventListener("scroll", checkScroll);
 });
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', checkScroll);
+  window.removeEventListener("scroll", checkScroll);
 });
 </script>
 
 <style scoped lang="scss">
-.scroll-btn{
-    position:fixed;
-    bottom:30px;
-    z-index:2;
-    padding:12px;
-    right:30px;
-    outline:none;
-    border:none;
-    border-radius: 7px;
-    @extend %blue-bnt-hover;
-    span{
-      font-size: 22px;
-    }
-    &:hover{
-        cursor: pointer;
-    }
+.scroll-btn {
+  position: fixed;
+  bottom: 30px;
+  z-index: 2;
+  padding: 12px;
+  right: 30px;
+  outline: none;
+  border: none;
+  border-radius: 7px;
+  @extend %blue-bnt-hover;
+  span {
+    font-size: 22px;
   }
-  
+  &:hover {
+    cursor: pointer;
+  }
+}
 </style>

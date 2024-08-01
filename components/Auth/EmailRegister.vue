@@ -1,5 +1,5 @@
 <template>
-  <div class="form" >
+  <div class="form">
     <p class="register-auth-header margin-bottom-40 margin-top-30">
       {{ $t("email") }}
     </p>
@@ -97,7 +97,11 @@
         <span class="err-input-msg"> {{ inputs.passwordRepeat.error }}</span>
       </div>
 
-      <button class="col-12 register-auth-btn" type="button" @click="submitRegister">
+      <button
+        class="col-12 register-auth-btn"
+        type="button"
+        @click="submitRegister"
+      >
         {{ $t("register") }}
       </button>
     </div>
@@ -173,21 +177,25 @@ const submitRegister = async () => {
   };
 
   for (const fieldName in inputs.value) {
-  if (fieldName !== 'email' && Object.prototype.hasOwnProperty.call(inputs.value, fieldName)) {
+    if (
+      fieldName !== "email" &&
+      Object.prototype.hasOwnProperty.call(inputs.value, fieldName)
+    ) {
+      const validationType =
+        validationTypes[fieldName as keyof typeof validationTypes];
 
-    const validationType = validationTypes[fieldName as keyof typeof validationTypes];
-
-    handleValues(fieldName as keyof Inputs, validationType);
-
+      handleValues(fieldName as keyof Inputs, validationType);
+    }
   }
-}
 
-const hasError = Object.entries(inputs.value).some(
-  ([key, input]) => key !== 'email' && input.error !== ""
-);
+  const hasError = Object.entries(inputs.value).some(
+    ([key, input]) => key !== "email" && input.error !== "",
+  );
   if (!hasError) {
     try {
-      const formattedNumber = inputs.value.phone?.value?.replace(/\s+/g, '').replace('+', '');
+      const formattedNumber = inputs.value.phone?.value
+        ?.replace(/\s+/g, "")
+        .replace("+", "");
       const body = {
         firstName: inputs.value.name.value,
         lastName: inputs.value.surname.value,
@@ -217,16 +225,17 @@ const hasError = Object.entries(inputs.value).some(
       if (err.response.data.includes("email")) {
         inputs.value.email.error = t("emailError");
       }
-      if (err.response.data?.includes('This phone number is used! Please use a different one')){
-        inputs.value.phone.error=t('phoneUsed')
+      if (
+        err.response.data?.includes(
+          "This phone number is used! Please use a different one",
+        )
+      ) {
+        inputs.value.phone.error = t("phoneUsed");
       }
     }
-  } 
-
-  else {
+  } else {
     console.log("still some errroe");
   }
-
 };
 </script>
 

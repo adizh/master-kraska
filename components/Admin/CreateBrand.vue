@@ -82,9 +82,13 @@ const openFileInput = () => {
 
 const handleNewsImage = async (event: any) => {
   newsForm.value.image.loading = true;
+
   newsForm.value.image.error = "";
+
   newsForm.value.image.value = "";
+
   const result = await useCompressImage(event);
+
   if (result?.size > targetSizeBytes) {
     newsForm.value.image.error = "Размер файла слишком большой";
     newsForm.value.image.loading = false;
