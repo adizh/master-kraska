@@ -63,8 +63,14 @@
 
 <style scoped lang="scss">
 .footer-section {
+
+
   background: $advan-bg;
+position:relative;
+z-index:2;
+height:400px;
   width: 100%;
+  bottom:0;
   padding: 3.3rem 30px 30px 3.1rem;
 }
 

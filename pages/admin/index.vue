@@ -1,9 +1,9 @@
 <template>
-  <section>
-    <NuxtLayout name="admin">
+  <NuxtLayout name="admin">
+    <section>
       <AdminProducts />
-    </NuxtLayout>
-  </section>
+    </section>
+  </NuxtLayout>
 </template>
 
 <script setup lang="ts">
@@ -18,7 +18,8 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-.footer-section {
-  display: none;
+section {
+  padding: 20px;
+  flex: 1;
 }
 </style>

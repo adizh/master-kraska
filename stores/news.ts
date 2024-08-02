@@ -29,6 +29,7 @@ export const useNewsStore = defineStore("newsStore", {
     async fetchSliders () {
       try {
         const response = await http("/api/v1/Slider/get-all-sliders");
+        console.log('fetch all sliders',response)
         if (response.status === 200) {
           this.sliders = response.data;
         }

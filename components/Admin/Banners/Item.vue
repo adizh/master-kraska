@@ -184,7 +184,6 @@ input {
     img {
       &:first-child {
         width: 40%;
-        border-radius: 50%;
       }
       &:last-child {
         width: 40%;

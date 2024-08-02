@@ -24,17 +24,18 @@
         },
       }"
     >
-      <SwiperSlide>
+      <SwiperSlide >
         <div class="banner-block slider-wrapper">
           <img
-            src="../assets/images/3.png"
-            format="webp"
-            id="'banner-image"
-            ref="bannerImage"
-            @load="updateHeight"
+          <img src="../assets/images/3.png" format="webp"
+          id="'banner-image"
+          ref="bannerImage"
+          @load="updateHeight" />
+          
           />
         </div>
       </SwiperSlide>
+   
 
       <SwiperSlide>
         <div
@@ -68,45 +69,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Discount } from "@/types/Discout";
-const discounts = ref([] as Discount[]);
-const discountsFirst = ref({} as Discount);
-const discountsSecond = ref({} as Discount);
-
-const isLoading = ref(false);
-const authStore = useAuthStore();
-
-const getDiscounts = async () => {
-  isLoading.value = true;
-  try {
-    const response = await http("/api/v1/Banner/get-all-banners");
-    if (response.status === 200) {
-      discounts.value = response.data.map((item: Discount) => {
-        if (authStore?.getSelectedLang === "kg") {
-          return {
-            ...item,
-            title: item?.titleKg,
-            buttonText: item?.buttonTextKg,
-            description: item?.descriptionKg,
-          };
-        } else {
-          return {
-            ...item,
-            title: item?.titleRu,
-            buttonText: item?.buttonTextRu,
-            description: item?.descriptionRu,
-          };
-        }
-      });
-      discountsFirst.value = discounts.value[0];
-      discountsSecond.value = discounts.value[1];
-    }
-  } catch (err) {
-    console.log(err);
-  } finally {
-    isLoading.value = false;
-  }
-};
+const newStore=useNewsStore()
 const bannerImage = ref<HTMLImageElement | null>(null);
 const targetElement = ref<HTMLElement | null>(null);
 
@@ -126,7 +89,7 @@ watch(
   },
 );
 onMounted(() => {
-  getDiscounts();
+  newStore.fetchSliders()
   window.addEventListener("resize", updateHeight);
 });
 
@@ -135,25 +98,8 @@ onBeforeUnmount(() => {
 });
 
 import "animate.css";
-const currentIndex = ref(0);
-const direction = ref("");
-const nextSlide = () => {
-  if (currentIndex.value < 6) {
-    currentIndex.value++;
-    direction.value = "next";
-  }
-};
 
-const changeSlide = (index: number) => {
-  direction.value = currentIndex.value < index ? "next" : "prev";
-  currentIndex.value = index;
-};
-const prevSlide = () => {
-  if (currentIndex.value > 0) {
-    currentIndex.value--;
-    direction.value = "prev";
-  }
-};
+
 </script>
 
 <style scoped lang="scss">
