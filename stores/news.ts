@@ -6,7 +6,7 @@ export const useNewsStore = defineStore("newsStore", {
   state: () => ({
     news: [] as News[],
     allNews: [] as News[],
-    sliders:[] as Slider[]
+    sliders: [] as Slider[]
   }),
   actions: {
     async fetchAllNews () {
@@ -26,15 +26,14 @@ export const useNewsStore = defineStore("newsStore", {
       );
     },
 
-    async fetchSliders(){
-      try{
-        const response = await http('/api/v1/Slider/get-all-sliders')
-        if(response.status===200){
-          this.sliders=response.data
+    async fetchSliders () {
+      try {
+        const response = await http("/api/v1/Slider/get-all-sliders");
+        if (response.status === 200) {
+          this.sliders = response.data;
         }
-
-      }catch(err){
-        console.log(err)
+      } catch (err) {
+        console.log(err);
       }
     }
   },
@@ -43,8 +42,8 @@ export const useNewsStore = defineStore("newsStore", {
     getAllNews (state) {
       return state.news;
     },
-    getAllSliders(state){
-      return state.sliders
+    getAllSliders (state) {
+      return state.sliders;
     }
   }
 });
