@@ -294,7 +294,7 @@ productImage.value = getProduct.value.product?.images[0];
 ratingValue.value = getProduct.value?.product?.rating;
 
 const selectVolumeSize = (value: any, index: number) => {
-console.log('selectVolumeSize',value,index)
+
 
   if (volumeBtn.value === value?.id) {
     removeVolume();
@@ -337,7 +337,7 @@ const decreaseCount = () => {
   if (countToBuy.value > 1) {
     countToBuy.value = countToBuy.value - 1;
     if (getProduct.value?.product?.price) {
-      totalPrice.value = countToBuy.value * getProduct.value?.product?.price;
+      totalPrice.value = countToBuy.value *selectedProductPrice.value;
     }
     if (isProductExistsInCart.value) {
       if (getProduct.value?.product?.price) {
@@ -345,7 +345,7 @@ const decreaseCount = () => {
           ...getProduct?.value?.product,
           count: countToBuy.value,
           totalProdSum: totalPrice.value,
-          initPrice: +getProduct.value?.product?.price,
+          initPrice:selectedProductPrice.value,
         };
         if (updatedItem) {
           store.updateCartItem(updatedItem);
@@ -358,7 +358,7 @@ const decreaseCount = () => {
 const increaseCount = () => {
   countToBuy.value = countToBuy.value + 1;
   if (getProduct.value?.product?.price) {
-    totalPrice.value = countToBuy.value * getProduct.value?.product?.price;
+    totalPrice.value = countToBuy.value * selectedProductPrice.value
   }
   if (isProductExistsInCart.value) {
     if (getProduct.value?.product?.price) {
@@ -366,8 +366,9 @@ const increaseCount = () => {
         ...getProduct?.value?.product,
         count: countToBuy.value,
         totalProdSum: totalPrice.value,
-        initPrice: +getProduct.value?.product?.price,
+        initPrice: selectedProductPrice.value,
       };
+   
       if (updatedItem) {
         store.updateCartItem(updatedItem);
         useNotif("success", t("successEdited"), t("success"));
@@ -416,9 +417,9 @@ const addToCart = () => {
 
   }
 
- else if(!confirmedCodeColor?.value?.length){
-    useNotif("error", t("selecteTintingRequired"), t("error"));
-  }
+//  else if(!confirmedCodeColor?.value?.length){
+//     useNotif("error", t("selecteTintingRequired"), t("error"));
+//   }
   else {
   const prodItem = {
     ...getProduct.value?.product,
@@ -477,8 +478,16 @@ onMounted(async () => {
       getProduct?.value?.product?.brandId,
     );
   }
+
+
+
+  if (prodCart.value && prodCart.value !== null) {
+    selectedProductPrice.value = prodCart?.value?.initPrice;
+}else{
   selectedProductPrice.value = getProduct.value?.product?.price;
-  totalPrice.value = countToBuy.value * selectedProductPrice.value;
+
+}
+    totalPrice.value = countToBuy.value * selectedProductPrice.value;
   volumeBtn.value = getProduct.value?.product?.size;
 });
 </script>

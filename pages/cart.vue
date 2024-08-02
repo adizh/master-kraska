@@ -7,6 +7,7 @@
       <div class="cart-main grid">
         <div class="cart-main-info lg:col-8 md:col-12 sm:col-12">
           <CartProductItem
+          
             v-for="cartItem in store.getAllCart"
             :key="cartItem.id"
             :item="cartItem"
