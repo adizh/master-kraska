@@ -731,7 +731,7 @@ else{
 
 .middle-volume {
   &-buttons {
-    width: 40%;
+    width: 350px;
     margin-left: -10px;
     button.active-btn {
       @include items-button(8px 20px 8px 20px, white, $main-blue, none, 16px);
@@ -822,7 +822,8 @@ else{
   }
 }
 
-@media (max-width: 768px) {
+
+@media (max-width: 778px) {
   .middle {
     width: 50%;
 
@@ -846,6 +847,11 @@ else{
   }
 }
 
+@media (max-width:645px){
+  .middle-volume-buttons{
+    width: 100%;
+  }
+}
 @media (max-width: 480px) {
   .item-page-header {
     flex-direction: column;

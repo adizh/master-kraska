@@ -2,7 +2,7 @@
   <div>
     <h2>{{ $t("colorsMap") }}</h2>
 
-    <div class="tinting-section grid">
+    <div class="tinting-section grid" v-if="!loading">
       <div class="left col-3">
         <p
         v-for="item in filteredBrands"
@@ -59,6 +59,11 @@
       />
      </div>
       </div>
+    </div>
+
+    <div v-else class="text-center">
+
+      <ProgressSpinner />
     </div>
   </div>
 </template>
@@ -172,7 +177,9 @@ const fetchAllData = async (ids: string[]) => {
   fetchTintingsByBrand(selectedBrand.value);
   return [];
 };
+const loading=ref(false)
 const fetchAllTintings = async () => {
+  loading.value=true
   try {
     const response = await http("/api/v1/Tinting/get-all-tintings");
     if (response.status === 200) {
@@ -190,6 +197,8 @@ const fetchAllTintings = async () => {
     }
   } catch (err) {
     console.log(err);
+  }finally{
+    loading.value=false
   }
 };
 
