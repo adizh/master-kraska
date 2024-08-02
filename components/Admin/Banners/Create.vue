@@ -60,7 +60,7 @@ const titleKg = ref("");
 const descriptionRu = ref("");
 const descriptionKg = ref("");
 const image = ref({ loading: false, value: "", error: "" });
-
+const newStore=useNewsStore()
 const targetSizeBytes = 150 * 1024;
 
 const handleImage = async (event: any) => {
@@ -102,6 +102,7 @@ const creaseSlider = async () => {
     if (response.status === 200) {
       useNotif("success", "Баннер создан!", "Успешно");
       emits("closeCreateModal");
+      newStore.fetchSliders()
     }
   } catch (err) {
     console.log(err);
@@ -120,6 +121,8 @@ const checkInputs = () => {
     useNotif("error", "Убедитесь что заполнили поля без ошибок", "Ошибка");
   }
 };
+
+
 </script>
 
 <style scoped>

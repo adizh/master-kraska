@@ -9,6 +9,12 @@
       >
         Создать баннер
       </button>
+<div class="sliders-section mt-4">
+<AdminBannersItem v-for="seller in newsStore.getAllSliders" :key="seller?.id" :seller="seller"/>
+</div>
+
+
+
     </div>
 
     <UIModal
@@ -23,6 +29,11 @@
 
 <script setup lang="ts">
 import { isCreateBannerOpen } from "@/helpers/admin/banners";
+const newsStore=useNewsStore()
+
+onMounted(()=>{
+  newsStore.fetchSliders()
+})
 </script>
 
 <style scoped></style>

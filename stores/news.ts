@@ -1,10 +1,12 @@
+import { Slider } from "~/Slider";
 import { Brands, Seller } from "~/types/Brands";
 import { News } from "~/types/News";
 
 export const useNewsStore = defineStore("newsStore", {
   state: () => ({
     news: [] as News[],
-    allNews: [] as News[]
+    allNews: [] as News[],
+    sliders:[] as Slider[]
   }),
   actions: {
     async fetchAllNews () {
@@ -22,12 +24,27 @@ export const useNewsStore = defineStore("newsStore", {
       this.news = this.allNews.filter((item) =>
         item?.nameRu?.toLowerCase()?.includes(value?.toLowerCase())
       );
+    },
+
+    async fetchSliders(){
+      try{
+        const response = await http('/api/v1/Slider/get-all-sliders')
+        if(response.status===200){
+          this.sliders=response.data
+        }
+
+      }catch(err){
+        console.log(err)
+      }
     }
   },
 
   getters: {
     getAllNews (state) {
       return state.news;
+    },
+    getAllSliders(state){
+      return state.sliders
     }
   }
 });
