@@ -46,7 +46,9 @@
                   @click="selectColor(item)"
                 >
                   <p class="flex flex-row align-items-center gap-1">
+
                     <span>{{ item.code }}</span>
+
                     <img
                       v-show="item?.id === selectedColor?.id"
                       src="../assets/icons/carbon_checkmark-filled (1).svg"
@@ -210,6 +212,8 @@ const chooseBrand = (value: Brands) => {
   tintingSearch.value = "";
   fetchTintingsByBrand(selectedBrand.value);
 };
+
+
 </script>
 
 <style scoped lang="scss">
