@@ -60,6 +60,20 @@
               {{ selectedBase ? selectedBase : $t("noData") }}
             </button>
           </div>
+
+          <div class="select-koler" v-if="isCatalogHasItemCategory">
+            <span class="each-block-info-col">{{ $t("tinting") }}</span>
+            <div class="middle-parameters">
+              <button
+                @click="openTintingModal = !openTintingModal"
+                :disabled="!selectedVolume.value?.length ? true : false"
+              >
+                <span>{{ $t("seletTinting") }}</span>
+                <img src="../../assets/images/tinting-icon.png" />
+              </button>
+            </div>
+          </div>
+
           <div>
             <span class="each-block-info-col">
               {{ $t("consumption") }}
@@ -187,6 +201,13 @@
         @confirm="confirmCreatePay"
       />
     </Dialog>
+
+    <UIModal
+      :show-modal="openTintingModal"
+      @close-modal="openTintingModal = false"
+    >
+      <ProductPageTinting :productBrand="productBrand"  @closeTinting="closeTinting"/>
+    </UIModal>
   </div>
 </template>
 
@@ -196,6 +217,7 @@ import { ExtendedProduct } from "@/types/Product";
 import { Brands } from "~/types/Brands";
 import { Variant } from "~/types/Variant";
 import { catalogItemsToCheck } from "@/helpers/product-page";
+const openTintingModal = ref(false);
 const isConfirmOpen = ref(false);
 const props = defineProps<{
   productId: string;
@@ -218,9 +240,12 @@ const isProfileOpen = ref(false);
 const { getProduct } = storeToRefs(productStore);
 const isVolumeOpen = ref(false);
 
+const confirmedCodeColor=ref('')
+
 const selectedVolume = ref({ name: t("selectVolume"), value: "" });
 const literValue = ref(0);
 
+console.log("selectedVolume", selectedVolume);
 const resultLiter = ref(0);
 
 const handleLiter = () => {
@@ -228,6 +253,12 @@ const handleLiter = () => {
     resultLiter.value = +(literValue.value / 4).toFixed(2);
   }
 };
+
+const closeTinting =(color: string)=>{
+  confirmedCodeColor.value =color
+  openTintingModal.value=false
+
+}
 
 const isCatalogHasItemCategory = computed(() => {
   const categoryIds =
@@ -253,6 +284,8 @@ const selectVolume = (value: { name: string; value: string }) => {
   );
   if (variantIndex !== undefined) {
     selectVolumeSize(variantItem, variantIndex);
+
+   // selectedProductPrice.value = 
   }
 };
 
@@ -261,6 +294,8 @@ productImage.value = getProduct.value.product?.images[0];
 ratingValue.value = getProduct.value?.product?.rating;
 
 const selectVolumeSize = (value: any, index: number) => {
+console.log('selectVolumeSize',value,index)
+
   if (volumeBtn.value === value?.id) {
     removeVolume();
   } else {
@@ -374,18 +409,31 @@ const buyNow = () => {
 };
 
 const addToCart = () => {
-  console.log("selected volume", selectedVolume);
+
   if (!selectedVolume?.value?.value?.length) {
+
     useNotif("error", t("selectVolume"), t("error"));
+
   }
 
-  // const prodItem = {
-  //   ...getProduct.value?.product,
-  //   count: countToBuy.value,
-  //   totalProdSum: totalPrice.value,
-  //   initPrice: selectedProductPrice.value,
-  // };
-  // store.addToCart(prodItem);
+ else if(!confirmedCodeColor?.value?.length){
+    useNotif("error", t("selecteTintingRequired"), t("error"));
+  }
+  else {
+  const prodItem = {
+    ...getProduct.value?.product,
+    count: countToBuy.value,
+    totalProdSum: totalPrice.value,
+    initPrice: selectedProductPrice.value,
+  };
+
+  console.log('prodItem',prodItem)
+
+  store.addToCart(prodItem);
+  }
+
+
+  
 };
 
 const isProductExistsInCart = computed(() => {
@@ -708,6 +756,9 @@ onMounted(async () => {
       16px
     );
     @include flex(row, start, center);
+    &:disabled {
+      cursor: not-allowed;
+    }
   }
 }
 

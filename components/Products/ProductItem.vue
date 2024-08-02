@@ -74,13 +74,16 @@
         </svg>
       </button>
     </div> -->
-    <button class="pink-button prod-price"     @click.stop="router.push(`/product/${product?.id}`)">
+    <button
+      class="pink-button prod-price"
+      @click.stop="router.push(`/product/${product?.id}`)"
+    >
       {{
         !isItemHovered
           ? product?.price + "сом"
           : isItemHovered
-            ? $t("toProduct") :''
-            
+            ? $t("toProduct")
+            : ""
       }}
     </button>
   </div>

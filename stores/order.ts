@@ -113,10 +113,11 @@ export const useOrderStore = defineStore("orderStore", {
     async createOrder () {
       const cartStore = useCartStore();
       const authStore = useAuthStore();
-      // isConfirmOpen.value = false;
+
       const allOrderItems = [] as Order[];
       for (const item of cartStore.getAllCart) {
         allOrderItems.push({
+          
           customerId: authStore.getUserId ? authStore.getUserId : "",
           productId: item?.id,
           productName: item?.name,
@@ -124,26 +125,28 @@ export const useOrderStore = defineStore("orderStore", {
           quantity: item?.count
         });
       }
-      try {
-        const response = await http.post(
-          "/api/v1/Order/create-order",
-          allOrderItems
-        );
-        console.log("response create order", response);
-        if (response.status === 200) {
-          useNotifLocal("success", "orderSent", "success");
-          cartStore.setCurrentOrder(response?.data?.message);
-          console.log("response data mesage", response?.data?.message);
-          if (response.data.code === 200) {
-            return navigateTo(`/place-order/${response.data?.message?.id}`);
-          }
-        }
-      } catch (err: any) {
-        console.log(err, "some err ");
-        if (err?.response?.data?.code === 400) {
-          //  isConfirmOpen.value = false;
-        }
-      }
+      console.log('allOrderItems',allOrderItems)
+
+      // try {
+      //   const response = await http.post(
+      //     "/api/v1/Order/create-order",
+      //     allOrderItems
+      //   );
+      //   console.log("response create order", response);
+      //   if (response.status === 200) {
+      //     useNotifLocal("success", "orderSent", "success");
+      //     cartStore.setCurrentOrder(response?.data?.message);
+      //     console.log("response data mesage", response?.data?.message);
+      //     if (response.data.code === 200) {
+      //      return navigateTo(`/place-order/${response.data?.message?.id}`);
+      //     }
+      //   }
+      // } catch (err: any) {
+      //   console.log(err, "some err ");
+      //   if (err?.response?.data?.code === 400) {
+      //     //  isConfirmOpen.value = false;
+      //   }
+      // }
     },
     setOrderAddress (value: string) {
       this.delForm.address.value = value;

@@ -61,13 +61,16 @@
         </svg>
       </button>
     </div> -->
-    <button class="pink-button prod-price"     @click.stop="router.push(`/product/${product?.id}`)">
+    <button
+      class="pink-button prod-price"
+      @click.stop="router.push(`/product/${product?.id}`)"
+    >
       {{
         !isItemHovered
           ? product?.price + "сом"
           : isItemHovered
             ? $t("toProduct")
-            : ''
+            : ""
       }}
     </button>
   </div>
@@ -104,7 +107,7 @@
         </div>
       </div>
     </div>
-<!-- 
+    <!-- 
     <div class="item-add-btns col-1">
       <button @click.stop="removeCount">
         <svg
@@ -134,13 +137,16 @@
       </button>
     </div> -->
     <div class="last-col col-3">
-      <button class="item-block-buy"  @click.stop="router.push(`/product/${product?.id}`)">
+      <button
+        class="item-block-buy"
+        @click.stop="router.push(`/product/${product?.id}`)"
+      >
         {{
           !isItemHovered
             ? product?.price + "сом"
             : isItemHovered && isProductExistsInCart
               ? $t("toProduct")
-              : ''
+              : ""
         }}
       </button>
       <UIBookmarks :product="product" />

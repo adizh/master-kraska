@@ -57,8 +57,13 @@
 </template>
 
 <script setup lang="ts">
-import {createSellerForm,image,certificateImage, isCreateModalOpen} from '@/helpers/admin/sellers'
-const brandsStore=useBrandsStore()
+import {
+  createSellerForm,
+  image,
+  certificateImage,
+  isCreateModalOpen,
+} from "@/helpers/admin/sellers";
+const brandsStore = useBrandsStore();
 const targetSizeBytes = 150 * 1024;
 
 const createSellerRequest = async () => {
@@ -77,8 +82,8 @@ const createSellerRequest = async () => {
     const response = await http.post("/api/v1/Seller/create-seller", body);
     if (response.status === 200) {
       useNotif("success", "Продавец добавлен", "Успешно");
-isCreateModalOpen.value=false
-      brandsStore.fetchAllSellers()
+      isCreateModalOpen.value = false;
+      brandsStore.fetchAllSellers();
     }
   } catch (err) {
     console.log(err);
@@ -110,8 +115,6 @@ const createSeller = () => {
     );
   }
 };
-
-
 
 const handleImage = async (event: any) => {
   image.value.loading = true;
