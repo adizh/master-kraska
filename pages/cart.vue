@@ -7,7 +7,6 @@
       <div class="cart-main grid">
         <div class="cart-main-info lg:col-8 md:col-12 sm:col-12">
           <CartProductItem
-          
             v-for="cartItem in store.getAllCart"
             :key="cartItem.id"
             :item="cartItem"
@@ -35,8 +34,15 @@
               <span>{{ $t("accountPiece") }}</span>
               <span>0%</span>
             </div>
-            <input class="basic-input" placeholder="Промокод" @input="handlePromocode">
-            <span class="err-input-msg" v-if="orderStore.orderPromocode?.length">*{{ $t('priceIsNotFinal') }}</span>
+            <input
+              class="basic-input"
+              placeholder="Промокод"
+              @input="handlePromocode"
+            >
+            <span
+              v-if="orderStore.orderPromocode?.length"
+              class="err-input-msg"
+            >*{{ $t("priceIsNotFinal") }}</span>
             <div class="last">
               <span>{{ $t("inTotal") }}</span>
               <span>{{ store.totalOfTotalSum }} сом</span>
@@ -147,13 +153,11 @@ const goToRegister = () => {
 
   // authStore.getUserId
 };
-const handlePromocode =(event:Event)=>{
-  const target=event.target as HTMLInputElement;
+const handlePromocode = (event: Event) => {
+  const target = event.target as HTMLInputElement;
 
-
-  orderStore.setOrderPromocode(target.value)
-
-}
+  orderStore.setOrderPromocode(target.value);
+};
 
 const removeFromCart = () => {
   if (currentProd?.value) {

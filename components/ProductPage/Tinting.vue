@@ -5,14 +5,14 @@
     <div class="tinting-section grid" v-if="!loading">
       <div class="left col-3">
         <p
-        v-for="item in filteredBrands"
-        :key="item?.id"
-        class="koler-section-select-names"
-        :class="{ 'active': item?.name === selectedBrand?.name }"
-        @click="chooseBrand(item)"
-      >
-        {{ item?.name }}
-      </p>
+          v-for="item in filteredBrands"
+          :key="item?.id"
+          class="koler-section-select-names"
+          :class="{ active: item?.name === selectedBrand?.name }"
+          @click="chooseBrand(item)"
+        >
+          {{ item?.name }}
+        </p>
       </div>
       <div class="right col-9">
         <input
@@ -37,32 +37,37 @@
             @click="selectColor(item?.code)"
             :class="{ 'selected-color': item?.code === selectedColor }"
           >
-          <p class="flex flex-row align-items-center justify-content-center gap-1">
-            <span>{{ item.code }}</span>
-            <img
-              v-show="item?.code === selectedColor"
-              src="../../assets/icons/carbon_checkmark-filled (1).svg"
-              alt="carbon"
-              class="carbon"
+            <p
+              class="flex flex-row align-items-center justify-content-center gap-1"
             >
-          </p>
+              <span>{{ item.code }}</span>
+              <img
+                v-show="item?.code === selectedColor"
+                src="../../assets/icons/carbon_checkmark-filled (1).svg"
+                alt="carbon"
+                class="carbon"
+              />
+            </p>
           </div>
         </div>
 
-
-        <button class="pink-button" @click="$emit('closeTinting',selectedColor)">{{ $t('selectColor') }}</button>
-     <div class='flex justify-content-between'>
-        <UIPagination
-        :total="totalPages"
-        :current-active="currentPage"
-        @change-page="changePage"
-      />
-     </div>
+        <button
+          class="pink-button"
+          @click="$emit('closeTinting', selectedColor)"
+        >
+          {{ $t("selectColor") }}
+        </button>
+        <div class="flex justify-content-between">
+          <UIPagination
+            :total="totalPages"
+            :current-active="currentPage"
+            @change-page="changePage"
+          />
+        </div>
       </div>
     </div>
 
     <div v-else class="text-center">
-
       <ProgressSpinner />
     </div>
   </div>
@@ -77,44 +82,41 @@ import {
   tintingSearch,
   selectedColor,
   selectColor,
-  allTingings,filteredBrands,selectedBrand,currentBrandsColors
+  allTingings,
+  filteredBrands,
+  selectedBrand,
+  currentBrandsColors,
 } from "@/helpers/product/tinting";
 import { Tinting } from "~/types/Tinting";
 const props = defineProps<{
   productBrand: Brands;
-
 }>();
 const chooseBrand = (value: Brands) => {
   selectedBrand.value = value;
 
-  console.log('selectedBrand',selectedBrand.value)
-  console.log('value',value)
+  console.log("selectedBrand", selectedBrand.value);
+  console.log("value", value);
   currentBrandsColors.value = allTingings.value?.filter(
-    (item: Tinting) => item?.brandId === selectedBrand?.value.id
+    (item: Tinting) => item?.brandId === selectedBrand?.value.id,
   );
   tintingSearch.value = "";
   fetchTintingsByBrand(selectedBrand.value);
 };
 const handleSearch = () => {
-    currentPage.value=1
+  currentPage.value = 1;
   fetchTintingsByBrand(selectedBrand.value);
 };
 
-const emit=defineEmits<{
-    closeTinting:[selectedColor:string]
-}>()
+const emit = defineEmits<{
+  closeTinting: [selectedColor: string];
+}>();
 
+const changePage = (page: number) => {
+  currentPage.value = page;
+  fetchTintingsByBrand(selectedBrand?.value);
+};
 
-
-
-
-
-const changePage =(page:number)=>{
-    currentPage.value=page
-    fetchTintingsByBrand(selectedBrand?.value)
-}
-
-const fetchTintingsByBrand = async (brand:Brands) => {
+const fetchTintingsByBrand = async (brand: Brands) => {
   try {
     const response = await http(
       `/api/v1/Tinting/get-all-tintings-pagination?page=${currentPage.value}&pageSize=${10}&brandId=${brand?.id}&code=${tintingSearch?.value}`,
@@ -130,7 +132,6 @@ const fetchTintingsByBrand = async (brand:Brands) => {
   }
 };
 
-
 const fetchBrandsId = async (id: string) => {
   try {
     const response = await http(`/api/v1/Brand/get-brand/${id}`);
@@ -145,7 +146,7 @@ const fetchBrandsId = async (id: string) => {
 const fetchAllData = async (ids: string[]) => {
   const idsNull = [
     "902dea30-e9a6-4d6c-accf-97d4590d9852",
-    "8b9f00af-1ff0-400e-be67-3f4753c89970"
+    "8b9f00af-1ff0-400e-be67-3f4753c89970",
   ];
   const filtered = ids.filter((item) => !idsNull.includes(item));
   const results = [];
@@ -156,8 +157,6 @@ const fetchAllData = async (ids: string[]) => {
     }
   }
 
-
-
   const filteredOnes = results.filter((item: Brands) => Boolean(item));
   const desiredOrder = [
     "Tikkurila",
@@ -165,21 +164,21 @@ const fetchAllData = async (ids: string[]) => {
     "Sirca",
     "Ярославские",
     "Marshall",
-    "Dulux"
+    "Dulux",
   ];
   filteredBrands.value = desiredOrder.map((name) =>
-    filteredOnes.find((obj) => obj.name === name)
+    filteredOnes.find((obj) => obj.name === name),
   );
   selectedBrand.value = filteredBrands.value[0];
   currentBrandsColors.value = allTingings.value?.filter(
-    (item: Tinting) => item?.brandId === selectedBrand?.value.id
+    (item: Tinting) => item?.brandId === selectedBrand?.value.id,
   );
   fetchTintingsByBrand(selectedBrand.value);
   return [];
 };
-const loading=ref(false)
+const loading = ref(false);
 const fetchAllTintings = async () => {
-  loading.value=true
+  loading.value = true;
   try {
     const response = await http("/api/v1/Tinting/get-all-tintings");
     if (response.status === 200) {
@@ -197,16 +196,15 @@ const fetchAllTintings = async () => {
     }
   } catch (err) {
     console.log(err);
-  }finally{
-    loading.value=false
+  } finally {
+    loading.value = false;
   }
 };
 
-onMounted(async() => {
-
+onMounted(async () => {
   await fetchAllTintings();
   currentBrandsColors.value = allTingings.value?.filter(
-    (item: Tinting) => item?.brandId === selectedBrand?.value.id
+    (item: Tinting) => item?.brandId === selectedBrand?.value.id,
   );
 });
 </script>
@@ -216,8 +214,8 @@ onMounted(async() => {
   @include textFormat(16px, 20px, 500, #eb5757);
   margin: 27px 0 40px 0;
 }
-.pink-button{
-    margin:20px 0 40px 0;
+.pink-button {
+  margin: 20px 0 40px 0;
 }
 .tinting-block {
   @include flex(row, start, start, 4px);
@@ -246,47 +244,42 @@ h2 {
 }
 
 .tinting-section {
- .left p.active{
-  color: $main-blue;
- }
-  .left{
-
+  .left p.active {
+    color: $main-blue;
+  }
+  .left {
     p {
-      margin-bottom:20px;
+      margin-bottom: 20px;
       color: #222;
       font-size: 20px;
       line-height: 32px;
       font-weight: 500;
-      &:hover{
+      &:hover {
         cursor: pointer;
       }
-     
     }
   }
-
 }
 .selected-color {
-    border: 1px solid $main-black !important;
+  border: 1px solid $main-black !important;
+}
+
+@media (max-width: 945px) {
+  .tinting-section {
+    flex-direction: column;
   }
-
-
-  @media (max-width: 945px){
-    .tinting-section {
-      flex-direction: column;
-    }
-    .left{
-      @include flex(row,start,start);
-      flex-wrap:wrap;
-      width: 100% !important;
-    }
-    .tinting-block {
-  
-      &-item {
-        width: 144px;
-      }
-    }
-    .right{
-      width: 100% !important;
+  .left {
+    @include flex(row, start, start);
+    flex-wrap: wrap;
+    width: 100% !important;
+  }
+  .tinting-block {
+    &-item {
+      width: 144px;
     }
   }
+  .right {
+    width: 100% !important;
+  }
+}
 </style>

@@ -1,9 +1,12 @@
 <template>
   <section>
     <div class="admin-links">
+      <a href="/admin" target="_blank">Главная</a>
+
       <a href="/admin/add-product" target="_blank">Добавить продукт</a>
       <a href="/admin/orders" target="_blank">Заказы</a>
       <a href="/admin/sellers" target="_blank">Продавцы</a>
+      <a href="/admin/banners" target="_blank">Баннеры</a>
       <a
         href="#"
         target="_blank"

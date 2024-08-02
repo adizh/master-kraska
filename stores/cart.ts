@@ -40,8 +40,6 @@ export const useCartStore = defineStore("cartStore", {
     },
 
     increaseCount (item: ExtendedProduct) {
-
-      
       const updatedItem = { ...item };
       updatedItem.count++;
       updatedItem.totalProdSum = updatedItem.count * updatedItem.initPrice;

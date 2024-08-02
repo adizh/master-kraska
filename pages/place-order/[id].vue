@@ -253,9 +253,9 @@ const sendOrderCash = async () => {
       useNotif("success", t("orderSent"), t("success"));
       payStore.setExit(true);
       localStorage.removeItem("cart");
-   setTimeout(()=>{
-    return navigateTo("/");
-   },600)
+      setTimeout(() => {
+        return navigateTo("/");
+      }, 600);
     }
   } catch (err) {
     console.log(err);

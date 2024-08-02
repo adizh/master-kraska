@@ -66,7 +66,7 @@
             <div class="middle-parameters">
               <button
                 @click="openTintingModal = !openTintingModal"
-                :disabled='isTintingDisabled'
+                :disabled="isTintingDisabled"
               >
                 <span>{{ $t("seletTinting") }}</span>
                 <img src="../../assets/images/tinting-icon.png" />
@@ -207,7 +207,10 @@
       @close-modal="openTintingModal = false"
       :modalStyle="modalStyle"
     >
-      <ProductPageTinting :productBrand="productBrand"  @closeTinting="closeTinting"/>
+      <ProductPageTinting
+        :productBrand="productBrand"
+        @closeTinting="closeTinting"
+      />
     </UIModal>
   </div>
 </template>
@@ -241,7 +244,7 @@ const isProfileOpen = ref(false);
 const { getProduct } = storeToRefs(productStore);
 const isVolumeOpen = ref(false);
 
-const confirmedCodeColor=ref('')
+const confirmedCodeColor = ref("");
 
 const selectedVolume = ref({ name: t("selectVolume"), value: "" });
 const literValue = ref(0);
@@ -255,19 +258,18 @@ const handleLiter = () => {
   }
 };
 
-const closeTinting =(color: string)=>{
-  confirmedCodeColor.value =color
-  openTintingModal.value=false
+const closeTinting = (color: string) => {
+  confirmedCodeColor.value = color;
+  openTintingModal.value = false;
+};
 
-}
-
-const isTintingDisabled=computed(()=>{
-  if(doVariantsExist?.value){
-    return !selectedVolume.value?.value?.length ? true : false
-  }else{
-    return false
+const isTintingDisabled = computed(() => {
+  if (doVariantsExist?.value) {
+    return !selectedVolume.value?.value?.length ? true : false;
+  } else {
+    return false;
   }
-})
+});
 
 const isCatalogHasItemCategory = computed(() => {
   const categoryIds =
@@ -294,7 +296,7 @@ const selectVolume = (value: { name: string; value: string }) => {
   if (variantIndex !== undefined) {
     selectVolumeSize(variantItem, variantIndex);
 
-   // selectedProductPrice.value = 
+    // selectedProductPrice.value =
   }
 };
 
@@ -303,8 +305,6 @@ productImage.value = getProduct.value.product?.images[0];
 ratingValue.value = getProduct.value?.product?.rating;
 
 const selectVolumeSize = (value: any, index: number) => {
-
-
   if (volumeBtn.value === value?.id) {
     removeVolume();
   } else {
@@ -318,15 +318,17 @@ const selectVolumeSize = (value: any, index: number) => {
       selectedProductPrice.value =
         getProduct.value?.product?.variants[index].price;
       selectedBase.value = value?.base;
- totalPrice.value = countToBuy.value * selectedProductPrice.value
-
+      totalPrice.value = countToBuy.value * selectedProductPrice.value;
     }
   }
 };
 
-const doVariantsExist = computed(()=>{
-  return getProduct.value.product.variants !== undefined && getProduct.value.product.variants?.length > 0 ? true :false
-})
+const doVariantsExist = computed(() => {
+  return getProduct.value.product.variants !== undefined &&
+    getProduct.value.product.variants?.length > 0
+    ? true
+    : false;
+});
 
 const selectedDefaultVolume = (value: string) => {
   if (volumeBtn.value === value) {
@@ -352,7 +354,7 @@ const decreaseCount = () => {
   if (countToBuy.value > 1) {
     countToBuy.value = countToBuy.value - 1;
     if (getProduct.value?.product?.price) {
-      totalPrice.value = countToBuy.value *selectedProductPrice.value;
+      totalPrice.value = countToBuy.value * selectedProductPrice.value;
     }
     if (isProductExistsInCart.value) {
       if (getProduct.value?.product?.price) {
@@ -360,7 +362,7 @@ const decreaseCount = () => {
           ...getProduct?.value?.product,
           count: countToBuy.value,
           totalProdSum: totalPrice.value,
-          initPrice:selectedProductPrice.value,
+          initPrice: selectedProductPrice.value,
         };
         if (updatedItem) {
           store.updateCartItem(updatedItem);
@@ -373,7 +375,7 @@ const decreaseCount = () => {
 const increaseCount = () => {
   countToBuy.value = countToBuy.value + 1;
   if (getProduct.value?.product?.price) {
-    totalPrice.value = countToBuy.value * selectedProductPrice.value
+    totalPrice.value = countToBuy.value * selectedProductPrice.value;
   }
   if (isProductExistsInCart.value) {
     if (getProduct.value?.product?.price) {
@@ -383,7 +385,7 @@ const increaseCount = () => {
         totalProdSum: totalPrice.value,
         initPrice: selectedProductPrice.value,
       };
-   
+
       if (updatedItem) {
         store.updateCartItem(updatedItem);
         useNotif("success", t("successEdited"), t("success"));
@@ -424,30 +426,25 @@ const buyNow = () => {
   }
 };
 
-
-
 const addToCart = () => {
   if (doVariantsExist.value && !selectedVolume?.value?.value?.length) {
     useNotif("error", t("selectVolume"), t("error"));
   }
 
-  if(isCatalogHasItemCategory?.value && !confirmedCodeColor?.value?.length){
+  if (isCatalogHasItemCategory?.value && !confirmedCodeColor?.value?.length) {
     useNotif("error", t("selecteTintingRequired"), t("error"));
+  } else {
+    const prodItem = {
+      ...getProduct.value?.product,
+      count: countToBuy.value,
+      totalProdSum: totalPrice.value,
+      initPrice: selectedProductPrice.value,
+      colorationCode: confirmedCodeColor.value,
+    };
+
+    console.log("prodItem", prodItem);
+    store.addToCart(prodItem);
   }
-  else {
-  const prodItem = {
-    ...getProduct.value?.product,
-    count: countToBuy.value,
-    totalProdSum: totalPrice.value,
-    initPrice: selectedProductPrice.value,
-    colorationCode:confirmedCodeColor.value
-  };
-
-  console.log('prodItem',prodItem)
-  store.addToCart(prodItem);
-
-  }
-
 };
 
 const isProductExistsInCart = computed(() => {
@@ -476,9 +473,9 @@ const removeVolume = () => {
   selectedBase.value = "";
 };
 
-const modalStyle={
-  width:'70%'
-}
+const modalStyle = {
+  width: "70%",
+};
 onUnmounted(() => {
   leastSmallAmount.value = 0;
 });
@@ -497,11 +494,10 @@ onMounted(async () => {
 
   if (prodCart.value && prodCart.value !== null) {
     selectedProductPrice.value = prodCart?.value?.initPrice;
-}
-else{
-  selectedProductPrice.value = getProduct.value?.product?.price;
-}
-    totalPrice.value = countToBuy.value * selectedProductPrice.value;
+  } else {
+    selectedProductPrice.value = getProduct.value?.product?.price;
+  }
+  totalPrice.value = countToBuy.value * selectedProductPrice.value;
   volumeBtn.value = getProduct.value?.product?.size;
 });
 </script>
@@ -832,7 +828,6 @@ else{
   }
 }
 
-
 @media (max-width: 778px) {
   .middle {
     width: 50%;
@@ -857,8 +852,8 @@ else{
   }
 }
 
-@media (max-width:645px){
-  .middle-volume-buttons{
+@media (max-width: 645px) {
+  .middle-volume-buttons {
     width: 100%;
   }
 }

@@ -17,7 +17,7 @@ export const useOrderStore = defineStore("orderStore", {
 
     selectedStatus: "",
     shops: [] as AddressList[],
-    orderPromocode:"",
+    orderPromocode: "",
     orders: {
       page: 1,
       pageSize: 0,
@@ -111,8 +111,8 @@ export const useOrderStore = defineStore("orderStore", {
       }
     },
 
-    setOrderPromocode(value:string){
-this.orderPromocode=value
+    setOrderPromocode (value: string) {
+      this.orderPromocode = value;
     },
 
     async createOrder () {
@@ -122,17 +122,16 @@ this.orderPromocode=value
       const allOrderItems = [] as Order[];
       for (const item of cartStore.getAllCart) {
         allOrderItems.push({
-          
           customerId: authStore.getUserId ? authStore.getUserId : "",
           productId: item?.id,
           productName: item?.name,
           price: item?.initPrice,
           quantity: item?.count,
-          colorationCode:item?.colorationCode || null as any,
-          promocode:this.orderPromocode
+          colorationCode: item?.colorationCode || (null as any),
+          promocode: this.orderPromocode
         });
       }
-      console.log('allOrderItems',allOrderItems)
+      console.log("allOrderItems", allOrderItems);
 
       try {
         const response = await http.post(
@@ -145,7 +144,7 @@ this.orderPromocode=value
           cartStore.setCurrentOrder(response?.data?.message);
           console.log("response data mesage", response?.data?.message);
           if (response.data.code === 200) {
-           return navigateTo(`/place-order/${response.data?.message?.id}`);
+            return navigateTo(`/place-order/${response.data?.message?.id}`);
           }
         }
       } catch (err: any) {

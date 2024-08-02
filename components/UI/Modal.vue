@@ -32,12 +32,8 @@ const props = defineProps<{
 
 const emit = defineEmits(["closeModal"]);
 
-// Define data
-const data = ref({
-  // Define any data properties here if needed
-});
+const data = ref({});
 
-// Define methods
 const closeModal = () => {
   emit("closeModal");
 };
@@ -69,6 +65,10 @@ const closeModal = () => {
   max-height: 85vh;
   overflow-y: auto;
   padding: 40px;
+  a {
+    color: #222;
+    font-size: 17px;
+  }
 }
 
 .close {
