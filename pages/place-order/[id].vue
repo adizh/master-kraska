@@ -83,11 +83,11 @@
               {{ $t("product") }}</span>
             <span>{{ currentOrder?.total }} сом</span>
           </div>
-          <div class="second">
+          <!-- <div class="second">
             <span>{{ $t("accountPiece") }}</span>
             <span>0%</span>
           </div>
-          <input class="basic-input" placeholder="Промокод">
+          <input class="basic-input" placeholder="Промокод"> -->
           <div class="last">
             <span>{{ $t("inTotal") }}</span>
             <span>{{ currentOrder?.total }} сом</span>
@@ -253,7 +253,9 @@ const sendOrderCash = async () => {
       useNotif("success", t("orderSent"), t("success"));
       payStore.setExit(true);
       localStorage.removeItem("cart");
-      return navigateTo("/");
+   setTimeout(()=>{
+    return navigateTo("/");
+   },600)
     }
   } catch (err) {
     console.log(err);
@@ -303,6 +305,7 @@ const deleteOrder = async () => {
       useNotif("success", t("orderCancelled"), t("success"));
       isWarningOpen.value = false;
       isPaymentOpen.value = false;
+      localStorage.removeItem("cart");
       setTimeout(() => {
         window.location.reload();
         return navigateTo("/");

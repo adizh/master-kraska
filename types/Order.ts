@@ -4,6 +4,8 @@ export type Order = {
   productName: string;
   price: number;
   quantity: number;
+  colorationCode:string,
+  promocode?:string |null
 };
 
 export type UserOrder = {

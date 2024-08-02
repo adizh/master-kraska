@@ -194,7 +194,7 @@ const fetchAllTintings = async () => {
 };
 
 onMounted(async() => {
-//  fetchTintingsByBrand();
+
   await fetchAllTintings();
   currentBrandsColors.value = allTingings.value?.filter(
     (item: Tinting) => item?.brandId === selectedBrand?.value.id
@@ -258,5 +258,26 @@ h2 {
 }
 .selected-color {
     border: 1px solid $main-black !important;
+  }
+
+
+  @media (max-width: 945px){
+    .tinting-section {
+      flex-direction: column;
+    }
+    .left{
+      @include flex(row,start,start);
+      flex-wrap:wrap;
+      width: 100% !important;
+    }
+    .tinting-block {
+  
+      &-item {
+        width: 144px;
+      }
+    }
+    .right{
+      width: 100% !important;
+    }
   }
 </style>

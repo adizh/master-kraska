@@ -35,7 +35,8 @@
               <span>{{ $t("accountPiece") }}</span>
               <span>0%</span>
             </div>
-            <input class="basic-input" placeholder="Промокод" disabled>
+            <input class="basic-input" placeholder="Промокод" @input="handlePromocode">
+            <span class="err-input-msg" v-if="orderStore.orderPromocode?.length">*{{ $t('priceIsNotFinal') }}</span>
             <div class="last">
               <span>{{ $t("inTotal") }}</span>
               <span>{{ store.totalOfTotalSum }} сом</span>
@@ -146,6 +147,13 @@ const goToRegister = () => {
 
   // authStore.getUserId
 };
+const handlePromocode =(event:Event)=>{
+  const target=event.target as HTMLInputElement;
+
+
+  orderStore.setOrderPromocode(target.value)
+
+}
 
 const removeFromCart = () => {
   if (currentProd?.value) {

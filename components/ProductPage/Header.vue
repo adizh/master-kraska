@@ -40,7 +40,7 @@
             </div>
           </div>
 
-          <div class="middle-volume">
+          <div class="middle-volume" v-if="doVariantsExist">
             <span class="each-block-info-col">{{ $t("volume") }}</span>
             <div class="middle-volume-buttons">
               <UIDropdown
@@ -205,6 +205,7 @@
     <UIModal
       :show-modal="openTintingModal"
       @close-modal="openTintingModal = false"
+      :modalStyle="modalStyle"
     >
       <ProductPageTinting :productBrand="productBrand"  @closeTinting="closeTinting"/>
     </UIModal>
@@ -309,9 +310,15 @@ const selectVolumeSize = (value: any, index: number) => {
       selectedProductPrice.value =
         getProduct.value?.product?.variants[index].price;
       selectedBase.value = value?.base;
+ totalPrice.value = countToBuy.value * selectedProductPrice.value
+
     }
   }
 };
+
+const doVariantsExist = computed(()=>{
+  return getProduct.value.product.variants !== undefined && getProduct.value.product.variants?.length > 0 ? true :false
+})
 
 const selectedDefaultVolume = (value: string) => {
   if (volumeBtn.value === value) {
@@ -410,31 +417,27 @@ const buyNow = () => {
 };
 
 const addToCart = () => {
-
-  if (!selectedVolume?.value?.value?.length) {
-
+  if (doVariantsExist.value && !selectedVolume?.value?.value?.length) {
     useNotif("error", t("selectVolume"), t("error"));
-
   }
 
-//  else if(!confirmedCodeColor?.value?.length){
-//     useNotif("error", t("selecteTintingRequired"), t("error"));
-//   }
+ else if(isCatalogHasItemCategory?.value && !confirmedCodeColor?.value?.length){
+    useNotif("error", t("selecteTintingRequired"), t("error"));
+  }
   else {
   const prodItem = {
     ...getProduct.value?.product,
     count: countToBuy.value,
     totalProdSum: totalPrice.value,
     initPrice: selectedProductPrice.value,
+    colorationCode:confirmedCodeColor.value
   };
 
   console.log('prodItem',prodItem)
-
   store.addToCart(prodItem);
+
   }
 
-
-  
 };
 
 const isProductExistsInCart = computed(() => {
@@ -463,6 +466,9 @@ const removeVolume = () => {
   selectedBase.value = "";
 };
 
+const modalStyle={
+  width:'70%'
+}
 onUnmounted(() => {
   leastSmallAmount.value = 0;
 });
@@ -479,13 +485,11 @@ onMounted(async () => {
     );
   }
 
-
-
   if (prodCart.value && prodCart.value !== null) {
     selectedProductPrice.value = prodCart?.value?.initPrice;
-}else{
+}
+else{
   selectedProductPrice.value = getProduct.value?.product?.price;
-
 }
     totalPrice.value = countToBuy.value * selectedProductPrice.value;
   volumeBtn.value = getProduct.value?.product?.size;
