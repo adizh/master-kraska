@@ -200,7 +200,7 @@ const editUser = async () => {
   const validationTypes: any = {
     firstName: "string",
     lastName: "string",
-    email: "email",
+
     phone: "string",
     address: "string",
   };

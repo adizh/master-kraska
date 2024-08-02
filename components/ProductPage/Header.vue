@@ -66,7 +66,7 @@
             <div class="middle-parameters">
               <button
                 @click="openTintingModal = !openTintingModal"
-                :disabled="!selectedVolume.value?.length ? true : false"
+                :disabled='isTintingDisabled'
               >
                 <span>{{ $t("seletTinting") }}</span>
                 <img src="../../assets/images/tinting-icon.png" />
@@ -261,6 +261,14 @@ const closeTinting =(color: string)=>{
 
 }
 
+const isTintingDisabled=computed(()=>{
+  if(doVariantsExist?.value){
+    return !selectedVolume.value?.value?.length ? true : false
+  }else{
+    return false
+  }
+})
+
 const isCatalogHasItemCategory = computed(() => {
   const categoryIds =
     getProduct.value?.product?.categories?.map((item) => item?.id) || [];
@@ -416,12 +424,14 @@ const buyNow = () => {
   }
 };
 
+
+
 const addToCart = () => {
   if (doVariantsExist.value && !selectedVolume?.value?.value?.length) {
     useNotif("error", t("selectVolume"), t("error"));
   }
 
- else if(isCatalogHasItemCategory?.value && !confirmedCodeColor?.value?.length){
+  if(isCatalogHasItemCategory?.value && !confirmedCodeColor?.value?.length){
     useNotif("error", t("selecteTintingRequired"), t("error"));
   }
   else {
