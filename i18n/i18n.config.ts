@@ -13,6 +13,6 @@ export default defineI18nConfig(() => ({
   locale: lan,
   messages: {
     ru,
-    kg
-  }
+    kg,
+  },
 }));

@@ -3,7 +3,6 @@
     <header>
       <img src="../../assets/icons/mdi_password-outline.svg" alt="locked" />
       <div class="main-header">{{ $t("resetPassword") }} rerere</div>
-
     </header>
 
     <div class="grid form" v-if="!isPasswordsOpen">
@@ -15,13 +14,13 @@
           </label>
         </div>
         <InputMask
-        id="basic"
-        v-model="inputs.phone.value"
-        mask="+999 999 99 99 99"
-        placeholder="+996 777 66 55 44"
-        @update:modelValue="handleInput('phone', 'number')"
-      />
-    
+          id="basic"
+          v-model="inputs.phone.value"
+          mask="+999 999 99 99 99"
+          placeholder="+996 777 66 55 44"
+          @update:modelValue="handleInput('phone', 'number')"
+        />
+
         <span v-if="inputs.phone.error" class="err-input-msg">{{
           inputs.phone.error
         }}</span>

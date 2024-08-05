@@ -44,7 +44,7 @@
 <script setup lang="ts">
 import {
   isCreateBannerOpen,
-  isDeleteSliderOpen
+  isDeleteSliderOpen,
 } from "@/helpers/admin/banners";
 import { Slider } from "~/Slider";
 const newsStore = useNewsStore();
@@ -58,7 +58,7 @@ const deleteSlider = (slider: Slider) => {
 const confirmDeleteSlider = async () => {
   try {
     const response = await http.delete(
-      `/api/v1/Slider/delete-slider-by-id/${currentSlider.value?.id}`
+      `/api/v1/Slider/delete-slider-by-id/${currentSlider.value?.id}`,
     );
     if (response.status === 200) {
       useNotif("success", "Баннер удален", "Успешно");

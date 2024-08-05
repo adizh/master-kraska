@@ -6,16 +6,25 @@
       <a href="/admin/orders" target="_blank">Заказы</a>
       <a href="/admin/sellers" target="_blank">Продавцы</a>
       <a href="/admin/banners" target="_blank">Баннеры</a>
-      <a href="#" target="_blank" @click.prevent="openModal">Создать категорию</a>
-      <a href="#" target="_blank" @click.prevent="openNewsModal">Создать новость</a>
-      <a href="#" target="_blank" @click.prevent="openBrandModal">Создать бренд</a>
+      <a href="#" target="_blank" @click.prevent="openModal"
+        >Создать категорию</a
+      >
+      <a href="#" target="_blank" @click.prevent="openNewsModal"
+        >Создать новость</a
+      >
+      <a href="#" target="_blank" @click.prevent="openBrandModal"
+        >Создать бренд</a
+      >
       <a href="/admin/delete" target="_blank">Удаление</a>
       <a href="/admin/update" target="_blank">Обновление</a>
     </div>
     <div class="slot-sidebar">
       <slot />
     </div>
-    <AdminCreateCategory :open-create-category-modal="openCreateCategoryModal" @close-modal="openCreateCategoryModal = false" />
+    <AdminCreateCategory
+      :open-create-category-modal="openCreateCategoryModal"
+      @close-modal="openCreateCategoryModal = false"
+    />
     <AdminCreateNews :is-open="openNews" @close-modal="openNews = false" />
     <AdminCreateBrand :is-open="openBrand" @close-modal="openBrand = false" />
   </div>
@@ -49,18 +58,14 @@ const openBrandModal = () => {
 .layout-container {
   display: flex;
   flex-direction: row;
-
 }
 
 .admin-links {
-
   width: 190px;
   left: 0;
   top: 100px;
   bottom: 0;
   background: white;
-
-
 
   @include flex(column, start, start);
   a {
@@ -72,7 +77,6 @@ const openBrandModal = () => {
 }
 
 .slot-sidebar {
-
   padding: 20px;
   flex: 1;
 }

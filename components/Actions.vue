@@ -23,6 +23,7 @@
 
     <div class="brands-pictures">
       <Swiper
+        priority="high"
         :slides-per-view="4"
         :modules="[SwiperAutoplay, SwiperController, SwiperNavigation]"
         :autoplay="true"

@@ -1,4 +1,3 @@
-export const formatPhone = (phone:string) => {
-return phone?.replace(/\s+/g, "")
-.replace("+", "");
-}
+export const formatPhone = (phone: string) => {
+  return phone?.replace(/\s+/g, "").replace("+", "");
+};

@@ -79,7 +79,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, defineEmits, computed, onMounted } from "vue";
 import { Seller } from "~/types/Brands";
 import {
   handleCertificateImageUpdate,

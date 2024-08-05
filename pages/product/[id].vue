@@ -3,9 +3,9 @@
     <section
       v-if="
         getProduct &&
-          getProduct != undefined &&
-          Object.entries(getProduct)?.length > 0 &&
-          !isLoading
+        getProduct != undefined &&
+        Object.entries(getProduct)?.length > 0 &&
+        !isLoading
       "
     >
       <ProductPageHeader :product-id="id" />
@@ -47,7 +47,7 @@ watch(
   () => id,
   () => {
     productsStore.fetchProductById(id as string);
-  }
+  },
 );
 </script>
 

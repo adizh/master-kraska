@@ -427,17 +427,18 @@ const buyNow = () => {
 };
 
 const addToCart = () => {
-
   if (isCatalogHasItemCategory?.value && !confirmedCodeColor?.value?.length) {
     useNotif("error", t("selecteTintingRequired"), t("error"));
-  } 
+  }
 
   if (doVariantsExist?.value && !selectedVolume.value?.value?.length) {
     useNotif("error", t("selectVolume"), t("error"));
-  }
-
-
-  else if(isCatalogHasItemCategory?.value &&confirmedCodeColor?.value?.length && doVariantsExist?.value &&  selectedVolume.value?.value?.length){
+  } else if (
+    isCatalogHasItemCategory?.value &&
+    confirmedCodeColor?.value?.length &&
+    doVariantsExist?.value &&
+    selectedVolume.value?.value?.length
+  ) {
     const prodItem = {
       ...getProduct.value?.product,
       count: countToBuy.value,
@@ -449,10 +450,6 @@ const addToCart = () => {
     console.log("prodItem", prodItem);
     store.addToCart(prodItem);
   }
-  
-
- 
-  
 };
 
 const isProductExistsInCart = computed(() => {

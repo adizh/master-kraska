@@ -15,13 +15,13 @@
         </div>
 
         <InputMask
-        id="basic"
-        v-model="inputs.phone.value"
-        mask="+999 999 99 99 99"
-        placeholder="+996 777 66 55 44"
-        @update:modelValue="handleInput('phone', 'number')"
-      />
-    
+          id="basic"
+          v-model="inputs.phone.value"
+          mask="+999 999 99 99 99"
+          placeholder="+996 777 66 55 44"
+          @update:modelValue="handleInput('phone', 'number')"
+        />
+
         <!-- <input
           class="col-12 basic-input"
           type="text"
@@ -269,7 +269,6 @@ const changePassword = async () => {
       const response = await http.post("/api/v1/User/change-password", body, {
         headers: {
           Authorization: `Bearer ${token}`,
-
         },
       });
       if (response.status == 401) {

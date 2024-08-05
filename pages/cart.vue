@@ -26,8 +26,10 @@
           </button>
           <div class="cart-main-info-price-block">
             <div class="first">
-              <span>{{ $t("all") }}: {{ totalOfProdTotals }}
-                {{ $t("product") }}</span>
+              <span
+                >{{ $t("all") }}: {{ totalOfProdTotals }}
+                {{ $t("product") }}</span
+              >
               <span>{{ store.totalOfTotalSum }} сом</span>
             </div>
             <div class="second">
@@ -38,11 +40,10 @@
               class="basic-input"
               placeholder="Промокод"
               @input="handlePromocode"
+            />
+            <span v-if="orderStore.orderPromocode?.length" class="err-input-msg"
+              >*{{ $t("priceIsNotFinal") }}</span
             >
-            <span
-              v-if="orderStore.orderPromocode?.length"
-              class="err-input-msg"
-            >*{{ $t("priceIsNotFinal") }}</span>
             <div class="last">
               <span>{{ $t("inTotal") }}</span>
               <span>{{ store.totalOfTotalSum }} сом</span>

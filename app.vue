@@ -8,16 +8,29 @@
     </section>
     <NuxtLayout name="footer" />
     <ScrollToTop />
-
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import "primevue/resources/themes/aura-light-green/theme.css";
 import "primeicons/primeicons.css";
 
+if (process.client) {
+  (function (w, d, u) {
+    var s = d.createElement("script");
+    s.async = true;
+    s.src = u + "?" + ((Date.now() / 60000) | 0);
+    var h = d.getElementsByTagName("script")[0];
+    h.parentNode.insertBefore(s, h);
+  })(
+    window,
+    document,
+    "https://cdn-ru.bitrix24.ru/b27013162/crm/site_button/loader_2_gi1nb6.js",
+  );
+}
+
 useHead({
-  meta: [{ name: "Master Kraska" }]
+  meta: [{ name: "Master Kraska" }],
 });
 
 const nuxtApp = useNuxtApp();

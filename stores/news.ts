@@ -6,10 +6,10 @@ export const useNewsStore = defineStore("newsStore", {
   state: () => ({
     news: [] as News[],
     allNews: [] as News[],
-    sliders: [] as Slider[]
+    sliders: [] as Slider[],
   }),
   actions: {
-    async fetchAllNews () {
+    async fetchAllNews() {
       try {
         const response = await http("/api/v1/News/get-all-news");
         if (response.status === 200) {
@@ -20,31 +20,31 @@ export const useNewsStore = defineStore("newsStore", {
         console.log(err);
       }
     },
-    filterNews (value: string) {
+    filterNews(value: string) {
       this.news = this.allNews.filter((item) =>
-        item?.nameRu?.toLowerCase()?.includes(value?.toLowerCase())
+        item?.nameRu?.toLowerCase()?.includes(value?.toLowerCase()),
       );
     },
 
-    async fetchSliders () {
+    async fetchSliders() {
       try {
         const response = await http("/api/v1/Slider/get-all-sliders");
-        console.log('fetch all sliders',response)
+        console.log("fetch all sliders", response);
         if (response.status === 200) {
           this.sliders = response.data;
         }
       } catch (err) {
         console.log(err);
       }
-    }
+    },
   },
 
   getters: {
-    getAllNews (state) {
+    getAllNews(state) {
       return state.news;
     },
-    getAllSliders (state) {
+    getAllSliders(state) {
       return state.sliders;
-    }
-  }
+    },
+  },
 });

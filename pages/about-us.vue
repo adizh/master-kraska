@@ -5,7 +5,7 @@
       <template #look-all-btn>
         <button class="look-all-btn" @click="navigateTo('/contacts')">
           <span>{{ $t("lookAll") }}</span>
-          <img src="../assets/icons/icon=components-more.svg">
+          <img src="../assets/icons/icon=components-more.svg" />
         </button>
       </template>
     </AboutContacts>

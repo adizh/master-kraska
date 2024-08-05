@@ -10,13 +10,13 @@ export const useAuthStore = defineStore("authStore", {
       email: "",
       image: "",
       isNotificationsAllowed: false,
-      accessToken: ""
+      accessToken: "",
     },
     isRefreshTokenSuccess: false,
-    selectedLanguage: "ru"
+    selectedLanguage: "ru",
   }),
   actions: {
-    async fetchUser () {
+    async fetchUser() {
       const accessToken = localStorage.getItem("token");
       if (this.getUserId) {
         try {
@@ -24,9 +24,9 @@ export const useAuthStore = defineStore("authStore", {
             `/api/v1/User/get-user-by-id/${this.getUserId}`,
             {
               headers: {
-                Authorization: `Bearer ${accessToken}`
-              }
-            }
+                Authorization: `Bearer ${accessToken}`,
+              },
+            },
           );
           console.log("response fetchUser", response);
           this.user.firstName = response.data.firstName;
@@ -46,18 +46,18 @@ export const useAuthStore = defineStore("authStore", {
       }
     },
 
-    setLang (lang: string) {
+    setLang(lang: string) {
       this.selectedLanguage = lang;
     },
 
-    async refreshToken (type?: "static") {
+    async refreshToken(type?: "static") {
       const accessToken = localStorage.getItem("token");
       const refreshToken = localStorage.getItem("refresh_Token");
       if (accessToken && refreshToken) {
         try {
           const response = await http.post("/api/v1/User/refresh", {
             access_Token: accessToken,
-            refresh_Token: refreshToken
+            refresh_Token: refreshToken,
           });
           console.log("response refreshToken", response);
 
@@ -69,7 +69,7 @@ export const useAuthStore = defineStore("authStore", {
             localStorage.setItem("token", response.data.tokens.access_Token);
             localStorage.setItem(
               "refresh_Token",
-              response.data.tokens.refresh_Token
+              response.data.tokens.refresh_Token,
             );
             this.user.accessToken = response.data?.tokens?.access_Token;
             if (type !== "static") {
@@ -89,7 +89,7 @@ export const useAuthStore = defineStore("authStore", {
           this.isRefreshTokenSuccess = false;
         }
       }
-    }
+    },
   },
   getters: {
     getUserId: () => {
@@ -99,11 +99,11 @@ export const useAuthStore = defineStore("authStore", {
           : "";
       }
     },
-    getAccessToken (state) {
+    getAccessToken(state) {
       return state.user.accessToken;
     },
 
-    getRole () {
+    getRole() {
       if (process.client) {
         const role = localStorage.getItem("role");
         if (role) {
@@ -112,10 +112,10 @@ export const useAuthStore = defineStore("authStore", {
       } else {
       }
     },
-    getRegreshTokenStatus (state) {
+    getRegreshTokenStatus(state) {
       return state.isRefreshTokenSuccess;
     },
-    getSelectedLang (state) {
+    getSelectedLang(state) {
       if (process.client) {
         const localLan = localStorage.getItem("selectedLanguage");
         if (localLan) {
@@ -126,6 +126,6 @@ export const useAuthStore = defineStore("authStore", {
     },
     getUser: (state) => {
       return state.user;
-    }
-  }
+    },
+  },
 });

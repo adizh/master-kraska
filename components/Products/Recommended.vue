@@ -3,6 +3,7 @@
     <h5 class="each-section-header">{{ $t("recommendeProducts") }}</h5>
     <div class="products-list" v-if="store.getBenefProducts?.length > 0">
       <Swiper
+        priority="high"
         :slides-per-view="slidesPerView"
         :navigation="true"
         id="mySlider"

@@ -112,7 +112,6 @@ const submitLogin = async () => {
   if (!hasError) {
     try {
       const response = await http.post(`/api/v1/User/login`, null, {
-        
         params: {
           phoneNumber: formattedNumber,
           password: inputs.value.password.value,

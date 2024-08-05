@@ -7,9 +7,7 @@
       <div
         class="admin-order-heading grid flex flex-row justify-content-between align-items-center"
       >
-        <h1 class="col-2">
-          Заказы
-        </h1>
+        <h1 class="col-2">Заказы</h1>
         <div class="flex flex-row gap-3 align-items-center col-10">
           <p>Фильтровать по</p>
           <div class="lg:col-3">
@@ -29,7 +27,7 @@
               placeholder="Поиск по номеру заказа"
               type="text"
               @input="filterOrdernumber"
-            >
+            />
           </div>
         </div>
       </div>
@@ -59,14 +57,14 @@ const isUIDropdownOpen = ref(false);
 
 const selectedStatus = ref({
   value: "",
-  name: "Все"
+  name: "Все",
 });
 
 const statusOptions = [
   { name: "Все", value: "" },
   { name: "Активные", value: "Active" },
   { name: "Отмененные", value: "Canceled" },
-  { name: "Завершенные", value: "Completed" }
+  { name: "Завершенные", value: "Completed" },
 ];
 
 const toggleDropdownUI = () => {

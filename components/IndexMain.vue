@@ -1,6 +1,7 @@
 <template>
   <div class="carousel-slider">
     <Swiper
+    priority="high"
       :slides-per-view="1"
       :modules="[
         SwiperNavigation,

@@ -5,9 +5,7 @@
         Назад
       </button>
 
-      <h1 class="mb-3">
-        Добавить продукт
-      </h1>
+      <h1 class="mb-3">Добавить продукт</h1>
       <form class="grid" @submit.prevent="formAdd">
         <div
           v-for="item in Object.values(inputs)"
@@ -42,7 +40,7 @@
               class="basic-input"
               :type="!item?.type || item.type === 'string' ? 'text' : 'number'"
               @input="validate(item.key as string, item?.type as string)"
-            >
+            />
           </template>
 
           <span v-if="item?.error" class="err-input-msg">{{
@@ -52,7 +50,7 @@
 
         <div class="lg:col-4 md:col-6 col-12">
           <label for="popular">Популярный</label>
-          <input id="popular" v-model="isPopular" type="checkbox">
+          <input id="popular" v-model="isPopular" type="checkbox" />
         </div>
 
         <div v-if="categoryCount?.length" class="lg:col-4 md:col-6 col-12">
@@ -75,7 +73,7 @@
                 :class="{ rotated: isCategoryOpen === index }"
                 src="../../assets/icons/icon=components-closed-arrow.svg"
                 alt="open-arrow"
-              >
+              />
             </div>
             <Transition name="slide-fade">
               <div>
@@ -86,7 +84,7 @@
                     @input="
                       (event: any) => searchCategories(event?.target?.value)
                     "
-                  >
+                  />
                   <li
                     v-for="item in catalogStore?.getLinkedCategories"
                     :key="item?.id"
@@ -114,7 +112,7 @@
               <span>
                 {{
                   selectedSubCategories[index]?.nameRu ||
-                    "Выберите подкатегорию"
+                  "Выберите подкатегорию"
                 }}
               </span>
               <img
@@ -122,7 +120,7 @@
                 :class="{ rotated: isSubCategoryOpen === index }"
                 src="../../assets/icons/icon=components-closed-arrow.svg"
                 alt="open-arrow"
-              >
+              />
             </div>
             <Transition name="slide-fade">
               <div>
@@ -134,7 +132,7 @@
                       (event: any) =>
                         catalogStore.searchSubDirs(event?.target?.value)
                     "
-                  >
+                  />
                   <li
                     v-for="item in catalogStore?.getHelperSubDirs"
                     :key="item?.id"
@@ -150,7 +148,7 @@
 
         <div class="lg:col-4 md:col-6 col-12 flex flex-column">
           <label for="image">Картинка</label>
-          <input type="file" @change="uploadImage">
+          <input type="file" @change="uploadImage" />
           <span v-if="arrErrors?.image?.error" class="err-input-msg">{{
             arrErrors?.image?.error
           }}</span>
@@ -174,7 +172,7 @@
                 :class="{ rotated: isBrandOpen }"
                 src="../../assets/icons/icon=components-closed-arrow.svg"
                 alt="open-arrow"
-              >
+              />
             </div>
             <Transition name="slide-fade">
               <div>
@@ -183,7 +181,7 @@
                     type="text"
                     class="basic-input"
                     @input="(event: any) => seachBrands(event?.target?.value)"
-                  >
+                  />
                   <li
                     v-for="item in brandsStore?.getAllBrands"
                     :key="item?.id"
@@ -215,7 +213,7 @@
                 v-model="allVariants[index].size"
                 type="text"
                 class="basic-input"
-              >
+              />
 
               <label :for="'price-' + index">Цена</label>
               <input
@@ -223,7 +221,7 @@
                 v-model="allVariants[index].price"
                 type="text"
                 class="basic-input"
-              >
+              />
 
               <label :for="'code-' + index">Код</label>
               <input
@@ -231,7 +229,7 @@
                 v-model="allVariants[index].code"
                 type="text"
                 class="basic-input"
-              >
+              />
 
               <label :for="'base-' + index">База</label>
               <input
@@ -239,14 +237,14 @@
                 v-model="allVariants[index].base"
                 type="text"
                 class="basic-input"
-              >
+              />
               <label :for="'file-' + index">Картинка</label>
               <input
                 :id="'file-' + index"
                 type="file"
                 class="basic-input"
                 @change="handleImage($event, index)"
-              >
+              />
 
               <span v-if="allVariants[index].error" class="err-input-msg">{{
                 allVariants[index].error
@@ -279,9 +277,7 @@
           >
             +Добавить подкатегорию
           </button>
-          <button type="submit" class="btn-white-bg">
-            Создать
-          </button>
+          <button type="submit" class="btn-white-bg">Создать</button>
         </div>
       </form>
     </div>
@@ -333,7 +329,7 @@ const selectedSubCategory = ref({} as CategorySys);
 const isPopular = ref(false);
 const arrErrors = {
   brand: { error: "" },
-  image: { error: "" }
+  image: { error: "" },
 };
 
 const variantCount = ref<number[]>([]);
@@ -389,7 +385,7 @@ const checkImgCompression = async (event: any) => {
   const value = event.target.files[0];
   const options = {
     maxSizeMB: 0.1465,
-    useWebWorker: true
+    useWebWorker: true,
   };
   let compressedFile = value;
   if (value?.size > targetSizeBytes) {
@@ -399,7 +395,7 @@ const checkImgCompression = async (event: any) => {
       console.log(
         "Compressed file size:",
         (compressedFile.size / 1024).toFixed(2),
-        "KB"
+        "KB",
       );
     } catch (error) {
       console.error("Compression error:", error);
@@ -418,7 +414,7 @@ const uploadImage = async (event: any) => {
   if (result && result !== undefined) {
     isImageLoading.value = await false;
     const base64StringNewImage = (await useConvertToBase64(
-      result
+      result,
     )) as unknown as string;
     prodImages.value = [base64StringNewImage];
     arrErrors.image.error = "";
@@ -436,7 +432,7 @@ const handleImage = async (event: any, index: number) => {
   } else if (result.size < targetSizeBytes && result && result !== undefined) {
     allVariants.value[index].loading = false;
     const base64StringNewImage = (await useConvertToBase64(
-      result
+      result,
     )) as unknown as string;
     allVariants.value[index].image = base64StringNewImage as unknown as string;
   }
@@ -484,7 +480,7 @@ const fields = ref<Fields>({
   brandId: "",
   images: [""],
   categoryIds: ["3fa85f64-5717-4562-b3fc-2c963f66afa6"],
-  variants: allVariants.value
+  variants: allVariants.value,
 });
 
 const addProduct = async () => {
@@ -506,16 +502,16 @@ const addProduct = async () => {
   const categories = selectedCategories?.value
     ?.filter(Boolean)
     ?.map((item) => item?.id);
-  function allFieldsHaveValues (obj: any) {
+  function allFieldsHaveValues(obj: any) {
     return Object.values(obj).every(
-      (value) => value !== "" && value !== null && value !== undefined
+      (value) => value !== "" && value !== null && value !== undefined,
     );
   }
   const subCategories = selectedSubCategories?.value
     ?.filter(Boolean)
     ?.map((item) => item?.id);
   const filteredVariants = allVariants.value?.filter((obj) =>
-    allFieldsHaveValues(obj)
+    allFieldsHaveValues(obj),
   );
 
   const remaining = {
@@ -528,7 +524,7 @@ const addProduct = async () => {
     categoryIds: categories,
     variants: filteredVariants,
 
-    extension: "png"
+    extension: "png",
   };
 
   const result = { ...body, ...remaining };
@@ -555,7 +551,7 @@ const formAdd = () => {
     }
   }
   const hasError = Object.values(inputs.value).some(
-    (input) => input.error !== ""
+    (input) => input.error !== "",
   );
 
   if (!selectedBrand?.value?.id) {

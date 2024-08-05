@@ -1,11 +1,10 @@
 // http.js
 import axios, { AxiosInstance, AxiosError } from "axios";
 
-
 const url = "https://api.masterkraska.kg/";
 
 const http: AxiosInstance = axios.create({
-  baseURL: url
+  baseURL: url,
 });
 
 http.interceptors.request.use((config) => {
@@ -27,7 +26,7 @@ http.interceptors.response.use(
       console.error("Error:", error.message);
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 export default http;
@@ -47,8 +46,8 @@ console.log("userToken", userToken);
 const httpAuth: AxiosInstance = axios.create({
   baseURL: url,
   headers: {
-    Authorization: `Bearer ${userToken}`
-  }
+    Authorization: `Bearer ${userToken}`,
+  },
 });
 httpAuth.interceptors.request.use((config) => {
   config.params = { ...config.params };
@@ -73,7 +72,7 @@ httpAuth.interceptors.response.use(
       console.error("Error:", error.message);
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 export { httpAuth };

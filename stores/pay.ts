@@ -11,7 +11,7 @@ export const usePayStore = defineStore("payStore", {
       mbankPhone: { value: "", error: "" },
       status: "",
       payId: "",
-      statusCode: ""
+      statusCode: "",
     },
     megapay: {
       otp: { value: "", error: "" },
@@ -21,24 +21,24 @@ export const usePayStore = defineStore("payStore", {
       user: { value: "", error: "" },
       status: "",
       payId: "",
-      statusCode: ""
-    }
+      statusCode: "",
+    },
   }),
 
   actions: {
-    setExit (value: boolean) {
+    setExit(value: boolean) {
       this.canExit = value;
     },
-    clearError (field: "otp" | "mbankPhone") {
+    clearError(field: "otp" | "mbankPhone") {
       this.mbank[field].error = "";
     },
-    clearErrorMega (field: "otp" | "megaPhone" | "megaAccount" | "user") {
+    clearErrorMega(field: "otp" | "megaPhone" | "megaAccount" | "user") {
       this.megapay[field].error = "";
     },
-    async checkPaymentStatus () {
+    async checkPaymentStatus() {
       try {
         const response = await http(
-          `/api/v1/Payment/get-status-payment?payId=${this.mbank?.payId}&paymentType=mbank`
+          `/api/v1/Payment/get-status-payment?payId=${this.mbank?.payId}&paymentType=mbank`,
         );
         console.log("response check payment statys", response);
         if (response.data.code === "201" && response.data.data === "AWAIT") {
@@ -50,10 +50,10 @@ export const usePayStore = defineStore("payStore", {
       }
     },
 
-    async checkPaymentStatusMega (payId: string) {
+    async checkPaymentStatusMega(payId: string) {
       try {
         const response = await http(
-          `/api/v1/Payment/get-status-payment?payId=${payId}&paymentType=mega`
+          `/api/v1/Payment/get-status-payment?payId=${payId}&paymentType=mega`,
         );
         console.log("response check payment statys MEGA", response);
         if (response.data.code === "201" && response.data.data === "AWAIT") {
@@ -66,10 +66,10 @@ export const usePayStore = defineStore("payStore", {
         console.log(err);
       }
     },
-    async confirmMbank () {
+    async confirmMbank() {
       try {
         const response = await http.post(
-          `/api/v1/Payment/confirm-payment-mbank?quid=${this.initMbankRes.quid}&otp=${this.mbank.otp.value}`
+          `/api/v1/Payment/confirm-payment-mbank?quid=${this.initMbankRes.quid}&otp=${this.mbank.otp.value}`,
         );
         console.log("response confirm mbank payment", response);
         if (response.data.code === "120") {
@@ -84,16 +84,16 @@ export const usePayStore = defineStore("payStore", {
         console.log(err);
       }
     },
-    async iniPaymentMbank (params: any, orderNumber: string) {
+    async iniPaymentMbank(params: any, orderNumber: string) {
       try {
         const body = {
           phone: params?.phone,
           amount: 1,
-          comment: ""
+          comment: "",
         };
         const response = await http.post(
           `/api/v1/Payment/initiate-payment-mbank?orderNumber=${orderNumber}`,
-          body
+          body,
         );
         console.log("response initpayment", response);
         if (response?.data?.code === 110) {
@@ -105,11 +105,11 @@ export const usePayStore = defineStore("payStore", {
         console.log(err);
       }
     },
-    async iniPaymentMegapay (params: any, orderNumber: string) {
+    async iniPaymentMegapay(params: any, orderNumber: string) {
       try {
         const response = await http.post(
           `/api/v1/Payment/initiate-payment-megapay?orderNumber=${orderNumber}`,
-          params
+          params,
         );
         if (response.data.code === "152") {
           this.megapay.otp.error = "Неправильный пин-код";
@@ -123,7 +123,7 @@ export const usePayStore = defineStore("payStore", {
         console.log(err);
       }
     },
-    async initPaymentElcart () {
+    async initPaymentElcart() {
       const cartStore = useCartStore();
       try {
         const response = await http({
@@ -132,8 +132,8 @@ export const usePayStore = defineStore("payStore", {
           params: {
             orderNumber: cartStore.getCurrentOrder?.orderNumber,
             amount: cartStore?.getCurrentOrder?.total,
-            language: "en"
-          }
+            language: "en",
+          },
         });
         console.log("response init payment elcart", response);
       } catch (err) {
@@ -141,18 +141,18 @@ export const usePayStore = defineStore("payStore", {
       }
     },
 
-    async checkPayment (
+    async checkPayment(
       params: any,
       orderNumber: string,
-      type: "mbank" | "megapay"
+      type: "mbank" | "megapay",
     ) {
       console.log("checkpayment orderNumber", orderNumber);
       try {
         const response = await http.get(
           "/api/v1/Payment/check-payment-mega-mbank",
           {
-            params
-          }
+            params,
+          },
         );
         console.log("check payment response", response);
         if (type === "mbank") {
@@ -182,17 +182,17 @@ export const usePayStore = defineStore("payStore", {
       } catch (err) {
         console.log(err);
       }
-    }
+    },
   },
   getters: {
-    getMbank (state) {
+    getMbank(state) {
       return state.mbank;
     },
-    getMega (state) {
+    getMega(state) {
       return state.megapay;
     },
-    getExit (state) {
+    getExit(state) {
       return state.canExit;
-    }
-  }
+    },
+  },
 });

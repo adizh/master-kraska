@@ -17,7 +17,7 @@
               v-show="method === 1"
               src="../../assets/icons/carbon_checkmark-filled (1).svg"
               alt="carbon"
-            >
+            />
           </button>
           <button
             class="gray-buttons-border pay-btn"
@@ -29,7 +29,7 @@
               v-show="method === 2"
               src="../../assets/icons/carbon_checkmark-filled (1).svg"
               alt="carbon"
-            >
+            />
           </button>
         </div>
         <div class="order-first-info">
@@ -67,7 +67,7 @@
               type="text"
               class="basic-input"
               :placeholder="$t('comments')"
-            >
+            />
           </div>
         </div>
 
@@ -79,8 +79,10 @@
       <div class="cart-main-info-price lg:col-4 md:col-6 sm:col-12 col-12">
         <div class="cart-main-info-price-block">
           <div class="first">
-            <span>{{ $t("all") }}: {{ currentOrder?.items?.length }}
-              {{ $t("product") }}</span>
+            <span
+              >{{ $t("all") }}: {{ currentOrder?.items?.length }}
+              {{ $t("product") }}</span
+            >
             <span>{{ currentOrder?.total }} сом</span>
           </div>
           <!-- <div class="second">
@@ -108,7 +110,9 @@
         order-place="orderPlace"
       >
         <template #count-buttons>
-          <span class="price text-center">{{ order?.price * order?.quantity }} сом</span>
+          <span class="price text-center"
+            >{{ order?.price * order?.quantity }} сом</span
+          >
         </template>
       </CartProductItem>
     </div>
@@ -161,9 +165,7 @@
       :style="{ width: '30rem', padding: '20px 40px 50px 20px' }"
     >
       <div class="warning-modal-exit">
-        <h5 class="modal-header2">
-          {{ $t("cancedlOrderWarn") }}?
-        </h5>
+        <h5 class="modal-header2">{{ $t("cancedlOrderWarn") }}?</h5>
         <p class="warning-text-modal">
           {{ $t("cancelOrderTextWarn") }}
         </p>
@@ -196,7 +198,7 @@ import { AddressList } from "~/types/Items";
 import { OrderItem, UserOrder } from "~/types/Order";
 
 definePageMeta({
-  layout: false
+  layout: false,
 });
 
 const { t } = useI18n();
@@ -205,7 +207,7 @@ const selectedOrderPlacement = ref(1);
 const currentOrder = ref({} as OrderItem);
 const pickupErr = ref({
   store: "",
-  payMethod: ""
+  payMethod: "",
 });
 const authStore = useAuthStore();
 const method = ref(1);
@@ -245,7 +247,7 @@ const sendOrderCash = async () => {
       phone: orderStore.deliveryForm.phone.value,
       email: orderStore.deliveryForm.email.value,
       comment: orderStore.deliveryForm.comment.value,
-      deliveryType: 1
+      deliveryType: 1,
     };
     const result = await orderStore.sendOrder(body, 1);
     console.log("send order deliver in cash", result);
@@ -267,7 +269,7 @@ const sendOrderCash = async () => {
 const getOrderId = async () => {
   try {
     const response = await http(
-      `/api/v1/Order/get-order-id/${route?.params?.id}`
+      `/api/v1/Order/get-order-id/${route?.params?.id}`,
     );
     console.log("response get Order By Id", response);
     if (response.status === 200) {
@@ -277,15 +279,15 @@ const getOrderId = async () => {
           if (authStore.getSelectedLang === "kg") {
             return {
               ...item,
-              productName: item?.productNameKg
+              productName: item?.productNameKg,
             };
           } else {
             return {
               ...item,
-              productName: item?.productNameRu
+              productName: item?.productNameRu,
             };
           }
-        })
+        }),
       };
     }
 
@@ -298,7 +300,7 @@ const getOrderId = async () => {
 const deleteOrder = async () => {
   try {
     const response = await http.delete(
-      `/api/v1/Order/delete-order?orderNumber=${cartStore.getCurrentOrder?.orderNumber}`
+      `/api/v1/Order/delete-order?orderNumber=${cartStore.getCurrentOrder?.orderNumber}`,
     );
     console.log("delete order response", response);
     if (response.status === 200) {
@@ -346,7 +348,7 @@ const submitOrder = async () => {
         phone: authStore?.getUser?.phone,
         email: authStore.getUser?.email,
         comment: orderStore.delForm.comment?.value,
-        deliveryType: 0
+        deliveryType: 0,
       };
 
       resultPicUp.value = await orderStore.sendOrder(body, 0);
@@ -371,12 +373,12 @@ const submitOrder = async () => {
         const validationType = field.type;
         orderStore.handleValues(
           fieldName as keyof typeof orderStore.delForm,
-          validationType
+          validationType,
         );
       }
     }
     const hasError = Object.values(orderStore.deliveryForm).some(
-      (input) => input.error !== ""
+      (input) => input.error !== "",
     );
 
     if (!hasError) {
@@ -396,7 +398,7 @@ const submitOrder = async () => {
         phone: orderStore.deliveryForm.phone.value,
         email: orderStore.deliveryForm.email.value,
         comment: orderStore.deliveryForm.comment.value,
-        deliveryType: 1
+        deliveryType: 1,
       };
       const result = await orderStore.sendOrder(body, 1);
       console.log("result in submitOrder", result);
@@ -425,13 +427,13 @@ watch(
   () => authStore.getSelectedLang,
   () => {
     orderStore?.fetchAllShops();
-  }
+  },
 );
 
 onBeforeRouteLeave((_, __, next) => {
   if (!payStore.getExit) {
     const answer = window.confirm(
-      "Вы уверены, что хотите выйти? Заказ будет отменен в случае выхода"
+      "Вы уверены, что хотите выйти? Заказ будет отменен в случае выхода",
     );
     if (answer) {
       deleteOrder();

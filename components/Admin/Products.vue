@@ -1,9 +1,14 @@
 <template>
   <div>
- <div class='flex justify-content-between align-items-center'>
-  <h1>Редактировать товары </h1>
-  <input type="text" placeholder="Поиск по имени" class="basic-input w-25" @input="handleSeach"/>
- </div>
+    <div class="flex justify-content-between align-items-center">
+      <h1>Редактировать товары</h1>
+      <input
+        type="text"
+        placeholder="Поиск по имени"
+        class="basic-input w-25"
+        @input="handleSeach"
+      />
+    </div>
     <div v-if="productsStore?.getFilteredProducts?.length > 0">
       <div class="all-prods">
         <ProductsProductItem
@@ -80,10 +85,10 @@ const changePage = (page: number) => {
   productsStore.filterProducts();
 };
 
-const handleSeach =(event:Event)=>{
+const handleSeach = (event: Event) => {
   const target = event.target as HTMLInputElement;
-  productsStore.setFilterSearch(target.value)
-}
+  productsStore.setFilterSearch(target.value);
+};
 
 onMounted(() => {
   productsStore.filterProducts();
