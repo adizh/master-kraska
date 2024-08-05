@@ -55,10 +55,10 @@ onUnmounted(() => {
 <style scoped lang="scss">
 .scroll-btn {
   position: fixed;
-  bottom: 30px;
+  bottom: 1rem;
   z-index: 2;
-  padding: 12px;
-  right: 30px;
+  padding: 7px;
+  right: 1rem;
   outline: none;
   border: none;
   border-radius: 7px;
