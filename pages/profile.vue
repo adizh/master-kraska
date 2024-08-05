@@ -242,9 +242,13 @@ const confirmedLogout = () => {
   localStorage.removeItem("userId");
   localStorage.removeItem("token");
   localStorage.removeItem("role");
-
   localStorage.removeItem("cart");
+   navigateTo('/')
+   setTimeout(()=>{
   window.location.reload();
+
+},700)
+
 };
 
 const selectTab = (tab: number) => {

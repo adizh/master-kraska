@@ -24,7 +24,7 @@
         },
       }"
     >
-      <SwiperSlide >
+      <SwiperSlide>
         <div class="banner-block slider-wrapper">
           <img
           <img src="../assets/images/3.png" format="webp"
@@ -32,7 +32,7 @@
           ref="bannerImage"
           @load="updateHeight" />
           
-          />
+          
         </div>
       </SwiperSlide>
    

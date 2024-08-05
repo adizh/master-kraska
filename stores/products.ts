@@ -56,6 +56,7 @@ export const useProductsSstore = defineStore("productsStore", {
         console.log(err);
       }
     },
+
     async fetchSpecialProd (type: string) {
       const authStore = useAuthStore();
       try {
@@ -208,6 +209,7 @@ export const useProductsSstore = defineStore("productsStore", {
       this.filters.minPrice = minPrice;
       this.filters.maxPrice = maxPrice;
     },
+
     setTypeOfWork (value: any) {
       if (value === null) {
         this.filters.subdirectoryIds = [];
@@ -215,6 +217,7 @@ export const useProductsSstore = defineStore("productsStore", {
         this.filters.subdirectoryIds.push(value[0]);
       }
     },
+
     setSubDirectories (value: any) {
       if (value === null) {
         this.filters.subdirectoryIds = [];
@@ -223,9 +226,11 @@ export const useProductsSstore = defineStore("productsStore", {
         this.filters.subdirectoryIds = [...ids];
       }
     },
+
     setCurrentPage (page: number) {
       this.filters.currentPage = page;
     },
+
     async filterProducts (prodName?: string) {
       this.areFiltersLoading = true;
       const subDirs =
@@ -331,6 +336,10 @@ export const useProductsSstore = defineStore("productsStore", {
 
         useNotif("error", "Ошибка при удалении продукта", "Ошибка");
       }
+    },
+    setFilterSearch(value:string){
+      this.filters.search = value;
+      this.filterProducts()
     }
   },
   getters: {

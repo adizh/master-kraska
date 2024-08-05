@@ -12,7 +12,7 @@ const router = useRouter();
 
 onMounted(() => {
   if (authStore?.getRole !== "Admin") {
-    // router.push("/");
+     router.push("/");
   }
 });
 </script>
