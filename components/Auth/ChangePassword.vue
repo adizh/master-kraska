@@ -13,16 +13,26 @@
             {{ $t("registerEmilPass") }}
           </label>
         </div>
-        <input
+
+        <InputMask
+        id="basic"
+        v-model="inputs.phone.value"
+        mask="+999 999 99 99 99"
+        placeholder="+996 777 66 55 44"
+        @update:modelValue="handleInput('phone', 'number')"
+      />
+    
+        <!-- <input
           class="col-12 basic-input"
           type="text"
           id="name"
           :placeholder="$t('typeEmail')"
           v-model="inputs.email.value"
           @input="handleInput('email', 'email')"
-        />
-        <span v-if="inputs.email.error" class="err-input-msg">{{
-          inputs.email.error
+        /> -->
+
+        <span v-if="inputs.phone.error" class="err-input-msg">{{
+          inputs.phone.error
         }}</span>
       </div>
       <div class="send-email">
@@ -153,7 +163,7 @@
 
 <script setup lang="ts">
 const inputs = ref({
-  email: { value: "", error: "" },
+  phone: { value: "", error: "" },
   code: { value: "", error: "" },
   password: { value: "", error: "" },
   passwordRepeat: { value: "", error: "" },
@@ -168,21 +178,22 @@ const responseLoading = ref(false);
 const isOTPOpen = ref(false);
 const isPasswordsOpen = ref(false);
 const authStore = useAuthStore();
+
 const { handleValues } = useInputValidation();
+
 const handleInput = (field: string, type: string) => {
   handleValues(inputs.value, field, type);
 };
 
 const sendEmail = async () => {
-  handleValues(inputs.value, "email", "email");
-
+  handleValues(inputs.value, "phone", "number");
   const hasError = Object.values(inputs.value).some(
     (input) => input.error !== "",
   );
   if (!hasError) {
     try {
       const response = await http.get(
-        `/api/v1/User/send-code/${inputs.value.email.value}`,
+        `/api/v1/User/send-code/${formatPhone(inputs.value?.phone?.value)}`,
       );
       console.log("response sendEmail", response);
       if (response.status === 200) {
@@ -191,7 +202,7 @@ const sendEmail = async () => {
     } catch (err: any) {
       console.log(err, "error sending code");
       if (err?.response?.data?.code === 404) {
-        inputs.value.email.error = t("userNotFound") || t("error");
+        inputs.value.phone.error = t("userNotFound") || t("error");
       }
     }
   }
@@ -206,7 +217,7 @@ const sendCode = async () => {
   if (!hasError) {
     try {
       const body = {
-        email: inputs.value.email.value,
+        phone: formatPhone(inputs.value.phone.value),
         code: inputs.value.code.value,
       };
       const response = await http.post(`/api/v1/User/verify-code`, body);
@@ -220,19 +231,18 @@ const sendCode = async () => {
     } catch (err: any) {
       console.log(err, "error sending code");
       if (err?.response?.data?.code === 404) {
-        inputs.value.email.error = t("userNotFound") || t("error");
+        inputs.value.phone.error = t("userNotFound") || t("error");
       }
     }
   }
 };
-
 const changePassword = async () => {
   const tokenLocal = localStorage.getItem("token");
   let token = tokenLocal && tokenLocal !== undefined ? tokenLocal : null;
 
   const validationTypes: any = {
     code: "string",
-    email: "email",
+    phone: "number",
     password: "password",
     passwordRepeat: "passwordRepeat",
     oldPassword: "string",
@@ -251,7 +261,7 @@ const changePassword = async () => {
   if (!hasError) {
     try {
       const body = {
-        email: inputs.value.email.value,
+        phone: formatPhone(inputs.value.phone.value),
         oldPassword: inputs.value.oldPassword.value,
         newPassword: inputs.value.password.value,
         confirmPassword: inputs.value.passwordRepeat.value,
@@ -259,6 +269,7 @@ const changePassword = async () => {
       const response = await http.post("/api/v1/User/change-password", body, {
         headers: {
           Authorization: `Bearer ${token}`,
+
         },
       });
       if (response.status == 401) {
@@ -292,6 +303,14 @@ const changePassword = async () => {
 </script>
 
 <style lang="scss" scoped>
+:deep(input#basic.p-inputtext) {
+  padding: 16px 13px;
+  width: 100%;
+  border: 1px solid #dddddd;
+  border-radius: 10px;
+  margin-bottom: 5px !important;
+}
+
 .main {
   padding: 40px;
 }

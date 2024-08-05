@@ -4,11 +4,11 @@
     <NuxtLayout />
     <section class="main-section-site">
       <NuxtPage />
-
       <NuxtSnackbar />
     </section>
     <NuxtLayout name="footer" />
     <ScrollToTop />
+
   </div>
 </template>
 

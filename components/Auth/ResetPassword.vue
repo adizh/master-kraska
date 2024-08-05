@@ -2,7 +2,8 @@
   <div class="main">
     <header>
       <img src="../../assets/icons/mdi_password-outline.svg" alt="locked" />
-      <div class="main-header">{{ $t("resetPassword") }}</div>
+      <div class="main-header">{{ $t("resetPassword") }} rerere</div>
+
     </header>
 
     <div class="grid form" v-if="!isPasswordsOpen">
@@ -13,16 +14,16 @@
             {{ $t("registerEmilPass") }}
           </label>
         </div>
-        <input
-          class="col-12 basic-input"
-          type="text"
-          id="name"
-          :placeholder="$t('typeEmail')"
-          v-model="inputs.email.value"
-          @input="handleInput('email', 'email')"
-        />
-        <span v-if="inputs.email.error" class="err-input-msg">{{
-          inputs.email.error
+        <InputMask
+        id="basic"
+        v-model="inputs.phone.value"
+        mask="+999 999 99 99 99"
+        placeholder="+996 777 66 55 44"
+        @update:modelValue="handleInput('phone', 'number')"
+      />
+    
+        <span v-if="inputs.phone.error" class="err-input-msg">{{
+          inputs.phone.error
         }}</span>
       </div>
       <div class="send-email">
@@ -120,32 +121,32 @@
 
 <script setup lang="ts">
 const inputs = ref({
-  email: { value: "", error: "" },
+  phone: { value: "", error: "" },
   code: { value: "", error: "" },
   password: { value: "", error: "" },
   passwordRepeat: { value: "", error: "" },
 });
+
 const isOTPOpen = ref(false);
 const isPasswordsOpen = ref(false);
 const { handleValues } = useInputValidation();
+
 const handleInput = (field: string, type: string) => {
   handleValues(inputs.value, field, type);
 };
-
 const passwordsVisibility = ref(false);
 const NewPasswordsVisibility = ref(false);
 const { t } = useI18n();
 const authStore = useAuthStore();
 const sendEmail = async () => {
-  handleValues(inputs.value, "email", "email");
-
+  handleValues(inputs.value, "phone", "number");
   const hasError = Object.values(inputs.value).some(
     (input) => input.error !== "",
   );
   if (!hasError) {
     try {
       const response = await http.get(
-        `/api/v1/User/send-code/${inputs.value.email.value}`,
+        `/api/v1/User/send-code/${formatPhone(inputs.value.phone.value)}`,
       );
       console.log("response sendEmail", response);
       if (response.status === 200) {
@@ -154,7 +155,7 @@ const sendEmail = async () => {
     } catch (err: any) {
       console.log(err, "error sending code");
       if (err?.response?.data?.code === 404) {
-        inputs.value.email.error = t("userNotFound") || t("error");
+        inputs.value.phone.error = t("userNotFound") || t("error");
       }
     }
   }
@@ -169,7 +170,7 @@ const sendCode = async () => {
   if (!hasError) {
     try {
       const body = {
-        email: inputs.value.email.value,
+        phone: formatPhone(inputs.value.phone.value),
         code: inputs.value.code.value,
       };
       const response = await http.post(`/api/v1/User/verify-code`, body);
@@ -183,7 +184,7 @@ const sendCode = async () => {
     } catch (err: any) {
       console.log(err, "error sending code");
       if (err?.response?.data?.code === 404) {
-        inputs.value.email.error = t("userNotFound") || t("error");
+        inputs.value.phone.error = t("userNotFound") || t("error");
       }
     }
   }
@@ -194,7 +195,7 @@ const changePassword = async () => {
   let token = tokenLocal && tokenLocal !== undefined ? tokenLocal : null;
   const validationTypes: any = {
     code: "string",
-    email: "email",
+    phone: "number",
     password: "password",
     passwordRepeat: "passwordRepeat",
   };
@@ -212,7 +213,7 @@ const changePassword = async () => {
   if (!hasError) {
     try {
       const body = {
-        email: inputs.value.email.value,
+        phone: formatPhone(inputs.value.phone.value),
         newPassword: inputs.value.password.value,
         confirmPassword: inputs.value.passwordRepeat.value,
       };

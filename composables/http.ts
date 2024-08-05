@@ -1,7 +1,7 @@
 // http.js
 import axios, { AxiosInstance, AxiosError } from "axios";
 
-// const url = "https://mc.mydatacoin.io";
+
 const url = "https://api.masterkraska.kg/";
 
 const http: AxiosInstance = axios.create({

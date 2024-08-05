@@ -30,6 +30,9 @@ export default defineNuxtConfig({
       script: [
         {
           src: "https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"
+        },
+        {
+          src: 'https://cdn-ru.bitrix24.ru/b27013162/crm/site_button/loader_2_gi1nb6.js'
         }
       ],
       link: [
@@ -47,6 +50,7 @@ export default defineNuxtConfig({
   modules: [
     "@nuxt/image",
     "nuxt-swiper",
+
     "nuxt-primevue",
     "@pinia/nuxt",
     "usebootstrap",
