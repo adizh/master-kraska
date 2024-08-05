@@ -17,7 +17,6 @@ import "primevue/resources/themes/aura-light-green/theme.css";
 import "primeicons/primeicons.css";
 
 useHead({
-  title: "Master Kraska",
   meta: [{ name: "Master Kraska" }]
 });
 

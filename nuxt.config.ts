@@ -61,7 +61,7 @@ export default defineNuxtConfig({
     "@vueuse/nuxt"
   ],
   site: {
-    url: "https://test"
+    url: 'https://masterkraska.kg'
   },
   seo: {
     automaticDefaults: true,
