@@ -8,18 +8,14 @@
       <a href="/admin/banners" target="_blank">Баннеры</a>
       <a href="/admin/category" target="_blank">Категории</a>
       <a href="/admin/news" target="_blank">Новости</a>
-      <a href="#" target="_blank" @click.prevent="openBrandModal"
-        >Создать бренд</a
-      >
-      <a href="/admin/delete" target="_blank">Удаление</a>
-      <a href="/admin/update" target="_blank">Обновление</a>
+      <a href="/admin/brands" target="_blank">Бренды</a>
+
     </div>
     <div class="slot-sidebar">
       <slot />
     </div>
  
   
-    <AdminCreateBrand :is-open="openBrand" @close-modal="openBrand = false" />
   </div>
 </template>
 

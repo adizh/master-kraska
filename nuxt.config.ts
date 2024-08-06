@@ -1,9 +1,17 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+
+
 export default defineNuxtConfig({
   devtools: { enabled: false },
   experimental: {
     renderJsonPayloads: false,
   },
+
+
+  devServer:{
+    port:8000
+  },
+
   vite: {
     esbuild: {
       drop: ["debugger"],
@@ -14,7 +22,17 @@ export default defineNuxtConfig({
         "console.debug",
         "console.trace",
       ],
+
     },
+    // build: {
+    //   rollupOptions: {
+    //     output: {
+    //       chunkFileNames: '_nuxt/chunks/[name].js',
+    //       entryFileNames: '_nuxt/js/[name].js',
+    //       assetFileNames: '_nuxt/[name].[ext]'
+    //     }
+    //   }
+    // },
     css: {
       preprocessorOptions: {
         scss: {
@@ -50,6 +68,7 @@ export default defineNuxtConfig({
     },
   },
 
+
   modules: [
     "@nuxt/image",
     "nuxt-swiper",
@@ -63,8 +82,9 @@ export default defineNuxtConfig({
     "@vueuse/nuxt",
   ],
 
+
   site: {
-    url: "https://masterkraska.kg",
+  url: "https://masterkraska.kg",
   },
   seo: {
     automaticDefaults: true,
@@ -79,9 +99,9 @@ export default defineNuxtConfig({
     duration: 5000,
   },
 
-  routeRules: {
-    "/": { prerender: true },
-  },
+  // routeRules: {
+  //   "/": { prerender: true },
+  // },
   runtimeConfig: {
     public: {},
   },

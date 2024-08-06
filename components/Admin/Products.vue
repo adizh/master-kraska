@@ -5,7 +5,7 @@
       <input
         type="text"
         placeholder="Поиск по имени"
-        class="basic-input w-25"
+        class="basic-input admin-search-input"
         @input="handleSeach"
       />
     </div>
@@ -100,6 +100,10 @@ onMounted(() => {
   margin-top: 40px;
   @include flex(row, center, center, 20px);
   flex-wrap: wrap;
+}
+
+.admin-search-input{
+  width:45%
 }
 
 @media (max-width: 1100px) {

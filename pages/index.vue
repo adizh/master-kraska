@@ -1,6 +1,7 @@
 <template>
   <section>
     <IndexMain />
+
     <div class="search-place">
       <div class="flex flex-row gap-4 search">
         <div class="input-block">
@@ -32,7 +33,7 @@
       />
     </div>
     <Products />
-    <Actions />
+    <Actions /> 
     <Advantages />
   </section>
 </template>
@@ -53,27 +54,27 @@ const handleSearch = (event: any) => {
   }, 2000);
 };
 
-watch(isSearchOpen, (value) => {
-  if (value) {
-    disableBodyScroll();
-  } else {
-    enableBodyScroll();
-  }
-});
-const disableBodyScroll = () => {
-  document.body.style.overflow = "hidden";
-};
-const enableBodyScroll = () => {
-  document.body.style.overflow = "auto";
-};
+// watch(isSearchOpen, (value) => {
+//   if (value) {
+//     disableBodyScroll();
+//   } else {
+//     enableBodyScroll();
+//   }
+// });
+// const disableBodyScroll = () => {
+//   document.body.style.overflow = "hidden";
+// };
+// const enableBodyScroll = () => {
+//   document.body.style.overflow = "auto";
+// };
 
-onMounted(async () => {
-  await catalogStore.fetchAllCategories();
-  firstCategoryItem.value = catalogStore?.getAllCategories[0];
+onMounted( async() => {
+   await catalogStore.fetchAllCategories();
+   firstCategoryItem.value = catalogStore?.getAllCategories[0];
 });
 
 onUnmounted(() => {
-  document.body.style.overflow = "auto";
+ // document.body.style.overflow = "auto";
 });
 </script>
 
