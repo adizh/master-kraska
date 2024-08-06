@@ -7,10 +7,7 @@
       <a href="/admin/sellers" target="_blank">Продавцы</a>
       <a href="/admin/banners" target="_blank">Баннеры</a>
       <a href="/admin/category" target="_blank">Категории</a>
-  
-      <a href="#" target="_blank" @click.prevent="openNewsModal"
-        >Создать новость</a
-      >
+      <a href="/admin/news" target="_blank">Новости</a>
       <a href="#" target="_blank" @click.prevent="openBrandModal"
         >Создать бренд</a
       >
@@ -21,7 +18,7 @@
       <slot />
     </div>
  
-    <AdminCreateNews :is-open="openNews" @close-modal="openNews = false" />
+  
     <AdminCreateBrand :is-open="openBrand" @close-modal="openBrand = false" />
   </div>
 </template>

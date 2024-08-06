@@ -18,11 +18,8 @@
       </div>
 
       <AdminUpdateBrand :is-open="brandOpen" @close-modal="brandOpen = false" />
-      <AdminUpdateNews :is-open="newsOpen" @close-modal="newsOpen = false" />
-      <AdminUpdateCategory
-        :is-open="categoryOpen"
-        @close-modal="categoryOpen = false"
-      />
+
+
     </section>
   </NuxtLayout>
 </template>

@@ -83,7 +83,7 @@
       <div>
         <div
           class="ui-dropdown col-6"
-          v-if="categoryInputs?.parentId?.value !== null"
+          v-if="categoryInputs?.parentId?.value !== null &&categoryInputs?.parentId?.value?.length " 
         >
           <label for="name">Категория родителя</label>
           <div
@@ -188,10 +188,8 @@ const selectCategory = async (item: CategorySys) => {
   if (item?.parentId) {
     await catalogStore.fetchLinkedCategoryById(item?.parentId);
     parentTitle.value = catalogStore.getLinkedCategory;
-    console.log(
-      "catalogStore.getLinkedCategory",
-      catalogStore.getLinkedCategory,
-    );
+
+    
   }
   for (const key in categoryInputs.value) {
     const inputValue = item[key as keyof typeof categoryInputs.value];
@@ -206,7 +204,13 @@ const selectCategory = async (item: CategorySys) => {
 };
 
 const validate = (field: string, type: string) => {
-  handleValues(categoryInputs.value, field, type);
+
+  if(field ==='parentId'){
+   return;
+  }else{
+    handleValues(categoryInputs.value, field, type);
+
+  }
 };
 
 const submitEdit = async () => {
@@ -249,9 +253,13 @@ const submitEdit = async () => {
     console.log(err);
   }
 };
+
 const editBrand = () => {
   for (const fieldName in categoryInputs.value) {
-    if (fieldName === "isActive" || fieldName === "parentId") {
+    if(fieldName === "parentId"){
+      continue;
+    }
+    if (fieldName === "isActive") {
       const fieldType =
         categoryInputs.value[fieldName as keyof typeof categoryInputs.value]
           ?.type;
@@ -261,11 +269,18 @@ const editBrand = () => {
   const hasError = Object.values(categoryInputs.value).some(
     (input) => input.error !== "",
   );
-
-  if (!hasError && parentTitle?.value?.id) {
+  
+  console.log('selectedCategory',selectedCategory)
+  console.log('parentTitle',parentTitle)
+  if (!hasError && selectedCategory?.value?.parentId && parentTitle?.value?.id) {
     console.log("NO ERROR!");
     submitEdit();
-  } else {
+  }else if(!hasError && !selectedCategory?.value?.parentId ){
+    submitEdit();
+  }
+  
+  
+  else {
     console.log("there is some erro");
   }
 };
