@@ -6,9 +6,8 @@
       <a href="/admin/orders" target="_blank">Заказы</a>
       <a href="/admin/sellers" target="_blank">Продавцы</a>
       <a href="/admin/banners" target="_blank">Баннеры</a>
-      <a href="#" target="_blank" @click.prevent="openModal"
-        >Создать категорию</a
-      >
+      <a href="/admin/category" target="_blank">Категории</a>
+  
       <a href="#" target="_blank" @click.prevent="openNewsModal"
         >Создать новость</a
       >
@@ -21,10 +20,7 @@
     <div class="slot-sidebar">
       <slot />
     </div>
-    <AdminCreateCategory
-      :open-create-category-modal="openCreateCategoryModal"
-      @close-modal="openCreateCategoryModal = false"
-    />
+ 
     <AdminCreateNews :is-open="openNews" @close-modal="openNews = false" />
     <AdminCreateBrand :is-open="openBrand" @close-modal="openBrand = false" />
   </div>
