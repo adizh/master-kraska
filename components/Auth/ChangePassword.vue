@@ -209,7 +209,7 @@ const sendEmail = async () => {
 };
 
 const sendCode = async () => {
-  handleValues(inputs.value, "email", "email");
+  handleValues(inputs.value, "phone", "number");
   handleValues(inputs.value, "code", "string");
   const hasError = Object.values(inputs.value).some(
     (input) => input.error !== "",
@@ -237,6 +237,7 @@ const sendCode = async () => {
   }
 };
 const changePassword = async () => {
+  
   const tokenLocal = localStorage.getItem("token");
   let token = tokenLocal && tokenLocal !== undefined ? tokenLocal : null;
 

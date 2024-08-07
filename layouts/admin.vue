@@ -1,7 +1,7 @@
 <template>
   <div class="layout-container">
     <div class="admin-links">
-      <a href="/admin" target="_blank">Главная</a>
+      <a href="/admin" target="_blank" @click="selectRoute('/admin')" :class="{'active-route':currentRoute==='/admin'}">Главная</a>
       <a href="/admin/add-product" target="_blank">Добавить продукт</a>
       <a href="/admin/orders" target="_blank">Заказы</a>
       <a href="/admin/sellers" target="_blank">Продавцы</a>
@@ -17,27 +17,14 @@
 </template>
 
 <script setup lang="ts">
-const authStore = useAuthStore();
-const visible = ref(true);
-const openNews = ref(false);
-const openBrand = ref(false);
-const router = useRouter();
-const openCreateCategoryModal = ref(false);
 
-const openModal = () => {
-  openCreateCategoryModal.value = true;
-  visible.value = false;
-};
+const currentRoute= ref('/admin')
 
-const openNewsModal = () => {
-  openNews.value = true;
-  visible.value = false;
-};
 
-const openBrandModal = () => {
-  openBrand.value = true;
-  visible.value = false;
-};
+const selectRoute=(route:string)=>{
+  currentRoute.value=route
+}
+
 </script>
 
 <style scoped lang="scss">
@@ -48,20 +35,35 @@ const openBrandModal = () => {
 
 .admin-links {
   width: 190px;
-  left: 0;
-  top: 100px;
-  bottom: 0;
-  background: white;
+  position: relative;
+  left: -1.69rem;
+  top:0;
 
-  @include flex(column, start, start);
+
+  background: white;
+  border-right: 1px solid #ddd;
+  height:100%;
+
+  @include flex(column, start, start,0);
   a {
-    border: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+    
     padding: 20px;
     display: block;
     width: 190px;
+    color:#222;
+    font-weight: 500;
+    &:last-child{
+      border-bottom: 1px solid #ddd;
+    }
+    &:hover{
+      background: #dddddd;
+    }
   }
 }
-
+.active-route{
+  background: #dddddd;
+}
 .slot-sidebar {
   padding: 20px;
   flex: 1;
