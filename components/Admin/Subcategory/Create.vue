@@ -81,9 +81,11 @@ import {
   subCategory,
   subCategoryKg,
   selectedCategoryId,
-  selectCategory,
   defaultText,
 } from "@/helpers/admin/subcategory";
+
+import { CategorySys } from "~/types/Category";
+
 const emit = defineEmits(["closeModal"]);
 
 const props = defineProps({
@@ -120,6 +122,12 @@ const addSubcategory = async () => {
   } else {
     useNotif("error", "Заполните все поля", "Ошибка");
   }
+};
+
+const selectCategory = (category: CategorySys) => {
+  selectedCategoryId.value = category;
+  isSubcategoryOpen.value = false;
+  catalogStore.filterTopCategories('')
 };
 
 const filterCategories = (event: Event) => {
