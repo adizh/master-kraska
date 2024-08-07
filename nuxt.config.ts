@@ -8,10 +8,6 @@ export default defineNuxtConfig({
   },
 
 
-  devServer:{
-    port:8000
-  },
-
   vite: {
     esbuild: {
       drop: ["debugger"],
@@ -24,15 +20,7 @@ export default defineNuxtConfig({
       ],
 
     },
-    // build: {
-    //   rollupOptions: {
-    //     output: {
-    //       chunkFileNames: '_nuxt/chunks/[name].js',
-    //       entryFileNames: '_nuxt/js/[name].js',
-    //       assetFileNames: '_nuxt/[name].[ext]'
-    //     }
-    //   }
-    // },
+  
     css: {
       preprocessorOptions: {
         scss: {

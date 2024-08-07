@@ -1,7 +1,6 @@
 <template>
   <div class="carousel-slider">
     <Swiper
-    priority="high"
       :slides-per-view="1"
       :modules="[
         SwiperNavigation,
@@ -27,7 +26,7 @@
     >
       <SwiperSlide>
         <div class="banner-block slider-wrapper">
-          <img
+         
           <img src="../assets/images/3.png" format="webp"
           id="'banner-image"
           ref="bannerImage"
