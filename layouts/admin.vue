@@ -9,13 +9,10 @@
       <a href="/admin/category" target="_blank">Категории</a>
       <a href="/admin/news" target="_blank">Новости</a>
       <a href="/admin/brands" target="_blank">Бренды</a>
-
     </div>
     <div class="slot-sidebar">
       <slot />
     </div>
- 
-  
   </div>
 </template>
 

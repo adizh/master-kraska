@@ -17,10 +17,10 @@ import "primeicons/primeicons.css";
 
 if (process.client) {
   (function (w, d, u) {
-    var s = d?.createElement("script");
+    const s = d?.createElement("script");
     s.async = true;
     s.src = u + "?" + ((Date.now() / 60000) | 0);
-    var h = d?.getElementsByTagName("script")[0];
+    const h = d?.getElementsByTagName("script")[0];
     h.parentNode.insertBefore(s, h);
   })(
     window,
@@ -30,7 +30,7 @@ if (process.client) {
 }
 
 useHead({
-  title:'MasterKraska',
+  title: "MasterKraska",
   meta: [{ name: "Master Kraska" }],
 });
 
@@ -43,9 +43,6 @@ nuxtApp.hook("page:start", () => {
 nuxtApp.hook("page:finish", () => {
   loading.value = false;
 });
-
-
-
 </script>
 
 <style lang="scss">

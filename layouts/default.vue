@@ -1,7 +1,7 @@
 <template>
   <div class="main-header">
     <div class="left" @click.prevent="gotToPage('/')">
-      <img src="/logo-master.png" class="logo-img" alt="logo">
+      <img src="/logo-master.png" class="logo-img" alt="logo" />
     </div>
 
     <ul class="bottom">
@@ -170,7 +170,6 @@ const screenSize = computed(() => {
     return "large";
   }
 });
-
 
 const toggleProfile = () => {
   if (authStore.getUserId && authStore.getUserId?.length > 0) {

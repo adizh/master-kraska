@@ -5,18 +5,19 @@
     <div class="search-place">
       <div class="flex flex-row gap-4 search">
         <div class="input-block">
+ 
           <input
             v-model="productStore.filters.search"
             type="text"
             class="main-header-input"
             :placeholder="$t('whichProSearch')"
             @input="handleSearch"
-          />
+          >
           <img
             src="../assets/icons/icon=search.svg"
             alt="search"
             class="search-icon"
-          />
+          >
         </div>
         <div class="btn-block" @click.stop="router.push(`/catalog`)">
           <button>{{ $t("find") }}</button>
@@ -33,7 +34,7 @@
       />
     </div>
     <Products />
-    <Actions /> 
+    <Actions />
     <Advantages />
   </section>
 </template>
@@ -68,13 +69,13 @@ const handleSearch = (event: any) => {
 //   document.body.style.overflow = "auto";
 // };
 
-onMounted( async() => {
-   await catalogStore.fetchAllCategories();
-   firstCategoryItem.value = catalogStore?.getAllCategories[0];
+onMounted(async () => {
+  await catalogStore.fetchAllCategories();
+  firstCategoryItem.value = catalogStore?.getAllCategories[0];
 });
 
 onUnmounted(() => {
- // document.body.style.overflow = "auto";
+  // document.body.style.overflow = "auto";
 });
 </script>
 

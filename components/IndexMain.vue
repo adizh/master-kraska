@@ -26,16 +26,15 @@
     >
       <SwiperSlide>
         <div class="banner-block slider-wrapper">
-         
-          <img src="../assets/images/3.png" format="webp"
-          id="'banner-image"
-          ref="bannerImage"
-          @load="updateHeight" />
-          
-          
+          <img
+            src="../assets/images/3.png"
+            format="webp"
+            id="'banner-image"
+            ref="bannerImage"
+            @load="updateHeight"
+          />
         </div>
       </SwiperSlide>
-   
 
       <SwiperSlide>
         <div
@@ -69,7 +68,7 @@
 </template>
 
 <script lang="ts" setup>
-const newStore=useNewsStore()
+const newStore = useNewsStore();
 const bannerImage = ref<HTMLImageElement | null>(null);
 const targetElement = ref<HTMLElement | null>(null);
 
@@ -89,7 +88,7 @@ watch(
   },
 );
 onMounted(() => {
-  newStore.fetchSliders()
+  newStore.fetchSliders();
   window.addEventListener("resize", updateHeight);
 });
 
@@ -98,8 +97,6 @@ onBeforeUnmount(() => {
 });
 
 import "animate.css";
-
-
 </script>
 
 <style scoped lang="scss">

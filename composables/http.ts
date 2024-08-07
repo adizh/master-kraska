@@ -4,7 +4,7 @@ import axios, { AxiosInstance, AxiosError } from "axios";
 const API_URL = "https://api.masterkraska.kg";
 
 const http: AxiosInstance = axios.create({
-  baseURL:"https://api.masterkraska.kg",
+  baseURL: "https://api.masterkraska.kg",
 });
 
 http.interceptors.request.use((config) => {
@@ -42,7 +42,6 @@ if (process.client) {
   }
 }
 
-
 // // const httpAuth: AxiosInstance = axios.create({
 // //   baseURL: url,
 // //   headers: {
@@ -76,4 +75,3 @@ if (process.client) {
 // // );
 
 // // export { httpAuth };
-

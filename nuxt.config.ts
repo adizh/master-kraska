@@ -1,12 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
-
 export default defineNuxtConfig({
   devtools: { enabled: false },
   experimental: {
     renderJsonPayloads: false,
   },
-
 
   vite: {
     esbuild: {
@@ -18,9 +16,8 @@ export default defineNuxtConfig({
         "console.debug",
         "console.trace",
       ],
-
     },
-  
+
     css: {
       preprocessorOptions: {
         scss: {
@@ -56,7 +53,6 @@ export default defineNuxtConfig({
     },
   },
 
-
   modules: [
     "@nuxt/image",
     "nuxt-swiper",
@@ -70,9 +66,8 @@ export default defineNuxtConfig({
     "@vueuse/nuxt",
   ],
 
-
   site: {
-  url: "https://masterkraska.kg",
+    url: "https://masterkraska.kg",
   },
   seo: {
     automaticDefaults: true,

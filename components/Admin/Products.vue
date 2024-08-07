@@ -102,8 +102,8 @@ onMounted(() => {
   flex-wrap: wrap;
 }
 
-.admin-search-input{
-  width:45%
+.admin-search-input {
+  width: 45%;
 }
 
 @media (max-width: 1100px) {
