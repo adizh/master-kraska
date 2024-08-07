@@ -1,14 +1,8 @@
 <template>
   <div class="layout-container">
     <div class="admin-links">
-      <a href="/admin" target="_blank" @click="selectRoute('/admin')" :class="{'active-route':currentRoute==='/admin'}">Главная</a>
-      <a href="/admin/add-product" target="_blank">Добавить продукт</a>
-      <a href="/admin/orders" target="_blank">Заказы</a>
-      <a href="/admin/sellers" target="_blank">Продавцы</a>
-      <a href="/admin/banners" target="_blank">Баннеры</a>
-      <a href="/admin/category" target="_blank">Категории</a>
-      <a href="/admin/news" target="_blank">Новости</a>
-      <a href="/admin/brands" target="_blank">Бренды</a>
+      <a v-for="link in routes" :key="link.value" :href="link.value"  :class="{'active-route':route.path===link.value}"> {{ link?.name }}</a>
+    
     </div>
     <div class="slot-sidebar">
       <slot />
@@ -17,13 +11,20 @@
 </template>
 
 <script setup lang="ts">
+const routes=[
+  {name:'Главная',value:"/admin"},
+  {name:'Добавить продукт',value:"/admin/add-product"},
+  {name:'Заказы',value:"/admin/orders"},
+  {name:'Продавцы',value:"/admin/sellers"},
+  {name:'Баннеры',value:"/admin/banners"},
+  {name:'Категории',value:"/admin/category"},
+  {name:'Новости',value:"/admin/news"},
+  {name:'Бренды',value:"/admin/brands"},
+]
 
-const currentRoute= ref('/admin')
+const route=useRoute()
 
 
-const selectRoute=(route:string)=>{
-  currentRoute.value=route
-}
 
 </script>
 
@@ -57,12 +58,12 @@ const selectRoute=(route:string)=>{
       border-bottom: 1px solid #ddd;
     }
     &:hover{
-      background: #dddddd;
+      background: #dddddd90;
     }
   }
 }
 .active-route{
-  background: #dddddd;
+  background: #dddddd90;
 }
 .slot-sidebar {
   padding: 20px;
