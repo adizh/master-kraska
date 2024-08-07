@@ -237,7 +237,6 @@ const sendCode = async () => {
   }
 };
 const changePassword = async () => {
-  
   const tokenLocal = localStorage.getItem("token");
   let token = tokenLocal && tokenLocal !== undefined ? tokenLocal : null;
 

@@ -4,7 +4,7 @@ import axios, { AxiosInstance, AxiosError } from "axios";
 const API_URL = "https://api.masterkraska.kg";
 
 const http: AxiosInstance = axios.create({
-  baseURL: "https://api.masterkraska.kg",
+  baseURL: "https://api.masterkraska.kg"
 });
 
 http.interceptors.request.use((config) => {
@@ -26,7 +26,7 @@ http.interceptors.response.use(
       console.error("Error:", error.message);
     }
     return Promise.reject(error);
-  },
+  }
 );
 
 export default http;

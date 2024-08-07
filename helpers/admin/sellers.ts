@@ -13,59 +13,59 @@ const createSellerForm = ref([
     placeholder: "Описание",
     value: "",
     error: "",
-    type: "textarea",
+    type: "textarea"
   },
   {
     name: "descriptionKg",
     placeholder: "Описание (кырг)",
     value: "",
     error: "",
-    type: "textarea",
+    type: "textarea"
   },
   {
     name: "imageExtension",
     placeholder: "",
     value: "png",
     error: "",
-    type: "",
+    type: ""
   },
   {
     name: "certificateImageExtension",
     placeholder: "",
     value: "png",
     error: "",
-    type: "",
+    type: ""
   },
   {
     name: "isActive",
     placeholder: "Активный",
     value: false,
     error: "",
-    type: "checkbox",
-  },
+    type: "checkbox"
+  }
 ]);
 
 const image = ref({
   value: "",
   error: "",
-  loading: false,
+  loading: false
 });
 
 const certificateImage = ref({
   value: "",
   error: "",
-  loading: false,
+  loading: false
 });
 
 const updateImage = ref({
   value: "",
   error: "",
-  loading: false,
+  loading: false
 });
 const updateCertificateImage = ref({
   value: "",
   error: "",
-  loading: false,
+  loading: false
 });
 
 const handleImageUpdate = async (event: any) => {
@@ -80,7 +80,7 @@ const handleImageUpdate = async (event: any) => {
     updateImage.value.error = "";
     updateImage.value.loading = false;
     const base64StringNewImage = (await useConvertToBase64(
-      result,
+      result
     )) as unknown as string;
 
     updateImage.value.value = base64StringNewImage;
@@ -99,7 +99,7 @@ const handleCertificateImageUpdate = async (event: any) => {
     updateCertificateImage.value.error = "";
     updateCertificateImage.value.loading = false;
     const base64StringNewImage = (await useConvertToBase64(
-      result,
+      result
     )) as unknown as string;
 
     updateCertificateImage.value.value = base64StringNewImage;
@@ -120,5 +120,5 @@ export {
   image,
   certificateImage,
   handleCertificateImageUpdate,
-  handleImageUpdate,
+  handleImageUpdate
 };

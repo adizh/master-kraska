@@ -4,7 +4,7 @@ const targetSizeBytes = 150 * 1024;
 const updateImage = ref({
   value: "",
   error: "",
-  loading: false,
+  loading: false
 });
 
 const handleImageUpdate = async (event: any) => {
@@ -19,7 +19,7 @@ const handleImageUpdate = async (event: any) => {
     updateImage.value.error = "";
     updateImage.value.loading = false;
     const base64StringNewImage = (await useConvertToBase64(
-      result,
+      result
     )) as unknown as string;
 
     updateImage.value.value = base64StringNewImage;
@@ -29,5 +29,5 @@ export {
   isCreateBannerOpen,
   handleImageUpdate,
   updateImage,
-  isDeleteSliderOpen,
+  isDeleteSliderOpen
 };

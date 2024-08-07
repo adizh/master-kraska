@@ -2,85 +2,53 @@
   <section class="footer-section">
     <div class="top">
       <div class="first">
-        <img src="/white-logo.png" format="webp" class="white-logo" />
+        <img src="/white-logo.png" format="webp" class="white-logo">
       </div>
       <div class="second">
-        <span
-          ><a href="/news"
-            >{{ $t("news") }}
-            <img src="../assets/icons/arrow-footer.svg" alt="arrow" /> </a
-        ></span>
-        <span
-          ><a href="/contacts"
-            >{{ $t("allOutStores") }}
-            <img src="../assets/icons/arrow-footer.svg" alt="arrow" /></a
-        ></span>
-        <span
-          ><a href="/contacts"
-            >{{ $t("contacts") }}
-            <img src="../assets/icons/arrow-footer.svg" alt="arrow" /></a
-        ></span>
+        <span><a href="/news">{{ $t("news") }}
+          <img src="../assets/icons/arrow-footer.svg" alt="arrow"> </a></span>
+        <span><a href="/contacts">{{ $t("allOutStores") }}
+          <img src="../assets/icons/arrow-footer.svg" alt="arrow"></a></span>
+        <span><a href="/contacts">{{ $t("contacts") }}
+          <img src="../assets/icons/arrow-footer.svg" alt="arrow"></a></span>
       </div>
       <div class="third">
-        <span
-          ><a href="/koler"
-            >{{ $t("tinting") }}
-            <img src="../assets/icons/arrow-footer.svg" alt="arrow" /></a
-        ></span>
-        <span
-          ><a href="/parameters"
-            >{{ $t("searchByParams") }}
-            <img src="../assets/icons/arrow-footer.svg" alt="arrow" /></a
-        ></span>
-        <span
-          ><a href="/brands"
-            >{{ $t("brands") }}
-            <img src="../assets/icons/arrow-footer.svg" alt="arrow" /></a
-        ></span>
+        <span><a href="/koler">{{ $t("tinting") }}
+          <img src="../assets/icons/arrow-footer.svg" alt="arrow"></a></span>
+        <span><a href="/parameters">{{ $t("searchByParams") }}
+          <img src="../assets/icons/arrow-footer.svg" alt="arrow"></a></span>
+        <span><a href="/brands">{{ $t("brands") }}
+          <img src="../assets/icons/arrow-footer.svg" alt="arrow"></a></span>
       </div>
       <div class="fourth">
-        <span
-          ><a href="/certificates"
-            >{{ $t("certificates") }}
-            <img src="../assets/icons/arrow-footer.svg" alt="arrow" /></a
-        ></span>
-        <span
-          ><a href="/about-us"
-            >{{ $t("aboutUs") }}
-            <img src="../assets/icons/arrow-footer.svg" alt="arrow" /></a
-        ></span>
+        <span><a href="/certificates">{{ $t("certificates") }}
+          <img src="../assets/icons/arrow-footer.svg" alt="arrow"></a></span>
+        <span><a href="/about-us">{{ $t("aboutUs") }}
+          <img src="../assets/icons/arrow-footer.svg" alt="arrow"></a></span>
         <!-- <span><a href="/sellers">{{ $t('mobileConsultant') }}<img src="../assets/icons/arrow-footer.svg"
                             alt="arrow"></a></span> -->
         <!-- <span><a href="">{{ $t('mapPermanentCustomer') }} <img src="../assets/icons/arrow-footer.svg"
                             alt="arrow"></a></span> -->
-        <span
-          ><a href="/pay-deliver"
-            >{{ $t("payDelivery") }}
-            <img src="../assets/icons/arrow-footer.svg" alt="arrow" /></a
-        ></span>
+        <span><a href="/pay-deliver">{{ $t("payDelivery") }}
+          <img src="../assets/icons/arrow-footer.svg" alt="arrow"></a></span>
         <!-- <span><a href="">{{ $t('experts') }} <img src="../assets/icons/arrow-footer.svg" alt="arrow"></a></span> -->
       </div>
     </div>
     <div class="middle">
       <span>
-        <img src="../assets/icons/icon=location.svg" alt="location" />
-        пр.Чынгыз Айтматова, 93/1 лит А</span
-      >
+        <img src="../assets/icons/icon=location.svg" alt="location">
+        пр.Чынгыз Айтматова, 93/1 лит А</span>
 
       <span>
-        <img src="../assets/icons/icon=phone.svg" alt="phone" />
-        <a href="tel:+996 550 910 148">+996 550 910 148</a></span
-      >
+        <img src="../assets/icons/icon=phone.svg" alt="phone">
+        <a href="tel:+996 550 910 148">+996 550 910 148</a></span>
 
       <span>
-        <img src="../assets/icons/icon=mail.svg" alt="email" />
-        <a href="mailto:sales-mk@masterkraska.kg"
-          >sales-mk@masterkraska.kg</a
-        ></span
-      >
+        <img src="../assets/icons/icon=mail.svg" alt="email">
+        <a href="mailto:sales-mk@masterkraska.kg">sales-mk@masterkraska.kg</a></span>
 
       <span>
-        <img src="../assets/icons/icon=time.svg" alt="time" />
+        <img src="../assets/icons/icon=time.svg" alt="time">
         c 9:00 до 18:00 {{ $t("monday") }}-{{ $t("saturday") }}
       </span>
     </div>

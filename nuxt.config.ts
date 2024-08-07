@@ -3,7 +3,7 @@
 export default defineNuxtConfig({
   devtools: { enabled: false },
   experimental: {
-    renderJsonPayloads: false,
+    renderJsonPayloads: false
   },
 
   vite: {
@@ -14,8 +14,8 @@ export default defineNuxtConfig({
         "console.error",
         "console.warn",
         "console.debug",
-        "console.trace",
-      ],
+        "console.trace"
+      ]
     },
 
     css: {
@@ -24,10 +24,10 @@ export default defineNuxtConfig({
           additionalData: `
           @use "~/assets/globals.scss" as *;
           @use "~/assets/mixins.scss" as *;
-        `,
-        },
-      },
-    },
+        `
+        }
+      }
+    }
   },
 
   app: {
@@ -35,8 +35,8 @@ export default defineNuxtConfig({
     head: {
       script: [
         {
-          src: "https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js",
-        },
+          src: "https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"
+        }
         // {
         //   src: 'https://cdn-ru.bitrix24.ru/b27013162/crm/site_button/loader_2_gi1nb6.js'
         // }
@@ -47,10 +47,10 @@ export default defineNuxtConfig({
           type: "image/x-icon",
           hid: "icon",
           href: "/favicon.ico",
-          sizes: "16x16",
-        },
-      ],
-    },
+          sizes: "16x16"
+        }
+      ]
+    }
   },
 
   modules: [
@@ -63,39 +63,39 @@ export default defineNuxtConfig({
     "@nuxtjs/i18n",
     "nuxt3-leaflet",
     "@nuxtjs/seo",
-    "@vueuse/nuxt",
+    "@vueuse/nuxt"
   ],
 
   site: {
-    url: "https://masterkraska.kg",
+    url: "https://masterkraska.kg"
   },
   seo: {
     automaticDefaults: true,
-    splash: true,
+    splash: true
   },
   i18n: {
-    vueI18n: "./i18n/i18n.config.ts",
+    vueI18n: "./i18n/i18n.config.ts"
   },
   snackbar: {
     bottom: true,
     right: true,
-    duration: 5000,
+    duration: 5000
   },
 
   // routeRules: {
   //   "/": { prerender: true },
   // },
   runtimeConfig: {
-    public: {},
+    public: {}
   },
   $development: {
     image: {
-      dir: "assets/images",
-    },
+      dir: "assets/images"
+    }
   },
   $production: {
     image: {
-      provider: "ipx",
-    },
-  },
+      provider: "ipx"
+    }
+  }
 });

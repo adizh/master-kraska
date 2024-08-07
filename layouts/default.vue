@@ -1,7 +1,7 @@
 <template>
   <div class="main-header">
     <div class="left" @click.prevent="gotToPage('/')">
-      <img src="/logo-master.png" class="logo-img" alt="logo" />
+      <img src="/logo-master.png" class="logo-img" alt="logo">
     </div>
 
     <ul class="bottom">
@@ -18,7 +18,7 @@
             :class="{ rotated: isCatalogOpen }"
             src="../assets/icons/icon=components-closed-arrow.svg"
             alt="open-arrow"
-          />
+          >
           <Catalog
             :is-catalog-open="isCatalogOpen"
             @close-catalog="closeCatalog"
@@ -36,7 +36,7 @@
             :class="{ rotated: isCatalogOpen }"
             src="../assets/icons/icon=components-closed-arrow.svg"
             alt="open-arrow"
-          />
+          >
           <Catalog
             :is-catalog-open="isCatalogOpen"
             @close-catalog="closeCatalog"
@@ -58,7 +58,7 @@
       </ul>
       <ul class="top-part">
         <li v-if="authStore?.getRole !== 'Admin'" class="phone">
-          <img src="../assets/icons/icon=phone loight.svg" alt="phone" />
+          <img src="../assets/icons/icon=phone loight.svg" alt="phone">
           <a href="tel:+996 550 910 148"> +996 550 910 148</a>
         </li>
         <li v-else-if="authStore?.getRole === 'Admin'">
@@ -67,12 +67,12 @@
 
         <div class="cart-block">
           <li class="cart-li" @click="gotToPage('/cart')">
-            <img src="../assets/icons/icon=cart.svg" alt="cart" />
+            <img src="../assets/icons/icon=cart.svg" alt="cart">
 
             <span class="cart-li-num">{{ cartStore?.getAllCart?.length }}</span>
           </li>
           <li @click="toggleProfile">
-            <img src="../assets/icons/icon=user.svg" alt="" />
+            <img src="../assets/icons/icon=user.svg" alt="">
             <span v-if="screenSize === 'large'">{{ $t("profile") }}</span>
           </li>
         </div>

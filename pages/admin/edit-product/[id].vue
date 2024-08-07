@@ -4,7 +4,9 @@
       <button class="btn-white-bg mb-4 mt-0" @click="navigateToAdmin">
         Назад
       </button>
-      <h1 class="mb-3">Редактировать</h1>
+      <h1 class="mb-3">
+        Редактировать
+      </h1>
       <form class="grid" @submit.prevent="editProduct('form')">
         <div class="lg:col-4 md:col-6 col-12 each-field">
           <label for="name">Имя</label>
@@ -14,7 +16,7 @@
             class="basic-input col-12"
             type="text"
             @input="validate('nameRu', 'string')"
-          />
+          >
           <span v-if="inputs.nameRu.error" class="err-input-msg">{{
             inputs.nameRu.error
           }}</span>
@@ -28,7 +30,7 @@
             class="basic-input col-12"
             type="text"
             @input="validate('nameKg', 'string')"
-          />
+          >
           <span v-if="inputs.nameKg.error" class="err-input-msg">{{
             inputs.nameKg.error
           }}</span>
@@ -41,7 +43,7 @@
             v-model="inputs.descriptionRu.value"
             class="basic-input col-12"
             type="text"
-          />
+          >
           <span v-if="inputs.descriptionRu.error" class="err-input-msg">{{
             inputs.descriptionRu.error
           }}</span>
@@ -54,7 +56,7 @@
             v-model="inputs.descriptionKg.value"
             class="basic-input col-12"
             type="text"
-          />
+          >
           <span v-if="inputs.descriptionKg.error" class="err-input-msg">{{
             inputs.descriptionKg.error
           }}</span>
@@ -67,7 +69,7 @@
             v-model="inputs.shortDescriptionRu.value"
             class="basic-input col-12"
             type="text"
-          />
+          >
           <span v-if="inputs.shortDescriptionRu.error" class="err-input-msg">{{
             inputs.shortDescriptionRu.error
           }}</span>
@@ -80,7 +82,7 @@
             v-model="inputs.shortDescriptionKg.value"
             class="basic-input col-12"
             type="text"
-          />
+          >
           <span v-if="inputs.shortDescriptionKg.error" class="err-input-msg">{{
             inputs.shortDescriptionKg.error
           }}</span>
@@ -94,7 +96,7 @@
             class="basic-input col-12"
             type="number"
             @input="validate('price', 'number')"
-          />
+          >
           <span v-if="inputs.price.error" class="err-input-msg">{{
             inputs.price.error
           }}</span>
@@ -135,7 +137,7 @@
               :class="{ rotated: isCategoryCreateOpen }"
               src="../../../assets/icons/icon=components-closed-arrow.svg"
               alt="open-arrow"
-            />
+            >
           </div>
 
           <Transition name="slide-fade">
@@ -148,7 +150,7 @@
                   @input="
                     (event: any) => searchCategories(event?.target?.value)
                   "
-                />
+                >
                 <li
                   v-for="(item, index) in catalogStore?.getLinkedCategories"
                   :key="item?.id"
@@ -202,7 +204,7 @@
             class="basic-input col-12"
             type="text"
             @input="validate('size', 'string')"
-          />
+          >
           <span v-if="inputs.size.error" class="err-input-msg">{{
             inputs.size.error
           }}</span>
@@ -216,7 +218,7 @@
             class="basic-input col-12"
             type="text"
             @input="validate('color', 'string')"
-          />
+          >
           <span v-if="inputs.color.error" class="err-input-msg">{{
             inputs.color.error
           }}</span>
@@ -230,7 +232,7 @@
             class="basic-input col-12"
             type="text"
             @input="validate('dryingTime', 'string')"
-          />
+          >
           <span v-if="inputs.dryingTime.error" class="err-input-msg">{{
             inputs?.dryingTime?.error
           }}</span>
@@ -247,7 +249,7 @@
             class="basic-input col-12"
             type="text"
             @input="validate('consumption', 'string')"
-          />
+          >
           <span v-if="inputs.consumption.error" class="err-input-msg">{{
             inputs.consumption.error
           }}</span>
@@ -263,25 +265,24 @@
                   alt="variant"
                   style="cursor: pointer"
                   @click="openFileInput(variant?.size)"
-                />
+                >
                 <input
                   id="fileInput"
                   ref="fileInput"
                   type="file"
                   style="display: none"
                   @change="(event) => handleNewVarImage(event)"
-                />
+                >
 
                 <!-- <ProgressSpinner v-if="varSizes[variant?.size]?.loading"/> -->
                 <span v-if="varSizes[variant?.size].loading">Loading..</span>
                 <span
                   v-if="
                     varSizes[variant?.size]?.error &&
-                    !varSizes[variant?.size]?.loading
+                      !varSizes[variant?.size]?.loading
                   "
                   class="err-input-msg"
-                  >{{ varSizes[variant?.size]?.error }}</span
-                >
+                >{{ varSizes[variant?.size]?.error }}</span>
               </div>
               <label :for="variant?.size">Размер</label>
               <input
@@ -289,7 +290,7 @@
                 v-model="varSizes[variant?.size].size"
                 class="basic-input col-12"
                 type="text"
-              />
+              >
 
               <label :for="variant?.base">База</label>
               <input
@@ -297,14 +298,14 @@
                 v-model="varSizes[variant?.size].base"
                 class="basic-input col-12"
                 type="text"
-              />
+              >
               <label :for="variant?.size">Код</label>
               <input
                 :id="variant?.size"
                 v-model="varSizes[variant?.size].code"
                 class="basic-input col-12"
                 type="number"
-              />
+              >
 
               <label :for="variant?.size">Цена</label>
               <input
@@ -312,7 +313,7 @@
                 v-model="varSizes[variant?.size].price"
                 class="basic-input col-12"
                 type="number"
-              />
+              >
             </div>
           </div>
           <span v-if="inputs.color.error" class="err-input-msg">{{
@@ -327,7 +328,7 @@
             v-model="inputs.isPopular.value"
             class="basic-input col-12"
             type="checkbox"
-          />
+          >
         </div>
 
         <div class="lg:col-4 md:col-6 col-12 each-field">
@@ -337,7 +338,7 @@
             v-model="inputs.isFeatured.value"
             class="basic-input col-12"
             type="checkbox"
-          />
+          >
         </div>
 
         <div class="lg:col-4 md:col-6 col-12 each-field">
@@ -347,10 +348,12 @@
             v-model="inputs.isBeneficial.value"
             class="basic-input col-12"
             type="checkbox"
-          />
+          >
         </div>
 
-        <button type="submit">Сохранить изменения</button>
+        <button type="submit">
+          Сохранить изменения
+        </button>
       </form>
 
       <button type="button" class="pink-button" @click="isVariantOpen = true">
@@ -386,29 +389,29 @@
             placeholder="Размер"
             required
             class="basic-input"
-          />
+          >
           <input
             v-model="newVariants.price"
             type="number"
             placeholder="Цена"
             required
             class="basic-input"
-          />
+          >
           <input
             v-model="newVariants.base"
             type="text"
             placeholder="База"
             required
             class="basic-input"
-          />
+          >
           <input
             v-model="newVariants.code"
             type="number"
             placeholder="Код"
             required
             class="basic-input"
-          />
-          <input type="file" @change="handleFileChange" />
+          >
+          <input type="file" @change="handleFileChange">
 
           <ProgressSpinner v-if="newVariants?.imgLoading" />
 
@@ -416,7 +419,9 @@
             newVariants?.imgError
           }}</span>
 
-          <button type="submit">Добавить</button>
+          <button type="submit">
+            Добавить
+          </button>
         </form>
       </UIModal>
 
@@ -478,7 +483,7 @@
               :class="{ rotated: isCategoryCreateOpen }"
               src="../../../assets/icons/icon=components-closed-arrow.svg"
               alt="open-arrow"
-            />
+            >
           </div>
 
           <Transition name="slide-fade">
@@ -491,7 +496,7 @@
                   @input="
                     (event: any) => searchCategories(event?.target?.value)
                   "
-                />
+                >
                 <li
                   v-for="(item, index) in catalogStore?.getLinkedCategories"
                   :key="item?.id"
@@ -504,7 +509,9 @@
           </Transition>
         </div>
 
-        <button type="button" @click="createNewProdCategory">Добавить</button>
+        <button type="button" @click="createNewProdCategory">
+          Добавить
+        </button>
       </UIModal>
 
       <UIModal
@@ -524,7 +531,7 @@
               :class="{ rotated: openSubDir }"
               src="../../../assets/icons/icon=components-closed-arrow.svg"
               alt="open-arrow"
-            />
+            >
           </div>
           <Transition name="slide-fade">
             <div>
@@ -536,7 +543,7 @@
                     (event: any) =>
                       catalogStore.searchSubDirs(event?.target?.value)
                   "
-                />
+                >
                 <li
                   v-for="(item, index) in catalogStore.getHelperSubDirs"
                   :key="item?.id"
@@ -549,7 +556,9 @@
           </Transition>
         </div>
 
-        <button type="button" @click="addNewSubCategory">Добавить</button>
+        <button type="button" @click="addNewSubCategory">
+          Добавить
+        </button>
       </UIModal>
     </section>
   </NuxtLayout>
@@ -601,7 +610,7 @@ const addNewSubCategory = async () => {
   if (newSubDir?.value?.id) {
     try {
       const response = await http.post(
-        `/api/v1/Product/add-subdirectory/${item?.value?.id}?subdirectoryId=${newSubDir?.value?.id}`,
+        `/api/v1/Product/add-subdirectory/${item?.value?.id}?subdirectoryId=${newSubDir?.value?.id}`
       );
       console.log("response create new sub category", response);
       if (response.status === 200) {
@@ -628,7 +637,7 @@ const newVariants = ref({
   image: "",
   base: "",
   imgLoading: false,
-  imgError: "",
+  imgError: ""
 });
 
 const deleteSubDir = (value: SubDirHelper, mainValue: string) => {
@@ -655,7 +664,7 @@ const handleFileChange = async (event: any) => {
   } else if (result.size < targetSizeBytes && result && result !== undefined) {
     newVariants.value.imgLoading = false;
     const base64StringNewImage = (await useConvertToBase64(
-      result,
+      result
     )) as unknown as string;
     newVariants.value.image = base64StringNewImage as unknown as string;
     newVariants.value.imgError = "";
@@ -699,7 +708,7 @@ const checkImgCompression = async (event: any) => {
   const value = event.target.files[0];
   const options = {
     maxSizeMB: 0.1465,
-    useWebWorker: true,
+    useWebWorker: true
   };
   let compressedFile = value;
   if (value?.size > targetSizeBytes) {
@@ -709,7 +718,7 @@ const checkImgCompression = async (event: any) => {
       console.log(
         "Compressed file size:",
         (compressedFile.size / 1024).toFixed(2),
-        "KB",
+        "KB"
       );
     } catch (error) {
       console.error("Compression error:", error);
@@ -720,7 +729,7 @@ const checkImgCompression = async (event: any) => {
 
 const selectValue = (newCategory: CategorySys, selectedValue: CategorySys) => {
   const itemIndex = categoryValues.value.findIndex(
-    (item: CategorySys) => item?.id === selectedValue?.id,
+    (item: CategorySys) => item?.id === selectedValue?.id
   );
   categoryValues.value.splice(itemIndex, 1, newCategory);
   isCategoryOpen.value = "";
@@ -746,7 +755,7 @@ interface Inputs {
 
 const confirmCategoryDelete = () => {
   const categoryIndex = categoryValues?.value.findIndex(
-    (item: CategorySys) => item?.id === currentCategory?.value?.id,
+    (item: CategorySys) => item?.id === currentCategory?.value?.id
   );
 
   categoryValues.value.splice(categoryIndex, 1);
@@ -761,7 +770,7 @@ const confirmCategoryDelete = () => {
 
 const confirmSubDirDelete = () => {
   const index = productHelpers?.value.findIndex(
-    (item: SubDirHelper) => item?.id === currentSubDir?.value?.id,
+    (item: SubDirHelper) => item?.id === currentSubDir?.value?.id
   );
   productHelpers.value.splice(index, 1);
 
@@ -778,7 +787,7 @@ const createNewProdCategory = async () => {
   if (newCategory?.value?.id) {
     try {
       const response = await http.post(
-        `/api/v1/Product/add-category/${item?.value?.id}?categoryId=${newCategory?.value?.id}`,
+        `/api/v1/Product/add-category/${item?.value?.id}?categoryId=${newCategory?.value?.id}`
       );
       console.log("response new caegory", response);
       if (response.status === 200) {
@@ -818,7 +827,7 @@ const handleNewVarImage = async (event: any) => {
     varSizes[currVarSize.value].loading = false;
     varSizes[currVarSize.value].error = "";
     const base64StringNewImage = (await useConvertToBase64(
-      result,
+      result
     )) as unknown as string;
     variantImage.value = base64StringNewImage as unknown as string;
     varSizes[currVarSize.value].image =
@@ -835,7 +844,7 @@ const openFileInput = (varSize: string) => {
 
 const selectSubDir = (value: SubDirHelper, prevValue: SubDirHelper) => {
   const index = productHelpers.value.findIndex(
-    (item: SubDirHelper) => item?.id === prevValue?.id,
+    (item: SubDirHelper) => item?.id === prevValue?.id
   );
   productHelpers.value.splice(index, 1, value);
 };
@@ -858,8 +867,8 @@ const addVariant = async () => {
         size: newVariants.value.size,
         base: newVariants.value?.base,
         image: newVariants.value.image,
-        extension: "png",
-      },
+        extension: "png"
+      }
     ];
     const response = await http.put(`/api/v1/Product/add-variants/${id}`, body);
     console.log("response add variant", response);
@@ -878,16 +887,16 @@ const inputs = ref<Inputs>({
   nameRu: { value: item.value?.nameRu, error: "", type: "string" },
   nameKg: { value: item.value?.nameKg, error: "", type: "string" },
   descriptionRu: {
-    value: item.value.descriptionRu,
+    value: item.value.descriptionRu
   },
   descriptionKg: {
-    value: item.value?.descriptionKg,
+    value: item.value?.descriptionKg
   },
   shortDescriptionRu: {
-    value: item.value?.shortDescriptionRu,
+    value: item.value?.shortDescriptionRu
   },
   shortDescriptionKg: {
-    value: item.value?.shortDescriptionKg,
+    value: item.value?.shortDescriptionKg
   },
   price: { value: item?.value?.price, error: "", type: "number" },
   subcategoryId: { value: item?.value?.subcategoryId, error: "" },
@@ -901,8 +910,8 @@ const inputs = ref<Inputs>({
   isBeneficial: { value: item?.value?.isBeneficial, error: "" },
   images: {
     value: item?.value?.images,
-    error: "",
-  },
+    error: ""
+  }
 });
 
 const { handleValues } = useInputValidation();
@@ -913,7 +922,7 @@ const validate = (field: string, type: string) => {
 
 const submitUpdate = async () => {
   const prodCategories = categoryValues.value.map(
-    (item: CategorySys) => item?.id,
+    (item: CategorySys) => item?.id
   );
   const prodVariantes = Object.values(varSizes).map((item: any) => {
     if (item?.image && item?.image?.startsWith("http")) {
@@ -947,7 +956,7 @@ const submitUpdate = async () => {
       dryingTime: inputs?.value?.dryingTime?.value,
       images: null,
       variants: prodVariantes || null,
-      extension: "png",
+      extension: "png"
     };
 
     console.log("what is body in submotupdat", body);
@@ -955,7 +964,7 @@ const submitUpdate = async () => {
     console.log("submit dat prodCategories", prodCategories);
     const response = await http.put(
       `/api/v1/Product/update-product/${id}`,
-      body,
+      body
     );
     console.log("response", response);
     if (response.status === 200) {
@@ -980,7 +989,7 @@ const editProduct = (type: string = "") => {
     }
   }
   const hasError = Object.values(inputs.value).some(
-    (input) => input.error !== "",
+    (input) => input.error !== ""
   );
   if (!hasError) {
     submitUpdate();
@@ -1037,22 +1046,22 @@ onMounted(async () => {
     descriptionRu: {
       value: item.value?.descriptionRu,
       error: "",
-      type: "string",
+      type: "string"
     },
     descriptionKg: {
       value: item.value?.descriptionKg,
       error: "",
-      type: "string",
+      type: "string"
     },
     shortDescriptionRu: {
       value: item.value?.shortDescriptionRu,
       error: "",
-      type: "string",
+      type: "string"
     },
     shortDescriptionKg: {
       value: item.value?.shortDescriptionKg,
       error: "",
-      type: "string",
+      type: "string"
     },
     price: { value: item?.value?.price, error: "", type: "number" },
     //   categories: { value: item?.value?.categories, error: '' },
@@ -1067,8 +1076,8 @@ onMounted(async () => {
     isBeneficial: { value: item?.value?.isBeneficial, error: "" },
     images: {
       value: item?.value?.images,
-      error: "",
-    },
+      error: ""
+    }
   };
 });
 

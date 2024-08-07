@@ -25,13 +25,13 @@ if (process.client) {
   })(
     window,
     document,
-    "https://cdn-ru.bitrix24.ru/b27013162/crm/site_button/loader_2_gi1nb6.js",
+    "https://cdn-ru.bitrix24.ru/b27013162/crm/site_button/loader_2_gi1nb6.js"
   );
 }
 
 useHead({
   title: "MasterKraska",
-  meta: [{ name: "Master Kraska" }],
+  meta: [{ name: "Master Kraska" }]
 });
 
 const nuxtApp = useNuxtApp();

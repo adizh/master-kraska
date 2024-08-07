@@ -39,7 +39,7 @@ const closeModal = () => {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .modal-container {
   position: fixed;
   z-index: 5;
@@ -64,10 +64,12 @@ const closeModal = () => {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   max-height: 85vh;
   overflow-y: auto;
+
   padding: 40px;
+
   a {
     color: #222;
-    font-size: 17px;
+    font-size: 16px;
   }
 }
 

@@ -101,7 +101,9 @@
           <li>
             {{ $t("typeOfPay1") }}
           </li>
-          <li class="danger">{{ $t("attention") }}!</li>
+          <li class="danger">
+            {{ $t("attention") }}!
+          </li>
           <li>
             {{ $t("dangerText1") }}
           </li>

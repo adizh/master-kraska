@@ -5,7 +5,6 @@
     <div class="search-place">
       <div class="flex flex-row gap-4 search">
         <div class="input-block">
- 
           <input
             v-model="productStore.filters.search"
             type="text"

@@ -25,5 +25,5 @@ export {
   allTingings,
   filteredBrands,
   selectedBrand,
-  currentBrandsColors,
+  currentBrandsColors
 };

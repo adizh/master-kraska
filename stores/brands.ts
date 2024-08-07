@@ -5,11 +5,11 @@ export const useBrandsStore = defineStore("brandsStore", {
     brands: [] as Brands[],
     allBrands: [] as Brands[],
     sellers: [] as Seller[],
-    brand: {} as Brands,
+    brand: {} as Brands
   }),
 
   actions: {
-    async fetchAllBrands() {
+    async fetchAllBrands () {
       try {
         const response = await http("/api/v1/Brand/get-all-brands");
 
@@ -23,7 +23,7 @@ export const useBrandsStore = defineStore("brandsStore", {
       }
     },
 
-    async fetchAllSellers() {
+    async fetchAllSellers () {
       const authStore = useAuthStore();
       try {
         const response = await http("/api/v1/Seller/get-all-sellers");
@@ -44,7 +44,7 @@ export const useBrandsStore = defineStore("brandsStore", {
       }
     },
 
-    async fetchAllBrandId(brandId: string) {
+    async fetchAllBrandId (brandId: string) {
       try {
         const response = await http(`/api/v1/Brand/get-brand/${brandId}`);
 
@@ -57,21 +57,21 @@ export const useBrandsStore = defineStore("brandsStore", {
       }
     },
 
-    searchBrands(value: string) {
+    searchBrands (value: string) {
       this.brands = this.allBrands.filter((brand) =>
-        brand?.name?.toLowerCase()?.includes(value?.toLowerCase()),
+        brand?.name?.toLowerCase()?.includes(value?.toLowerCase())
       );
-    },
+    }
   },
   getters: {
-    getAllBrands(state) {
+    getAllBrands (state) {
       return state.brands;
     },
-    getAllSellers(state) {
+    getAllSellers (state) {
       return state.sellers;
     },
-    getBrand(state) {
+    getBrand (state) {
       return state.brand;
-    },
-  },
+    }
+  }
 });

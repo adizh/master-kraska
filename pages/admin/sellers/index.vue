@@ -4,7 +4,9 @@
       class="flex w-full mb-2"
       @click="isCreateModalOpen = !isCreateModalOpen"
     >
-      <button class="pink-button">Создать продавца</button>
+      <button class="pink-button">
+        Создать продавца
+      </button>
     </div>
 
     <div class="all-sellers">
@@ -59,7 +61,7 @@ const deleteSeller = (seller: Seller) => {
 const confirmDeleteSeller = async () => {
   try {
     const response = await http.delete(
-      `/api/v1/Seller/delete-seller-by-id/${currentSeller.value?.id}`,
+      `/api/v1/Seller/delete-seller-by-id/${currentSeller.value?.id}`
     );
     if (response.status === 200) {
       useNotif("success", "Продавец удален", "Успешно");
