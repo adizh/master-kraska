@@ -34,6 +34,13 @@
         >
           Создать подкатегорию
         </button>
+
+        <button
+        class="bordered-white-btn"
+        @click="isDeleteSubCategoryOpen = !isDeleteSubCategoryOpen"
+      >
+        Удалить подкатегорию
+      </button>
       </div>
 
       <AdminCreateCategory
@@ -54,6 +61,8 @@
         :is-open="isCreateSubCategoryOpen"
         @close-modal="isCreateSubCategoryOpen = false"
       />
+      
+      <AdminSubcategoryDelete :is-open="isDeleteSubCategoryOpen" @close-modal="isDeleteSubCategoryOpen=false"/>
     </section>
   </NuxtLayout>
 </template>

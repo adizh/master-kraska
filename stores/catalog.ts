@@ -11,7 +11,8 @@ export const useCatalogStore = defineStore("catalogStore", {
     allHelpersSubDirFilter: [] as SubDirHelper[],
     linkedCategory: {} as CategorySys,
     topCategories: [] as CategorySys[],
-    allTopCategories: [] as CategorySys[]
+    allTopCategories: [] as CategorySys[],
+    filteredSubcategories:[] as CategorySys[]
   }),
   actions: {
     async fetchAllCatalogs () {
@@ -112,8 +113,8 @@ export const useCatalogStore = defineStore("catalogStore", {
               };
             }
           });
-
           this.category = filtered;
+          this.filteredSubcategories = this.category[0].subcategories
         }
       } catch (err) {
         console.log(err);
@@ -213,6 +214,9 @@ export const useCatalogStore = defineStore("catalogStore", {
       } catch (error) {
         console.error("Error fetching helpers subdirectories:", error);
       }
+    },
+    filterSubcategoriesByCategory(value:string){
+this.filteredSubcategories = this.category[0]?.subcategories?.filter((item)=>item?.nameRu?.toLowerCase()?.includes(value?.toLowerCase()))
     }
   },
   getters: {
@@ -236,6 +240,9 @@ export const useCatalogStore = defineStore("catalogStore", {
     },
     getTopCategories (state) {
       return state.topCategories;
+    },
+    getFilteredSubcategories(state){
+      return state.filteredSubcategories
     }
   }
 });
