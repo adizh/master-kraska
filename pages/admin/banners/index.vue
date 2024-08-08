@@ -15,6 +15,7 @@
           :key="slider?.id"
           :slider="slider"
           @delete-slider="deleteSlider"
+          class="mb-4"
         />
       </div>
     </div>

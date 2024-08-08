@@ -2,10 +2,11 @@
   <div class="main">
     <header>
       <img src="../../assets/icons/mdi_password-outline.svg" alt="locked" />
-      <div class="main-header">{{ $t("resetPassword") }} rerere</div>
+      <div class="main-header">{{ $t("resetPassword") }}</div>
     </header>
 
     <div class="grid form" v-if="!isPasswordsOpen">
+
       <div class="col-12 each-field">
         <div class="steps">
           <span>1</span
@@ -161,7 +162,7 @@ const sendEmail = async () => {
 };
 
 const sendCode = async () => {
-  handleValues(inputs.value, "email", "email");
+  handleValues(inputs.value, "phone", "number");
   handleValues(inputs.value, "code", "string");
   const hasError = Object.values(inputs.value).some(
     (input) => input.error !== "",
