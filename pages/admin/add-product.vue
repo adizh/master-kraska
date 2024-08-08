@@ -263,21 +263,21 @@
             class="pink-button"
             @click.capture="addCategoryCount"
           >
-            +Добавить категорию
+            Добавить категорию
           </button>
           <button
             type="button"
             class="pink-button"
             @click.capture="addVariantCount"
           >
-            +Добавить объем
+            Добавить объем
           </button>
           <button
             type="button"
             class="pink-button"
             @click.capture="addSubDirCount"
           >
-            +Добавить подкатегорию
+            Добавить подкатегорию
           </button>
           <button type="submit" class="btn-white-bg">
             Создать

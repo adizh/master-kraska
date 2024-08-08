@@ -1,5 +1,5 @@
 <template>
-  <div class="ui-dropdown col-6">
+  <div class="ui-dropdown w-full">
     <div
       class="selected-option basic-input"
       @click="openDropdown(selectedValue)"
@@ -109,7 +109,9 @@ onMounted(() => {
   max-height: 200px;
   overflow-y: auto;
   @include textFormat(16px, 20px, 400, #000);
-
+input{
+  width: 100%;
+}
   li {
     padding: 16px;
     border-radius: 10px;

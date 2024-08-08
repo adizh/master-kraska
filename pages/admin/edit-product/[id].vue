@@ -4,91 +4,93 @@
       <button class="btn-white-bg mb-4 mt-0" @click="navigateToAdmin">
         Назад
       </button>
-      <h1 class="mb-3">
+      <h1 class="mb-4">
         Редактировать
       </h1>
-      <form class="grid" @submit.prevent="editProduct('form')">
-        <div class="lg:col-4 md:col-6 col-12 each-field">
+ 
+      <span class="err-input-msg">*Обязательные поля</span>
+      <form class="grid mt-4" @submit.prevent="editProduct('form')">
+        <div class="lg:col-6 md:col-6 col-12 each-field">
           <label for="name">Имя</label>
-          <input
+          <textarea
             id="name"
-            v-model="inputs.nameRu.value"
+            v-model="inputs.nameRu.value as string"
             class="basic-input col-12"
             type="text"
             @input="validate('nameRu', 'string')"
-          >
+          ></textarea>
           <span v-if="inputs.nameRu.error" class="err-input-msg">{{
             inputs.nameRu.error
           }}</span>
         </div>
 
-        <div class="lg:col-4 md:col-6 col-12 each-field">
+        <div class="lg:col-6 md:col-6 col-12 each-field">
           <label for="name">Имя (кырг)</label>
-          <input
+          <textarea
             id="name"
-            v-model="inputs.nameKg.value"
+            v-model="inputs.nameKg.value as string"
             class="basic-input col-12"
             type="text"
             @input="validate('nameKg', 'string')"
-          >
+          ></textarea>
           <span v-if="inputs.nameKg.error" class="err-input-msg">{{
             inputs.nameKg.error
           }}</span>
         </div>
 
-        <div class="lg:col-4 md:col-6 col-12 each-field">
+        <div class="lg:col-12 md:col-12 col-12 each-field">
           <label for="description">Описание</label>
-          <input
+          <textarea
             id="description"
-            v-model="inputs.descriptionRu.value"
+            v-model="inputs.descriptionRu.value as string"
             class="basic-input col-12"
             type="text"
-          >
+          ></textarea>
           <span v-if="inputs.descriptionRu.error" class="err-input-msg">{{
             inputs.descriptionRu.error
           }}</span>
         </div>
 
-        <div class="lg:col-4 md:col-6 col-12 each-field">
+        <div class="lg:col-12 md:col-12 col-12 each-field">
           <label for="description">Описание (кырг)</label>
-          <input
+          <textarea
             id="descriptionKg"
-            v-model="inputs.descriptionKg.value"
+            v-model="inputs.descriptionKg.value as string"
             class="basic-input col-12"
             type="text"
-          >
+          ></textarea>
           <span v-if="inputs.descriptionKg.error" class="err-input-msg">{{
             inputs.descriptionKg.error
           }}</span>
         </div>
 
-        <div class="lg:col-4 md:col-6 col-12 each-field">
+        <div class="lg:col-6 md:col-6 col-12 each-field">
           <label for="description">Короткое описание</label>
-          <input
+          <textarea
             id="shortDescriptionRu"
-            v-model="inputs.shortDescriptionRu.value"
+            v-model="inputs.shortDescriptionRu.value as string"
             class="basic-input col-12"
             type="text"
-          >
+          ></textarea>
           <span v-if="inputs.shortDescriptionRu.error" class="err-input-msg">{{
             inputs.shortDescriptionRu.error
           }}</span>
         </div>
 
-        <div class="lg:col-4 md:col-6 col-12 each-field">
+        <div class="lg:col-6 md:col-6 col-12 each-field">
           <label for="description">Короткое описание (кырг)</label>
-          <input
+          <textarea
             id="shortDescriptionKg"
-            v-model="inputs.shortDescriptionKg.value"
+            v-model="inputs.shortDescriptionKg.value as string"
             class="basic-input col-12"
             type="text"
-          >
+          ></textarea>
           <span v-if="inputs.shortDescriptionKg.error" class="err-input-msg">{{
             inputs.shortDescriptionKg.error
           }}</span>
         </div>
 
-        <div class="lg:col-4 md:col-6 col-12 each-field">
+        <div class="lg:col-6 md:col-6 col-12 each-field">
           <label for="price">Цена</label>
           <input
             id="price"
@@ -104,7 +106,7 @@
 
         <div
           v-if="categoryValues?.value?.length > 0"
-          class="lg:col-4 md:col-6 col-12 each-field"
+          class="lg:col-6 md:col-6 col-12 each-field"
         >
           <label for="categoryId">Категории</label>
           <UISelect
@@ -122,7 +124,7 @@
           />
         </div>
 
-        <div v-else class="lg:col-4 md:col-6 col-6 each-field">
+        <div v-else class="lg:col-6 md:col-6 col-6 each-field">
           <label for="categoryId">Категории</label>
           <div
             class="selected-option basic-input"
@@ -163,7 +165,7 @@
           </Transition>
         </div>
 
-        <div class="lg:col-4 md:col-6 col-12 each-field">
+        <div class="lg:col-6 md:col-6 col-12 each-field">
           <label for="brandId">Бренд</label>
           <UISelect
             :options="brandsStore?.getAllBrands"
@@ -357,7 +359,7 @@
       </form>
 
       <button type="button" class="pink-button" @click="isVariantOpen = true">
-        +Добавить объемы
+        Добавить объемы
       </button>
 
       <button
@@ -365,14 +367,14 @@
         class="pink-button"
         @click="isCategoryCreateOpen = true"
       >
-        +Добавить категорию
+        Добавить категорию
       </button>
       <button
         type="button"
         class="pink-button"
         @click="isSubDirCreateOpen = true"
       >
-        +Добавить подкатегорию
+        Добавить подкатегорию
       </button>
       <UIModal
         :show-modal="isVariantOpen"
@@ -1138,6 +1140,10 @@ console.log("categoryValues", categoryValues);
   opacity: 0;
 }
 
+.each-field{
+  @include flex(column,start,start,4px)
+}
+
 @keyframes slideFromTop {
   from {
     transform: translateY(-5%);
@@ -1167,7 +1173,9 @@ button {
 }
 
 .variant {
-  border: 1px solid $main-pink;
+  border: 1px solid #dddddd;
+  border-radius: 8px;
+  padding:10px;
   img {
     width: 100%;
   }
@@ -1176,7 +1184,7 @@ button {
   @include flex(row, start, start);
   flex-wrap: wrap;
   div {
-    width: 20%;
+    width: 25%;
   }
 }
 .variant .img-variant {
