@@ -12,7 +12,7 @@
         <div
           v-for="item in Object.values(inputs)"
           :key="item?.field"
-          class="flex flex-column gap-2 lg:col-4 md:col-6 col-12"
+          class="flex flex-column gap-2 lg:col-6 md:col-6 col-12"
         >
           <template
             v-if="
@@ -27,8 +27,7 @@
               :id="item?.key"
               v-model="item.value"
               :name="item?.key"
-              cols="30"
-              rows="10"
+         
               class="basic-input"
               @input="validate(item.key as string, item?.type as string)"
             />
@@ -36,13 +35,13 @@
 
           <template v-else>
             <label :for="item?.field">{{ item?.field }}</label>
-            <input
+            <textarea
               :id="item?.field"
               v-model="item.value"
               class="basic-input"
               :type="!item?.type || item.type === 'string' ? 'text' : 'number'"
-              @input="validate(item.key as string, item?.type as string)"
-            >
+              @change="validate(item.key as string, item?.type as string)"
+            ></textarea>
           </template>
 
           <span v-if="item?.error" class="err-input-msg">{{

@@ -18,7 +18,6 @@
 <script setup lang="ts">
 const routes = [
   { name: "Главная", value: "/admin" },
-  { name: "Добавить продукт", value: "/admin/add-product" },
   { name: "Заказы", value: "/admin/orders" },
   { name: "Продавцы", value: "/admin/sellers" },
   { name: "Баннеры", value: "/admin/banners" },
@@ -67,7 +66,6 @@ const route = useRoute();
   background: #dddddd90;
 }
 .slot-sidebar {
-  padding: 20px;
   flex: 1;
 }
 </style>
