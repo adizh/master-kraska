@@ -127,7 +127,7 @@ const addSubcategory = async () => {
 const selectCategory = (category: CategorySys) => {
   selectedCategoryId.value = category;
   isSubcategoryOpen.value = false;
-  catalogStore.filterTopCategories('')
+  catalogStore.filterTopCategories("");
 };
 
 const filterCategories = (event: Event) => {

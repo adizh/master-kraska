@@ -26,11 +26,11 @@
               class="basic-input"
               @input="
                 (event: any) =>
-                  catalogStore.filterLinkedCategories(event?.target?.value)
+                  catalogStore.filterTopCategories(event?.target?.value)
               "
             />
             <li
-              v-for="(item, index) in catalogStore.getLinkedCategories"
+              v-for="(item, index) in catalogStore.getTopCategories"
               :key="item?.id"
               @click="selectCategory(item)"
             >
@@ -105,6 +105,8 @@ const selectCategory = (item: CategorySys) => {
   } else {
     selectedCategories.value.splice(index, 1);
   }
+
+  openCategory.value = false;
 };
 
 onMounted(() => {

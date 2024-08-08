@@ -51,7 +51,7 @@ const createCategory = async () => {
     const response = await http.post("/api/v1/Category/create-category", {
       nameRu: category?.value,
       nameKg: categoryKg?.value,
-      parentId:null
+      parentId: null,
     });
 
     console.log("response", response);
