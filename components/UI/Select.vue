@@ -109,9 +109,9 @@ onMounted(() => {
   max-height: 200px;
   overflow-y: auto;
   @include textFormat(16px, 20px, 400, #000);
-input{
-  width: 100%;
-}
+  input {
+    width: 100%;
+  }
   li {
     padding: 16px;
     border-radius: 10px;

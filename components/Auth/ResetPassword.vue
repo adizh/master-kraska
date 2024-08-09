@@ -6,7 +6,6 @@
     </header>
 
     <div class="grid form" v-if="!isPasswordsOpen">
-
       <div class="col-12 each-field">
         <div class="steps">
           <span>1</span

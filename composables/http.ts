@@ -1,7 +1,7 @@
 // http.js
 import axios, { AxiosInstance, AxiosError } from "axios";
 
-const API_URL = "https://api.masterkraska.kg";
+
 
 const http: AxiosInstance = axios.create({
   baseURL: "https://api.masterkraska.kg"

@@ -14,8 +14,8 @@
           v-for="slider in newsStore.getAllSliders"
           :key="slider?.id"
           :slider="slider"
-          @delete-slider="deleteSlider"
           class="mb-4"
+          @delete-slider="deleteSlider"
         />
       </div>
     </div>

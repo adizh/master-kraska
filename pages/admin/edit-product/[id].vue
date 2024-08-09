@@ -1,14 +1,13 @@
 <template>
   <NuxtLayout name="admin">
     <section>
-
       <button class="btn-white-bg mb-4 mt-0" @click="navigateToAdmin">
         Назад
       </button>
       <h1 class="mb-4">
         Редактировать
       </h1>
- 
+
       <span class="err-input-msg">*Обязательные поля</span>
       <form class="grid mt-4" @submit.prevent="editProduct('form')">
         <div class="lg:col-6 md:col-6 col-12 each-field">
@@ -19,7 +18,7 @@
             class="basic-input col-12"
             type="text"
             @input="validate('nameRu', 'string')"
-          ></textarea>
+          />
           <span v-if="inputs.nameRu.error" class="err-input-msg">{{
             inputs.nameRu.error
           }}</span>
@@ -33,7 +32,7 @@
             class="basic-input col-12"
             type="text"
             @input="validate('nameKg', 'string')"
-          ></textarea>
+          />
           <span v-if="inputs.nameKg.error" class="err-input-msg">{{
             inputs.nameKg.error
           }}</span>
@@ -46,7 +45,7 @@
             v-model="inputs.descriptionRu.value as string"
             class="basic-input col-12"
             type="text"
-          ></textarea>
+          />
           <span v-if="inputs.descriptionRu.error" class="err-input-msg">{{
             inputs.descriptionRu.error
           }}</span>
@@ -59,7 +58,7 @@
             v-model="inputs.descriptionKg.value as string"
             class="basic-input col-12"
             type="text"
-          ></textarea>
+          />
           <span v-if="inputs.descriptionKg.error" class="err-input-msg">{{
             inputs.descriptionKg.error
           }}</span>
@@ -72,7 +71,7 @@
             v-model="inputs.shortDescriptionRu.value as string"
             class="basic-input col-12"
             type="text"
-          ></textarea>
+          />
           <span v-if="inputs.shortDescriptionRu.error" class="err-input-msg">{{
             inputs.shortDescriptionRu.error
           }}</span>
@@ -85,7 +84,7 @@
             v-model="inputs.shortDescriptionKg.value as string"
             class="basic-input col-12"
             type="text"
-          ></textarea>
+          />
           <span v-if="inputs.shortDescriptionKg.error" class="err-input-msg">{{
             inputs.shortDescriptionKg.error
           }}</span>
@@ -1141,8 +1140,8 @@ console.log("categoryValues", categoryValues);
   opacity: 0;
 }
 
-.each-field{
-  @include flex(column,start,start,4px)
+.each-field {
+  @include flex(column, start, start, 4px);
 }
 
 @keyframes slideFromTop {
@@ -1176,7 +1175,7 @@ button {
 .variant {
   border: 1px solid #dddddd;
   border-radius: 8px;
-  padding:10px;
+  padding: 10px;
   img {
     width: 100%;
   }

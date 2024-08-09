@@ -2,6 +2,7 @@
   <NuxtLayout name="admin">
     <div>
       <button class="btn-white-bg mb-4 mt-0" @click="navigateToAdmin">
+
         Назад
       </button>
 
@@ -27,7 +28,6 @@
               :id="item?.key"
               v-model="item.value"
               :name="item?.key"
-         
               class="basic-input"
               @input="validate(item.key as string, item?.type as string)"
             />
@@ -41,7 +41,7 @@
               class="basic-input"
               :type="!item?.type || item.type === 'string' ? 'text' : 'number'"
               @change="validate(item.key as string, item?.type as string)"
-            ></textarea>
+            />
           </template>
 
           <span v-if="item?.error" class="err-input-msg">{{
@@ -77,8 +77,8 @@
               >
             </div>
             <Transition name="slide-fade">
-              <div>
-                <ul v-if="index === isCategoryOpen" class="ui-options">
+              <div  v-if="index === isCategoryOpen">
+                <ul class="ui-options">
                   <input
                     type="text"
                     class="basic-input"
@@ -87,11 +87,11 @@
                     "
                   >
                   <li
-                    v-for="item in catalogStore?.getLinkedCategories"
-                    :key="item?.id"
-                    @click="selectCategory(item, index)"
+                    v-for="categoryItem in catalogStore?.getLinkedCategories"
+                    :key="categoryItem?.id"
+                    @click="selectCategory(categoryItem, index)"
                   >
-                    {{ item?.nameRu }}
+                    {{ categoryItem?.nameRu }}
                   </li>
                 </ul>
               </div>
@@ -102,8 +102,8 @@
         <div v-if="subDirCount?.length" class="lg:col-4 md:col-6 col-12">
           <label for="category">Подкатегория</label>
           <div
-            v-for="(item, index) in subDirCount"
-            :key="item"
+            v-for="(subDirItem, index) in subDirCount"
+            :key="subDirItem"
             class="ui-dropdown col-6"
           >
             <div
@@ -124,8 +124,8 @@
               >
             </div>
             <Transition name="slide-fade">
-              <div>
-                <ul v-if="index === isSubCategoryOpen" class="ui-options">
+              <div v-if="index === isSubCategoryOpen">
+                <ul  class="ui-options">
                   <input
                     type="text"
                     class="basic-input"
@@ -135,11 +135,11 @@
                     "
                   >
                   <li
-                    v-for="item in catalogStore?.getHelperSubDirs"
-                    :key="item?.id"
-                    @click="selectSubCategory(item, index)"
+                    v-for="helperSubDir in catalogStore?.getHelperSubDirs"
+                    :key="helperSubDir?.id"
+                    @click="selectSubCategory(helperSubDir, index)"
                   >
-                    {{ item?.nameRu }}
+                    {{ helperSubDir?.nameRu }}
                   </li>
                 </ul>
               </div>

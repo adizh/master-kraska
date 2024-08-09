@@ -427,20 +427,22 @@ const buyNow = () => {
 };
 
 const addToCart = () => {
-  if (isCatalogHasItemCategory?.value && !confirmedCodeColor?.value?.length) {
+  if (doVariantsExist?.value && !selectedVolume.value?.value?.length) {
+    useNotif("error", t("selectVolume"), t("error"));
+  } 
+  
+
+
+ else if (isCatalogHasItemCategory?.value && !confirmedCodeColor?.value?.length) {
     useNotif("error", t("selecteTintingRequired"), t("error"));
   }
 
-  if (doVariantsExist?.value && !selectedVolume.value?.value?.length) {
-    useNotif("error", t("selectVolume"), t("error"));
-  } else if (
-    isCatalogHasItemCategory?.value &&
-    confirmedCodeColor?.value?.length &&
-    doVariantsExist?.value &&
-    selectedVolume.value?.value?.length
-  ) {
+ 
+  
+  else  {
     const prodItem = {
       ...getProduct.value?.product,
+
       count: countToBuy.value,
       totalProdSum: totalPrice.value,
       initPrice: selectedProductPrice.value,
