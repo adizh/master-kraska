@@ -450,7 +450,10 @@ const addToCart = () => {
     };
 
     console.log("prodItem", prodItem);
-    store.addToCart(prodItem);
+    setTimeout(()=>{
+      store.addToCart(prodItem);
+    },300)
+
   }
 };
 

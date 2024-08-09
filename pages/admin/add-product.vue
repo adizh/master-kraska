@@ -59,7 +59,7 @@
           <div
             v-for="(item, index) in categoryCount"
             :key="item"
-            class="ui-dropdown col-6"
+            class="ui-dropdown mt-2"
           >
             <div
               class="selected-option basic-input"
@@ -97,6 +97,70 @@
             </Transition>
           </div>
         </div>
+
+
+        <div v-if="isCategorySelected" class="lg:col-4 md:col-6 col-12">
+          <label for="category">Подкатегория</label>
+
+          <div
+            class="ui-dropdown mt-2"
+          >
+            <div
+              class="selected-option basic-input"
+              @click="isSubcategorySelect=!isSubcategorySelect"
+            >
+              <span v-if="allSelectedSubcategories.length >0 ">
+                {{  allSelectedSubcategories?.map((item)=>item?.nameRu)?.join('| ') }}
+              </span>
+
+              <span v-else>
+                Выберите подкатегорию
+              </span>
+              <img
+                class="arrow"
+                :class="{ rotated: isSubcategorySelect }"
+                src="../../assets/icons/icon=components-closed-arrow.svg"
+                alt="open-arrow"
+              >
+            </div>
+            <Transition name="slide-fade">
+              <div  v-if="isSubcategorySelect">
+                <ul class="ui-options">
+                  <input
+                    type="text"
+                    class="basic-input w-100 d-block"
+                    @input="
+                      (event: any) => catalogStore.filterSubcategoriesByCategory(event?.target?.value)
+                    "
+                  >
+                  <li
+                    v-for="categoryItem in catalogStore?.getFilteredSubcategories"
+                    :key="categoryItem?.id"
+                    @click="chooseSubCategories(categoryItem)"
+                 
+                  >
+                    {{ categoryItem?.nameRu }}
+                  </li>
+                </ul>
+              </div>
+            </Transition>
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         <div v-if="subDirCount?.length" class="lg:col-6 md:col-6 col-12">
           <label for="category">Каталог</label>
@@ -289,6 +353,7 @@
 
 <script setup lang="ts">
 import imageCompression from "browser-image-compression";
+import { isSubcategoryOpen } from "~/helpers/admin/subcategory";
 import { Brands } from "~/types/Brands";
 import { CategorySys } from "~/types/Category";
 import { Variant } from "~/types/Variant";
@@ -327,7 +392,10 @@ const selectedSubCategories = ref([] as any[]);
 const selectedBrand = ref({} as Brands);
 const isBrandOpen = ref(false);
 const brandsStore = useBrandsStore();
+const isSubcategorySelect =ref(false)
 const selectedCategory = ref({} as CategorySys);
+const isCategorySelected =ref(false)
+const allSelectedSubcategories=ref([] as CategorySys[])
 const selectedSubCategory = ref({} as CategorySys);
 const isPopular = ref(false);
 const arrErrors = {
@@ -340,10 +408,12 @@ const variantCount = ref<number[]>([]);
 const allVariants = ref<Variant[]>([]);
 const prodImages = ref([] as string[]);
 
-const selectCategory = (category: any, index: number) => {
+const selectCategory = async(category: any, index: number) => {
   selectedCategory.value = category;
   selectedCategories.value[index] = category;
   isCategoryOpen.value = "";
+  isCategorySelected.value=true
+  await catalogStore.fetchCategoryById(category?.id);
 };
 
 const searchCategories = (value: string) => {
@@ -366,6 +436,18 @@ const toggleSubCategory = (index: number) => {
     isSubCategoryOpen.value = index;
   }
 };
+
+const chooseSubCategories =(item:CategorySys)=>{
+  const index = allSelectedSubcategories.value.findIndex(
+    (subcategory) => subcategory.id === item?.id
+  );
+  if (index === -1) {
+    allSelectedSubcategories.value.push(item);
+  } else {
+    allSelectedSubcategories.value.splice(index, 1);
+  }
+
+}
 
 const addCategoryCount = () => {
   let value = 0;

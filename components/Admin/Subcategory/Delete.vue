@@ -1,7 +1,10 @@
 <template>
   <UIModal
+  
     :show-modal="isOpen"
+
     title="Удалить подкатегорию"
+
     @close-modal="$emit('closeModal')"
   >
     <form
