@@ -2,7 +2,6 @@
   <NuxtLayout name="admin">
     <div>
       <button class="btn-white-bg mb-4 mt-0" @click="navigateToAdmin">
-
         Назад
       </button>
 
@@ -81,13 +80,13 @@
                 <ul class="ui-options">
                   <input
                     type="text"
-                    class="basic-input"
+                    class="basic-input w-100 d-block"
                     @input="
-                      (event: any) => searchCategories(event?.target?.value)
+                      (event: any) => catalogStore.filterTopCategories(event?.target?.value)
                     "
                   >
                   <li
-                    v-for="categoryItem in catalogStore?.getLinkedCategories"
+                    v-for="categoryItem in catalogStore?.getTopCategories"
                     :key="categoryItem?.id"
                     @click="selectCategory(categoryItem, index)"
                   >
@@ -99,12 +98,12 @@
           </div>
         </div>
 
-        <div v-if="subDirCount?.length" class="lg:col-4 md:col-6 col-12">
-          <label for="category">Подкатегория</label>
+        <div v-if="subDirCount?.length" class="lg:col-6 md:col-6 col-12">
+          <label for="category">Каталог</label>
           <div
             v-for="(subDirItem, index) in subDirCount"
             :key="subDirItem"
-            class="ui-dropdown col-6"
+            class="ui-dropdown"
           >
             <div
               class="selected-option basic-input"
@@ -113,7 +112,7 @@
               <span>
                 {{
                   selectedSubCategories[index]?.nameRu ||
-                    "Выберите подкатегорию"
+                    "Выберите каталог"
                 }}
               </span>
               <img
@@ -125,10 +124,11 @@
             </div>
             <Transition name="slide-fade">
               <div v-if="index === isSubCategoryOpen">
+
                 <ul  class="ui-options">
                   <input
                     type="text"
-                    class="basic-input"
+                    class="basic-input d-block w-full"
                     @input="
                       (event: any) =>
                         catalogStore.searchSubDirs(event?.target?.value)
@@ -139,7 +139,7 @@
                     :key="helperSubDir?.id"
                     @click="selectSubCategory(helperSubDir, index)"
                   >
-                    {{ helperSubDir?.nameRu }}
+                {{ helperSubDir.category }}:    {{ helperSubDir?.nameRu }}
                   </li>
                 </ul>
               </div>
@@ -359,6 +359,7 @@ const selectSubCategory = (subCategory: any, index: number) => {
 };
 
 const toggleSubCategory = (index: number) => {
+
   if (isSubCategoryOpen.value === index) {
     isSubCategoryOpen.value = null;
   } else {
@@ -428,7 +429,7 @@ const uploadImage = async (event: any) => {
 const handleImage = async (event: any, index: number) => {
   allVariants.value[index].loading = true;
   const result = await checkImgCompression(event);
-  console.log("what is aresult??", result);
+
   if (result.size > targetSizeBytes) {
     allVariants.value[index].error = "Размер слишком большой";
     allVariants.value[index].loading = false;
@@ -611,7 +612,10 @@ onMounted(() => {
   max-height: 200px;
   overflow-y: auto;
   @include textFormat(16px, 20px, 400, #000);
-
+input{
+  display: block;
+  width: 100%;
+}
   li {
     padding: 16px;
     border-radius: 10px;

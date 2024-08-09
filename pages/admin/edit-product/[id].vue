@@ -10,6 +10,7 @@
 
       <span class="err-input-msg">*Обязательные поля</span>
       <form class="grid mt-4" @submit.prevent="editProduct('form')">
+
         <div class="lg:col-6 md:col-6 col-12 each-field">
           <label for="name">Имя</label>
           <textarea
@@ -319,7 +320,9 @@
             </div>
           </div>
           <span v-if="inputs.color.error" class="err-input-msg">{{
+
             inputs.color.error
+
           }}</span>
         </div>
 
@@ -520,6 +523,7 @@
         :show-modal="isSubDirCreateOpen"
         title="Добавить подкатегорию"
         @close-modal="isSubDirCreateOpen = false"
+        
       >
         <div class="ui-dropdown col-6">
           <div class="selected-option basic-input" @click="toggleSubDirCreate">

@@ -20,7 +20,7 @@ export type SubDirHelper = {
   isActive: boolean;
   categoryId: string;
   products: [];
-  category: null;
+  category: string;
 };
 export type AllCatalog = {
   id: string;

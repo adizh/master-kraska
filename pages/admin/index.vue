@@ -24,6 +24,10 @@ const goToAdd = () => {
 onMounted(() => {
   if (authStore?.getRole !== "Admin") {
     router.push("/");
+
+    setTimeout(()=>{
+      window.location.reload()
+    },600)
   }
 });
 </script>
