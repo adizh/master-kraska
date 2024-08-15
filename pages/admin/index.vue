@@ -22,7 +22,7 @@ const goToAdd = () => {
   }, 700);
 };
 onMounted(() => {
-  if (authStore?.getRole !== "Admin") {
+  if (authStore?.getRole !== "Admin" && authStore?.getRole !== "SuperAdmin") {
     router.push("/");
 
     setTimeout(()=>{

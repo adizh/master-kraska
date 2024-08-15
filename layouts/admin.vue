@@ -16,15 +16,24 @@
 </template>
 
 <script setup lang="ts">
-const routes = [
+
+const routes = ref([
   { name: "Главная", value: "/admin" },
   { name: "Заказы", value: "/admin/orders" },
-  { name: "Продавцы", value: "/admin/sellers" },
-  { name: "Баннеры", value: "/admin/banners" },
   { name: "Категории", value: "/admin/category" },
   { name: "Новости", value: "/admin/news" },
+]);
+
+const superAdminRoutes = [
+  { name: "Продавцы", value: "/admin/sellers" },
+  { name: "Баннеры", value: "/admin/banners" },
   { name: "Бренды", value: "/admin/brands" }
 ];
+onMounted(()=>{
+if(localStorage.getItem('role') === 'SuperAdmin'){
+  routes.value.push(...superAdminRoutes);
+};
+})
 
 const route = useRoute();
 </script>

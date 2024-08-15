@@ -124,7 +124,7 @@ const submitLogin = async () => {
         localStorage.setItem("token", response.data?.accessToken);
         localStorage.setItem("refresh_Token", response.data?.refreshToken);
         localStorage.setItem("role", response.data.role);
-        if (response.data.role === "Admin") {
+        if (response.data.role === "Admin" || response.data.role === "SuperAdmin") {
           router.push("/admin");
         }
         setTimeout(() => {

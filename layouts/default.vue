@@ -57,11 +57,11 @@
         </li>
       </ul>
       <ul class="top-part">
-        <li v-if="authStore?.getRole !== 'Admin'" class="phone">
+        <li v-if="authStore?.getRole !== 'Admin' && authStore?.getRole !== 'SuperAdmin'" class="phone">
           <img src="../assets/icons/icon=phone loight.svg" alt="phone">
           <a href="tel:+996 550 910 148"> +996 550 910 148</a>
         </li>
-        <li v-else-if="authStore?.getRole === 'Admin'">
+        <li v-else-if="authStore?.getRole === 'Admin' || authStore?.getRole === 'SuperAdmin'">
           <a href="/admin">Админ</a>
         </li>
 
