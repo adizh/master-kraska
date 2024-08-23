@@ -320,6 +320,9 @@ a {
   width: 75%;
   @include flex(row, space-between, center);
 }
+.bottom-part .language{
+  display: none;
+}
 
 .left {
   width: 10%;
@@ -473,7 +476,7 @@ a {
 }
 
 @media (max-width: 576px) {
-  .bottom .language{
+  .top-part .language{
     display: none;
   }
   .catalog-li-small {
