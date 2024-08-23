@@ -53,7 +53,7 @@
           id="phone"
           v-model="inputs.phone.value"
           mask="+999 999 99 99 99"
-          placeholder="+996 777 66 55 44"
+          :placeholder="$t('phoneNumber')"
           @update:modelValue="validate('phone', 'string')"
         />
         <span class="err-input-msg" v-if="inputs.phone.error">
@@ -95,17 +95,6 @@
           {{ $t("changePassword") }}
         </button>
       </div>
-      <div class="col-6 each-field language">
-        <label for="password">{{ $t("language") }}</label>
-        <UIDropdown
-          :isDropdownOpen="isUIDropdownOpen"
-          :selectedValue="initLan"
-          :options="lanOptions"
-          @toggleDropdownUI="toggleDropdownUI"
-          @selectValue="selectLanguage"
-          label="name"
-        />
-      </div>
     </div>
 
     <div class="col-12 edit-btn">
@@ -127,27 +116,10 @@
 </template>
 
 <script setup lang="ts">
-import axios from "axios";
 import { useI18n } from "vue-i18n";
 const isAddressOpen = ref(false);
-const config = useRuntimeConfig();
-const { locale, setLocale } = useI18n();
-import { LanguageOptions } from "@/types/Items";
 const store = useAuthStore();
-const userLogo = ref("");
-const initLan = ref({
-  name: store.getSelectedLang === "ru" ? "Русский" : "Кыргызча",
-  value: store.getSelectedLang,
-});
-const isUIDropdownOpen = ref(false);
-const lanOptions = [
-  { name: "Русский", value: "ru" },
-  { name: "Кыргызча", value: "kg" },
-];
 
-const toggleDropdownUI = () => {
-  isUIDropdownOpen.value = !isUIDropdownOpen.value;
-};
 const isPasswordChangOpen = ref(false);
 const inputs = ref({
   firstName: { value: "", error: "" },
@@ -157,15 +129,6 @@ const inputs = ref({
   address: { value: "", error: "" },
   image: { value: "", error: "" },
 });
-
-const selectLanguage = (item: LanguageOptions) => {
-  initLan.value = item;
-  isUIDropdownOpen.value = false;
-  store.setLang(item?.value);
-  setLocale(item?.value);
-  localStorage.setItem("selectedLanguage", item?.value);
-  window.location.reload();
-};
 
 onMounted(async () => {
   await store.fetchUser();

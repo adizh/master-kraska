@@ -8,7 +8,7 @@
         :loop="true"
         id="mySlider"
         :modules="[SwiperNavigation]"
-        :style="{ '--swiper-navigation-size': '15px', padding: '20px 0' }"
+        :style="{ '--swiper-navigation-size': '15px', padding: '20px 18px' }"
       >
         <SwiperSlide
           v-for="product in store.getPopularProducts"

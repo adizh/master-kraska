@@ -50,13 +50,21 @@
             </p>
           </div>
         </div>
+        <div class="flex gap-3">
+          <button
+            class="pink-button"
+            @click="$emit('closeTinting', selectedColor)"
+          >
+            {{ $t("selectColor") }}
+          </button>
+          <button
+            class="pink-button no-tinting"
+            @click="$emit('closeTinting', ' ')"
+          >
+            {{ $t("noTinting") }}
+          </button>
+        </div>
 
-        <button
-          class="pink-button"
-          @click="$emit('closeTinting', selectedColor)"
-        >
-          {{ $t("selectColor") }}
-        </button>
         <div class="flex justify-content-between">
           <UIPagination
             :total="totalPages"
@@ -216,6 +224,11 @@ onMounted(async () => {
 }
 .pink-button {
   margin: 20px 0 40px 0;
+  &.no-tinting{
+    background: transparent;
+    color: #222;
+    border: 1px solid black;
+  }
 }
 .tinting-block {
   @include flex(row, start, start, 4px);

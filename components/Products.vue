@@ -40,8 +40,7 @@
   background: #f5f5f5;
   padding: 36px 40px 36px 40px;
   border-radius: 20px;
-  margin-bottom: 40px;
-  margin-top: 60px;
+  margin: 60px 0 40px 0;
   &-heading {
     margin-bottom: 24px;
     p {

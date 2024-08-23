@@ -25,7 +25,7 @@ onMounted(() => {
   if (authStore?.getRole !== "Admin" && authStore?.getRole !== "SuperAdmin") {
     router.push("/");
 
-    setTimeout(()=>{
+    setTimeout(() => {
       window.location.reload()
     },600)
   }

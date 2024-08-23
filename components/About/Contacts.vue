@@ -93,7 +93,7 @@
             <InputMask
               id="phone"
               mask="+999 999 99 99 99"
-              placeholder="+996 777 66 55 44"
+              :placeholder="$t('phoneNumber')"
               v-model="contactForm.phone.value"
               @update:modelValue="validate('phone', 'string')"
               :class="{ 'err-contact-input': contactForm.phone.error }"

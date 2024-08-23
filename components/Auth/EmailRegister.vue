@@ -42,7 +42,7 @@
           id="basic"
           v-model="inputs.phone.value"
           mask="+999 999 99 99 99"
-          placeholder="+996 777 66 55 44"
+          :placeholder="$t('phoneNumber')"
           @update:modelValue="handleValues('phone', 'number')"
         />
         <span class="err-input-msg"> {{ inputs.phone.error }}</span>

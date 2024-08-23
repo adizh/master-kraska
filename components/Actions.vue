@@ -22,25 +22,15 @@
     </div>
 
     <div class="brands-pictures">
-      <Swiper
-        priority="high"
-        :slides-per-view="4"
-        :modules="[SwiperAutoplay, SwiperController, SwiperNavigation]"
-        :autoplay="true"
-      >
-        <SwiperSlide v-for="item in brandsStore.getAllBrands" :key="item.id">
-          <img
-            :src="item?.logo"
-            alt="logo"
-            @click="
-              navigateTo({
-                path: `/catalog`,
-                query: { brandId: item?.id },
-              })
-            "
-          />
-        </SwiperSlide>
-      </Swiper>
+      <div class="inner">
+        <div class="wrapper">
+          <section v-for="(section, index) in sections" :key="index" :style="{ '--speed': '65000ms' }">
+            <div class="brand-logo" v-for="(item, index) in brandsStore.getAllBrands" :key="item.id">
+              <img :src="item.logo" :alt="`image-${index}`" />
+            </div>
+          </section>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -54,12 +44,13 @@ const catalogStore = useCatalogStore();
 const firstCategoryItem = ref({} as Category);
 onMounted(async () => {
   await catalogStore.fetchAllCategories();
-  brandsStore.fetchAllBrands();
+  await brandsStore.fetchAllBrands();
 
   if (catalogStore.getAllCategories?.length > 0) {
     firstCategoryItem.value = catalogStore.getAllCategories[0];
   }
 });
+const sections = ref([0, 1, 2]);
 </script>
 
 <style scoped lang="scss">
@@ -86,7 +77,7 @@ onMounted(async () => {
   padding: 20px;
   margin-top: 20px;
   border-top: 1px solid $slider-border-color;
-
+  height: max-content;
   img {
     width: 250px;
     max-height: 200px;
@@ -96,20 +87,10 @@ onMounted(async () => {
   }
 }
 
-:deep(.slider) {
-  width: 100%;
-  @include flex(row, space-around, center);
-}
-
-:deep(.swiper-slide) {
+:deep(.brand-logo) {
   margin: 0 15px;
 }
 
-@media (max-width: 1000px) {
-  .brands-pictures img {
-    width: 100% !important;
-  }
-}
 @media (max-width: 768px) {
   .actions-block {
     flex-direction: column;
@@ -120,6 +101,38 @@ onMounted(async () => {
 @media (min-width: 320px) and (max-width: 768px) {
   .brands-text {
     max-width: 100%;
+  }
+}
+.inner {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  height: 11rem;
+}
+
+.wrapper {
+  position: absolute;
+  display: flex;
+}
+
+section {
+  display: flex;
+  animation: swipe var(--speed) linear infinite;
+}
+
+.image img {
+  max-width: 150px;
+  height: 5rem;
+  padding: 0 15px;
+  object-fit: cover;
+}
+
+@keyframes swipe {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
   }
 }
 </style>
