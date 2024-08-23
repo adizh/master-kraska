@@ -60,6 +60,23 @@ const props = defineProps<{
   }
 }
 
+.language {
+  .selected-option {
+    border: none;
+    width: max-content;
+    padding: 0px !important;
+  }
+  .ui-options {
+    top: 60px;
+    left: -50px !important;
+    width: max-content !important;
+    padding: 0 20px 10px;
+    li {
+      padding: 10px 0 0;
+    }
+  }
+}
+
 .ui-options {
   position: absolute;
   top: 100%;

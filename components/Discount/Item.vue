@@ -63,10 +63,10 @@ onMounted(() => {
 .actions-block {
   &-item {
     padding: 20px 10px 25px 10px;
-    border-radius: 10px;
     text-align: center;
     width: 30%;
     img {
+      border-radius: 10px;
       width: 100%;
     }
     &-header {

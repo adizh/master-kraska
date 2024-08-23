@@ -1,21 +1,22 @@
 <template>
-  <div>
-    <NuxtLoadingIndicator color="#b30753" :throttle="0" />
-    <NuxtLayout />
-    <section class="main-section-site">
+  <NuxtLoadingIndicator color="#b30753" :throttle="0" />
+  <NuxtLayout>
+    <section class="main-section-site" v-if="!preloader">
       <NuxtPage />
       <NuxtSnackbar />
     </section>
+    <Preloader v-else />
     <NuxtLayout name="footer" />
-    <ScrollToTop />
-  </div>
+  </NuxtLayout>
+  <ScrollToTop />
 </template>
 
 <script setup>
 import "primevue/resources/themes/aura-light-green/theme.css";
 import "primeicons/primeicons.css";
-
+const preloader = ref(true);
 if (process.client) {
+  preloader.value = false;
   (function (w, d, u) {
     const s = d?.createElement("script");
     s.async = true;
@@ -23,9 +24,9 @@ if (process.client) {
     const h = d?.getElementsByTagName("script")[0];
     h.parentNode.insertBefore(s, h);
   })(
-    window,
-    document,
-    "https://cdn-ru.bitrix24.ru/b27013162/crm/site_button/loader_2_gi1nb6.js"
+      window,
+      document,
+      "https://cdn-ru.bitrix24.ru/b27013162/crm/site_button/loader_2_gi1nb6.js"
   );
 }
 

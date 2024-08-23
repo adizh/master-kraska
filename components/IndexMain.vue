@@ -24,43 +24,21 @@
         },
       }"
     >
-      <SwiperSlide>
-        <div class="banner-block slider-wrapper">
+      <SwiperSlide v-for="banner in newStore.getAllSliders">
+        <div class="banner-block slider-wrapper"
+          @click="navigateTo({
+            path: `/catalog`,
+            query: { brandId: '8ce5266c-a2d0-48de-9a93-4ea72e0182d9' },
+          })
+          "
+        >
           <img
-            src="../assets/images/3.png"
+            :src="banner?.image"
             format="webp"
-            id="'banner-image"
+            id="banner-image"
             ref="bannerImage"
             @load="updateHeight"
           />
-        </div>
-      </SwiperSlide>
-
-      <SwiperSlide>
-        <div
-          class="banner-block"
-          @click="
-            navigateTo({
-              path: `/catalog`,
-              query: { brandId: '8ce5266c-a2d0-48de-9a93-4ea72e0182d9' },
-            })
-          "
-        >
-          <img src="../assets/images/2.png" format="webp" />
-        </div>
-      </SwiperSlide>
-
-      <SwiperSlide>
-        <div
-          class="banner-block"
-          @click="
-            navigateTo({
-              path: `/catalog`,
-              query: { brandId: '8ce5266c-a2d0-48de-9a93-4ea72e0182d9' },
-            })
-          "
-        >
-          <img src="../assets/images/1.png" format="webp" />
         </div>
       </SwiperSlide>
     </Swiper>

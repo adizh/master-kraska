@@ -6,7 +6,7 @@
         id="basic"
         v-model="inputs.phone.value"
         mask="+999 999 99 99 99"
-        placeholder="+996 777 66 55 44"
+        :placeholder="$t('phoneNumber')"
         @update:modelValue="handleValues('phone', 'number')"
       />
 
@@ -125,7 +125,7 @@ const submitLogin = async () => {
         localStorage.setItem("refresh_Token", response.data?.refreshToken);
         localStorage.setItem("role", response.data.role);
         if (response.data.role === "Admin" || response.data.role === "SuperAdmin") {
-          router.push("/admin");
+          return navigateTo("/admin");
         }
         setTimeout(() => {
           window.location.reload();

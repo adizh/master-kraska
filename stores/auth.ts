@@ -13,7 +13,7 @@ export const useAuthStore = defineStore("authStore", {
       accessToken: ""
     },
     isRefreshTokenSuccess: false,
-    selectedLanguage: "ru"
+    selectedLanguage: '',
   }),
   actions: {
     async fetchUser () {
@@ -47,7 +47,10 @@ export const useAuthStore = defineStore("authStore", {
     },
 
     setLang (lang: string) {
-      this.selectedLanguage = lang;
+      const route = useRoute();
+      if(route.query?.lang){
+        this.selectedLanguage = lang;
+      }
     },
 
     async refreshToken (type?: "static") {

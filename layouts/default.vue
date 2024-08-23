@@ -55,14 +55,32 @@
         <li @click="gotToPage('/contacts')">
           {{ $t("contacts") }}
         </li>
+        <li class="language">
+          <img src="../assets/icons/globe.svg" alt="globe">
+          <UIDropdown
+              :isDropdownOpen="isUIDropdownOpen"
+              :selectedValue="initLan"
+              :options="lanOptions"
+              @toggleDropdownUI="toggleDropdownUI"
+              @selectValue="selectLanguage"
+              label="name"
+          />
+        </li>
       </ul>
       <ul class="top-part">
-        <li v-if="authStore?.getRole !== 'Admin' && authStore?.getRole !== 'SuperAdmin'" class="phone">
-          <img src="../assets/icons/icon=phone loight.svg" alt="phone">
-          <a href="tel:+996 550 910 148"> +996 550 910 148</a>
-        </li>
-        <li v-else-if="authStore?.getRole === 'Admin' || authStore?.getRole === 'SuperAdmin'">
-          <a href="/admin">Админ</a>
+          <li class="language">
+            <img src="../assets/icons/globe.svg" alt="globe">
+                <UIDropdown
+                  :isDropdownOpen="isUIDropdownOpen"
+                  :selectedValue="initLan"
+                  :options="lanOptions"
+                  @toggleDropdownUI="toggleDropdownUI"
+                  @selectValue="selectLanguage"
+                  label="name"
+                />
+          </li>
+        <li v-if="authStore?.getRole === 'Admin' || authStore?.getRole === 'SuperAdmin'">
+          <NuxtLink to="/admin">Админ</NuxtLink>
         </li>
 
         <div class="cart-block">
@@ -106,6 +124,7 @@
       <AuthModal @close-modal="isProfileOpen = false" />
     </Dialog>
   </div>
+  <slot />
 </template>
 
 <script setup lang="ts">
@@ -113,8 +132,35 @@ const isBurgerMenuOpen = ref(false);
 const isCatalogOpen = ref(false);
 const isProfileOpen = ref();
 const authStore = useAuthStore();
+const store = useAuthStore();
 
 const cartStore = useCartStore();
+
+const { setLocale } = useI18n();
+import { LanguageOptions } from "@/types/Items";
+
+const initLan = ref({
+  name: store.getSelectedLang === "ru" ? "Ru" : store.getSelectedLang === "kg" ? "Kg" : "...",
+  value: store.getSelectedLang,
+});
+
+const isUIDropdownOpen = ref(false);
+const lanOptions = [
+  { name: "Русский", value: "ru" },
+  { name: "Кыргызча", value: "kg" },
+];
+
+const toggleDropdownUI = () => {
+  isUIDropdownOpen.value = !isUIDropdownOpen.value;
+};
+const selectLanguage = (item: LanguageOptions) => {
+  initLan.value = item;
+  isUIDropdownOpen.value = false;
+  store.setLang(item?.value);
+  setLocale(item?.value);
+  localStorage.setItem("selectedLanguage", item?.value);
+  window.location.reload();
+};
 
 const closeBurgerMenu = () => {
   isBurgerMenuOpen.value = false;
@@ -138,6 +184,7 @@ const clickToggleCatalog = () => {
     isCatalogOpen.value = true;
   }
 };
+const route = useRoute();
 
 const closeCatalog = () => {
   isCatalogOpen.value = false;
@@ -153,12 +200,16 @@ const updateScreenWidth = () => {
 onMounted(() => {
   window.addEventListener("resize", updateScreenWidth);
 });
-const router = useRouter();
 
-const gotToPage = (link: string) => {
-  router.push(link);
-  // navigateTo(link)
-  closeBurgerMenu();
+const gotToPage = async (link: string) => {
+  if(route.fullPath.includes('/admin')){
+    await navigateTo(link)
+    window.location.reload();
+    closeBurgerMenu();
+  }else{
+    navigateTo(link)
+    closeBurgerMenu();
+  }
 };
 
 onUnmounted(() => {
@@ -173,7 +224,7 @@ const screenSize = computed(() => {
 
 const toggleProfile = () => {
   if (authStore.getUserId && authStore.getUserId?.length > 0) {
-    return navigateTo("/profile");
+    return gotToPage('/profile');
   } else {
     isProfileOpen.value = !isProfileOpen.value;
   }
@@ -235,6 +286,18 @@ a {
   background: white;
   z-index: 5;
   @extend %header-nav;
+}
+
+.language {
+  background: #F5F5F5;
+  border-radius: 8px;
+  padding: 8px 20px;
+  border: 1px solid #DDDDDD;
+}
+
+.ui-dropdown {
+  padding: 0;
+  width: fit-content;
 }
 
 .overlay {
@@ -410,6 +473,9 @@ a {
 }
 
 @media (max-width: 576px) {
+  .bottom .language{
+    display: none;
+  }
   .catalog-li-small {
     display: flex !important;
     align-items: center;
@@ -441,9 +507,12 @@ a {
     flex-direction: column;
     height: 350px;
   }
+  .bottom-part .language {
+    display: flex;
+  }
 
   .overlay {
-    top: 23rem;
+    top: 25rem;
   }
   .top-part {
     gap: 40px;
