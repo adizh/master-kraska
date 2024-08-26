@@ -42,6 +42,13 @@
 </template>
 
 <script setup lang="ts">
+const authStore=useAuthStore()
+if(authStore.getRole!=='SuperAdmin'){
+   navigateTo('/admin')
+   setTimeout(()=>{
+window.location.reload()
+   },200)
+}
 import { isCreateModalOpen, isDeleteSellerOpen } from "@/helpers/admin/sellers";
 
 import { Seller } from "~/types/Brands";

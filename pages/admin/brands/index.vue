@@ -38,6 +38,13 @@
 </template>
 
 <script setup lang="ts">
+const authStore=useAuthStore()
+if(authStore.getRole!=='SuperAdmin'){
+   navigateTo('/admin')
+   setTimeout(()=>{
+window.location.reload()
+   },200)
+}
 const isCreateBrandOpen = ref(false);
 const isDeleteBrandOpen = ref(false);
 const isUpdateBrandOpen = ref(false);

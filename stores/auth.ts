@@ -110,11 +110,13 @@ export const useAuthStore = defineStore("authStore", {
       if (process.client) {
         const roleLocal = localStorage.getItem("role") as Roles;
     
-        if (roleLocal) {
+        if (roleLocal!==undefined) {
           return roleLocal;
+        }else{
+         // return undefined; 
         }
       }
-      return undefined; 
+     
     },
     getRegreshTokenStatus (state) {
       

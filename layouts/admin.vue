@@ -62,6 +62,7 @@ const route = useRoute();
     display: block;
     width: 190px;
     color: #222;
+    
     font-weight: 500;
     &:last-child {
       border-bottom: 1px solid #ddd;

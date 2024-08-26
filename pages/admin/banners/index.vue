@@ -43,9 +43,17 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({
-  middleware:['super-admin']
-})
+
+const authStore=useAuthStore()
+
+
+if(authStore.getRole!=='SuperAdmin'){
+   navigateTo('/admin')
+   setTimeout(()=>{
+window.location.reload()
+   },200)
+}
+
 import {
   isCreateBannerOpen,
   isDeleteSliderOpen
@@ -54,7 +62,6 @@ import { Slider } from "~/Slider";
 const newsStore = useNewsStore();
 const currentSlider = ref({} as Slider);
 const deleteSlider = (slider: Slider) => {
-  console.log("slider", slider);
   isDeleteSliderOpen.value = true;
   currentSlider.value = slider;
 };
