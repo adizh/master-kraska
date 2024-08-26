@@ -173,19 +173,19 @@ input {
 .seller-block {
   padding: 10px 14px;
   border-radius: 10px;
-  max-width: 70%;
+  max-width: 80%;
   width: 100%;
   box-shadow: 0px 6px 18px 0px rgba(0, 0, 0, 0.1215686275);
   &-images {
     @include flex(row, start, start);
 
-    width: 40%;
+    width: 100%;
     img {
       &:first-child {
-        width: 40%;
+        width: 100%;
       }
       &:last-child {
-        width: 40%;
+        width: 100%;
       }
     }
   }

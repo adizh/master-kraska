@@ -12,7 +12,7 @@
         <div
           v-for="item in Object.values(inputs)"
           :key="item?.field"
-          class="flex flex-column gap-2 lg:col-6 md:col-6 col-12"
+          class="flex flex-column gap-2 lg:col-12 md:col-12 col-12"
         >
           <template
             v-if="
@@ -58,6 +58,7 @@
 
           <div
             v-for="(item, index) in categoryCount"
+
             :key="item"
             class="ui-dropdown mt-2"
           >
@@ -128,7 +129,7 @@
                 <ul class="ui-options">
                   <input
                     type="text"
-                    class="basic-input w-100 d-block"
+                    class="basic-input w-100 d-block admin-search-input"
                     @input="
                       (event: any) => catalogStore.filterSubcategoriesByCategory(event?.target?.value)
                     "
@@ -672,6 +673,10 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+
+.admin-search-input{
+}
+
 .admin-form {
   @include flex(row, start, center, 20px);
   flex-wrap: wrap;

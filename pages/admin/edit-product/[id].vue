@@ -291,7 +291,7 @@
               <input
                 :id="variant?.size"
                 v-model="varSizes[variant?.size].size"
-                class="basic-input col-12"
+                class="basic-input col-12 mt-2 mb-2"
                 type="text"
               >
 
@@ -299,14 +299,14 @@
               <input
                 :id="variant?.base"
                 v-model="varSizes[variant?.size].base"
-                class="basic-input col-12"
+                class="basic-input col-12 mt-2 mb-2"
                 type="text"
               >
               <label :for="variant?.size">Код</label>
               <input
                 :id="variant?.size"
                 v-model="varSizes[variant?.size].code"
-                class="basic-input col-12"
+                class="basic-input col-12 mt-2 mb-2"
                 type="number"
               >
 
@@ -314,7 +314,7 @@
               <input
                 :id="variant?.size"
                 v-model="varSizes[variant?.size].price"
-                class="basic-input col-12"
+                class="basic-input col-12 mt-2 mb-2"
                 type="number"
               >
             </div>
