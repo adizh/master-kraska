@@ -22,9 +22,11 @@
         next: {
           translate: ['100%', 0, 0],
         },
+        
       }"
     >
       <SwiperSlide v-for="banner in newStore.getAllSliders">
+
         <div class="banner-block slider-wrapper"
           @click="navigateTo({
             path: `/catalog`,
@@ -37,7 +39,7 @@
             format="webp"
             id="banner-image"
             ref="bannerImage"
-            @load="updateHeight"
+          
           />
         </div>
       </SwiperSlide>
@@ -68,6 +70,7 @@ watch(
 onMounted(() => {
   newStore.fetchSliders();
   window.addEventListener("resize", updateHeight);
+
 });
 
 onBeforeUnmount(() => {

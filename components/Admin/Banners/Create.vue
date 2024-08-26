@@ -65,21 +65,9 @@ const targetSizeBytes = 150 * 1024;
 
 const handleImage = async (event: any) => {
   image.value.loading = true;
-  console.log("loading", image.value.loading);
-  const result = await useCompressImage(event);
-
-  if (result?.size > targetSizeBytes) {
-    image.value.error = "Размер файла слишком большой";
-    image.value.loading = false;
-  } else if (result.size < targetSizeBytes && result && result !== undefined) {
-    image.value.error = "";
-    image.value.loading = false;
-    const base64StringNewImage = (await useConvertToBase64(
-      result,
-    )) as unknown as string;
-
-    image.value.value = base64StringNewImage;
-  }
+  const base64Img = await useConvertToBase64(event.target.files[0]) as string
+  image.value.value=base64Img
+  image.value.loading = false;
 };
 
 const emits = defineEmits<{
@@ -93,6 +81,7 @@ const creaseSlider = async () => {
       titleKg: titleKg.value,
       descriptionRu: descriptionRu.value,
       descriptionKg: descriptionKg.value,
+
       image: image.value.value,
       imageExtension: "png",
     };
