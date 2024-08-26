@@ -26,7 +26,12 @@
         <div class="wrapper">
           <section v-for="(section, index) in sections" :key="index" :style="{ '--speed': '65000ms' }">
             <div class="brand-logo" v-for="(item, index) in brandsStore.getAllBrands" :key="item.id">
-              <img :src="item.logo" :alt="`image-${index}`" />
+              <img :src="item.logo" :alt="`image-${index}`" @click="
+              navigateTo({
+                path: `/catalog`,
+                query: { brandId: item?.id },
+              })
+            "/>
             </div>
           </section>
         </div>
