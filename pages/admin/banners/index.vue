@@ -43,6 +43,9 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({
+  middleware:['super-admin']
+})
 import {
   isCreateBannerOpen,
   isDeleteSliderOpen

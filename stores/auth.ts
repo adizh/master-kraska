@@ -1,4 +1,5 @@
 import http from "@/composables/http";
+import { Roles } from "~/types/User";
 
 export const useAuthStore = defineStore("authStore", {
   state: () => ({
@@ -105,17 +106,18 @@ export const useAuthStore = defineStore("authStore", {
     getAccessToken (state) {
       return state.user.accessToken;
     },
-
-    getRole () {
+    getRole(): Roles {
       if (process.client) {
-        const role = localStorage.getItem("role");
-        if (role) {
-          return role;
+        const roleLocal = localStorage.getItem("role") as Roles;
+    
+        if (roleLocal) {
+          return roleLocal;
         }
-      } else {
       }
+      return undefined; 
     },
     getRegreshTokenStatus (state) {
+      
       return state.isRefreshTokenSuccess;
     },
     getSelectedLang (state) {

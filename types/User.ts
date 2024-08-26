@@ -20,3 +20,5 @@ export type User = {
   token?: string;
   verificationCode?: string;
 };
+
+export type Roles='Admin' | 'SuperAdmin' | 'CustomerUser'| undefined
