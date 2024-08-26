@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-
+const authStore=useAuthStore()
 const routes = ref([
   { name: "Главная", value: "/admin" },
   { name: "Заказы", value: "/admin/orders" },
@@ -26,13 +26,20 @@ const routes = ref([
 
 const superAdminRoutes = [
   { name: "Продавцы", value: "/admin/sellers" },
+
   { name: "Баннеры", value: "/admin/banners" },
   { name: "Бренды", value: "/admin/brands" }
 ];
 onMounted(()=>{
-if(localStorage.getItem('role') === 'SuperAdmin'){
-  routes.value.push(...superAdminRoutes);
-};
+
+if (authStore.getRole === 'SuperAdmin') {
+    const existingRoutes = routes.value.map(route => route.value);
+    superAdminRoutes.forEach(route => {
+      if (!existingRoutes.includes(route.value)) {
+        routes.value.push(route);
+      }
+    });
+  }
 })
 
 const route = useRoute();
