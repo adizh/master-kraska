@@ -98,6 +98,8 @@
                 </ul>
               </div>
             </Transition>
+            <span v-if="arrErrors.category.error.length" class="err-input-msg"> {{   arrErrors.category.error }}</span>
+
           </div>
         </div>
 
@@ -310,6 +312,8 @@
           >
             Добавить категорию
           </button>
+
+          <span v-if="arrErrors.category.error.length" class="err-input-msg"> {{   arrErrors.category.error }}</span>
           <button
             type="button"
             class="pink-button"
@@ -335,14 +339,9 @@
 
 <script setup lang="ts">
 
-
-import { Brands } from "~/types/Brands";
-import { CategorySys } from "~/types/Category";
-
 import {
 
   isSubCategoryOpen,
-
   categoryCount,
   subDirCount,
   isImageLoading,
@@ -350,12 +349,11 @@ import {
   selectedSubCategories,
   selectedBrand,
   isBrandOpen,
-
   isSubcategorySelect,
   selectedCategory,
   isCategorySelected,
   allSelectedSubcategories,
-  selectedSubCategory,
+
   isPopular,
   arrErrors,
   variantCount,
@@ -385,6 +383,7 @@ const selectCategory = async (category: any, index: number) => {
   isCategoryOpen.value = "";
   isCategorySelected.value = true;
   await catalogStore.fetchCategoryById(category?.id);
+  arrErrors.value.category.error=''
 };
 
 const seachBrands = (value: string) => {
@@ -417,11 +416,11 @@ const checkImgCompression = async (event: any) => {
   };
   
   const uploadImage = async (event: any) => {
-    arrErrors.image.error = "";
+    arrErrors.value.image.error = "";
     isImageLoading.value = await true;
     const result = await checkImgCompression(event);
     if (result?.size > targetSizeBytes) {
-      arrErrors.image.error = "Размер слишком большой";
+      arrErrors.value.image.error = "Размер слишком большой";
     }
     if (result && result !== undefined) {
       isImageLoading.value = await false;
@@ -429,7 +428,7 @@ const checkImgCompression = async (event: any) => {
         result
       )) as unknown as string;
       prodImages.value = [base64StringNewImage];
-      arrErrors.image.error = "";
+      arrErrors.value.image.error = "";
     }
     console.log("prodImages", prodImages);
   };
@@ -468,11 +467,13 @@ const addProduct = async () => {
   const categories = selectedCategories?.value
     ?.filter(Boolean)
     ?.map((item) => item?.id);
+
   function allFieldsHaveValues (obj: any) {
     return Object.values(obj).every(
       (value) => value !== "" && value !== null && value !== undefined
     );
   }
+
   const subCategories = selectedSubCategories?.value
     ?.filter(Boolean)
     ?.map((item) => item?.id);
@@ -487,7 +488,7 @@ const addProduct = async () => {
     subdirectoryId: subCategories || null,
     brandId: selectedBrand?.value?.id,
     images: prodImages?.value,
-    categoryIds: categories,
+    categoryId: categories,
     variants: filteredVariants,
     extension: "png"
   };
@@ -510,23 +511,39 @@ const addProduct = async () => {
 
 const formAdd = () => {
 
-  console.log('selectedCategore',selectedCategories)
+  const hasArrError= Object.values(arrErrors)
+
+  console.log('hasArrError',hasArrError);
+  if(!selectedCategories.value.length){
+
+  }
   for (const fieldName in inputs.value) {
     if (Object.prototype.hasOwnProperty.call(inputs.value, fieldName)) {
       const fieldType = inputs.value[fieldName].type;
       handleValues(inputs.value, fieldName, fieldType);
     }
   }
+
   const hasError = Object.values(inputs.value).some(
-    (input) => input.error !== ""
+    (input) => input.hasOwnProperty('error') &&  input.error !== ""
   );
 
+
+  console.log('hasError',hasError)
+  console.log('inputs',inputs)
+
   if (!prodImages?.value?.length) {
-    arrErrors.image.error = "Это поле обязательно";
-  } else if (!hasError && prodImages?.value?.length) {
+    arrErrors.value.image.error = "Это поле обязательно";
+  }  if(!selectedCategories.value.length){
+    arrErrors.value.category.error = "Это поле обязательно";
+  }
+  
+  
+   if (!hasError && prodImages?.value?.length) {
     addProduct();
   }
 };
+
 
 const inputs = ref<{ [key: string]: Input }>({});
 

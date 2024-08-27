@@ -18,9 +18,11 @@ const isCategorySelected = ref(false);
 const allSelectedSubcategories = ref([] as CategorySys[]);
 const selectedSubCategory = ref({} as CategorySys);
 const isPopular = ref(false);
-const arrErrors = {
-  image: { error: "" }
-};
+const arrErrors = ref({
+    image: { error: "" },
+    category:{error:''},
+    subcategory:{error:''}
+  })
 
 const variantCount = ref<number[]>([]);
 const allVariants = ref<Variant[]>([]);
@@ -73,6 +75,8 @@ const chooseSubCategories = (item: CategorySys) => {
   } else {
     allSelectedSubcategories.value.splice(index, 1);
   }
+
+  isSubcategorySelect.value=false
 };
 
 const addCategoryCount = () => {
@@ -118,7 +122,6 @@ const fields = ref<Fields>({
   size: { value: "", error: "", type: "string", field: "Размер" },
   consumption: { value: "", field: "Расход" },
   dryingTime: { value: "", field: "Высыхание" },
-
   colorType: { value: "", type: "number", field: "Цвет" },
   descriptionRu: { value: "", field: "Описание" },
   descriptionKg: { value: "", field: "Описание (кырг)" },
@@ -129,12 +132,11 @@ const fields = ref<Fields>({
   subdirectoryId: ["3fa85f64-5717-4562-b3fc-2c963f66afa6"],
   brandId: "",
   images: [""],
-  categoryIds: ["3fa85f64-5717-4562-b3fc-2c963f66afa6"],
+  categoryId: ["3fa85f64-5717-4562-b3fc-2c963f66afa6"],
   variants: allVariants.value
 });
 
 export {
-
   isSubCategoryOpen,
   categoryCount,
   subDirCount,
@@ -143,7 +145,6 @@ export {
   selectedSubCategories,
   selectedBrand,
   isBrandOpen,
-
   isSubcategorySelect,
   selectedCategory,
   isCategorySelected,
@@ -165,6 +166,5 @@ export {
   addVariantCount,
   toggleDropdown,
   selectBrand,
-  fields,
-
+  fields
 };
