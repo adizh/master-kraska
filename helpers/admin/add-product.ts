@@ -2,7 +2,7 @@ import { Brands } from "~/types/Brands";
 import { CategorySys } from "~/types/Category";
 import { Variant } from "~/types/Variant";
 
-const catalogStore = useCatalogStore();
+
 const isSubCategoryOpen = ref();
 const categoryCount = ref([] as number[]);
 const subDirCount = ref([] as number[]);
@@ -11,7 +11,7 @@ const selectedCategories = ref([] as any[]);
 const selectedSubCategories = ref([] as any[]);
 const selectedBrand = ref({} as Brands);
 const isBrandOpen = ref(false);
-const brandsStore = useBrandsStore();
+
 const isSubcategorySelect = ref(false);
 const selectedCategory = ref({} as CategorySys);
 const isCategorySelected = ref(false);
@@ -50,6 +50,7 @@ type Fields = {
         base: string;
       }[];
 };
+
 const selectSubCategory = (subCategory: any, index: number) => {
   selectedSubCategory.value = subCategory;
   selectedSubCategories.value[index] = subCategory;
@@ -131,8 +132,9 @@ const fields = ref<Fields>({
   categoryIds: ["3fa85f64-5717-4562-b3fc-2c963f66afa6"],
   variants: allVariants.value
 });
+
 export {
-  catalogStore,
+
   isSubCategoryOpen,
   categoryCount,
   subDirCount,
@@ -141,7 +143,7 @@ export {
   selectedSubCategories,
   selectedBrand,
   isBrandOpen,
-  brandsStore,
+
   isSubcategorySelect,
   selectedCategory,
   isCategorySelected,
@@ -163,5 +165,6 @@ export {
   addVariantCount,
   toggleDropdown,
   selectBrand,
-  fields
+  fields,
+
 };

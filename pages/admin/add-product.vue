@@ -334,14 +334,15 @@
 </template>
 
 <script setup lang="ts">
-import imageCompression from "browser-image-compression";
+
 
 import { Brands } from "~/types/Brands";
 import { CategorySys } from "~/types/Category";
 
 import {
-  catalogStore,
+
   isSubCategoryOpen,
+
   categoryCount,
   subDirCount,
   isImageLoading,
@@ -349,7 +350,7 @@ import {
   selectedSubCategories,
   selectedBrand,
   isBrandOpen,
-  brandsStore,
+
   isSubcategorySelect,
   selectedCategory,
   isCategorySelected,
@@ -362,7 +363,7 @@ import {
   prodImages,
   isCategoryOpen,
   type Input,
-  type Fields,
+
   selectSubCategory,
   toggleSubCategory,
   chooseSubCategories,
@@ -373,6 +374,10 @@ import {
   selectBrand,
   fields
 } from "@/helpers/admin/add-product";
+const targetSizeBytes = 150 * 1024;
+const brandsStore = useBrandsStore();
+const catalogStore = useCatalogStore();
+import imageCompression from "browser-image-compression";
 
 const selectCategory = async (category: any, index: number) => {
   selectedCategory.value = category;
@@ -386,67 +391,64 @@ const seachBrands = (value: string) => {
   brandsStore.searchBrands(value);
 };
 
-const targetSizeBytes = 150 * 1024;
-
-const checkImgCompression = async (event: any) => {
-  const value = event.target.files[0];
-  const options = {
-    maxSizeMB: 0.1465,
-    useWebWorker: true
-  };
-  let compressedFile = value;
-  if (value?.size > targetSizeBytes) {
-    try {
-      compressedFile = await imageCompression(value, options);
-      console.log("Original file size:", (value.size / 1024).toFixed(2), "KB");
-      console.log(
-        "Compressed file size:",
-        (compressedFile.size / 1024).toFixed(2),
-        "KB"
-      );
-    } catch (error) {
-      console.error("Compression error:", error);
-    }
-  }
-  return compressedFile;
-};
-
-const uploadImage = async (event: any) => {
-  arrErrors.image.error = "";
-  isImageLoading.value = await true;
-  const result = await checkImgCompression(event);
-  if (result?.size > targetSizeBytes) {
-    arrErrors.image.error = "Размер слишком большой";
-  }
-  if (result && result !== undefined) {
-    isImageLoading.value = await false;
-    const base64StringNewImage = (await useConvertToBase64(
-      result
-    )) as unknown as string;
-    prodImages.value = [base64StringNewImage];
-    arrErrors.image.error = "";
-  }
-  console.log("prodImages", prodImages);
-};
-
-const handleImage = async (event: any, index: number) => {
-  allVariants.value[index].loading = true;
-  const result = await checkImgCompression(event);
-
-  if (result.size > targetSizeBytes) {
-    allVariants.value[index].error = "Размер слишком большой";
-    allVariants.value[index].loading = false;
-  } else if (result.size < targetSizeBytes && result && result !== undefined) {
-    allVariants.value[index].loading = false;
-    const base64StringNewImage = (await useConvertToBase64(
-      result
-    )) as unknown as string;
-    allVariants.value[index].image = base64StringNewImage as unknown as string;
-  }
-};
 
 const { handleValues } = useInputValidation();
-
+const checkImgCompression = async (event: any) => {
+    const value = event.target.files[0];
+    const options = {
+      maxSizeMB: 0.1465,
+      useWebWorker: true
+    };
+    let compressedFile = value;
+    if (value?.size > targetSizeBytes) {
+      try {
+        compressedFile = await imageCompression(value, options);
+        console.log("Original file size:", (value.size / 1024).toFixed(2), "KB");
+        console.log(
+          "Compressed file size:",
+          (compressedFile.size / 1024).toFixed(2),
+          "KB"
+        );
+      } catch (error) {
+        console.error("Compression error:", error);
+      }
+    }
+    return compressedFile;
+  };
+  
+  const uploadImage = async (event: any) => {
+    arrErrors.image.error = "";
+    isImageLoading.value = await true;
+    const result = await checkImgCompression(event);
+    if (result?.size > targetSizeBytes) {
+      arrErrors.image.error = "Размер слишком большой";
+    }
+    if (result && result !== undefined) {
+      isImageLoading.value = await false;
+      const base64StringNewImage = (await useConvertToBase64(
+        result
+      )) as unknown as string;
+      prodImages.value = [base64StringNewImage];
+      arrErrors.image.error = "";
+    }
+    console.log("prodImages", prodImages);
+  };
+  
+  const handleImage = async (event: any, index: number) => {
+    allVariants.value[index].loading = true;
+    const result = await checkImgCompression(event);
+  
+    if (result.size > targetSizeBytes) {
+      allVariants.value[index].error = "Размер слишком большой";
+      allVariants.value[index].loading = false;
+    } else if (result.size < targetSizeBytes && result && result !== undefined) {
+      allVariants.value[index].loading = false;
+      const base64StringNewImage = (await useConvertToBase64(
+        result
+      )) as unknown as string;
+      allVariants.value[index].image = base64StringNewImage as unknown as string;
+    }
+  };
 const addProduct = async () => {
   const values = Object.values(inputs?.value);
   const body: { [key: string]: any } = {};
@@ -507,6 +509,8 @@ const addProduct = async () => {
 };
 
 const formAdd = () => {
+
+  console.log('selectedCategore',selectedCategories)
   for (const fieldName in inputs.value) {
     if (Object.prototype.hasOwnProperty.call(inputs.value, fieldName)) {
       const fieldType = inputs.value[fieldName].type;
