@@ -47,7 +47,7 @@ a {
 }
 .main-section-site:not(.home-section) {
   padding: 20px 2rem;
-  margin-top: 7rem;
+
   position:relative;
 }
 ul li {
@@ -667,9 +667,7 @@ h2 {
 }
 
 @media (max-width: 468px) {
-  .main-section-site {
-    margin-top: 12rem !important;
-  }
+
   .main-header-h1 {
     font-size: 24px !important;
     line-height: 32px !important;

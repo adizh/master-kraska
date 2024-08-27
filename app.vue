@@ -31,7 +31,28 @@ if (process.client) {
       document,
       "https://cdn-ru.bitrix24.ru/b27013162/crm/site_button/loader_2_gi1nb6.js"
   );
+
 }
+
+function adjustMainSeaction() {
+  const mainSection = document.querySelector('.main-section-site');
+  const mainHeader = document.querySelector('.main-header')
+
+  if (mainHeader && mainSection) {
+    const headerHeight = mainHeader.offsetHeight + 24
+    mainSection.style.marginTop = `${headerHeight}px`;
+  }
+}
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', adjustMainSeaction);
+});
+
+onMounted(async () => {
+ 
+  adjustMainSeaction();
+  window.addEventListener('resize', adjustMainSeaction);
+});
 
 useHead({
   title: "MasterKraska",
