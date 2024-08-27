@@ -45,9 +45,10 @@ input:focus {
 a {
   text-decoration: none;
 }
-.main-section-site {
+.main-section-site:not(.home-section) {
   padding: 20px 2rem;
   margin-top: 7rem;
+  position:relative;
 }
 ul li {
   list-style: none;
@@ -665,9 +666,9 @@ h2 {
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 468px) {
   .main-section-site {
-    margin-top: 11rem;
+    margin-top: 12rem !important;
   }
   .main-header-h1 {
     font-size: 24px !important;

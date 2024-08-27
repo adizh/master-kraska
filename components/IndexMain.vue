@@ -1,392 +1,93 @@
 <template>
-  <div class="carousel-slider">
-    <Swiper
-      :slides-per-view="1"
-      :modules="[
-        SwiperNavigation,
-        SwiperEffectCreative,
-        SwiperController,
-        SwiperAutoplay,
-      ]"
-      :navigation="true"
-      :creative="true"
-      :loop="true"
-      :autoplay="{
-        delay: 5000,
-      }"
-      :creative-effect="{
-        prev: {
-          shadow: true,
-          translate: [0, 0, -400],
-        },
-        next: {
-          translate: ['100%', 0, 0],
-        },
-        
-      }"
-    >
-      <SwiperSlide v-for="banner in newStore.getAllSliders">
+<section class='carousel-slider'>
 
-        <div class="banner-block slider-wrapper"
-          @click="navigateTo({
-            path: `/catalog`,
-            query: { brandId: '8ce5266c-a2d0-48de-9a93-4ea72e0182d9' },
-          })
-          "
-        >
-          <img
-            :src="banner?.image"
-            format="webp"
-            id="banner-image"
-            ref="bannerImage"
-          
-          />
-        </div>
-      </SwiperSlide>
-    </Swiper>
+  <div >
+    <Galleria :value="newStore.getAllSliders" :numVisible="1"  
+    :showItemNavigators="true" :showThumbnails="false"  :circular="true" 
+
+             >
+             <template #previousitemicon>
+              <img src="../assets/images/prev-btn.png" alt="prev" class="prev-btn">
+             </template>
+  
+             <template #nextitemicon>
+              <img src="../assets/images/next-btn.png" alt="next" class="next-btn">
+             </template>
+              <template #item="slotProps">
+  <div class="slider-block">
+    <img :src="slotProps.item.image" :alt="slotProps.item.image" class="slider-img" />
   </div>
+              </template>
+          </Galleria>
+
+  </div>
+</section>
 </template>
+
+
 
 <script lang="ts" setup>
 const newStore = useNewsStore();
-const bannerImage = ref<HTMLImageElement | null>(null);
-const targetElement = ref<HTMLElement | null>(null);
 
-const updateHeight = () => {
-  if (bannerImage.value && targetElement.value) {
-    const imageHeight = bannerImage.value.clientHeight;
-
-    targetElement.value.style.height = `${imageHeight}px`;
-  }
-};
-watch(
-  () => bannerImage.value?.clientHeight,
-  (newHeight) => {
-    if (newHeight) {
-      updateHeight();
-    }
-  },
-);
 onMounted(() => {
   newStore.fetchSliders();
-  window.addEventListener("resize", updateHeight);
-
 });
-
-onBeforeUnmount(() => {
-  window.removeEventListener("resize", updateHeight);
-});
-
-import "animate.css";
 </script>
 
+
+
 <style scoped lang="scss">
+.section{
+  width:100%;
+
+
+}
+
+.slider-img{
+  width:100%;
+}
+
+:deep(button.p-galleria-item-prev.p-galleria-item-nav.p-link),
+:deep(button.p-galleria-item-next.p-galleria-item-nav.p-link)
+{
+  background: #00000020 !important;
+  width: 28px;
+  height:28px;
+  padding:18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: .4s ease;
+  &:hover{
+    transition: .4s ease;
+    cursor: pointer;
+    background: #00000040 !important;
+  }
+  &:first-child{
+    margin-left: 20px;
+  }
+  &:last-child{
+    margin-right: 20px;
+  }
+}
+
+
 .carousel-slider {
-  margin-left: -2rem !important;
-  margin-right: -2rem !important;
+ position:absolute;
+ top:20px;
+ overflow: hidden;
+ left:0;
+ right:0;
 }
 
-:deep(.swiper-button-next:after),
-:deep(.swiper-button-prev:after) {
-  font-size: 23px;
-}
-
-.banner-block {
-  width: 100%;
-  img {
-    width: 100%;
-    height: 100%;
-  }
-}
-.slider-wrapper {
-  position: relative;
-}
-
-.slider-wrapper .controls-circle span.active-control {
-  background: $blue-color;
-}
-
-.main-page-header {
-  margin-bottom: 40px;
-  padding: 4.5rem 0 4.5rem 50px;
-  @include flex(row, space-between, center);
-  background: $main-white;
-  height: 573px;
-}
-
-.right {
-  width: 50%;
-  position: relative;
-
-  img {
-    width: 100%;
-    position: absolute;
-    right: 0;
+@media (max-width:840px){
+  :deep(.p-galleria-item-nav){
+top:30%
   }
 }
 
-.left {
-  @include flex(column, center, start, 1px);
-}
-
-h1 {
-  color: $main-pink;
-  line-height: 92px !important;
-  font-weight: 600;
-  font-size: 74px !important;
-  margin-bottom: 20px;
-}
-
-.sub-header {
-  color: $main-black;
-  font-size: 28px;
-  font-weight: 500;
-  max-width: 500px;
-  line-height: 38px;
-}
-
-:deep(.swiper-button-next) {
-  color: #fff;
-  background: #00000020;
-  padding: 18px;
-  &:hover {
-    background: #00000040;
-  }
-}
-
-:deep(.swiper-button-prev) {
-  background: #00000020;
-  padding: 18px;
-  color: #fff;
-  &:hover {
-    background: #00000040;
-  }
-}
-
-:deep(
-    .swiper-pagination,
-    .swiper-pagination-custom,
-    .swiper-horizontal > .swiper-pagination-bullets,
-    .swiper-pagination-bullets.swiper-pagination-horizontal
-  ) {
-  display: flex !important;
-  width: 90% !important;
-  justify-content: flex-end !important;
-}
-
-.small-image {
-  display: none;
-}
-
-@media (min-width: 1400px) {
-  .carousel-slider {
-    margin-top: -4.6rem !important;
-    margin-left: -10rem !important;
-    margin-right: -10rem !important;
-  }
-}
-
-@media (min-width: 1160px) {
-  .right {
-    width: 450px;
-    img {
-      bottom: -123px;
-    }
-  }
-}
-
-@media (max-width: 1160px) {
-  h1 {
-    font-size: 50px !important;
-    line-height: 54px !important;
-  }
-  .right img {
-    width: 80%;
-
-    bottom: -123px;
-  }
-  .sub-header {
-    font-size: 24px;
-    line-height: 30px;
-  }
-}
-@media (max-width: 1100px) {
-  .carousel-slider {
-    margin-top: -4rem;
-  }
-
-  :deep(.swiper-wrapper) {
-    height: 170px;
-  }
-}
-@media (max-width: 896px) {
-  .right img {
-    width: 100%;
-  }
-
-  :deep(.swiper-wrapper) {
-    height: 150px;
-  }
-}
-@media (max-width: 790px) {
-  .main-page-header {
-    padding: 10px 10px 20px 10px;
-  }
-  .pink-button {
-    margin-top: 40px;
-  }
-}
-@media (max-width: 786px) {
-  .sub-header {
-    font-size: 18px !important;
-    max-width: 340px !important;
-  }
-
-  h1 {
-    font-size: 48px !important;
-    line-height: 49px !important;
-  }
-
-  .main-page-header {
-    padding: 40px 20px;
-  }
-
-  .pink-button {
-    font-size: 18px;
-    padding: 10px 20px;
-  }
-  .right {
-    display: none;
-  }
-  .carousel-slider {
-    margin-top: -3.4rem;
-  }
-  :deep(.swiper-button-next:after),
-  :deep(.swiper-button-prev:after) {
-    font-size: 16px;
-  }
-}
-
-@media (max-width: 700px) {
-  h1 {
-    font-size: 36px !important;
-    margin-bottom: 0;
-  }
-  .pink-button {
-    font-size: 16px;
-  }
-
-  .sub-header {
-    font-size: 16px;
-    max-width: 440px;
-  }
-
-  :deep(.swiper-wrapper) {
-    height: 95px;
-  }
-}
-
-@media (max-width: 576px) {
-  .pink-button {
-    margin-top: 5px;
-  }
-  h1 {
-    font-size: 26px !important;
-    margin-bottom: 0;
-  }
-
-  .main-page-header {
-    padding-top: 30px !important;
-  }
-  .sub-header {
-    font-size: 16px !important;
-    max-width: 440px !important;
-  }
-  .sub-header {
-    line-height: 33px !important;
-  }
-  .carousel-slider {
-    margin-top: -3rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .carousel-slider {
-    margin-top: -7.7rem !important;
-  }
-  .sub-header {
-    line-height: 28px !important;
-  }
-  .main-page-header {
-    flex-direction: column;
-    gap: 28px;
-  }
-
-  .pink-button {
-    font-size: 16px !important;
-    padding: 8px 20px;
-  }
-
-  .large-image {
-    display: none;
-  }
-
-  .small-image {
-    display: block;
-  }
-  :deep(.swiper-button-next:after),
-  :deep(.swiper-button-prev:after) {
-    font-size: 13px;
-  }
-
-  :deep(.swiper-wrapper) {
-    height: 80px;
-  }
-}
-@media (max-width: 469px) {
-  .carousel-slider {
-    margin-top: 0.56rem !important;
-  }
-}
-@media (max-width: 430px) {
-  h1 {
-    font-size: 20px !important;
-  }
-  .sub-header {
-    font-size: 14px !important;
-    line-height: 20px !important;
-  }
-  .pink-button {
-    font-size: 13px !important;
-    padding: 6px 14px;
-    margin-top: 15px;
-  }
-  .main-page-header {
-    padding-top: 20px !important;
-  }
-}
-
-@media (max-width: 420px) {
-  .carousel-slider {
-    margin-top: -1.3rem !important;
-  }
-
-  :deep(.swiper-wrapper) {
-    height: 70px;
-  }
-}
-@media (max-width: 360px) {
-  .main-page-header {
-    padding-top: 5px !important;
-  }
-  .left {
-    align-items: center;
-  }
-  .sub-header {
-    line-height: 18px;
-  }
-  .carousel-slider {
-    margin-top: -2.3rem;
-  }
-}
 </style>
+
+
+
+

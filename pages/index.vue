@@ -1,37 +1,38 @@
 <template>
-  <section>
-    <IndexMain />
+  <section class="home-section">
 
-    <div class="search-place">
-      <div class="flex flex-row gap-4 search">
-        <div class="input-block">
-          <input
-            v-model="productStore.filters.search"
-            type="text"
-            class="main-header-input"
-            :placeholder="$t('whichProSearch')"
-            @input="handleSearch"
-          >
-          <img
-            src="../assets/icons/icon=search.svg"
-            alt="search"
-            class="search-icon"
-          >
-        </div>
-        <div class="btn-block" @click.stop="router.push(`/catalog`)">
-          <button>{{ $t("find") }}</button>
-        </div>
+  <IndexMain />
+  <div class="search-place">
+    <div class="flex flex-row gap-4 search">
+      <div class="input-block">
+        <input
+          v-model="productStore.filters.search"
+          type="text"
+          class="main-header-input"
+          :placeholder="$t('whichProSearch')"
+          @input="handleSearch"
+        >
+        <img
+          src="../assets/icons/icon=search.svg"
+          alt="search"
+          class="search-icon"
+        >
       </div>
-      <SearchOptions
-        :is-search-open="isSearchOpen"
-        @close-search="isSearchOpen = false"
-      />
-      <div
-        v-show="isSearchOpen"
-        class="overlay-header-options"
-        :class="{ open: isSearchOpen }"
-      />
+      <div class="btn-block" @click.stop="router.push(`/catalog`)">
+        <button>{{ $t("find") }}</button>
+      </div>
     </div>
+    <SearchOptions
+      :is-search-open="isSearchOpen"
+      @close-search="isSearchOpen = false"
+    />
+    <div
+      v-show="isSearchOpen"
+      class="overlay-header-options"
+      :class="{ open: isSearchOpen }"
+    />
+
+ </div>
     <Products />
     <Actions />
     <Advantages />
@@ -54,28 +55,28 @@ const handleSearch = (event: any) => {
   }, 2000);
 };
 
-// watch(isSearchOpen, (value) => {
-//   if (value) {
-//     disableBodyScroll();
-//   } else {
-//     enableBodyScroll();
-//   }
-// });
-// const disableBodyScroll = () => {
-//   document.body.style.overflow = "hidden";
-// };
-// const enableBodyScroll = () => {
-//   document.body.style.overflow = "auto";
-// };
+
+function adjustSearchPlaceMargin() {
+  const sliderImg = document.querySelector('.slider-img') as HTMLElement;
+  const searchPlace = document.querySelector('.search-place') as HTMLElement;
+
+  if (sliderImg && searchPlace) {
+    const sliderHeight = sliderImg.offsetHeight + 40
+    searchPlace.style.marginTop = `${sliderHeight}px`;
+  }
+}
 
 onMounted(async () => {
   await catalogStore.fetchAllCategories();
   firstCategoryItem.value = catalogStore?.getAllCategories[0];
+  adjustSearchPlaceMargin();
+  window.addEventListener('resize', adjustSearchPlaceMargin);
+});
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', adjustSearchPlaceMargin);
 });
 
-onUnmounted(() => {
-  // document.body.style.overflow = "auto";
-});
+
 </script>
 
 <style scoped lang="scss">
@@ -84,11 +85,9 @@ section {
 }
 
 .search-place {
-  position: relative;
   width: 100%;
   margin-bottom: 40px;
-  margin-top: 40px;
-
+position:relative;
   button {
     box-shadow: 0px 0px 0px 0.5px #0000000d;
     box-shadow: 0px 0.5px 2.5px 0px #0000004d;
@@ -133,11 +132,9 @@ section {
   .search {
     flex-direction: column !important;
     align-items: center;
-
     .input-block {
       width: 100%;
     }
-
     .btn-block {
       width: 40%;
     }

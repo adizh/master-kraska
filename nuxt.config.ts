@@ -29,17 +29,17 @@ export default defineNuxtConfig({
       }
     }
   },
-
+  // <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+//<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   app: {
     pageTransition: { name: "page", mode: "out-in" },
     head: {
       script: [
         {
           src: "https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"
-        }
-        // {
-        //   src: 'https://cdn-ru.bitrix24.ru/b27013162/crm/site_button/loader_2_gi1nb6.js'
-        // }
+        },
+      
+       
       ],
       link: [
         {
@@ -48,7 +48,8 @@ export default defineNuxtConfig({
           hid: "icon",
           href: "/favicon.ico",
           sizes: "16x16"
-        }
+        },
+    
       ]
     }
   },
@@ -56,14 +57,16 @@ export default defineNuxtConfig({
   modules: [
     "@nuxt/image",
     "nuxt-swiper",
+
     "nuxt-primevue",
     "@pinia/nuxt",
-    "usebootstrap",
+
     "nuxt-snackbar",
     "@nuxtjs/i18n",
     "nuxt3-leaflet",
     "@nuxtjs/seo",
-    "@vueuse/nuxt"
+    "@vueuse/nuxt",
+
   ],
 
   site: {

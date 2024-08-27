@@ -1,8 +1,11 @@
 <template>
   <NuxtLoadingIndicator color="#b30753" :throttle="0" />
   <NuxtLayout>
+
     <section class="main-section-site" v-if="!preloader">
-      <NuxtPage />
+      <NuxtPage>
+
+      </NuxtPage>
       <NuxtSnackbar />
     </section>
     <Preloader v-else />
