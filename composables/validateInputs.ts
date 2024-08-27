@@ -10,6 +10,9 @@ export const useInputValidation = () => {
     if (!inputs[fieldName].hasOwnProperty("error")) {
       return;
     }
+
+    console.log('inputs',inputs)
+    console.log('validationType',validationType)
     inputs[fieldName].value = value;
     inputs[fieldName].error = "";
     if (validationType === "string") {
@@ -24,6 +27,8 @@ export const useInputValidation = () => {
     } else if (validationType === "number") {
       if (value === "") {
         inputs[fieldName].error = t("requiredField");
+      }else if(typeof value!=='number'){
+        inputs[fieldName].error='Введите число'
       }
     } else if (validationType === "rating") {
       if (value <= 0) {

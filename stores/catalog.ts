@@ -174,6 +174,7 @@ export const useCatalogStore = defineStore("catalogStore", {
         console.log(err);
       }
     },
+
     async fetchCatalog (categoryId: string) {
       try {
         const response = await http(
@@ -186,6 +187,7 @@ export const useCatalogStore = defineStore("catalogStore", {
         console.log(err);
       }
     },
+
     searchSubDirs (value: string) {
       this.allHelpersSubDir = this.allHelpersSubDirFilter.filter(
         (item) =>
@@ -193,11 +195,13 @@ export const useCatalogStore = defineStore("catalogStore", {
           item?.category?.toLowerCase().includes(value?.toLowerCase())
       );
     },
+
     filterTopCategories (value: string) {
       this.topCategories = this.allTopCategories.filter((item) =>
         item?.nameRu?.toLowerCase().includes(value?.toLowerCase())
       );
     },
+    
     async getHelpersSubDirs () {
       try {
         const response = await http("/api/v1/Helpers/get-all-subdirectories");

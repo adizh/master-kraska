@@ -30,7 +30,7 @@ const prodImages = ref([] as string[]);
 
 const isCategoryOpen = ref();
 type Input = {
-  value: string;
+  value: string | number;
   error?: string;
   type?: string;
   field?: string;
@@ -41,6 +41,7 @@ type Fields = {
     | Input
     | boolean
     | string[]
+    |number
     | Variant[]
     | string
     | {
@@ -118,21 +119,21 @@ const fields = ref<Fields>({
   nameRu: { value: "", error: "", type: "string", field: "Название" },
   shortDescriptionRu: { value: "", field: "Короткое описание" },
   shortDescriptionKg: { value: "", field: "Короткое описание (кырг)" },
-  price: { value: "", error: "", type: "number", field: "Цена" },
+  price: { value:0, error: "", type: "number", field: "Цена" },
   size: { value: "", error: "", type: "string", field: "Размер" },
   consumption: { value: "", field: "Расход" },
   dryingTime: { value: "", field: "Высыхание" },
-  colorType: { value: "", type: "number", field: "Цвет" },
+  colorType: { value: 0, type: "number", field: "Цвет",error:'' },
   descriptionRu: { value: "", field: "Описание" },
   descriptionKg: { value: "", field: "Описание (кырг)" },
-  code: { value: "", type: "number", field: "Код" },
+  code: { value: 0, type: "number", field: "Код",error:'' },
   isPopular: false,
   isFeatured: false,
   isBeneficial: false,
-  subdirectoryId: ["3fa85f64-5717-4562-b3fc-2c963f66afa6"],
+  subdirectoryId: [""],
   brandId: "",
   images: [""],
-  categoryId: ["3fa85f64-5717-4562-b3fc-2c963f66afa6"],
+  categoryId: [""],
   variants: allVariants.value
 });
 

@@ -29,7 +29,7 @@
               v-model="item.value"
               :name="item?.key"
               class="basic-input"
-              @input="validate(item.key as string, item?.type as string)"
+              @change="validate(item.key as any, item?.type as any)"
             />
           </template>
 
@@ -41,7 +41,7 @@
               v-model="item.value"
               class="basic-input"
               :type="!item?.type || item.type === 'string' ? 'text' : 'number'"
-              @change="validate(item.key as string, item?.type as string)"
+              @change="validate(item.key as any, item?.type as any)"
             />
           </template>
 
@@ -164,9 +164,10 @@
               class="selected-option basic-input"
               @click="toggleSubCategory(index)"
             >
-              <span>
-                {{ selectedSubCategories[index]?.nameRu || "Выберите каталог" }}
-              </span>
+            <span>
+              {{selectedSubCategories[index] ? (selectedSubCategories[index]?.category + ' - ' + selectedSubCategories[index]?.nameRu): "Выберите каталог" }}
+            </span>
+            
               <img
                 class="arrow"
                 :class="{ rotated: isSubCategoryOpen === index }"
