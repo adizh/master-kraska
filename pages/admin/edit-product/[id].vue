@@ -10,7 +10,6 @@
 
       <span class="err-input-msg">*Обязательные поля</span>
       <form class="grid mt-4" @submit.prevent="editProduct('form')">
-
         <div class="lg:col-6 md:col-6 col-12 each-field">
           <label for="name">Имя</label>
           <textarea
@@ -65,26 +64,24 @@
           }}</span>
         </div>
 
-        <div class="lg:col-6 md:col-6 col-12 each-field">
-          <label for="description">Короткое описание</label>
+        <div class="lg:col-12 md:col-12 col-12 each-field">
+          <label for="shortDescriptionRu">Короткое описание</label>
           <textarea
             id="shortDescriptionRu"
             v-model="inputs.shortDescriptionRu.value as string"
             class="basic-input col-12"
-            type="text"
           />
           <span v-if="inputs.shortDescriptionRu.error" class="err-input-msg">{{
             inputs.shortDescriptionRu.error
           }}</span>
         </div>
 
-        <div class="lg:col-6 md:col-6 col-12 each-field">
+        <div class="lg:col-12 md:col-12 col-12 each-field">
           <label for="description">Короткое описание (кырг)</label>
           <textarea
             id="shortDescriptionKg"
             v-model="inputs.shortDescriptionKg.value as string"
             class="basic-input col-12"
-            type="text"
           />
           <span v-if="inputs.shortDescriptionKg.error" class="err-input-msg">{{
             inputs.shortDescriptionKg.error
@@ -113,7 +110,7 @@
           <UISelect
             v-for="item in categoryValues?.value"
             :key="item?.id"
-            :options="catalogStore?.getLinkedCategories"
+            :options="catalogStore?.getTopCategories"
             label="nameRu"
             :is-dropdown-open="isCategoryOpen === item?.id"
             :selected-value="item"
@@ -181,7 +178,7 @@
         </div>
 
         <div class="lg:col-6 md:col-6 col-12 each-field">
-          <label for="subcategoryId">Подкатегории (helpersMain)</label>
+          <label for="subcategoryId">(helpersMain)</label>
           <UISelect
             v-for="helper in productHelpers"
             :key="helper?.id"
@@ -320,9 +317,7 @@
             </div>
           </div>
           <span v-if="inputs.color.error" class="err-input-msg">{{
-
             inputs.color.error
-
           }}</span>
         </div>
 
@@ -523,7 +518,6 @@
         :show-modal="isSubDirCreateOpen"
         title="Добавить подкатегорию"
         @close-modal="isSubDirCreateOpen = false"
-        
       >
         <div class="ui-dropdown col-6">
           <div class="selected-option basic-input" @click="toggleSubDirCreate">

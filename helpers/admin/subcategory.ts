@@ -1,4 +1,4 @@
-import {  CategorySys } from "~/types/Category";
+import { CategorySys } from "~/types/Category";
 
 const defaultText = "Выберите категорию";
 const isSubcategoryOpen = ref(false);

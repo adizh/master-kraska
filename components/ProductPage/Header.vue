@@ -429,17 +429,12 @@ const buyNow = () => {
 const addToCart = () => {
   if (doVariantsExist?.value && !selectedVolume.value?.value?.length) {
     useNotif("error", t("selectVolume"), t("error"));
-  }
-
-
-
- else if (isCatalogHasItemCategory?.value && !confirmedCodeColor?.value?.length) {
+  } else if (
+    isCatalogHasItemCategory?.value &&
+    !confirmedCodeColor?.value?.length
+  ) {
     useNotif("error", t("selecteTintingRequired"), t("error"));
-  }
-
-
-
- else  {
+  } else {
     const prodItem = {
       ...getProduct.value?.product,
 
@@ -450,10 +445,9 @@ const addToCart = () => {
     };
 
     console.log("prodItem", prodItem);
-    setTimeout(()=>{
+    setTimeout(() => {
       store.addToCart(prodItem);
-    },300)
-
+    }, 300);
   }
 };
 

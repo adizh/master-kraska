@@ -8,7 +8,8 @@
       <h1 class="mb-3">
         Добавить продукт
       </h1>
-      <form class="grid" @submit.prevent="formAdd">
+      <span class="err-input-msg">*Обязательные поля</span>
+      <form class="grid mt-3" @submit.prevent="formAdd">
         <div
           v-for="item in Object.values(inputs)"
           :key="item?.field"
@@ -19,7 +20,7 @@
               item?.key === 'descriptionRu' || item?.key === 'descriptionKg'
             "
           >
-            <label :for="item?.field">{{ item?.field }}</label>
+            <label :for="item?.field">{{ "error" in item ? "*" : "" }}{{ item?.field }}</label>
             <textarea
               v-if="
                 item?.key === 'descriptionRu' || item?.key === 'descriptionKg'
@@ -33,7 +34,8 @@
           </template>
 
           <template v-else>
-            <label :for="item?.field">{{ item?.field }}</label>
+            <label :for="item?.field">
+              {{ "error" in item ? "*" : "" }}{{ item?.field }}</label>
             <textarea
               :id="item?.field"
               v-model="item.value"
@@ -54,11 +56,10 @@
         </div>
 
         <div v-if="categoryCount?.length" class="lg:col-4 md:col-6 col-12">
-          <label for="category">Категория</label>
+          <label for="category">*Категория</label>
 
           <div
             v-for="(item, index) in categoryCount"
-
             :key="item"
             class="ui-dropdown mt-2"
           >
@@ -77,13 +78,14 @@
               >
             </div>
             <Transition name="slide-fade">
-              <div  v-if="index === isCategoryOpen">
+              <div v-if="index === isCategoryOpen">
                 <ul class="ui-options">
                   <input
                     type="text"
                     class="basic-input w-100 d-block"
                     @input="
-                      (event: any) => catalogStore.filterTopCategories(event?.target?.value)
+                      (event: any) =>
+                        catalogStore.filterTopCategories(event?.target?.value)
                     "
                   >
                   <li
@@ -99,24 +101,23 @@
           </div>
         </div>
 
-
         <div v-if="isCategorySelected" class="lg:col-4 md:col-6 col-12">
-          <label for="category">Подкатегория</label>
+          <label for="category">*Подкатегория</label>
 
-          <div
-            class="ui-dropdown mt-2"
-          >
+          <div class="ui-dropdown mt-2">
             <div
               class="selected-option basic-input"
-              @click="isSubcategorySelect=!isSubcategorySelect"
+              @click="isSubcategorySelect = !isSubcategorySelect"
             >
-              <span v-if="allSelectedSubcategories.length >0 ">
-                {{  allSelectedSubcategories?.map((item)=>item?.nameRu)?.join('| ') }}
+              <span v-if="allSelectedSubcategories.length > 0">
+                {{
+                  allSelectedSubcategories
+                    ?.map((item) => item?.nameRu)
+                    ?.join("| ")
+                }}
               </span>
 
-              <span v-else>
-                Выберите подкатегорию
-              </span>
+              <span v-else> Выберите подкатегорию </span>
               <img
                 class="arrow"
                 :class="{ rotated: isSubcategorySelect }"
@@ -125,20 +126,22 @@
               >
             </div>
             <Transition name="slide-fade">
-              <div  v-if="isSubcategorySelect">
+              <div v-if="isSubcategorySelect">
                 <ul class="ui-options">
                   <input
                     type="text"
                     class="basic-input w-100 d-block admin-search-input"
                     @input="
-                      (event: any) => catalogStore.filterSubcategoriesByCategory(event?.target?.value)
+                      (event: any) =>
+                        catalogStore.filterSubcategoriesByCategory(
+                          event?.target?.value,
+                        )
                     "
                   >
                   <li
                     v-for="categoryItem in catalogStore?.getFilteredSubcategories"
                     :key="categoryItem?.id"
                     @click="chooseSubCategories(categoryItem)"
-                 
                   >
                     {{ categoryItem?.nameRu }}
                   </li>
@@ -147,21 +150,6 @@
             </Transition>
           </div>
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         <div v-if="subDirCount?.length" class="lg:col-6 md:col-6 col-12">
           <label for="category">Каталог</label>
@@ -175,10 +163,7 @@
               @click="toggleSubCategory(index)"
             >
               <span>
-                {{
-                  selectedSubCategories[index]?.nameRu ||
-                    "Выберите каталог"
-                }}
+                {{ selectedSubCategories[index]?.nameRu || "Выберите каталог" }}
               </span>
               <img
                 class="arrow"
@@ -189,8 +174,7 @@
             </div>
             <Transition name="slide-fade">
               <div v-if="index === isSubCategoryOpen">
-
-                <ul  class="ui-options">
+                <ul class="ui-options">
                   <input
                     type="text"
                     class="basic-input d-block w-full"
@@ -204,7 +188,7 @@
                     :key="helperSubDir?.id"
                     @click="selectSubCategory(helperSubDir, index)"
                   >
-                {{ helperSubDir.category }}:    {{ helperSubDir?.nameRu }}
+                    {{ helperSubDir.category }}: {{ helperSubDir?.nameRu }}
                   </li>
                 </ul>
               </div>
@@ -213,7 +197,7 @@
         </div>
 
         <div class="lg:col-4 md:col-6 col-12 flex flex-column">
-          <label for="image">Картинка</label>
+          <label for="image">*Картинка</label>
           <input type="file" @change="uploadImage">
           <span v-if="arrErrors?.image?.error" class="err-input-msg">{{
             arrErrors?.image?.error
@@ -259,9 +243,6 @@
               </div>
             </Transition>
           </div>
-          <span v-if="arrErrors?.brand?.error" class="err-input-msg">{{
-            arrErrors?.brand?.error
-          }}</span>
         </div>
 
         <div v-if="allVariants?.length" class="lg:col-4 md:col-6 col-12">
@@ -341,7 +322,7 @@
             class="pink-button"
             @click.capture="addSubDirCount"
           >
-            Добавить подкатегорию
+            Добавить каталог(helpersMain)
           </button>
           <button type="submit" class="btn-white-bg">
             Создать
@@ -354,118 +335,57 @@
 
 <script setup lang="ts">
 import imageCompression from "browser-image-compression";
-import { isSubcategoryOpen } from "~/helpers/admin/subcategory";
+
 import { Brands } from "~/types/Brands";
 import { CategorySys } from "~/types/Category";
-import { Variant } from "~/types/Variant";
-const isCategoryOpen = ref();
-type Input = {
-  value: string;
-  error?: string;
-  type?: string;
-  field?: string;
-  key?: string;
-};
-type Fields = {
-  [key: string]:
-    | Input
-    | boolean
-    | string[]
-    | Variant[]
-    | string
-    | {
-        id: string;
-        size: string;
-        price: number;
-        code: number;
-        image: string;
-        base: string;
-      }[];
-};
 
-const catalogStore = useCatalogStore();
-const isSubCategoryOpen = ref();
-const categoryCount = ref([] as number[]);
-const subDirCount = ref([] as number[]);
-const isImageLoading = ref(false);
-const selectedCategories = ref([] as any[]);
-const selectedSubCategories = ref([] as any[]);
-const selectedBrand = ref({} as Brands);
-const isBrandOpen = ref(false);
-const brandsStore = useBrandsStore();
-const isSubcategorySelect =ref(false)
-const selectedCategory = ref({} as CategorySys);
-const isCategorySelected =ref(false)
-const allSelectedSubcategories=ref([] as CategorySys[])
-const selectedSubCategory = ref({} as CategorySys);
-const isPopular = ref(false);
-const arrErrors = {
-  brand: { error: "" },
-  image: { error: "" }
-};
+import {
+  catalogStore,
+  isSubCategoryOpen,
+  categoryCount,
+  subDirCount,
+  isImageLoading,
+  selectedCategories,
+  selectedSubCategories,
+  selectedBrand,
+  isBrandOpen,
+  brandsStore,
+  isSubcategorySelect,
+  selectedCategory,
+  isCategorySelected,
+  allSelectedSubcategories,
+  selectedSubCategory,
+  isPopular,
+  arrErrors,
+  variantCount,
+  allVariants,
+  prodImages,
+  isCategoryOpen,
+  type Input,
+  type Fields,
+  selectSubCategory,
+  toggleSubCategory,
+  chooseSubCategories,
+  addCategoryCount,
+  addSubDirCount,
+  addVariantCount,
+  toggleDropdown,
+  selectBrand,
+  fields
+} from "@/helpers/admin/add-product";
 
-const variantCount = ref<number[]>([]);
-
-const allVariants = ref<Variant[]>([]);
-const prodImages = ref([] as string[]);
-
-const selectCategory = async(category: any, index: number) => {
+const selectCategory = async (category: any, index: number) => {
   selectedCategory.value = category;
   selectedCategories.value[index] = category;
   isCategoryOpen.value = "";
-  isCategorySelected.value=true
+  isCategorySelected.value = true;
   await catalogStore.fetchCategoryById(category?.id);
 };
 
-const searchCategories = (value: string) => {
-  catalogStore.filterLinkedCategories(value);
-};
 const seachBrands = (value: string) => {
   brandsStore.searchBrands(value);
 };
-const selectSubCategory = (subCategory: any, index: number) => {
-  selectedSubCategory.value = subCategory;
-  selectedSubCategories.value[index] = subCategory;
-  isSubCategoryOpen.value = "";
-};
 
-const toggleSubCategory = (index: number) => {
-
-  if (isSubCategoryOpen.value === index) {
-    isSubCategoryOpen.value = null;
-  } else {
-    isSubCategoryOpen.value = index;
-  }
-};
-
-const chooseSubCategories =(item:CategorySys)=>{
-  const index = allSelectedSubcategories.value.findIndex(
-    (subcategory) => subcategory.id === item?.id
-  );
-  if (index === -1) {
-    allSelectedSubcategories.value.push(item);
-  } else {
-    allSelectedSubcategories.value.splice(index, 1);
-  }
-
-}
-
-const addCategoryCount = () => {
-  let value = 0;
-  value++;
-  selectedCategories.value.push(null);
-  for (let i = 0; i < value; i++) {
-    categoryCount.value.push(i);
-  }
-};
-const addSubDirCount = () => {
-  let value = 0;
-  value++;
-
-  for (let i = 0; i < value; i++) {
-    subDirCount.value.push(i);
-  }
-};
 const targetSizeBytes = 150 * 1024;
 
 const checkImgCompression = async (event: any) => {
@@ -525,50 +445,7 @@ const handleImage = async (event: any, index: number) => {
   }
 };
 
-const addVariantCount = () => {
-  const newIndex = variantCount.value.length;
-  variantCount.value.push(newIndex);
-  allVariants.value.push({ size: "", price: 0, code: 0, base: "", image: "" });
-};
-
-const toggleDropdown = (item: number) => {
-  if (isCategoryOpen.value === item) {
-    isCategoryOpen.value = "";
-  } else {
-    isCategoryOpen.value = item;
-  }
-};
-
-const selectBrand = (item: Brands) => {
-  selectedBrand.value = item;
-  isBrandOpen.value = false;
-  arrErrors.brand.error = "";
-};
 const { handleValues } = useInputValidation();
-
-const fields = ref<Fields>({
-  nameKg: { value: "", error: "", type: "string", field: "Название (кырг)" },
-  nameRu: { value: "", error: "", type: "string", field: "Название" },
-  shortDescriptionRu: { value: "", field: "Короткое описание" },
-  shortDescriptionKg: { value: "", field: "Короткое описание (кырг)" },
-  price: { value: "", error: "", type: "number", field: "Цена" },
-  size: { value: "", error: "", type: "string", field: "Размер" },
-  consumption: { value: "", field: "Расход" },
-  dryingTime: { value: "", field: "Высыхание" },
-
-  colorType: { value: "", error: "", type: "number", field: "Цвет" },
-  descriptionRu: { value: "", field: "Описание" },
-  descriptionKg: { value: "", field: "Описание (кырг)" },
-  code: { value: "", error: "", type: "number", field: "Код" },
-  isPopular: false,
-  isFeatured: false,
-  isBeneficial: false,
-  subdirectoryId: ["3fa85f64-5717-4562-b3fc-2c963f66afa6"],
-  brandId: "",
-  images: [""],
-  categoryIds: ["3fa85f64-5717-4562-b3fc-2c963f66afa6"],
-  variants: allVariants.value
-});
 
 const addProduct = async () => {
   const values = Object.values(inputs?.value);
@@ -610,7 +487,6 @@ const addProduct = async () => {
     images: prodImages?.value,
     categoryIds: categories,
     variants: filteredVariants,
-
     extension: "png"
   };
 
@@ -641,12 +517,9 @@ const formAdd = () => {
     (input) => input.error !== ""
   );
 
-  if (!selectedBrand?.value?.id) {
-    arrErrors.brand.error = "Это поле обязательно";
-  }
   if (!prodImages?.value?.length) {
     arrErrors.image.error = "Это поле обязательно";
-  } else if (!hasError && prodImages?.value?.length && selectedBrand?.value) {
+  } else if (!hasError && prodImages?.value?.length) {
     addProduct();
   }
 };
@@ -664,7 +537,6 @@ const validate = (field: string, type: string) => {
   handleValues(inputs.value, field, type);
 };
 
-console.log("inputs", inputs);
 onMounted(() => {
   catalogStore.fetchAllCategoriesLinked();
   brandsStore.fetchAllBrands();
@@ -673,10 +545,6 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-
-.admin-search-input{
-}
-
 .admin-form {
   @include flex(row, start, center, 20px);
   flex-wrap: wrap;
@@ -699,10 +567,10 @@ onMounted(() => {
   max-height: 200px;
   overflow-y: auto;
   @include textFormat(16px, 20px, 400, #000);
-input{
-  display: block;
-  width: 100%;
-}
+  input {
+    display: block;
+    width: 100%;
+  }
   li {
     padding: 16px;
     border-radius: 10px;

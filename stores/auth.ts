@@ -14,7 +14,7 @@ export const useAuthStore = defineStore("authStore", {
       accessToken: ""
     },
     isRefreshTokenSuccess: false,
-    selectedLanguage: '',
+    selectedLanguage: ""
   }),
   actions: {
     async fetchUser () {
@@ -49,7 +49,7 @@ export const useAuthStore = defineStore("authStore", {
 
     setLang (lang: string) {
       const route = useRoute();
-      if(route.query?.lang){
+      if (route.query?.lang) {
         this.selectedLanguage = lang;
       }
     },
@@ -106,20 +106,18 @@ export const useAuthStore = defineStore("authStore", {
     getAccessToken (state) {
       return state.user.accessToken;
     },
-    getRole(): Roles {
+    getRole (): Roles {
       if (process.client) {
         const roleLocal = localStorage.getItem("role") as Roles;
-    
-        if (roleLocal!==undefined) {
+
+        if (roleLocal !== undefined) {
           return roleLocal;
-        }else{
-         // return undefined; 
+        } else {
+          // return undefined;
         }
       }
-     
     },
     getRegreshTokenStatus (state) {
-      
       return state.isRefreshTokenSuccess;
     },
     getSelectedLang (state) {

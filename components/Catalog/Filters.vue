@@ -269,11 +269,9 @@ const computedBrands = computed(() => {
 });
 
 const filteredCatalog = computed(() => {
-
   return catalogStore.getAllCatalogs?.filter(
     (item) => item?.subdirectory?.length > 0,
   );
-  
 });
 
 const initializeCheckboxStates = async () => {

@@ -1,11 +1,8 @@
 <template>
   <NuxtLoadingIndicator color="#b30753" :throttle="0" />
   <NuxtLayout>
-
-    <section class="main-section-site" v-if="!preloader">
-      <NuxtPage>
-
-      </NuxtPage>
+    <section v-if="!preloader" class="main-section-site">
+      <NuxtPage />
       <NuxtSnackbar />
     </section>
     <Preloader v-else />
@@ -27,31 +24,29 @@ if (process.client) {
     const h = d?.getElementsByTagName("script")[0];
     h.parentNode.insertBefore(s, h);
   })(
-      window,
-      document,
-      "https://cdn-ru.bitrix24.ru/b27013162/crm/site_button/loader_2_gi1nb6.js"
+    window,
+    document,
+    "https://cdn-ru.bitrix24.ru/b27013162/crm/site_button/loader_2_gi1nb6.js"
   );
-
 }
 
-function adjustMainSeaction() {
-  const mainSection = document.querySelector('.main-section-site');
-  const mainHeader = document.querySelector('.main-header')
+function adjustMainSeaction () {
+  const mainSection = document.querySelector(".main-section-site");
+  const mainHeader = document.querySelector(".main-header");
 
   if (mainHeader && mainSection) {
-    const headerHeight = mainHeader.offsetHeight + 24
+    const headerHeight = mainHeader.offsetHeight + 24;
     mainSection.style.marginTop = `${headerHeight}px`;
   }
 }
 
 onBeforeUnmount(() => {
-  window.removeEventListener('resize', adjustMainSeaction);
+  window.removeEventListener("resize", adjustMainSeaction);
 });
 
 onMounted(async () => {
- 
   adjustMainSeaction();
-  window.addEventListener('resize', adjustMainSeaction);
+  window.addEventListener("resize", adjustMainSeaction);
 });
 
 useHead({

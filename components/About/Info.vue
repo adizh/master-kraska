@@ -37,7 +37,6 @@
 
 <script setup lang="ts">
 import certificates from "~/pages/certificates.vue";
-
 </script>
 
 <style scoped lang="scss">

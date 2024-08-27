@@ -21,4 +21,4 @@ export type User = {
   verificationCode?: string;
 };
 
-export type Roles='Admin' | 'SuperAdmin' | 'CustomerUser'| undefined
+export type Roles = "Admin" | "SuperAdmin" | "CustomerUser" | undefined;

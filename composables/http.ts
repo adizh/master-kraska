@@ -1,8 +1,6 @@
 // http.js
 import axios, { AxiosInstance, AxiosError } from "axios";
 
-
-
 const http: AxiosInstance = axios.create({
   baseURL: "https://api.masterkraska.kg"
 });

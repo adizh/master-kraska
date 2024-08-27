@@ -65,8 +65,8 @@ const targetSizeBytes = 150 * 1024;
 
 const handleImage = async (event: any) => {
   image.value.loading = true;
-  const base64Img = await useConvertToBase64(event.target.files[0]) as string
-  image.value.value=base64Img
+  const base64Img = (await useConvertToBase64(event.target.files[0])) as string;
+  image.value.value = base64Img;
   image.value.loading = false;
 };
 

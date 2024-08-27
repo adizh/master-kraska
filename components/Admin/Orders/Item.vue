@@ -185,5 +185,4 @@ const confirmStatus = async () => {
     transition: 0.4s ease;
   }
 }
-
 </style>

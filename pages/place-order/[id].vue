@@ -5,8 +5,10 @@
     </div>
     <div class="orders grid">
       <div class="orders-first lg:col-8 md-col-12 col-12">
-        <p class="danger-text red">{{ $t("tentingWarn") }}</p>
-        <br/>
+        <p class="danger-text red">
+          {{ $t("tentingWarn") }}
+        </p>
+        <br>
         <h3>{{ $t("waysOfOrder") }}</h3>
         <div class="buttons-sel">
           <button
@@ -519,7 +521,7 @@ h3 {
   @include flex(row, flex-end !important, center);
 }
 
-.danger-text{
+.danger-text {
   color: red;
 }
 

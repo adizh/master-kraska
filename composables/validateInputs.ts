@@ -7,6 +7,9 @@ export const useInputValidation = () => {
     validationType: string | any
   ) => {
     const value = inputs[fieldName].value;
+    if (!inputs[fieldName].hasOwnProperty("error")) {
+      return;
+    }
     inputs[fieldName].value = value;
     inputs[fieldName].error = "";
     if (validationType === "string") {
@@ -36,8 +39,6 @@ export const useInputValidation = () => {
               ? t("requiredField")
               : "";
     }
-
-    console.log("inputs", inputs);
   };
 
   return { handleValues };

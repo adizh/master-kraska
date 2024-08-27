@@ -18,15 +18,18 @@
             {{ item?.dryingTime || $t("noData") }}</span
           >
           <span class="volume"
-            >{{ $t("volume") }} (л): 
+            >{{ $t("volume") }} (л):
 
-            <span>{{ selectedVariant  || item?.size}}</span>
+            <span>{{ selectedVariant || item?.size }}</span>
             <!-- <span v-for="vars in item?.variants?.slice(0, 2)" :key="vars?.id">
               / {{ vars?.size?.split(" ")[0] }}</span
             > -->
           </span>
 
-          <span>{{ $t('baseTinting') }}: {{ item?.colorationCode|| $t('noData') }}</span>
+          <span
+            >{{ $t("baseTinting") }}:
+            {{ item?.colorationCode || $t("noData") }}</span
+          >
         </div>
       </div>
     </div>
@@ -34,7 +37,8 @@
     <div class="cart-main-info-count">
       <slot name="count-buttons"></slot>
       <span class="price" v-if="orderPlace !== 'orderPlace'"
-        >{{ item?.totalProdSum }} сом</span>
+        >{{ item?.totalProdSum }} сом</span
+      >
       <button class="prod-count-buttons" v-if="orderPlace !== 'orderPlace'">
         <span @click="$emit('decreaseCount', item)">-</span>
         <span>{{ store.getTotalItemCount(item?.count) }}</span>
@@ -72,11 +76,11 @@ const emit = defineEmits<{
   confirmDelete: [value: ExtendedProduct];
 }>();
 
-const selectedVariant=computed(()=>{
-return props.item?.variants?.find((variantItem:Variant)=>variantItem.price === props?.item?.initPrice)?.size
-})
-
-
+const selectedVariant = computed(() => {
+  return props.item?.variants?.find(
+    (variantItem: Variant) => variantItem.price === props?.item?.initPrice,
+  )?.size;
+});
 
 const confirmDelete = () => {
   if (props?.item) {

@@ -5,18 +5,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted } from "vue";
 
 const isLoading = ref(true);
 
 onMounted(() => {
   const nuxtApp = useNuxtApp();
 
-  nuxtApp.hook('page:start', () => {
+  nuxtApp.hook("page:start", () => {
     isLoading.value = true;
   });
 
-  nuxtApp.hook('page:finish', () => {
+  nuxtApp.hook("page:finish", () => {
     isLoading.value = false;
   });
 });

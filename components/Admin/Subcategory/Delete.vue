@@ -1,21 +1,16 @@
 <template>
   <UIModal
-  
     :show-modal="isOpen"
-
     title="Удалить подкатегорию"
-
     @close-modal="$emit('closeModal')"
   >
     <form
       class="mt-4 flex flex-column align-items-center"
-
       @submit.prevent="deleteSubcategory"
     >
       <div class="ui-dropdown">
         <div
           class="selected-option basic-input"
-
           @click="isSubcategoryOpen = !isSubcategoryOpen"
         >
           <span>
@@ -77,13 +72,9 @@
           <div>
             <ul class="ui-options" v-if="isDeleteSubcategoryOpen">
               <input
-
                 type="text"
-
                 class="basic-input"
-
                 @input="filterSubcategories"
-                
               />
               <li
                 v-if="catalogStore.getFilteredSubcategories?.length > 0"

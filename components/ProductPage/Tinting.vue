@@ -224,7 +224,7 @@ onMounted(async () => {
 }
 .pink-button {
   margin: 20px 0 40px 0;
-  &.no-tinting{
+  &.no-tinting {
     background: transparent;
     color: #222;
     border: 1px solid black;

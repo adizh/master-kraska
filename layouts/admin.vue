@@ -16,12 +16,12 @@
 </template>
 
 <script setup lang="ts">
-const authStore=useAuthStore()
+const authStore = useAuthStore();
 const routes = ref([
   { name: "Главная", value: "/admin" },
   { name: "Заказы", value: "/admin/orders" },
   { name: "Категории", value: "/admin/category" },
-  { name: "Новости", value: "/admin/news" },
+  { name: "Новости", value: "/admin/news" }
 ]);
 
 const superAdminRoutes = [
@@ -30,17 +30,16 @@ const superAdminRoutes = [
   { name: "Баннеры", value: "/admin/banners" },
   { name: "Бренды", value: "/admin/brands" }
 ];
-onMounted(()=>{
-
-if (authStore.getRole === 'SuperAdmin') {
-    const existingRoutes = routes.value.map(route => route.value);
-    superAdminRoutes.forEach(route => {
+onMounted(() => {
+  if (authStore.getRole === "SuperAdmin") {
+    const existingRoutes = routes.value.map((route) => route.value);
+    superAdminRoutes.forEach((route) => {
       if (!existingRoutes.includes(route.value)) {
         routes.value.push(route);
       }
     });
   }
-})
+});
 
 const route = useRoute();
 </script>
@@ -69,7 +68,7 @@ const route = useRoute();
     display: block;
     width: 190px;
     color: #222;
-    
+
     font-weight: 500;
     &:last-child {
       border-bottom: 1px solid #ddd;

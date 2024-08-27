@@ -43,22 +43,20 @@
 </template>
 
 <script setup lang="ts">
-
-const authStore=useAuthStore()
-
-
-if(authStore.getRole!=='SuperAdmin'){
-   navigateTo('/admin')
-   setTimeout(()=>{
-window.location.reload()
-   },200)
-}
-
 import {
   isCreateBannerOpen,
   isDeleteSliderOpen
 } from "@/helpers/admin/banners";
 import { Slider } from "~/Slider";
+
+const authStore = useAuthStore();
+
+if (authStore.getRole !== "SuperAdmin") {
+  navigateTo("/admin");
+  setTimeout(() => {
+    window.location.reload();
+  }, 200);
+}
 const newsStore = useNewsStore();
 const currentSlider = ref({} as Slider);
 const deleteSlider = (slider: Slider) => {

@@ -187,11 +187,11 @@ export const useCatalogStore = defineStore("catalogStore", {
       }
     },
     searchSubDirs (value: string) {
-     
-      this.allHelpersSubDir = this.allHelpersSubDirFilter.filter((item) =>
-  (item?.nameRu?.toLowerCase().includes(value?.toLowerCase()) ||
-   item?.category?.toLowerCase().includes(value?.toLowerCase()))
-);
+      this.allHelpersSubDir = this.allHelpersSubDirFilter.filter(
+        (item) =>
+          item?.nameRu?.toLowerCase().includes(value?.toLowerCase()) ||
+          item?.category?.toLowerCase().includes(value?.toLowerCase())
+      );
     },
     filterTopCategories (value: string) {
       this.topCategories = this.allTopCategories.filter((item) =>

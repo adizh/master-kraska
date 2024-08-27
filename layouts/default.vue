@@ -58,29 +58,36 @@
         <li class="language">
           <img src="../assets/icons/globe.svg" alt="globe">
           <UIDropdown
-              :isDropdownOpen="isUIDropdownOpen"
-              :selectedValue="initLan"
-              :options="lanOptions"
-              @toggleDropdownUI="toggleDropdownUI"
-              @selectValue="selectLanguage"
-              label="name"
+            :is-dropdown-open="isUIDropdownOpen"
+            :selected-value="initLan"
+            :options="lanOptions"
+            label="name"
+            @toggle-dropdown-u-i="toggleDropdownUI"
+            @select-value="selectLanguage"
           />
         </li>
       </ul>
       <ul class="top-part">
-          <li class="language">
-            <img src="../assets/icons/globe.svg" alt="globe">
-                <UIDropdown
-                  :isDropdownOpen="isUIDropdownOpen"
-                  :selectedValue="initLan"
-                  :options="lanOptions"
-                  @toggleDropdownUI="toggleDropdownUI"
-                  @selectValue="selectLanguage"
-                  label="name"
-                />
-          </li>
-        <li v-if="authStore?.getRole === 'Admin' || authStore?.getRole === 'SuperAdmin'">
-          <NuxtLink to="/admin">Админ</NuxtLink>
+        <li class="language">
+          <img src="../assets/icons/globe.svg" alt="globe">
+          <UIDropdown
+            :is-dropdown-open="isUIDropdownOpen"
+            :selected-value="initLan"
+            :options="lanOptions"
+            label="name"
+            @toggle-dropdown-u-i="toggleDropdownUI"
+            @select-value="selectLanguage"
+          />
+        </li>
+        <li
+          v-if="
+            authStore?.getRole === 'Admin' ||
+              authStore?.getRole === 'SuperAdmin'
+          "
+        >
+          <NuxtLink to="/admin">
+            Админ
+          </NuxtLink>
         </li>
 
         <div class="cart-block">
@@ -128,6 +135,7 @@
 </template>
 
 <script setup lang="ts">
+import { LanguageOptions } from "@/types/Items";
 const isBurgerMenuOpen = ref(false);
 const isCatalogOpen = ref(false);
 const isProfileOpen = ref();
@@ -137,17 +145,21 @@ const store = useAuthStore();
 const cartStore = useCartStore();
 
 const { setLocale } = useI18n();
-import { LanguageOptions } from "@/types/Items";
 
 const initLan = ref({
-  name: store.getSelectedLang === "ru" ? "Ru" : store.getSelectedLang === "kg" ? "Kg" : "...",
-  value: store.getSelectedLang,
+  name:
+    store.getSelectedLang === "ru"
+      ? "Ru"
+      : store.getSelectedLang === "kg"
+        ? "Kg"
+        : "...",
+  value: store.getSelectedLang
 });
 
 const isUIDropdownOpen = ref(false);
 const lanOptions = [
   { name: "Русский", value: "ru" },
-  { name: "Кыргызча", value: "kg" },
+  { name: "Кыргызча", value: "kg" }
 ];
 
 const toggleDropdownUI = () => {
@@ -202,12 +214,12 @@ onMounted(() => {
 });
 
 const gotToPage = async (link: string) => {
-  if(route.fullPath.includes('/admin')){
-    await navigateTo(link)
+  if (route.fullPath.includes("/admin")) {
+    await navigateTo(link);
     window.location.reload();
     closeBurgerMenu();
-  }else{
-    navigateTo(link)
+  } else {
+    navigateTo(link);
     closeBurgerMenu();
   }
 };
@@ -224,7 +236,7 @@ const screenSize = computed(() => {
 
 const toggleProfile = () => {
   if (authStore.getUserId && authStore.getUserId?.length > 0) {
-    return gotToPage('/profile');
+    return gotToPage("/profile");
   } else {
     isProfileOpen.value = !isProfileOpen.value;
   }
@@ -289,10 +301,10 @@ a {
 }
 
 .language {
-  background: #F5F5F5;
+  background: #f5f5f5;
   border-radius: 8px;
   padding: 8px 20px;
-  border: 1px solid #DDDDDD;
+  border: 1px solid #dddddd;
 }
 
 .ui-dropdown {
@@ -320,7 +332,7 @@ a {
   width: 75%;
   @include flex(row, space-between, center);
 }
-.bottom-part .language{
+.bottom-part .language {
   display: none;
 }
 
@@ -476,7 +488,7 @@ a {
 }
 
 @media (max-width: 576px) {
-  .top-part .language{
+  .top-part .language {
     display: none;
   }
   .catalog-li-small {
