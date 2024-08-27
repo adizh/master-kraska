@@ -478,9 +478,16 @@ const addProduct = async () => {
   const subCategories = selectedSubCategories?.value
     ?.filter(Boolean)
     ?.map((item) => item?.id);
+
+
   const filteredVariants = allVariants.value?.filter((obj) =>
     allFieldsHaveValues(obj)
   );
+
+const subCategors=allSelectedSubcategories.value?.filter(Boolean)
+    ?.map((item) => item?.id);
+
+  const allCategories=[...categories,...subCategors]
 
   const remaining = {
     isPopular: isPopular?.value,
@@ -489,7 +496,7 @@ const addProduct = async () => {
     subdirectoryId: subCategories || null,
     brandId: selectedBrand?.value?.id,
     images: prodImages?.value,
-    categoryId: categories,
+    categoryIds: allCategories,
     variants: filteredVariants,
     extension: "png"
   };
@@ -513,8 +520,9 @@ const addProduct = async () => {
 const formAdd = () => {
 
   const hasArrError= Object.values(arrErrors)
+console.log('selectedSubCategories',selectedSubCategories)
+console.log('allSelectedSubCategories',allSelectedSubcategories)
 
-  console.log('hasArrError',hasArrError);
   if(!selectedCategories.value.length){
 
   }

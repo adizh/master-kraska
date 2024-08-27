@@ -131,7 +131,7 @@
       <AuthModal @close-modal="isProfileOpen = false" />
     </Dialog>
   </div>
-  <slot />
+
 </template>
 
 <script setup lang="ts">

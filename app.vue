@@ -1,13 +1,13 @@
 <template>
   <NuxtLoadingIndicator color="#b30753" :throttle="0" />
-  <NuxtLayout>
+  <NuxtLayout/>
     <section v-if="!preloader" class="main-section-site">
       <NuxtPage />
       <NuxtSnackbar />
     </section>
     <Preloader v-else />
     <NuxtLayout name="footer" />
-  </NuxtLayout>
+
   <ScrollToTop />
 </template>
 
